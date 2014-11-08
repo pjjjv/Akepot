@@ -1,0 +1,23 @@
+
+<!-- before the Polymer elements imports -->
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
+<link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
+
+<polymer-element name="competences-service" attributes="competences">
+  <template>
+    <style>
+    :host {
+      display: none;
+    }
+    </style>
+    <core-ajax-dart id="ajax"
+    auto
+    url="data/competences.json"
+    on-core-response="{{parseResponse}}"
+    handleAs="json">
+  </core-ajax-dart>
+  </template>
+  <script type="application/dart" src="competences_service.dart"></script>
+</polymer-element>

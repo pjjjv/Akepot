@@ -1,0 +1,16 @@
+
+<link rel="import" href="../../packages/core_elements/core_icons.html">
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/paper_elements/paper_icon_button.html">
+<link rel="import" href="../../packages/paper_elements/roboto.html">
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<polymer-element name="strength-button" attributes="number">
+  <template>
+    <link href="strength_button.css" rel="stylesheet">
+    <paper-button raised id="button" on-click="{{showToast}}" label="{{number}}"></paper-button>
+
+  </template>
+
+  <script type="application/dart" src="strength_button.dart"></script>
+</polymer-element>

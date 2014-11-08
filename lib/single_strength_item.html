@@ -1,0 +1,16 @@
+
+<link rel="import" href="../../packages/paper_elements/roboto.html">
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="strength_button.html">
+
+<polymer-element name="single-strength-item" attributes="title desc number">
+  <template>
+    <link href="single_strength_item.css" rel="stylesheet">
+    <div layout horizontal center>
+      <span flex>{{title}}</span>
+      <strength-button id="single_button" number="{{number}}"></strength-button>
+    </div>
+  </template>
+
+  <script type="application/dart" src="single_strength_item.dart"></script>
+</polymer-element>

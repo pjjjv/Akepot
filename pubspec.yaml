@@ -1,0 +1,12 @@
+name: akepot
+description: A competence matrix
+dependencies:
+  browser: any
+  core_elements: any
+  paper_elements: any
+  polymer: any
+  intl: any
+transformers:
+- polymer:
+    entry_points:
+    - web/akepot.html

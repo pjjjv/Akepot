@@ -1,0 +1,13 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="single_strength_item.html">
+<link rel="import" href="competences_service.html">
+
+<polymer-element name="core-card2">
+  <template>
+    <link href="core_card2.css" rel="stylesheet">
+    <content></content>
+  </template>
+    <competences-service id="service" competences="{{competences}}"></competences-service>
+
+  <script type="application/dart" src="core_card2.dart"></script>
+</polymer-element>

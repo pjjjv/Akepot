@@ -1,1 +1,15 @@
 @import '../web/theme';
+
+core-card2 {
+  width:40%;
+  min-width:500px;
+}
+
+#image-box {
+  height:200px;
+}
+
+core-image {
+  height:200px;
+  background-color: $light-color;
+}

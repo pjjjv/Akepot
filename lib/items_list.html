@@ -9,13 +9,16 @@
     <link href="items_list.css" rel="stylesheet">
     <competences-service id="service" competences="{{competences}}"></competences-service>
     <div layout horizontal wrap center-justified>
-      <core-card2 id="card" style="width:40%; min-width:500px;" self-center layout vertical>
-        <div style="width:100%; height:200px;">
-          <core-image fit src="../../images/ilias.jpg" style="width:100%; height:200px; background-color: lightgray;" sizing="cover" preload fade></core-image>
+      <core-card2 id="card" self-center layout vertical>
+        <div class="front">
+          <div id="image-box">
+            <core-image fit src="../../images/ilias.jpg" sizing="cover" preload fade></core-image>
+          </div>
+          <template repeat="{{competence in competences}}">
+            <single-strength-item id="{{competence.id}}" title="{{competence.title}}" desc="{{competence.desc}}" number="{{competence.value}}"></single-strength-item>
+          </template>
         </div>
-        <template repeat="{{competence in competences}}">
-          <single-strength-item id="{{competence.id}}" title="{{competence.title}}" desc="{{competence.desc}}" number="{{competence.value}}"></single-strength-item>
-        </template>
+        <div class="back">Bla</div>
       </core-card2>
     </div>
   </template>

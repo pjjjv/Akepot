@@ -17,7 +17,7 @@ html, body {
 }
 
 body {
-  @include text-body2();
+  @include text-body1();
   color: $text-black-primary;
   background-color: white;
   background-repeat: no-repeat;
@@ -72,24 +72,28 @@ core-scaffold {
   core-toolbar.tall {
     height: 150px;
   }
-  core-menu {
+  core-selector, core-menu {
     overflow: auto;
     margin: 0px;
     padding: 0px;
+    ::shadow paper-ripple {
+      color: $primary-color;
+    }
   }
 
   /*
   paper-item doesn't style this at all, currently :(
   https://github.com/Polymer/paper-item/issues/12
   */
-  core-menu .core-selected {
+  core-selector .core-selected {
     color: $primary-color;
+    //background-color: $light-color;
   }
 }
 
 core-animated-pages {
-  width: 95%;
-  height: 95%;
+  width: 98%;
+  height: 98%;
   -webkit-user-select: none;
 }
 
@@ -121,4 +125,8 @@ paper-button[raised].colored {
 core-card2 {
   min-width: 500px;
   min-height: 600px;
+}
+
+core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /deep/ core-item, core-menu /deep/ core-item {
+  @include text-body2();
 }

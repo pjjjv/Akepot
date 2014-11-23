@@ -48,13 +48,16 @@
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/">Welcome Back</core-toolbar>
-        <core-menu on-tap="{{goTo}}" flex id="panel-list" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
+        <core-menu on-tap="{{goTo}}" flex id="panel-list1" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
+        </core-menu>
+        <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
           <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Document Management" horizontal center layout></paper-item>
           <paper-item href="/checkin" id="menu_item2" icon="assignment-ind" label="Component Knowledge" horizontal center layout active></paper-item>
-          <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Document Management" horizontal center layout></paper-item>
-          <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Document Management" horizontal center layout></paper-item>
-          <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Document Management" horizontal center layout></paper-item>
-        </core-menu>
+          <paper-item href="/booking" id="menu_item3" icon="assignment-ind" label="Document Management1" horizontal center layout></paper-item>
+          <paper-item href="/booking" id="menu_item4" icon="assignment-ind" label="Document Management2" horizontal center layout></paper-item>
+          <paper-item href="/booking" id="menu_item5" icon="assignment-ind" label="Document Management3" horizontal center layout></paper-item>
+        </core-selector>
+
 
         <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
           <core-icon icon="search" id="search_icon"></core-icon>

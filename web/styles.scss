@@ -1,0 +1,124 @@
+@import 'theme';
+
+
+html {
+  //background: url("icons/icon.svg") no-repeat center center;
+  font-family: $font-stack;
+  font-size: 62.5%; /* 16px * .625 => 10px */
+  /*font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2em;
+  margin: 0;*/
+}
+
+html, body {
+  height: 100%;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body {
+  @include text-body2();
+  color: $text-black-primary;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+@media screen and (min-width: 900px) {
+  body {
+    background-size: 512px;
+  }
+}
+
+core-scaffold::shadow [drawer] {
+  background-color: transparent;
+}
+
+core-scaffold::shadow [main] {
+  background-color: transparent;
+}
+
+core-toolbar {
+  @include text-title();
+  color: $text-white;
+}
+core-toolbar.tall {
+  background-color: $primary-color;
+  height: 64px;
+}
+core-toolbar:not(.tall) {
+  background-color: $dark-color;
+}
+
+core-scaffold::shadow {
+  core-toolbar {
+    @extend core-toolbar;
+  }
+  core-toolbar.tall {
+    @extend core-toolbar.tall;
+  }
+  core-toolbar:not(.tall) {
+    @extend core-toolbar:not(.tall);
+  }
+}
+
+core-scaffold {
+  core-toolbar{
+    @include text-subhead();
+    color: $text-white;
+    padding: 16px 0px 16px 22px;
+    /*background: url("images/carbon_intake.png") no-repeat center bottom;*/
+  }
+  core-toolbar.tall {
+    height: 150px;
+  }
+  core-menu {
+    overflow: auto;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  /*
+  paper-item doesn't style this at all, currently :(
+  https://github.com/Polymer/paper-item/issues/12
+  */
+  core-menu .core-selected {
+    color: $primary-color;
+  }
+}
+
+core-animated-pages {
+  width: 95%;
+  height: 95%;
+  -webkit-user-select: none;
+}
+
+@media all and (max-width: 480px) {
+  core-animated-pages {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+#main-heading {
+  //background-color: #b0bec5;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+
+paper-button.colored,
+core-icon.colored {
+  color: #4285f4;
+}
+
+paper-button[raised].colored {
+  background: #4285f4;
+  color: #fff;
+}
+
+core-card2 {
+  min-width: 500px;
+  min-height: 600px;
+}

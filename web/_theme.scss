@@ -1,0 +1,136 @@
+$font-stack:    'Roboto', 'Noto', 'Open Sans', sans-serif;
+$blue500: #2196F3;
+$blue200: #90CAF9;
+$blue700: #1976D2;
+$tealA400: #1DE9B6;
+$primary-color: $blue500;
+$accent-color: $tealA400;
+$light-color: $blue200;
+$dark-color: $blue700;
+
+$text-black: black;
+$text-black-primary: rgba(0,0,0,0.87);
+$text-black-secondary: rgba(0,0,0,0.54); // or icons, also caption and display1-4
+$text-black-disabled: rgba(0,0,0,0.26); // or hints
+$text-black-dividers: rgba(0,0,0,0.12);
+
+$text-white: white;
+$text-white-primary: rgba(255,255,255,0.87); // or icons
+$text-white-secondary: rgba(255,255,255,0.70); // caption and display1-4
+$text-white-disabled: rgba(255,255,255,0.30); // or hints
+$text-white-dividers: rgba(255,255,255,0.12);
+
+$background-color: rgba(255,255,255,0.02);
+
+$font-size-button: 1.4rem; //MEDIUM 14sp
+$font-size-caption: 1.2rem; //Regular 12sp
+$font-size-body: 1.3rem; //Regular or Medium 13sp (Desktop)
+$font-size-subhead: 1.5rem; //Regular 15sp (Desktop) //small snippets or when titles are paired with lines of Body-styled text.
+$font-size-title: 2.0rem; //Medium 20sp //app bars
+$font-size-headline: 2.4rem; //Regular 24sp
+$font-size-display1: 3.4rem; //Regular 34sp
+$font-size-display2: 4.5rem; //Regular 45sp
+$font-size-display3: 5.6rem; //Regular 56sp
+$font-size-display4: 11.2rem; //Light 112sp
+
+$font-weight-button: 500; //MEDIUM 14sp
+$font-weight-caption: 400; //Regular 12sp
+$font-weight-body1: 400; //Regular 13sp (Desktop)
+$font-weight-body2: 500; //Medium 13sp (Desktop)
+$font-weight-subhead: 400; //Regular 15sp (Desktop)
+$font-weight-title: 500; //Medium 20sp
+$font-weight-headline: 400; //Regular 24sp
+$font-weight-display1: 400; //Regular 34sp
+$font-weight-display2: 400; //Regular 45sp
+$font-weight-display3: 400; //Regular 56sp
+$font-weight-display4: 300; //Light 112sp
+
+$text-transform-button: uppercase;  //MEDIUM 14sp all caps
+
+$line-height-body1: 1.6em; // Leading 20pt
+$line-height-body2: 2.0em; // Leading 24pt, isolated increased
+$line-height-subhead1: 2.0em; // Leading 24pt
+$line-height-subhead2: 2.3em; // Leading 28pt, isolated increased
+$line-height-headline: 2.55em; // Leading 32pt
+$line-height-display1: 3.2em; // Leading 40pt
+$line-height-display2: 3.84em; // Leading 48pt
+
+$letter-spacing-button: 0.01em; //Tracking 10
+$letter-spacing-caption: 0.02em; //Tracking 20
+$letter-spacing-body1: 0.01em; //Tracking 10
+$letter-spacing-body2: 0.01em; //Tracking 10
+$letter-spacing-subhead: 0.01em; //Tracking 10
+$letter-spacing-title: 0.005em; //Tracking 5
+$letter-spacing-headline: 0em; //Tracking 0
+$letter-spacing-display1: 0em; //Tracking 0
+$letter-spacing-display2: 0em; //Tracking 0
+$letter-spacing-display3: -0.005em; //Tracking -5
+$letter-spacing-display4: -0.01em; //Tracking -10
+
+@mixin text-button() {
+  font-size: $font-size-button;
+  font-weight: $font-weight-button;
+  //line-height
+  letter-spacing: $letter-spacing-button;
+  text-transform: $text-transform-button
+}
+@mixin text-caption() {
+  font-size: $font-size-caption;
+  font-weight: $font-weight-caption;
+  //line-height
+  letter-spacing: $letter-spacing-caption;
+}
+@mixin text-body1() {
+  font-size: $font-size-body;
+  font-weight: $font-weight-body1;
+  line-height: $line-height-body1;
+  letter-spacing: $letter-spacing-body1;
+}
+@mixin text-body2() {
+  font-size: $font-size-body;
+  font-weight: $font-weight-body2;
+  line-height: $line-height-body2;
+  letter-spacing: $letter-spacing-body2;
+}
+@mixin text-subhead() {
+  font-size: $font-size-subhead;
+  font-weight: $font-weight-subhead;
+  line-height: $line-height-subhead1;
+  letter-spacing: $letter-spacing-subhead;
+}
+@mixin text-title() {
+  font-size: $font-size-title;
+  font-weight: $font-weight-title;
+  //line-height
+  letter-spacing: $letter-spacing-title;
+}
+@mixin text-headline() {
+  font-size: $font-size-headline;
+  font-weight: $font-weight-headline;
+  line-height: $line-height-headline;
+  letter-spacing: $letter-spacing-headline;
+}
+@mixin text-display1() {
+  font-size: $font-size-display1;
+  font-weight: $font-weight-display1;
+  line-height: $line-height-display1;
+  letter-spacing: $letter-spacing-display1;
+}
+@mixin text-display2() {
+  font-size: $font-size-display2;
+  font-weight: $font-weight-display2;
+  line-height: $line-height-display2;
+  letter-spacing: $letter-spacing-display2;
+}
+@mixin text-display3() {
+  font-size: $font-size-display3;
+  font-weight: $font-weight-display3;
+  //line-height
+  letter-spacing: $letter-spacing-display3;
+}
+@mixin text-display4() {
+  font-size: $font-size-display4;
+  font-weight: $font-weight-display4;
+  //line-height
+  letter-spacing: $letter-spacing-display4;
+}

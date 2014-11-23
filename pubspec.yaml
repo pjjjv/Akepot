@@ -4,9 +4,12 @@ dependencies:
   browser: any
   core_elements: any
   paper_elements: any
-  polymer: any
+  polymer: ">=0.15.1+5 <0.16.0"
   intl: any
+  sass: any
 transformers:
+- sass:
+    compass: true                 # Include compass
 - polymer:
     entry_points:
     - web/akepot.html

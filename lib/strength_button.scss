@@ -1,0 +1,17 @@
+@import '../web/theme';
+
+#button {
+  //background: green;
+  background: $accent-color;
+  @include text-button();
+  color: $text-white;
+  //color: greenyellow;
+  //font-weight: 800;
+  min-width: 3em;
+  min-height: 2em;
+}
+
+:host {
+  margin: 0.5em 1em 0.5em 0;
+  right: 1em;
+}

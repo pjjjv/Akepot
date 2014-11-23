@@ -1,3 +1,5 @@
+@import '../web/theme';
+
 :host {
   padding: 20px 16px;
   margin: 32px 32px;
@@ -5,7 +7,7 @@
   position: relative;
   min-width: 300px;
   min-height: 300px;
-  background-color: #fff;
+  background-color: $background-color;
   border-radius: 2px;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }

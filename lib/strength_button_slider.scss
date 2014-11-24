@@ -1,7 +1,15 @@
 @import '../web/theme';
 
-
 :host {
   margin: 0.5em 1em 0.5em 0;
   right: 1em;
+}
+
+strength-button {
+  margin: 0;
+  right: 0;
+}
+
+strength-button::shadow .button {
+  margin: 0 0em;
 }

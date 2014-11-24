@@ -13,7 +13,6 @@ class CoreCard2 extends PolymerElement {
     HtmlElement front = shadowRoot.querySelector('#front');
 
     String height = front.client.height.toString()+"px";
-    print("heiht: $height");
     back.style.height = height;
     flipContainer.style.height = height;
   }

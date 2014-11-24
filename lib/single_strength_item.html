@@ -18,8 +18,8 @@
         cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
-    <core-animation-group direction="reverse" fill="forwards" easing="ease-in-out" id="slide-down" type="par">
-      <core-animation duration="600">
+    <core-animation-group on-core-animation-finish="{{finishToggleDesc}}" direction="reverse" fill="both" easing="ease-in-out" id="slide-down" type="par">
+      <core-animation duration="450" endDelay="150" fill="both">
         <core-animation-keyframe>
           <core-animation-prop name="opacity" value="0">
           </core-animation-prop>
@@ -28,12 +28,8 @@
           <core-animation-prop name="opacity" value="1">
           </core-animation-prop>
         </core-animation-keyframe>
-        <core-animation-keyframe>
-          <core-animation-prop name="opacity" value="1">
-          </core-animation-prop>
-        </core-animation-keyframe>
       </core-animation>
-      <core-animation duration="600">
+      <core-animation duration="600" fill="both">
         <core-animation-keyframe>
           <core-animation-prop name="transform" value="translate(0,-150px)">
           </core-animation-prop>

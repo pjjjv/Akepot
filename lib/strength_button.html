@@ -1,14 +1,16 @@
 
-<link rel="import" href="../../packages/core_elements/core_icons.html">
 <link rel="import" href="../../packages/paper_elements/paper_button.html">
-<link rel="import" href="../../packages/paper_elements/paper_icon_button.html">
-<link rel="import" href="../../packages/paper_elements/roboto.html">
 <link rel="import" href="../../packages/polymer/polymer.html">
 
-<polymer-element name="strength-button" attributes="number">
+<polymer-element name="strength-button" attributes="number selected">
   <template>
     <link href="strength_button.css" rel="stylesheet">
-    <paper-button raised id="button" on-click="{{showToast}}" label="{{number}}"></paper-button>
+    <template if="{{selected}}">
+      <paper-button raised id="button" label="{{number}}"></paper-button>
+    </template>
+    <template if="{{!selected}}">
+      <paper-button id="button" label="{{number}}"></paper-button>
+    </template>
 
   </template>
 

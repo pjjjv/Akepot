@@ -1,14 +1,14 @@
 
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="strength_button.html">
+<link rel="import" href="strength_button_slider.html">
 <link rel="import" href="../../packages/core_elements/core_animation_group.html">
 
 <polymer-element name="single-strength-item" attributes="title desc number">
   <template>
     <link href="single_strength_item.css" rel="stylesheet">
-    <div id="main" layout horizontal center on-tap="{{toggleDesc}}">
-      <span id="title" flex>{{title}}</span>
-      <strength-button id="single_button" number="{{number}}"></strength-button>
+    <div id="main" layout horizontal center>
+      <span id="title" flex on-tap="{{toggleDesc}}">{{title}}</span>
+      <strength-button-slider id="single_button" selected="{{number}}" max="5"></strength-button-slider>
     </div>
     <div id="secondary" layout horizontal end-justified>
       <p id="desc" hidden class="core-animation-target">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

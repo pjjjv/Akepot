@@ -77,7 +77,7 @@ core-scaffold {
     margin: 0px;
     padding: 0px;
     ::shadow paper-ripple {
-      color: $primary-color;
+      color: $accent-color;
     }
   }
 
@@ -86,7 +86,7 @@ core-scaffold {
   https://github.com/Polymer/paper-item/issues/12
   */
   core-selector .core-selected {
-    color: $primary-color;
+    color: $accent-color;
     //background-color: $light-color;
   }
 }

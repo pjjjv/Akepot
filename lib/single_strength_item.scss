@@ -12,4 +12,15 @@
   @include text-body1();
   color: $text-black-secondary;
   max-width: 60ch;
+  z-index: 0;
+  opacity: 0;
 }
+
+#main {
+  z-index: 1;
+}
+
+/*#secondary {
+  display: block;
+  overflow: hidden;
+}*/

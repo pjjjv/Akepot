@@ -36,6 +36,7 @@
     <link rel="import" href="packages/core_elements/core_icons.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
     <link rel="import" href="packages/core_elements/core_animated_pages.html">
+    <link rel="import" href="packages/paper_elements/paper_button.html">
     <link rel="import" href="packages/paper_elements/paper_item.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
@@ -66,10 +67,8 @@
       </core-header-panel>
 
 
-      <core-icon-button id="menu_button" icon="menu" core-drawer-toggle tool></core-icon-button>
-      <paper-icon-button icon="maps:flight" tool></paper-icon-button>
       <div id="title" tool flex>Competence Matrix</div>
-      <paper-icon-button icon="search" tool></paper-icon-button>
+      <core-icon-button icon="search" tool></core-icon-button>
 
 
       <core-animated-pages fit main selected="{{orderedIndex}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">

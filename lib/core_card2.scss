@@ -13,14 +13,14 @@
   transition: width .20s;
 }
 .flip-container,#front,#back{
-  min-width: 500px;
-  min-height: 300px;
+  min-width: $card-width;
+  min-height: $card-height;
 }
 #front,#back{
   padding: 20px 16px;
   border-radius: 4px;
   background-color: $background-color;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  box-shadow: 0 2px 5px 0 $shadow;
 
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;

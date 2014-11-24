@@ -5,10 +5,13 @@ import 'package:template_binding/template_binding.dart';
 void main() {
   initPolymer().run(() {
     //(querySelector('#menu_button') as PolymerElement).onClick.listen(openMenu);
+    Content contentModel;
+
 
     Polymer.onReady.then((_) {
       var content = document.querySelector('#content');
-      templateBind(content).model = new Content();
+      contentModel = new Content();
+      templateBind(content).model = contentModel;
     });
   });
 }
@@ -18,6 +21,7 @@ void openMenu(Event e) {
   var dialog = querySelector('#dialog');
   dialog.toggle();
 }
+
 
 class Content extends Observable {
   @observable List items = toObservable([]);

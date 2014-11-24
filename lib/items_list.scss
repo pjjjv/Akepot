@@ -1,15 +1,33 @@
 @import '../web/theme';
 
 core-card2 {
-  width:40%;
-  min-width:500px;
+  width: 40%;
+  min-width: $card-width;
+  min-height: $card-height;
 }
 
 #image-box {
-  height:200px;
+  height: $image-height;
+  display: block;
 }
 
 core-image {
-  height:200px;
+  height: $image-height;
   background-color: $light-color;
+  border-bottom: 1px solid $seam;
+}
+
+#title-box {
+  height: $title-height;
+  display: block;
+}
+
+#title {
+  height: $title-height;
+  top: $image-height + 1px;
+  padding-left: 20px;
+  @include text-headline();
+  background-color: $primary-color;
+  color: $text-white-primary;
+  border-bottom: 1px solid $seam;
 }

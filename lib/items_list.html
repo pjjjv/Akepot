@@ -14,6 +14,9 @@
           <div id="image-box">
             <core-image fit src="../../images/ilias.jpg" sizing="cover" preload fade></core-image>
           </div>
+          <div id="title-box">
+            <div fit id="title">Component Knowledge: ILIAS</div>
+          </div>
           <template repeat="{{competence in competences}}">
             <single-strength-item id="{{competence.id}}" title="{{competence.title}}" desc="{{competence.desc}}" number="{{competence.value}}"></single-strength-item>
           </template>

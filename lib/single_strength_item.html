@@ -1,16 +1,18 @@
 
 <link rel="import" href="../../packages/polymer/polymer.html">
 <link rel="import" href="strength_button.html">
+<!--<link rel="import" href="../../packages/core_elements/core_animation_group.html">
+<link rel="import" href="../../packages/core_elements/core_animation.html">-->
 
 <polymer-element name="single-strength-item" attributes="title desc number">
   <template>
     <link href="single_strength_item.css" rel="stylesheet">
-    <div layout horizontal center>
-      <span flex>{{title}}</span>
+    <div layout horizontal center on-tap="{{toggleDesc}}">
+      <span id="title" flex>{{title}}</span>
       <strength-button id="single_button" number="{{number}}"></strength-button>
     </div>
-    <div layout horizontal left>
-      <p flex>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    <div layout horizontal end-justified>
+      <p id="desc" hidden>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
         consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -19,5 +21,35 @@
     </div>
   </template>
 
+    <!--<core-animation-group id= "slideUp" type="seq">
+        <core-animation duration="300">
+          <core-animation-keyframe>
+            <core-animation-prop name="opacity" value="1">
+            </core-animation-prop>
+          </core-animation-keyframe>
+          <core-animation-keyframe>
+            <core-animation-prop name="opacity" value="0.3">
+            </core-animation-prop>
+          </core-animation-keyframe>
+          <core-animation-keyframe>
+            <core-animation-prop name="opacity" value="1">
+            </core-animation-prop>
+          </core-animation-keyframe>
+        </core-animation>
+        <core-animation duration="300">
+          <core-animation-keyframe>
+            <core-animation-prop name="transform" value="scale(1)">
+            </core-animation-prop>
+          </core-animation-keyframe>
+          <core-animation-keyframe>
+            <core-animation-prop name="transform" value="scale(1.2)">
+            </core-animation-prop>
+          </core-animation-keyframe>
+          <core-animation-keyframe>
+            <core-animation-prop name="transform" value="scale(1)">
+            </core-animation-prop>
+          </core-animation-keyframe>
+        </core-animation>
+      </core-animation-group>-->
   <script type="application/dart" src="single_strength_item.dart"></script>
 </polymer-element>

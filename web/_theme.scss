@@ -8,6 +8,9 @@ $accent-color: $tealA400;
 $light-color: $blue200;
 $dark-color: $blue700;
 
+$shadow: rgba(0,0,0,.26);
+$seam: #ddd;
+
 $text-black: black;
 $text-black-primary: rgba(0,0,0,0.87);
 $text-black-secondary: rgba(0,0,0,0.54); // or icons, also caption and display1-4
@@ -134,3 +137,15 @@ $letter-spacing-display4: -0.01em; //Tracking -10
   //line-height
   letter-spacing: $letter-spacing-display4;
 }
+
+$component-grid: 0.8rem;
+$icon-grid: 0.4rem; // icon and type
+
+
+
+
+
+$card-width: 450px;
+$card-height: $card-width * 3px / 2px;
+$title-height: 64px;
+$image-height: $card-height - $card-width - $title-height;

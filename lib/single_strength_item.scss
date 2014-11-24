@@ -3,3 +3,13 @@
 #button {
   background: gray;
 }
+
+#title {
+  @include text-subhead();
+}
+
+#desc {
+  @include text-body1();
+  color: $text-black-secondary;
+  max-width: 60ch;
+}

@@ -28,6 +28,13 @@ class SingleStrengthItem extends PolymerElement {
   }
 
   void toggleDesc(Event e){
+    print('dispatching from child');
+    //dispatchEvent(new CustomEvent('toggleotherdescs'));
+
+    startToggleDesc();
+  }
+
+  void startToggleDesc(){
     animation.direction = (animation.direction == "reverse") ? "normal" : "reverse";
     hidden = descEl.hidden;
 
@@ -44,6 +51,8 @@ class SingleStrengthItem extends PolymerElement {
   }
 
   void setDescHidden(){
-
+    if(!descEl.hidden){
+      startToggleDesc();
+    }
   }
 }

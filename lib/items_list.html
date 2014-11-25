@@ -20,7 +20,7 @@
             <div fit id="title">Component Knowledge: ILIAS</div>
           </div>
           <template repeat="{{competence in competences}}">
-            <single-strength-item id="{{competence.id}}" title="{{competence.title}}" desc="{{competence.desc}}" number="{{competence.value}}"></single-strength-item>
+            <single-strength-item id="{{competence.id}}" title="{{competence.title}}" desc="{{competence.desc}}" number="{{competence.value}}" on-toggleotherdescs="{{toggleOtherDescs}}"></single-strength-item>
           </template>
         </div>
         <div class="back">Bla</div>

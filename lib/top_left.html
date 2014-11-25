@@ -1,0 +1,27 @@
+
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/akepot/components/google-signin/google-signin.html">
+<link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
+
+<polymer-element name="top-left">
+  <template>
+    <link href="top_left.css" rel="stylesheet">
+    <template if="{{signedin}}">
+      <span class="welcome">Welcome Back{{name}}</span>
+    <core-ajax-dart id="ajax-people" auto
+      url="https://www.googleapis.com/plus/v1/people/me?access_token={{accessToken}}"
+      on-core-response="{{parseResponse}}"
+      handleAs="json">
+    </core-ajax-dart>
+    </template>
+    <template if="{{!signedin}}">
+      <span class="welcome">Welcome</span>
+    </template>
+    <google-signin raised clientId="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile email"></google-signin>
+
+    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
+  </template>
+
+  <script type="application/dart" src="top_left.dart"></script>
+</polymer-element>

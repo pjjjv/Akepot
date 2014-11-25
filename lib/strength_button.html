@@ -6,10 +6,10 @@
   <template>
     <link href="strength_button.css" rel="stylesheet">
     <template if="{{selected}}">
-      <paper-button raised class="button" label="{{number}}"></paper-button>
+      <paper-button raised class="button">{{number}}</paper-button>
     </template>
     <template if="{{!selected}}">
-      <paper-button class="button" label="{{number}}"></paper-button>
+      <paper-button class="button">{{number}}</paper-button>
     </template>
 
   </template>

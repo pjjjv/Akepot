@@ -1,6 +1,7 @@
 
 <!-- before the Polymer elements imports -->
 <link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/akepot/components/google-signin/google-signin.html">
 
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
@@ -13,11 +14,14 @@
     }
     </style>
     <core-ajax-dart id="ajax"
-    auto
-    url="data/competences.json"
-    on-core-response="{{parseResponse}}"
-    handleAs="json">
-  </core-ajax-dart>
+      auto
+      url="data/competences.json"
+      on-core-response="{{parseResponse}}"
+      handleAs="json">
+    </core-ajax-dart>
+
+    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
+
   </template>
   <script type="application/dart" src="competences_service.dart"></script>
 </polymer-element>

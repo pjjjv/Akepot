@@ -41,6 +41,7 @@
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/items_list.html">
+    <link rel="import" href="packages/akepot/top_left.html">
   </head>
 
   <body unresolved fullbleed touch-action="auto">
@@ -48,7 +49,7 @@
     <template is="auto-binding-dart" id="content">
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
-        <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/">Welcome Back</core-toolbar>
+        <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
         <core-menu on-tap="{{goTo}}" flex id="panel-list1" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
         </core-menu>
         <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
@@ -88,7 +89,7 @@
         transition="paper-transition-center" backdrop="true">
         <p>Made with Polymer and Dart in October 2014.</p>
         <p>This tool was created by pjv.</p>
-        <paper-button label="Close" dismissive autofocus></paper-button>
+        <paper-button dismissive autofocus>Close</paper-button>
       </paper-dialog>
     </core-scaffold>
     </template>

@@ -7,13 +7,9 @@ dependencies:
   polymer: ">=0.15.1+5 <0.16.0"
   intl: any
   sass: any
-  bwu_polymer_routing: '>=0.0.1 <0.1.0'
-  route_hierarchical: '>=0.4.21 <0.6.1'
-  di: '>=2.0.1 <4.0.0'
 transformers:
 - sass:
     compass: true                 # Include compass
 - polymer:
     entry_points:
     - web/akepot.html
-- di

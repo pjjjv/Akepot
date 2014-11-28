@@ -42,11 +42,16 @@
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/items_list.html">
     <link rel="import" href="packages/akepot/top_left.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
   </head>
 
   <body unresolved fullbleed touch-action="auto">
+  <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
+    <more-route path="/projects/:projectHash" params="{{projectsRoute}}"></more-route>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
@@ -68,7 +73,7 @@
       </core-header-panel>
 
 
-      <div id="title" tool flex>Competence Matrix</div>
+      <div id="title" tool flex>Competence Matrix for {{projectsRoute['projectHash']}}</div>
       <core-icon-button icon="search" tool></core-icon-button>
 
 

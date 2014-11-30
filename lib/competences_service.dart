@@ -1,10 +1,10 @@
 import 'dart:html';
-import 'dart:js';
 import 'package:polymer/polymer.dart';
 import 'competence_model.dart';
 import 'package:core_elements/core_ajax_dart.dart';
-import 'package:core_elements/core_xhr_dart.dart';
+import "package:google_oauth2_client/google_oauth2_browser.dart";
 
+typedef void ResponseHandler(response, HttpRequest req);
 
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
@@ -12,6 +12,7 @@ class CompetencesService extends PolymerElement {
   @observable bool signedin = false;
   @observable Map headers;
   //@observable String urlparams;
+  GoogleOAuth2 auth;
 
   CompetencesService.created() : super.created() {
     //print("created");
@@ -29,15 +30,55 @@ class CompetencesService extends PolymerElement {
     //$['ajax'].on["core-response"].listen(parseResponse);//using declarative event handler
   }
 
-  void authenticated(CustomEvent event, var detail) {
-    String token = detail['token'];
+  void domReady(){
+    auth = new GoogleOAuth2(
+        "71435708886-adrd3d3qumqm1ssedko964621rlku3nj.apps.googleusercontent.com",
+        ["https://www.googleapis.com/auth/userinfo.email"],
+        tokenLoaded: authenticated,
+        autoLogin: false);
+    auth.login();
+  }
+
+  void authenticated(Token token) {
     headers = {"Content-type": "application/json",
-               "Authorization": "Bearer $token"};
+               "Authorization": "${token.type} ${token.data}"};
     print("headersss: $headers");
     //urlparams={"'access_token'": token}.toString();
-    CoreAjax ajax = shadowRoot.querySelector('#ajax');
+    /*CoreAjax ajax = shadowRoot.querySelector('#ajax');
     ajax.withCredentials = true;
-    ajax.go();
+    ajax.go();*/
+
+    HttpRequest xhr = new HttpRequest();
+    String method = 'GET';
+
+    String url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item?access_token=${token.data}";
+
+    xhr.open(method, url, async: true);
+
+    xhr.responseType = "json";
+
+    xhr.withCredentials = true;
+
+    this._makeReadyStateHandler(xhr, parseResponse);
+    this._setRequestHeaders(xhr, headers);
+
+    auth.authenticate(xhr).then((request) => request.send(null));
+  }
+
+  _makeReadyStateHandler(HttpRequest xhr, ResponseHandler callback) {
+    xhr.onReadyStateChange.listen((_) {
+      if (xhr.readyState == 4) {
+        if (callback != null) callback(xhr.response, xhr);
+      }
+    });
+  }
+
+  _setRequestHeaders(HttpRequest xhr, Map headers) {
+    if (headers != null) {
+      for (var name in headers.keys) {
+        xhr.setRequestHeader(name, headers[name]);
+      }
+    }
   }
 
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
@@ -48,8 +89,8 @@ class CompetencesService extends PolymerElement {
 
   }
 
-  List<Competence> parseResponse(CustomEvent event, Map detail, CoreAjax node) {
-    var response = detail['response'];
+  List<Competence> parseResponse(response, HttpRequest req) {
+    //var response = detail['response'];
     //print(response['competences']);
 
     try {

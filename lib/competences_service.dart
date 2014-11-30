@@ -10,8 +10,6 @@ typedef void ResponseHandler(response, HttpRequest req);
 class CompetencesService extends PolymerElement {
   @published List<Competence> competences;
   @observable bool signedin = false;
-  @observable Map headers;
-  //@observable String urlparams;
   GoogleOAuth2 auth;
 
   CompetencesService.created() : super.created() {
@@ -30,18 +28,32 @@ class CompetencesService extends PolymerElement {
     //$['ajax'].on["core-response"].listen(parseResponse);//using declarative event handler
   }
 
-  void domReady(){
+  /*void domReady(){
     auth = new GoogleOAuth2(
         "71435708886-adrd3d3qumqm1ssedko964621rlku3nj.apps.googleusercontent.com",
         ["https://www.googleapis.com/auth/userinfo.email"],
         tokenLoaded: authenticated,
         autoLogin: false);
     auth.login();
+  }*/
+
+  void authenticated(CustomEvent event, var detail) {
+    String token = detail['token'];
+    Map headers = {"Content-type": "application/json",
+               "Authorization": "Bearer $token"};
+    print("headersss: $headers");
+    //String urlparams={"access_token": token}.toString();
+    CoreAjax ajax = shadowRoot.querySelector('#ajax');
+    //ajax.withCredentials = true;
+    ajax.headers = headers;
+    //ajax.params = urlparams;
+    ajax.go();
   }
 
-  void authenticated(Token token) {
+  /*void authenticated(CustomEvent event, var detail) {
+    String token = detail['token'];
     headers = {"Content-type": "application/json",
-               "Authorization": "${token.type} ${token.data}"};
+               "Authorization": "Bearer $token"};
     print("headersss: $headers");
     //urlparams={"'access_token'": token}.toString();
     /*CoreAjax ajax = shadowRoot.querySelector('#ajax');
@@ -51,7 +63,7 @@ class CompetencesService extends PolymerElement {
     HttpRequest xhr = new HttpRequest();
     String method = 'GET';
 
-    String url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item?access_token=${token.data}";
+    String url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item?access_token=$token";
 
     xhr.open(method, url, async: true);
 
@@ -62,8 +74,10 @@ class CompetencesService extends PolymerElement {
     this._makeReadyStateHandler(xhr, parseResponse);
     this._setRequestHeaders(xhr, headers);
 
-    auth.authenticate(xhr).then((request) => request.send(null));
-  }
+    xhr.send(null);
+
+    //auth.authenticate(xhr).then((request) => request.send(null));
+  }*/
 
   _makeReadyStateHandler(HttpRequest xhr, ResponseHandler callback) {
     xhr.onReadyStateChange.listen((_) {
@@ -89,8 +103,8 @@ class CompetencesService extends PolymerElement {
 
   }
 
-  List<Competence> parseResponse(response, HttpRequest req) {
-    //var response = detail['response'];
+  List<Competence> parseResponse(CustomEvent event, Map detail, CoreAjax node) {
+    var response = detail['response'];
     //print(response['competences']);
 
     try {

@@ -11,8 +11,8 @@ class Competence extends Observable {
   Competence(this.id, this.title, this.desc, this.value);
 
   factory Competence.fromJson(Map json) {
-    return new Competence(int.parse(json['id']), json['title'], json['desc'],
-        int.parse(json['value']));
+    return new Competence(int.parse(json['id']), json['label'], json['description']['value'],
+        json['value']['rating']);
   }
 
   toString() => title;

@@ -6,6 +6,8 @@
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
 
+<link rel="import" href="../../packages/akepot/components/oauth-authenticator/oauth-authenticator.html">
+
 <polymer-element name="competences-service" attributes="competences">
   <template>
     <style>
@@ -13,15 +15,23 @@
       display: none;
     }
     </style>
+    <oauth-authenticator id="authenticator"
+      client_id="71435708886-adrd3d3qumqm1ssedko964621rlku3nj.apps.googleusercontent.com"
+      scopes="https://www.googleapis.com/auth/userinfo.email" on-authenticated="{{authenticated}}"></oauth-authenticator>
     <core-ajax-dart id="ajax"
-      auto
-      url="data/competences.json"
-      on-core-response="{{parseResponse}}"
+      headers="{{headers}}"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item"
+      on-core-response="{{parseResponse}}" on-core-error="{{ajaxError}}"
       handleAs="json">
     </core-ajax-dart>
+      <!--url="data/competences.json"
+
+
+      params="{{urlparams}}"-->
 
     <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
 
   </template>
   <script type="application/dart" src="competences_service.dart"></script>
+  <script src="../../packages/browser/dart.js"></script>
 </polymer-element>

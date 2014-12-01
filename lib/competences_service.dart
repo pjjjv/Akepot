@@ -16,18 +16,6 @@ class CompetencesService extends PolymerElement {
     competences = new List<Competence>();
   }
 
-  void authenticated(CustomEvent event, Token token) {
-    if (token.expired){
-      throw new Exception("Token expired");
-    }
-    Map headers = {"Content-type": "application/json",
-               "Authorization": "${token.type} ${token.data}"};
-    //print("headersss: $headers");
-    CoreAjax ajax = shadowRoot.querySelector('#ajax');
-    ajax.headers = headers;
-    ajax.go();
-  }
-
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
     print(detail);
   }
@@ -51,6 +39,13 @@ class CompetencesService extends PolymerElement {
 
   void signedIn(CustomEvent event, dynamic response){
     signedin=true;
+
+    Map headers = {"Content-type": "application/json",
+               "Authorization": "${response['result']['token_type']} ${response['result']['access_token']}"};
+    print("headersss: $headers");
+    CoreAjax ajax = shadowRoot.querySelector('#ajax');
+    ajax.headers = headers;
+    ajax.go();
   }
 
   void signedOut(CustomEvent event, dynamic detail){

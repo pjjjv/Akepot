@@ -11,12 +11,7 @@
       <strength-button-slider id="single_button" selected="{{number}}" max="5"></strength-button-slider>
     </div>
     <div id="secondary" layout horizontal end-justified>
-      <p id="desc" hidden class="core-animation-target" on-tap="{{toggleDesc}}">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p id="desc" hidden class="core-animation-target" on-tap="{{toggleDesc}}">{{desc}}</p>
     </div>
     <core-animation-group on-core-animation-finish="{{finishToggleDesc}}" direction="reverse" fill="both" easing="ease-in-out" id="slide-down" type="par">
       <core-animation duration="450" endDelay="150" fill="both">

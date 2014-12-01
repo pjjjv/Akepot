@@ -13,12 +13,18 @@
       display: none;
     }
     </style>
-    <core-ajax-dart id="ajax"
+    <core-ajax-dart id="ajaxGetItems"
       url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item"
-      on-core-response="{{parseResponse}}" on-core-error="{{ajaxError}}"
+      on-core-response="{{ajaxGetItemsResponse}}" on-core-error="{{ajaxError}}"
       handleAs="json">
     </core-ajax-dart>
       <!--url="data/competences.json"-->
+
+    <core-ajax-dart id="ajaxPutItem"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item"
+      on-core-response="{{ajaxPutItemResponse}}" on-core-error="{{ajaxError}}"
+      handleAs="json" method="PUT">
+    </core-ajax-dart>
 
     <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
 

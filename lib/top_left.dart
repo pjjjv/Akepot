@@ -11,13 +11,13 @@ class TopLeft extends PolymerElement {
   @observable String name = "";
 
   void signedIn(CustomEvent event, dynamic response){
-    //print("google-signin-aware-success $response");
-    accessToken = response['result']['access_token'];
-    //print(accessToken);
     signedin = true;
-    /*CoreAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
-    print(peopleAjax.url);
-    peopleAjax.go();*/
+
+    Map headers = {"Content-type": "application/json",
+               "Authorization": "${response['result']['token_type']} ${response['result']['access_token']}"};
+    CoreAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
+    peopleAjax.headers = headers;
+    peopleAjax.go();
   }
 
   void signedOut(CustomEvent event, dynamic detail){
@@ -27,7 +27,7 @@ class TopLeft extends PolymerElement {
 
   void parseResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
-    print(response);
+    //print(response);
 
     try {
       if (response == null) {
@@ -41,7 +41,9 @@ class TopLeft extends PolymerElement {
 
     name = ", "+response['nickname'];
     String email = response['emails'][0]['value'];
-    /*competences = toObservable(response
-            .map((s) => new Competence.fromJson(s)).toList());*/
+  }
+
+  void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
+    print(detail);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
+import 'package:akepot/model/model_category.dart';
 
 void main() {
   initPolymer().run(() {
@@ -24,8 +25,10 @@ void openMenu(Event e) {
 
 class Content extends Observable {
   @observable List items = toObservable([]);
-  @observable var orderedIndex = "content1";
+  @observable var orderedIndex = "2";
   @observable var projectsRoute;
+
+  @observable List<Category> categories = [];
 
   void goTo(Event e) {
     print("wentTo");

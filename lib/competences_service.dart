@@ -1,7 +1,9 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'dart:convert';
-import 'competence_model.dart';
+import 'model/model_category.dart';
+import 'model/model_subcategory.dart';
+import 'model/model_competence.dart';
 import 'package:core_elements/core_ajax_dart.dart';
 import "package:google_oauth2_client/google_oauth2_browser.dart";
 
@@ -9,19 +11,19 @@ typedef void ResponseHandler(response, HttpRequest req);
 
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
-  @published List<Competence> competences;
+  @published List<Category> categories;
   @observable bool signedin = false;
   GoogleOAuth2 auth;
-  CoreAjax ajaxGetItems;
+  CoreAjax ajaxGetCategories;
   CoreAjax ajaxPutItem;
   Map _headers;
 
   CompetencesService.created() : super.created() {
-    competences = new List<Competence>();
+    categories = new List<Category>();
   }
 
   void domReady(){
-    ajaxGetItems = shadowRoot.querySelector('#ajaxGetItems');
+    ajaxGetCategories = shadowRoot.querySelector('#ajaxGetCategories');
     ajaxPutItem = shadowRoot.querySelector('#ajaxPutItem');
   }
 
@@ -31,24 +33,28 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  List<Competence> ajaxGetItemsResponse(CustomEvent event, Map detail, CoreAjax node) {
+  List<Category> ajaxGetCategoriesResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
     //print(response['competences']);
 
     try {
-      if (response == null) {
-        return null;
+      if (response == null || response['items'] == null) {
+        return [];//TODO: empty list
       }
     } catch (e) {
       return null;
     }
 
-    competences = toObservable(response['items'].map((s){
-        Competence c = new Competence.fromJson(s);
-        c.value.service = this;
-        return c;
+    categories = toObservable(response['items'].map((s){
+      Category category = new Category.fromJson(s);
+      for (SubCategory subcategory in category.subcategories){
+        for (Competence competence in subcategory.items){
+          competence.value.service = this;
+        }
+      }
+      return category;
       }).toList());//['items'] was new
-    return competences;
+    return categories;
   }
 
   @reflectable
@@ -69,15 +75,15 @@ class CompetencesService extends PolymerElement {
   set headers(Map headers) {
     _headers = headers;
     print("headersss: $headers");
-    ajaxGetItems.headers = headers;
+    ajaxGetCategories.headers = headers;
     ajaxPutItem.headers = headers;
   }
 
-  void getItems(){
+  void getCategories(){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxGetItems.go();
+    ajaxGetCategories.go();
   }
 
   void updateItem(Competence competence){
@@ -97,7 +103,7 @@ class CompetencesService extends PolymerElement {
     }
     headers = {"Content-type": "application/json",
                "Authorization": "${((response['result'] as Map)['token_type'] as String)} ${((response['result'] as Map)['access_token'] as String)}"};
-    getItems();
+    getCategories();
   }
 
   @reflectable

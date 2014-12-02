@@ -6,16 +6,16 @@
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
 
-<polymer-element name="competences-service" attributes="competences">
+<polymer-element name="competences-service" attributes="categories">
   <template>
     <style>
     :host {
       display: none;
     }
     </style>
-    <core-ajax-dart id="ajaxGetItems"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item"
-      on-core-response="{{ajaxGetItemsResponse}}" on-core-error="{{ajaxError}}"
+    <core-ajax-dart id="ajaxGetCategories"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/categoryendpoint/v1/category"
+      on-core-response="{{ajaxGetCategoriesResponse}}" on-core-error="{{ajaxError}}"
       handleAs="json">
     </core-ajax-dart>
       <!--url="data/competences.json"-->

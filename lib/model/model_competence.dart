@@ -1,4 +1,4 @@
-library competence_model;
+library akepot.model.model_competence;
 
 import 'package:polymer/polymer.dart';
 import "dart:core" as core;

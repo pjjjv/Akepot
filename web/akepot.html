@@ -45,6 +45,7 @@
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
+    <link rel="import" href="packages/akepot/competences_service.html">
   </head>
 
   <body unresolved fullbleed touch-action="auto">
@@ -52,17 +53,17 @@
 
     <template is="auto-binding-dart" id="content">
     <more-route path="/projects/:projectHash" params="{{projectsRoute}}"></more-route>
+    <competences-service id="service" categories="{{categories}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
         <core-menu on-tap="{{goTo}}" flex id="panel-list1" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
         </core-menu>
-        <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
-          <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Document Management" horizontal center layout></paper-item>
-          <paper-item href="/checkin" id="menu_item2" icon="assignment-ind" label="Component Knowledge" horizontal center layout active></paper-item>
-          <paper-item href="/booking" id="menu_item3" icon="assignment-ind" label="Document Management1" horizontal center layout></paper-item>
-          <paper-item href="/booking" id="menu_item4" icon="assignment-ind" label="Document Management2" horizontal center layout></paper-item>
-          <paper-item href="/booking" id="menu_item5" icon="assignment-ind" label="Document Management3" horizontal center layout></paper-item>
+        <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" valueattr="label" selectedindex="1" theme="core-light-theme">
+          <!--  selected="{{categories[0].name}}" -->
+          <template repeat="{{category in categories}}">
+            <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="{{category.name}}" horizontal center layout></paper-item>
+          </template>
         </core-selector>
 
 
@@ -83,9 +84,11 @@
         </section>
         <!--<topeka-profile id="profile" name="profile" user="John" wide="100px" center="" layout="" vertical="" class="core-selected" active="">
         </topeka-profile>-->
-        <section name="content1" vertical layout>
-          <items-list id="list1"></items-list>
-        </section>
+        <template repeat="{{category in categories}}">
+          <section name="{{category.id}}" vertical layout>
+            <items-list id="list1" subcategories="{{category.subcategories}}"></items-list>
+          </section>
+        </template>
       </core-animated-pages>
 
 

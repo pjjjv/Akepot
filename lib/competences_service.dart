@@ -25,10 +25,12 @@ class CompetencesService extends PolymerElement {
     ajaxPutItem = shadowRoot.querySelector('#ajaxPutItem');
   }
 
+  @reflectable
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
     print(detail);
   }
 
+  @reflectable
   List<Competence> ajaxGetItemsResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
     //print(response['competences']);
@@ -49,6 +51,7 @@ class CompetencesService extends PolymerElement {
     return competences;
   }
 
+  @reflectable
   void ajaxPutItemResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
     print(response);
@@ -86,14 +89,18 @@ class CompetencesService extends PolymerElement {
     ajaxPutItem.go();
   }
 
-  void signedIn(CustomEvent event, dynamic response){
-    signedin=true;
-
+  @reflectable
+  void signedIn(CustomEvent event, Map response){
+    signedin = true;
+    if(response==null || response['result']==null){
+      throw new Exception("Not authorized and repsonse is null.");
+    }
     headers = {"Content-type": "application/json",
-               "Authorization": "${response['result']['token_type']} ${response['result']['access_token']}"};
+               "Authorization": "${((response['result'] as Map)['token_type'] as String)} ${((response['result'] as Map)['access_token'] as String)}"};
     getItems();
   }
 
+  @reflectable
   void signedOut(CustomEvent event, dynamic detail){
     signedin=false;
   }

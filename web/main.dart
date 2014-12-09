@@ -1,5 +1,7 @@
 import 'dart:html';
+import 'dart:async';
 import 'package:polymer/polymer.dart';
+import 'package:core_elements/core_style.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/model/model_category.dart';
 
@@ -13,6 +15,8 @@ void main() {
       var content = document.querySelector('#content');
       contentModel = new Content();
       templateBind(content).model = contentModel;
+
+      setAkepotTransitionSpeed(350);
     });
   });
 }
@@ -24,14 +28,40 @@ void openMenu(Event e) {
 }
 
 class Content extends Observable {
-  @observable List competences = toObservable([]);
-  @observable var orderedIndex = "c1";//TODO
+  //@observable List competences = toObservable([]);
   @observable var projectsRoute;
 
   @observable List<Category> categories = [];
+
+  @observable String selectedCategory = "splash";
+
+  static const int MIN_SPLASH_TIME = 1000;
+  static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
+
+  Content () {
+    startup();
+  }
+
+  void startup () {
+    print(SPLASH_TIMEOUT);
+    new Timer(SPLASH_TIMEOUT, completeStartup);
+  }
+
+  void completeStartup () {
+    if(categories.isEmpty == true){
+      startup();
+      return;
+    }
+    selectedCategory = "c1";//TODO
+  }
 
   void goTo(Event e) {
     print("wentTo");
   }
 
+}
+
+void setAkepotTransitionSpeed(int timeInMs){
+  /*CoreStyle.g.transitions.duration = timeInMs + 'ms';
+  CoreStyle.g.transitions.scaleDelay = CoreStyle.g.transitions.duration;*/
 }

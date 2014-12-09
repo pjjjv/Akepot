@@ -130,3 +130,13 @@ core-card2 {
 core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /deep/ core-item, core-menu /deep/ core-item {
   @include text-body2();
 }
+
+.splash {
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-image: url(../images/splash.svg);
+}
+.splash.wide {
+  background-size: 512px;
+}

@@ -78,15 +78,16 @@
       <core-icon-button icon="search" tool></core-icon-button>
 
 
-      <core-animated-pages fit main selected="{{orderedIndex}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
-        <section name="splash" class="">
-          <span fit="" class="splash wide" cross-fade="">Splash</span>
+      <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
+        <section name="splash">
+          <span fit class="splash wide" cross-fade></span>
         </section>
         <!--<topeka-profile id="profile" name="profile" user="John" wide="100px" center="" layout="" vertical="" class="core-selected" active="">
         </topeka-profile>-->
         <template repeat="{{category in categories}}">
-          <section name="{{category.name}}" vertical layout>
-            <category-pane id="list1" subcategories="{{category.subcategories}}"></category-pane>
+          <section name="{{category.name}}" id="{{category.name}}" vertical layout>
+            <category-pane id="list1" subcategories="{{category.subcategories}}" cross-fade></category-pane>
+            <span id="dummy"></span>
           </section>
         </template>
       </core-animated-pages>

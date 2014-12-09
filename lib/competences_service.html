@@ -14,8 +14,7 @@
     }
     </style>
     <core-ajax-dart id="ajaxGetProject"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/projectget"
-      params='{"projectHash": "a1", "userToken": "u1"}'
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/a1/u1"
       on-core-response="{{ajaxGetProjectResponse}}" on-core-error="{{ajaxError}}"
       handleAs="json" method="GET">
     </core-ajax-dart>

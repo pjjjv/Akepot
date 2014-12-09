@@ -16,8 +16,4 @@ class ItemsList extends PolymerElement {
       item.setDescHidden();
     }
   }
-
-  void subcategoriesChanged(Event e){
-    print("subcategories.competences: ${subcategories[0].competences}");
-  }
 }

@@ -79,16 +79,3 @@
     display: inline;
   }
 }*/
-
-.flip-button {
-  position: absolute;
-  top: 16px;//match padding
-  right: 16px;//match padding
-  z-index: 3;
-  color: white;
-  background-color: $accent-color;
-}
-
-.flip-button::shadow core-icon{
-  vertical-align: baseline;
-}

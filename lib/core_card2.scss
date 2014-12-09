@@ -80,7 +80,7 @@
   }
 }*/
 
-#help-button {
+.flip-button {
   position: absolute;
   top: 16px;//match padding
   right: 16px;//match padding
@@ -89,6 +89,6 @@
   background-color: $accent-color;
 }
 
-#help-button::shadow core-icon{
+.flip-button::shadow core-icon{
   vertical-align: baseline;
 }

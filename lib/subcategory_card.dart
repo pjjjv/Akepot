@@ -1,14 +1,14 @@
 
 import 'package:polymer/polymer.dart';
-import 'package:akepot/single_strength_item.dart';
 import 'package:akepot/model/model_subcategory.dart';
+import 'package:akepot/single_strength_item.dart';
 import 'dart:html';
 
-@CustomTag('items-list')
-class ItemsList extends PolymerElement {
-  ItemsList.created() : super.created();
+@CustomTag('subcategory-card')
+class SubCategoryCard extends PolymerElement {
+  SubCategoryCard.created() : super.created();
 
-  @published List<SubCategory> subcategories;
+  @published SubCategory subcategory;
 
   void toggleOtherDescs(Event e) {
     for(SingleStrengthItem item in shadowRoot.querySelectorAll('single-strength-item')){

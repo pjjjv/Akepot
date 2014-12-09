@@ -32,15 +32,15 @@ core-image {
   border-bottom: 1px solid $seam;
 }
 
-#next-button {
+.flip-button {
   position: absolute;
-  bottom: 16px;//match padding
-  right: -16px;//match padding
+  top: 16px;//match padding
+  right: 16px;//match padding
   z-index: 3;
   color: white;
-  background-color: $primary-color;
+  background-color: $accent-color;
 }
 
-#next-button::shadow core-icon{
+.flip-button::shadow core-icon{
   vertical-align: baseline;
 }

@@ -40,7 +40,7 @@
     <link rel="import" href="packages/paper_elements/paper_item.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
-    <link rel="import" href="packages/akepot/items_list.html">
+    <link rel="import" href="packages/akepot/category_pane.html">
     <link rel="import" href="packages/akepot/top_left.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
@@ -86,7 +86,7 @@
         </topeka-profile>-->
         <template repeat="{{category in categories}}">
           <section name="{{category.name}}" vertical layout>
-            <items-list id="list1" subcategories="{{category.subcategories}}"></items-list>
+            <category-pane id="list1" subcategories="{{category.subcategories}}"></category-pane>
           </section>
         </template>
       </core-animated-pages>

@@ -1,0 +1,14 @@
+@import '../web/theme';
+
+#next-button {
+  position: absolute;
+  bottom: 16px;//match padding
+  right: -16px;//match padding
+  z-index: 3;
+  color: white;
+  background-color: $primary-color;
+}
+
+#next-button::shadow core-icon{
+  vertical-align: baseline;
+}

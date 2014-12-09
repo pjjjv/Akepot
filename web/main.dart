@@ -24,8 +24,8 @@ void openMenu(Event e) {
 }
 
 class Content extends Observable {
-  @observable List items = toObservable([]);
-  @observable var orderedIndex = "2";
+  @observable List competences = toObservable([]);
+  @observable var orderedIndex = "c1";//TODO
   @observable var projectsRoute;
 
   @observable List<Category> categories = [];

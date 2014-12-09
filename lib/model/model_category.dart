@@ -12,7 +12,7 @@ class Category extends Observable {
   final Text description;
 
   /** Not documented yet. */
-  final core.String id;
+  final core.Map id;
 
   /** Not documented yet. */
   final core.String name;
@@ -38,8 +38,8 @@ class Category extends Observable {
     if (_json.containsKey("description")) {
       description = new Text.fromJson(_json["description"]);
     }
-    if (_json.containsKey("subcategories")) {
-      subcategories = _json["subcategories"].map((value) => new SubCategory.fromJson(value)).toList();
+    if (_json.containsKey("subCategories")) {
+      subcategories = _json["subCategories"].map((value) => new SubCategory.fromJson(value)).toList();
     }
 
     Category category = new Category(_json["id"], name, description,
@@ -59,7 +59,7 @@ class Category extends Observable {
       _json["name"] = name;
     }
     if (subcategories != null) {
-      _json["subcategories"] = subcategories.map((value) => (value).toJson()).toList();
+      _json["subCategories"] = subcategories.map((value) => (value).toJson()).toList();
     }
     return _json;
   }

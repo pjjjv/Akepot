@@ -14,8 +14,8 @@ class CompetencesService extends PolymerElement {
   @published List<Category> categories;
   @observable bool signedin = false;
   GoogleOAuth2 auth;
-  CoreAjax ajaxGetCategories;
-  CoreAjax ajaxPutItem;
+  CoreAjax ajaxGetProject;
+  CoreAjax ajaxUpdateCompetence;
   Map _headers;
 
   CompetencesService.created() : super.created() {
@@ -23,8 +23,8 @@ class CompetencesService extends PolymerElement {
   }
 
   void domReady(){
-    ajaxGetCategories = shadowRoot.querySelector('#ajaxGetCategories');
-    ajaxPutItem = shadowRoot.querySelector('#ajaxPutItem');
+    ajaxGetProject = shadowRoot.querySelector('#ajaxGetProject');
+    ajaxUpdateCompetence = shadowRoot.querySelector('#ajaxUpdateCompetence');
   }
 
   @reflectable
@@ -33,22 +33,24 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  List<Category> ajaxGetCategoriesResponse(CustomEvent event, Map detail, CoreAjax node) {
+  List<Category> ajaxGetProjectResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
-    //print(response['competences']);
+    print("response: $response");
 
     try {
-      if (response == null || response['items'] == null) {
+      if (response == null || response['categories'] == null) {
         return [];//TODO: empty list
       }
     } catch (e) {
       return null;
     }
 
-    categories = toObservable(response['items'].map((s){
+
+
+    categories = toObservable(response['categories'].map((s){
       Category category = new Category.fromJson(s);
       for (SubCategory subcategory in category.subcategories){
-        for (Competence competence in subcategory.items){
+        for (Competence competence in subcategory.competences){
           competence.value.service = this;
         }
       }
@@ -58,7 +60,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxPutItemResponse(CustomEvent event, Map detail, CoreAjax node) {
+  void ajaxUpdateCompetenceResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
     print(response);
 
@@ -75,24 +77,24 @@ class CompetencesService extends PolymerElement {
   set headers(Map headers) {
     _headers = headers;
     print("headersss: $headers");
-    ajaxGetCategories.headers = headers;
-    ajaxPutItem.headers = headers;
+    ajaxGetProject.headers = headers;
+    ajaxUpdateCompetence.headers = headers;
   }
 
-  void getCategories(){
+  void getProject(){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxGetCategories.go();
+    ajaxGetProject.go();
   }
 
-  void updateItem(Competence competence){
+  void updateCompetence(Competence competence){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxPutItem.body = JSON.encode(competence.toJson());
-    print("body: ${ajaxPutItem.body}");
-    ajaxPutItem.go();
+    ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
+    print("body: ${ajaxUpdateCompetence.body}");
+    ajaxUpdateCompetence.go();
   }
 
   @reflectable
@@ -103,7 +105,7 @@ class CompetencesService extends PolymerElement {
     }
     headers = {"Content-type": "application/json",
                "Authorization": "${((response['result'] as Map)['token_type'] as String)} ${((response['result'] as Map)['access_token'] as String)}"};
-    getCategories();
+    getProject();
   }
 
   @reflectable

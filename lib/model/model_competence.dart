@@ -16,7 +16,7 @@ class Competence extends Observable {
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*/
 
   /** Not documented yet. */
-  final core.String id;
+  final core.Map id;
 
   /** Not documented yet. */
   final core.String label;
@@ -24,7 +24,11 @@ class Competence extends Observable {
   /** Not documented yet. */
   final Rating value;
 
-  Competence(this.id, this.label, this.description, this.value);
+  final core.bool newCompetence;
+
+  final core.Map templateId;
+
+  Competence(this.id, this.label, this.description, this.value, this.newCompetence, this.templateId);
 
   toString() => label;
 
@@ -32,6 +36,7 @@ class Competence extends Observable {
     core.String label = "Competence";
     Text description = new Text("-");
     Rating value = new Rating(0);
+    core.bool newCompetence = true;
 
     if (!_json.containsKey("id")) {
       throw new core.Exception("No id.");
@@ -45,26 +50,36 @@ class Competence extends Observable {
     if (_json.containsKey("value")) {
       value = new Rating.fromJson(_json["value"]);
     }
+    if (_json.containsKey("newCompetence")) {
+      newCompetence = _json["newCompetence"].toString().toLowerCase() == 'true';
+    }
+    if (!_json.containsKey("templateId")) {
+      throw new core.Exception("No templateId.");
+    }
 
     Competence competence = new Competence(_json["id"], label, description,
-        value);
+        value, newCompetence, _json["templateId"]);
     value.competence = competence;
     return competence;
   }
 
   core.Map toJson() {
     var _json = new core.Map();
-    if (description != null) {
-      _json["description"] = (description).toJson();
-    }
     if (id != null) {
       _json["id"] = id;
     }
     if (label != null) {
       _json["label"] = label;
     }
+    if (description != null) {
+      _json["description"] = (description).toJson();
+    }
     if (value != null) {
       _json["value"] = (value).toJson();
+    }
+    _json["newCompetence"] = newCompetence;
+    if (templateId != null) {
+      _json["templateId"] = templateId;
     }
     return _json;
   }
@@ -103,7 +118,7 @@ class Rating extends Observable {
   core.int get rating             => _rating;
   set rating(core.int rating) {
     _rating = rating;
-    service.updateItem(competence);
+    service.updateCompetence(competence);
   }
 }
 

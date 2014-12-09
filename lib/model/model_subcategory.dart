@@ -10,22 +10,22 @@ class SubCategory extends Observable {
   final Text description;
 
   /** Not documented yet. */
-  final core.String id;
+  final core.Map id;
 
   /** Not documented yet. */
-  final core.List<Competence> items;
+  final core.List<Competence> competences;
 
   /** Not documented yet. */
   final core.String name;
 
-  SubCategory(this.id, this.name, this.description, this.items);
+  SubCategory(this.id, this.name, this.description, this.competences);
 
   toString() => name;
 
   factory SubCategory.fromJson(core.Map _json) {
     core.String name = "SubCategory";
     Text description = new Text("-");
-    core.List<Competence> items = [];
+    core.List<Competence> competences = [];
 
     if (!_json.containsKey("id")) {
       throw new core.Exception("No id.");
@@ -36,12 +36,12 @@ class SubCategory extends Observable {
     if (_json.containsKey("description")) {
       description = new Text.fromJson(_json["description"]);
     }
-    if (_json.containsKey("items")) {
-      items = _json["items"].map((value) => new Competence.fromJson(value)).toList();
+    if (_json.containsKey("competences")) {
+      competences = _json["competences"].map((value) => new Competence.fromJson(value)).toList();
     }
 
     SubCategory subCategory = new SubCategory(_json["id"], name, description,
-        items);
+        competences);
     return subCategory;
   }
 
@@ -53,8 +53,8 @@ class SubCategory extends Observable {
     if (id != null) {
       _json["id"] = id;
     }
-    if (items != null) {
-      _json["items"] = items.map((value) => (value).toJson()).toList();
+    if (competences != null) {
+      _json["competences"] = competences.map((value) => (value).toJson()).toList();
     }
     if (name != null) {
       _json["name"] = name;

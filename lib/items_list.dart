@@ -8,12 +8,16 @@ import 'dart:html';
 class ItemsList extends PolymerElement {
   ItemsList.created() : super.created();
 
-  @published List subcategories;
+  @published List<SubCategory> subcategories;
 
   void toggleOtherDescs(Event e) {
     for(SingleStrengthItem item in shadowRoot.querySelectorAll('single-strength-item')){
       print("toggleOtherDescs");
       item.setDescHidden();
     }
+  }
+
+  void subcategoriesChanged(Event e){
+    print("subcategories.competences: ${subcategories[0].competences}");
   }
 }

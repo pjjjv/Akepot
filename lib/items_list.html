@@ -18,8 +18,8 @@
             <div id="title-box">
               <div fit id="title">Component Knowledge: {{subcategory.name}}</div>
             </div>
-            <template repeat="{{competence in subcategory.items">
-              <single-strength-item id="{{competence.id}}" title="{{competence.label}}" desc="{{competence.description.value}}" number="{{competence.value.rating}}" on-toggleotherdescs="{{toggleOtherDescs}}"></single-strength-item>
+            <template repeat="{{competence in subcategory.competences}}">
+              <single-strength-item id="{{competence.id['id']}}" title="{{competence.label}}" desc="{{competence.description.value}}" number="{{competence.value.rating}}" on-toggleotherdescs="{{toggleOtherDescs}}"></single-strength-item>
             </template>
           </div>
           <div class="back">Bla</div>

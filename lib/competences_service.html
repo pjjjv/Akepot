@@ -13,16 +13,17 @@
       display: none;
     }
     </style>
-    <core-ajax-dart id="ajaxGetCategories"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/categoryendpoint/v1/category"
-      on-core-response="{{ajaxGetCategoriesResponse}}" on-core-error="{{ajaxError}}"
-      handleAs="json">
+    <core-ajax-dart id="ajaxGetProject"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/projectget"
+      params='{"projectHash": "a1", "userToken": "u1"}'
+      on-core-response="{{ajaxGetProjectResponse}}" on-core-error="{{ajaxError}}"
+      handleAs="json" method="GET">
     </core-ajax-dart>
       <!--url="data/competences.json"-->
 
-    <core-ajax-dart id="ajaxPutItem"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/itemendpoint/v1/item"
-      on-core-response="{{ajaxPutItemResponse}}" on-core-error="{{ajaxError}}"
+    <core-ajax-dart id="ajaxUpdateCompetence"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/a1/u1"
+      on-core-response="{{ajaxUpdateCompetenceResponse}}" on-core-error="{{ajaxError}}"
       handleAs="json" method="PUT">
     </core-ajax-dart>
 

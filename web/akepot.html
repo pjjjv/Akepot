@@ -42,11 +42,10 @@
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/category_pane.html">
     <link rel="import" href="packages/akepot/top_left.html">
-    <link rel="import" href="packages/more_routing_dart/more_routing.html">
-    <link rel="import" href="packages/more_routing_dart/more_route.html">
-    <link rel="import" href="packages/more_routing_dart/route.html">
-    <link rel="import" href="packages/more_routing_dart/more_route_selector.html">
-    <link rel="import" href="packages/more_routing_dart/more_route_switch.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
+    <link rel="import" href="packages/akepot/components/more-routing/more-route-switch.html">
     <link rel="import" href="packages/akepot/competences_service.html">
   </head>
 <!-- http://localhost:8080/akepot.html#!/project/bla -->
@@ -54,11 +53,8 @@
   <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
-    <more-route name="home" path="/home"></more-route>
-    <more-route name="admin" path="/admin/:projectHash"></more-route>
-    <more-route name="project" path="/project/:projectHash"></more-route>
-    <more-route name="admin" params="{{adminRoute}}"></more-route>
-    <more-route name="project" params="{{projectRoute}}"></more-route>
+    <more-route path="/admin/:projectHash" params="{{adminRoute}}"></more-route>
+    <more-route path="/project/:projectHash" params="{{projectRoute}}"></more-route>
 
     <competences-service id="service" categories="{{categories}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
@@ -68,12 +64,15 @@
         </core-menu>
         <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" valueattr="label" selectedindex="1" theme="core-light-theme">
           <!--  selected="{{categories[0].name}}" -->
-<more-route-selector routes="['project']"></more-route-selector>
-          <template if="{{ route('project').active }}">
+          <template if="{{ projectRoute['projectHash'] != null }}">
             PROJECT
             <template repeat="{{category in categories}}">
               <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="{{category.name}}" horizontal center layout></paper-item>
             </template>
+          </template>
+          <template if="{{ projectRoute['projectHash'] == null }}">
+            HOME
+              <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Home" horizontal center layout></paper-item>
           </template>
         </core-selector>
 
@@ -93,8 +92,8 @@
 
         <!--<topeka-profile id="profile" name="profile" user="John" wide="100px" center="" layout="" vertical="" class="core-selected" active="">
         </topeka-profile>-->
-<more-route-switch>
-        <template when-route="project">
+
+        <template>
           <section name="splash">
             <span fit class="splash wide" cross-fade></span>
           </section>
@@ -105,7 +104,7 @@
             </section>
           </template>
         </template>
-</more-route-switch>
+
       </core-animated-pages>
 
 

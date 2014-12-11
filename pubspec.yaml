@@ -8,6 +8,8 @@ dependencies:
   intl: any
   sass: any
   google_oauth_authenticator: ">=1.0.0 <2.0.0"
+  more_routing_dart:
+    path: /Data/CR/dart/more_routing/
 transformers:
 - sass:
     compass: true                 # Include compass

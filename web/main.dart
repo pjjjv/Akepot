@@ -29,7 +29,8 @@ void openMenu(Event e) {
 
 class Content extends Observable {
   //@observable List competences = toObservable([]);
-  @observable var projectsRoute;
+  @observable var projectRoute;
+  @observable var adminRoute;
 
   @observable List<Category> categories = [];
 
@@ -52,7 +53,7 @@ class Content extends Observable {
       startup();
       return;
     }
-    selectedCategory = "c1";//TODO
+    selectedCategory = "Technical Competence";//TODO
   }
 
   void goTo(Event e) {

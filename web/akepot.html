@@ -36,12 +36,14 @@
     <link rel="import" href="packages/core_elements/core_icons.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
     <link rel="import" href="packages/core_elements/core_animated_pages.html">
+    <link rel="import" href="packages/akepot/components/core-image/core-image.html">
     <link rel="import" href="packages/paper_elements/paper_button.html">
     <link rel="import" href="packages/paper_elements/paper_item.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/category_pane.html">
     <link rel="import" href="packages/akepot/top_left.html">
+    <link rel="import" href="packages/akepot/core_card2.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
@@ -62,38 +64,96 @@
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
         <core-menu on-tap="{{goTo}}" flex id="panel-list1" class="content" selected="Document Management" valueattr="label" selectedindex="1" theme="core-light-theme">
         </core-menu>
-        <core-selector on-tap="{{goTo}}" flex id="panel-list2" class="content" valueattr="label" selectedindex="1" theme="core-light-theme">
-          <!--  selected="{{categories[0].name}}" -->
-          <template if="{{ projectRoute['projectHash'] != null }}">
-            PROJECT
+
+        <!-- Home -->
+        <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
+            <core-selector flex id="panel-list2" class="content" valueattr="label" selected="Home" theme="core-light-theme">
+              <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
+            </core-selector>
+        </template>
+
+        <!-- Project -->
+        <template if="{{ projectRoute['projectHash'] != null }}">
+          <core-selector flex id="panel-list2" class="content" selected="2" theme="core-light-theme">
+            <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
             <template repeat="{{category in categories}}">
               <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="{{category.name}}" horizontal center layout></paper-item>
             </template>
-          </template>
-          <template if="{{ projectRoute['projectHash'] == null }}">
-            HOME
-              <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="Home" horizontal center layout></paper-item>
-          </template>
-        </core-selector>
+          </core-selector>
+        </template>
 
+        <!-- Admin -->
+        <template if="{{ adminRoute['projectHash'] != null }}">
+            <core-selector flex id="panel-list2" class="content" valueattr="label" selected="Input" theme="core-light-theme">
+              <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
+              <paper-item href="/" id="menu_item_input" icon="input" label="Input" horizontal center layout></paper-item>
+              <paper-item href="/" id="menu_item_output" icon="output" label="Output" horizontal center layout></paper-item>
+            </core-selector>
 
-        <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
-          <core-icon icon="search" id="search_icon"></core-icon>
-          <core-input willvalidate placeholder="Search for a competency" id="core_input" flex></core-input>
-        </core-field>
+          <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
+            <core-icon icon="search" id="search_icon"></core-icon>
+            <core-input willvalidate placeholder="Search for a competency" id="core_input" flex></core-input>
+          </core-field>
+        </template>
+
       </core-header-panel>
 
 
-      <div id="title" tool flex>Competence Matrix for {{projectRoute['projectHash']}} or {{adminRoute['projectHash']}}</div>
+      <div id="title" tool flex>Competence Matrix
+        <!-- Project -->
+        <template if="{{ projectRoute['projectHash'] != null }}">
+          for {{projectRoute['projectHash']}} or {{adminRoute['projectHash']}}
+        </template>
+        <!-- Admin -->
+        <template if="{{ adminRoute['projectHash'] != null }}">
+          admin for {{adminRoute['projectHash']}}
+        </template>
+      </div>
       <core-icon-button icon="search" tool></core-icon-button>
 
 
-      <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
+      <core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
 
         <!--<topeka-profile id="profile" name="profile" user="John" wide="100px" center="" layout="" vertical="" class="core-selected" active="">
         </topeka-profile>-->
 
-        <template>
+        <!-- Home -->
+        <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
+          <section name="splash">
+            <span fit class="splash wide" cross-fade></span>
+          </section>
+          <section name="home-info">
+            <div layout horizontal wrap center-justified>
+              <div id="card-new" self-center layout vertical>
+                <div fit id="title-box">
+                  <div id="title">New project</div>
+                </div>
+                <div id="title-box-substitute"></div>
+                <div id="text-box">
+                  Create a new project and administrate it for your teams.
+                </div>
+                <div flex></div>
+                <paper-button self-center id="new-button" raised class="colored custom" role="button" tabindex="0">
+                  <core-icon icon="create" aria-label="create" role="img"></core-icon>
+                  Create project
+                </paper-button>
+              </div>
+              <div id="card-link" self-center layout vertical>
+                <div fit id="title-box">
+                  <div id="title">... or use link</div>
+                </div>
+                <div id="title-box-substitute"></div>
+                <div id="text-box">
+                  If you just want to fill in your competences as a user, ask your administrator for the deep link to your project.
+                </div>
+                <div flex></div>
+              </div>
+            </div>
+          </section>
+        </template>
+
+        <!-- Project -->
+        <template if="{{ projectRoute['projectHash'] != null }}">
           <section name="splash">
             <span fit class="splash wide" cross-fade></span>
           </section>

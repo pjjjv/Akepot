@@ -34,26 +34,54 @@ class Content extends Observable {
 
   @observable List<Category> categories = [];
 
-  @observable String selectedCategory = "splash";
+  @observable String selectedSection = "splash";
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
-    startup();
+    if(projectRoute != null && projectRoute['projectHash'] != null){
+      startupForProject();
+    } else if (adminRoute != null && adminRoute['projectHash'] != null){
+      startupForAdmin();
+    } else {
+      startupForHome();
+    }
   }
 
-  void startup () {
+  void startupForProject () {
     print(SPLASH_TIMEOUT);
-    new Timer(SPLASH_TIMEOUT, completeStartup);
+    new Timer(SPLASH_TIMEOUT, completeStartupForProject);
   }
 
-  void completeStartup () {
+  void startupForAdmin () {
+    print(SPLASH_TIMEOUT);
+    new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
+  }
+
+  void startupForHome () {
+    print(SPLASH_TIMEOUT);
+    new Timer(SPLASH_TIMEOUT, completeStartupForHome);
+  }
+
+  void completeStartupForProject () {
     if(categories.isEmpty == true){
-      startup();
+      startupForProject();
       return;
     }
-    selectedCategory = "Technical Competence";//TODO
+    selectedSection = "Technical Competence";//TODO
+  }
+
+  void completeStartupForAdmin () {
+    /*if(categories.isEmpty == true){
+      startupForAdmin();
+      return;
+    }*/
+    selectedSection = "Input";
+  }
+
+  void completeStartupForHome () {
+    selectedSection = "home-info";
   }
 
   void goTo(Event e) {

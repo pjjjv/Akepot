@@ -85,7 +85,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxGetProject.go();
+    //ajaxGetProject.go();//TODO
   }
 
   void updateCompetence(Competence competence){

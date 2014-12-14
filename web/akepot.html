@@ -48,6 +48,7 @@
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-switch.html">
+    <link rel="import" href="packages/akepot/components/more-routing/routing.html">
     <link rel="import" href="packages/akepot/competences_service.html">
   </head>
 <!-- http://localhost:8080/akepot.html#!/project/bla -->
@@ -55,8 +56,8 @@
   <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
-    <more-route path="/admin/:projectHash" params="{{adminRoute}}"></more-route>
-    <more-route path="/project/:projectHash" params="{{projectRoute}}"></more-route>
+    <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
+    <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
     <competences-service id="service" categories="{{categories}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
@@ -80,6 +81,11 @@
               <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="{{category.name}}" horizontal center layout></paper-item>
             </template>
           </core-selector>
+
+          <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
+            <core-icon icon="search" id="search_icon"></core-icon>
+            <core-input willvalidate placeholder="Search for a competency" id="core_input" flex></core-input>
+          </core-field>
         </template>
 
         <!-- Admin -->
@@ -89,11 +95,6 @@
               <paper-item href="/" id="menu_item_input" icon="input" label="Input" horizontal center layout></paper-item>
               <paper-item href="/" id="menu_item_output" icon="output" label="Output" horizontal center layout></paper-item>
             </core-selector>
-
-          <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
-            <core-icon icon="search" id="search_icon"></core-icon>
-            <core-input willvalidate placeholder="Search for a competency" id="core_input" flex></core-input>
-          </core-field>
         </template>
 
       </core-header-panel>
@@ -133,7 +134,7 @@
                   Create a new project and administrate it for your teams.
                 </div>
                 <div flex></div>
-                <paper-button self-center id="new-button" raised class="colored custom" role="button" tabindex="0">
+                <paper-button hidden self-center id="new-button" raised class="colored custom" role="button" tabindex="0">
                   <core-icon icon="create" aria-label="create" role="img"></core-icon>
                   Create project
                 </paper-button>

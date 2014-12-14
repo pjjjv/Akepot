@@ -180,7 +180,7 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
   #text-box {
     display: block;
     margin-top: 20px;
-    @include text-body2();
+    @include text-subhead();
   }
 
   #new-button {

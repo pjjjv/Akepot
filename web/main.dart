@@ -2,17 +2,19 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:js';
+import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:core_elements/core_style.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/model/model_category.dart';
+import 'package:akepot/model/model_project.dart';
 import 'package:paper_elements/paper_button.dart';
+import 'package:paper_elements/paper_autogrow_textarea.dart';
 
 void main() {
   initPolymer().run(() {
     //(querySelector('#menu_button') as PolymerElement).onClick.listen(openMenu);
     Content contentModel;
-
 
     Polymer.onReady.then((_) {
       var content = document.querySelector('#content');
@@ -22,7 +24,6 @@ void main() {
       setAkepotTransitionSpeed(350);
 
       window.onHashChange.listen((HashChangeEvent e) {
-        window.location.href = window.location.href;
         window.location.reload();
       });
     });
@@ -46,9 +47,12 @@ class Content extends Observable {
 
   String generatedHash = null;
   PaperButton newButton;
+  PaperButton createButton;
 
   var projectRouter = null;
   var adminRouter = null;
+
+  @observable Project project;
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
@@ -87,6 +91,20 @@ class Content extends Observable {
 
   void startupForAdmin () {
     print(SPLASH_TIMEOUT);
+    project = new Project.empty(adminRoute['projectHash']);
+
+    HttpRequest.getString("data/fresh_categories.json")
+    .then((String text) {
+      project.categoriesAsJson = text;
+      PaperAutogrowTextarea textarea = document.querySelector("#textareaCategories");
+      if(textarea != null) textarea.update();
+    })
+    .catchError((Error error) => print("Error: $error"));
+
+    HttpRequest.getString("data/fresh_teams.json")
+    .then((String text) => project.teams = text)
+    .catchError((Error error) => print("Error: $error"));
+
     new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
   }
 
@@ -108,7 +126,14 @@ class Content extends Observable {
       startupForAdmin();
       return;
     }*/
-    selectedSection = "Input";
+    selectedSection = "input";
+    createButton = document.querySelector("#create-button");
+    createButton.hidden = false;
+    createButton.onClick.listen(createProject);
+  }
+
+  void createProject(Event e){
+    print ("createProject");
   }
 
   void completeStartupForHome () {
@@ -116,10 +141,10 @@ class Content extends Observable {
       startupForHome();
       return;
     }
-    selectedSection = "home-info";
-    PaperButton newButton = document.querySelector("#new-button");
+    selectedSection = "home";
+    newButton = document.querySelector("#new-button");
     newButton.hidden = false;
-    newButton.onClick.listen(createProject);
+    newButton.onClick.listen(newProject);
   }
 
   void goTo(Event e) {
@@ -136,7 +161,7 @@ class Content extends Observable {
     return result;
   }
 
-  void createProject(Event e){
+  void newProject(Event e){
     String message = context['MoreRouting'].callMethod('urlFor', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
     print("New project link would be: $message");
     context['MoreRouting'].callMethod('navigateTo', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);

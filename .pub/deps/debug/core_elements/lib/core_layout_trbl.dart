@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// `<core-layout-trbl>` arranges nodes horizontally via absolute positioning.
 /// Set the `vertical` attribute (boolean) to arrange vertically instead.
@@ -118,12 +118,12 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///      ||         ||-----------------||
 ///      ||         ||Footer           ||
 ///      --------------------------------
-class CoreLayoutTrbl extends HtmlElement with DomProxyMixin {
+class CoreLayoutTrbl extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreLayoutTrbl.created() : super.created();
   factory CoreLayoutTrbl() => new Element.tag('core-layout-trbl');
 
-  get vertical => jsElement['vertical'];
-  set vertical(value) { jsElement['vertical'] = (value is Map || value is Iterable) ? new JsObject.jsify(value) : value;}
+  get vertical => jsElement[r'vertical'];
+  set vertical(value) { jsElement[r'vertical'] = (value is Map || value is Iterable) ? new JsObject.jsify(value) : value;}
 
   /// Arrange sibling nodes end-to-end in one dimension.
   ///

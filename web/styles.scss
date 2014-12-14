@@ -197,3 +197,47 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
     vertical-align: baseline;
   }
 }
+
+
+
+paper-input {
+  width: 80%;
+}
+
+paper-input-decorator {
+  max-width: 80%;
+}
+
+paper-input.narrow {
+  width: 150px;
+}
+
+paper-input[focused] /deep/ .floated-label .label-text {
+  color: $accent-color;
+}
+
+paper-input /deep/ .focused-underline {
+  background-color: $accent-color;
+}
+
+/*paper-input-decorator[focused] /deep/ .floated-label .label-text {
+  color: $accent-color;
+}
+
+paper-input-decorator /deep/ .focused-underline {
+  background-color: $accent-color;
+}*/
+
+
+#create-button {
+  display: block;
+  margin-top: 20px;
+  //padding: 16px;//match padding
+  color: white;
+  background-color: $accent-color;
+  @include text-button();
+}
+
+#create-button::shadow core-icon{
+  vertical-align: baseline;
+}

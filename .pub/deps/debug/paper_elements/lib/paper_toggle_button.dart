@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// `paper-toggle-button` provides a ON/OFF switch that user can toggle the state
 /// by tapping or by dragging the swtich.
@@ -53,13 +53,18 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///     paper-toggle-button::shadow #toggleBar {
 ///       background-color: red;
 ///     }
-class PaperToggleButton extends HtmlElement with DomProxyMixin {
+class PaperToggleButton extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   PaperToggleButton.created() : super.created();
   factory PaperToggleButton() => new Element.tag('paper-toggle-button');
 
   /// Gets or sets the state, `true` is checked and `false` is unchecked.
-  bool get checked => jsElement['checked'];
-  set checked(bool value) { jsElement['checked'] = value; }
+  bool get checked => jsElement[r'checked'];
+  set checked(bool value) { jsElement[r'checked'] = value; }
+
+  /// If true, the toggle button is disabled.  A disabled toggle button cannot
+  /// be tapped or dragged to change the checked state.
+  bool get disabled => jsElement[r'disabled'];
+  set disabled(bool value) { jsElement[r'disabled'] = value; }
 }
 @initMethod
 upgradePaperToggleButton() => registerDartType('paper-toggle-button', PaperToggleButton);

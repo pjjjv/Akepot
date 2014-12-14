@@ -217,13 +217,13 @@ class CoreAnimatedPages extends CoreSelector {
   /// A space-delimited string of transitions to use when switching between pages in this element.
   /// The strings are `id`s of `core-transition-pages` elements included elsewhere. See the
   /// individual transition's document for specific details.
-  String get transitions => jsElement['transitions'];
-  set transitions(String value) { jsElement['transitions'] = value; }
+  String get transitions => jsElement[r'transitions'];
+  set transitions(String value) { jsElement[r'transitions'] = value; }
 
   /// The last page selected. This property is useful to dynamically set transitions based
   /// on incoming and outgoing pages.
-  get lastSelected => jsElement['lastSelected'];
-  set lastSelected(value) { jsElement['lastSelected'] = (value is Map || value is Iterable) ? new JsObject.jsify(value) : value;}
+  get lastSelected => jsElement[r'lastSelected'];
+  set lastSelected(value) { jsElement[r'lastSelected'] = (value is Map || value is Iterable) ? new JsObject.jsify(value) : value;}
 }
 @initMethod
 upgradeCoreAnimatedPages() => registerDartType('core-animated-pages', CoreAnimatedPages);

@@ -7,7 +7,8 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
+import 'core_focusable.dart';
 
 /// The `core-tooltip` element creates a hover tooltip centered for the content
 /// it contains. It can be positioned on the top|bottom|left|right of content using
@@ -58,32 +59,32 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///         ...
 ///       </div>
 ///     </core-tooltip>
-class CoreTooltip extends HtmlElement with DomProxyMixin {
+class CoreTooltip extends HtmlElement with DomProxyMixin, PolymerProxyMixin, CoreFocusable {
   CoreTooltip.created() : super.created();
   factory CoreTooltip() => new Element.tag('core-tooltip');
 
   /// If true, the tooltip an arrow pointing towards the content.
-  bool get noarrow => jsElement['noarrow'];
-  set noarrow(bool value) { jsElement['noarrow'] = value; }
+  bool get noarrow => jsElement[r'noarrow'];
+  set noarrow(bool value) { jsElement[r'noarrow'] = value; }
 
   /// Positions the tooltip to the top, right, bottom, left of its content.
-  String get position => jsElement['position'];
-  set position(String value) { jsElement['position'] = value; }
+  String get position => jsElement[r'position'];
+  set position(String value) { jsElement[r'position'] = value; }
 
   /// A simple string label for the tooltip to display. To display a rich
   /// HTML tooltip instead, omit `label` and include the `tip` attribute
   /// on a child node of `core-tooltip`.
-  String get label => jsElement['label'];
-  set label(String value) { jsElement['label'] = value; }
+  String get label => jsElement[r'label'];
+  set label(String value) { jsElement[r'label'] = value; }
 
   /// Forces the tooltip to display. If `disabled` is set, this property is ignored.
-  bool get show => jsElement['show'];
-  set show(bool value) { jsElement['show'] = value; }
+  bool get show => jsElement[r'show'];
+  set show(bool value) { jsElement[r'show'] = value; }
 
   /// Customizes the attribute used to specify which content
   /// is the rich HTML tooltip.
-  String get tipAttribute => jsElement['tipAttribute'];
-  set tipAttribute(String value) { jsElement['tipAttribute'] = value; }
+  String get tipAttribute => jsElement[r'tipAttribute'];
+  set tipAttribute(String value) { jsElement[r'tipAttribute'] = value; }
 }
 @initMethod
 upgradeCoreTooltip() => registerDartType('core-tooltip', CoreTooltip);

@@ -1,0 +1,19 @@
+[
+ {
+  "name": "t1",
+  "description": {
+   "value": "t1d"
+  },
+  "persons": [
+   {
+    "nickName": "p1",
+    "firstName": "p1f",
+    "lastName": "p1l",
+    "emailAddress": {
+     "email": "p1e"
+    },
+    "token": "u1"
+   }
+  ]
+ }
+]

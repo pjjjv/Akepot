@@ -84,7 +84,7 @@ class CoreTransition extends CoreMeta {
   /// [event]: Name of an event
   /// [fn]: Event handler
   /// [args]: Additional arguments to pass to `fn`
-  void listenOnce(node, String event, fn, args) =>
+  void listenOnce(node, String event, fn, JsArray args) =>
       jsElement.callMethod('listenOnce', [node, event, fn, args]);
 }
 @initMethod

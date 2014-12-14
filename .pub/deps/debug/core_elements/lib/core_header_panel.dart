@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// `core-header-panel` contains a header section and a content panel section.
 ///
@@ -61,7 +61,7 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///     </core-header-panel>
 ///
 /// Use `mode` to control the header and scrolling behavior.
-class CoreHeaderPanel extends HtmlElement with DomProxyMixin {
+class CoreHeaderPanel extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreHeaderPanel.created() : super.created();
   factory CoreHeaderPanel() => new Element.tag('core-header-panel');
 
@@ -98,27 +98,27 @@ class CoreHeaderPanel extends HtmlElement with DomProxyMixin {
   ///     </style>
   ///
   ///     <core-header-panel mode="cover">
-  ///       <core-appbar class="tall">
+  ///       <core-toolbar class="tall">
   ///         <core-icon-button icon="menu"></core-icon-button>
-  ///       </core-appbar>
+  ///       </core-toolbar>
   ///       <div class="content"></div>
   ///     </core-header-panel>
-  String get mode => jsElement['mode'];
-  set mode(String value) { jsElement['mode'] = value; }
+  String get mode => jsElement[r'mode'];
+  set mode(String value) { jsElement[r'mode'] = value; }
 
   /// The class used in waterfall-tall mode.  Change this if the header
   /// accepts a different class for toggling height, e.g. "medium-tall"
-  String get tallClass => jsElement['tallClass'];
-  set tallClass(String value) { jsElement['tallClass'] = value; }
+  String get tallClass => jsElement[r'tallClass'];
+  set tallClass(String value) { jsElement[r'tallClass'] = value; }
 
   /// If true, the drop-shadow is always shown no matter what mode is set to.
-  bool get shadow => jsElement['shadow'];
-  set shadow(bool value) { jsElement['shadow'] = value; }
+  bool get shadow => jsElement[r'shadow'];
+  set shadow(bool value) { jsElement[r'shadow'] = value; }
 
   /// Returns the scrollable element.
-  get scroller => jsElement['scroller'];
+  get scroller => jsElement[r'scroller'];
 
-  get header => jsElement['header'];
+  get header => jsElement[r'header'];
 }
 @initMethod
 upgradeCoreHeaderPanel() => registerDartType('core-header-panel', CoreHeaderPanel);

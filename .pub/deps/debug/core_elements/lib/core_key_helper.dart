@@ -7,10 +7,10 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 
-class CoreKeyHelper extends HtmlElement with DomProxyMixin {
+class CoreKeyHelper extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreKeyHelper.created() : super.created();
   factory CoreKeyHelper() => new Element.tag('core-key-helper');
 }

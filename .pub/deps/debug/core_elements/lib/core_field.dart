@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// The `core-field` supplies a horizontal layout, anticipating an input.
 ///
@@ -18,7 +18,7 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///       <label>I'm a label!</label>
 ///       <input placeholder="I have a label" flex>
 ///     </core-field>
-class CoreField extends HtmlElement with DomProxyMixin {
+class CoreField extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreField.created() : super.created();
   factory CoreField() => new Element.tag('core-field');
 }

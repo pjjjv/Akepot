@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// `paper-tab` is styled to look like a tab.  It should be used in conjunction with
 /// `paper-tabs`.
@@ -27,13 +27,13 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///     .pink paper-tab::shadow #ink {
 ///       color: #ff4081;
 ///     }
-class PaperTab extends HtmlElement with DomProxyMixin {
+class PaperTab extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   PaperTab.created() : super.created();
   factory PaperTab() => new Element.tag('paper-tab');
 
   /// If true, ink ripple effect is disabled.
-  bool get noink => jsElement['noink'];
-  set noink(bool value) { jsElement['noink'] = value; }
+  bool get noink => jsElement[r'noink'];
+  set noink(bool value) { jsElement[r'noink'] = value; }
 }
 @initMethod
 upgradePaperTab() => registerDartType('paper-tab', PaperTab);

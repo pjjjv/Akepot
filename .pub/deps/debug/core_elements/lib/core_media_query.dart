@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// core-media-query can be used to data bind to a CSS media query.
 /// The "query" property is a bare CSS media query.
@@ -23,17 +23,17 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 ///
 ///
 /// Fired when the media query state changes
-class CoreMediaQuery extends HtmlElement with DomProxyMixin {
+class CoreMediaQuery extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreMediaQuery.created() : super.created();
   factory CoreMediaQuery() => new Element.tag('core-media-query');
 
   /// The CSS media query to evaulate
-  String get mediaQuery => jsElement['query'];
-  set mediaQuery(String value) { jsElement['query'] = value; }
+  String get mediaQuery => jsElement[r'query'];
+  set mediaQuery(String value) { jsElement[r'query'] = value; }
 
   /// The Boolean return value of the media query
-  bool get queryMatches => jsElement['queryMatches'];
-  set queryMatches(bool value) { jsElement['queryMatches'] = value; }
+  bool get queryMatches => jsElement[r'queryMatches'];
+  set queryMatches(bool value) { jsElement[r'queryMatches'] = value; }
 }
 @initMethod
 upgradeCoreMediaQuery() => registerDartType('core-media-query', CoreMediaQuery);

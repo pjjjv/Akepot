@@ -7,7 +7,7 @@ import 'dart:html';
 import 'dart:js' show JsArray, JsObject;
 import 'package:web_components/interop.dart' show registerDartType;
 import 'package:polymer/polymer.dart' show initMethod;
-import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
+import 'package:custom_element_apigen/src/common.dart' show PolymerProxyMixin, DomProxyMixin;
 
 /// The `core-icon` element displays an icon. By default an icon renders as a 24px square.
 ///
@@ -52,27 +52,27 @@ import 'package:custom_element_apigen/src/common.dart' show DomProxyMixin;
 /// how to create a custom iconset.
 ///
 /// See [core-icons](http://www.polymer-project.org/components/core-icons/demo.html) for the default set of icons.
-class CoreIcon extends HtmlElement with DomProxyMixin {
+class CoreIcon extends HtmlElement with DomProxyMixin, PolymerProxyMixin {
   CoreIcon.created() : super.created();
   factory CoreIcon() => new Element.tag('core-icon');
 
   /// The URL of an image for the icon. If the src property is specified,
   /// the icon property should not be.
-  String get src => jsElement['src'];
-  set src(String value) { jsElement['src'] = value; }
+  String get src => jsElement[r'src'];
+  set src(String value) { jsElement[r'src'] = value; }
 
   /// Specifies the icon name or index in the set of icons available in
   /// the icon's icon set. If the icon property is specified,
   /// the src property should not be.
-  String get icon => jsElement['icon'];
-  set icon(String value) { jsElement['icon'] = value; }
+  String get icon => jsElement[r'icon'];
+  set icon(String value) { jsElement[r'icon'] = value; }
 
   /// Alternative text content for accessibility support.
   /// If alt is present and not empty, it will set the element's role to img and add an aria-label whose content matches alt.
   /// If alt is present and is an empty string, '', it will hide the element from the accessibility layer
   /// If alt is not present, it will set the element's role to img and the element will fallback to using the icon attribute for its aria-label.
-  String get alt => jsElement['alt'];
-  set alt(String value) { jsElement['alt'] = value; }
+  String get alt => jsElement[r'alt'];
+  set alt(String value) { jsElement[r'alt'] = value; }
 }
 @initMethod
 upgradeCoreIcon() => registerDartType('core-icon', CoreIcon);

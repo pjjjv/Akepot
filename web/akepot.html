@@ -36,9 +36,12 @@
     <link rel="import" href="packages/core_elements/core_icons.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
     <link rel="import" href="packages/core_elements/core_animated_pages.html">
-    <link rel="import" href="packages/akepot/components/core-image/core-image.html">
+    <link rel="import" href="packages/core_elements/core_image.html">
     <link rel="import" href="packages/paper_elements/paper_button.html">
     <link rel="import" href="packages/paper_elements/paper_item.html">
+    <link rel="import" href="packages/paper_elements/paper_input.html">
+    <link rel="import" href="packages/paper_elements/paper_input_decorator.html">
+    <link rel="import" href="packages/paper_elements/paper_autogrow_textarea.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/category_pane.html">
@@ -69,31 +72,49 @@
         <!-- Home -->
         <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
             <core-selector flex id="panel-list2" class="content" valueattr="label" selected="Home" theme="core-light-theme">
-              <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
+              <paper-item href="/" id="menu_item_home" horizontal center layout>
+                <core-icon icon="home"></core-icon>
+                Home
+              </paper-item>
             </core-selector>
         </template>
 
         <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">
           <core-selector flex id="panel-list2" class="content" selected="2" theme="core-light-theme">
-            <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
+            <paper-item href="/" id="menu_item_home" horizontal center layout>
+              <core-icon icon="home"></core-icon>
+              Home
+            </paper-item>
             <template repeat="{{category in categories}}">
-              <paper-item href="/booking" id="menu_item1" icon="assignment-ind" label="{{category.name}}" horizontal center layout></paper-item>
+              <paper-item href="/booking" id="menu_item1" horizontal center layout>
+                <core-icon icon="assignment-ind"></core-icon>
+                {{category.name}}
+              </paper-item>
             </template>
           </core-selector>
 
           <core-field id="search_field" icon="search" theme="core-light-theme" center horizontal layout>
             <core-icon icon="search" id="search_icon"></core-icon>
-            <core-input willvalidate placeholder="Search for a competency" id="core_input" flex></core-input>
+            <input is="core-input" willvalidate placeholder="Search for a competency" id="core_input" flex/>
           </core-field>
         </template>
 
         <!-- Admin -->
         <template if="{{ adminRoute['projectHash'] != null }}">
-            <core-selector flex id="panel-list2" class="content" valueattr="label" selected="Input" theme="core-light-theme">
-              <paper-item href="/" id="menu_item_home" icon="home" label="Home" horizontal center layout></paper-item>
-              <paper-item href="/" id="menu_item_input" icon="input" label="Input" horizontal center layout></paper-item>
-              <paper-item href="/" id="menu_item_output" icon="output" label="Output" horizontal center layout></paper-item>
+            <core-selector flex id="panel-list2" class="content" valueattr="name" selected="{{selectedSection}}" theme="core-light-theme">
+              <paper-item href="/" id="menu_item_home" name="splash">
+                <core-icon icon="home"></core-icon>
+                Home
+              </paper-item>
+              <paper-item href="/" id="menu_item_input" name="input">
+                <core-icon icon="input"></core-icon>
+                Input
+              </paper-item>
+              <paper-item href="/" id="menu_item_output" name="output">
+                <core-icon icon="output"></core-icon>
+                Output
+              </paper-item>
             </core-selector>
         </template>
 
@@ -103,11 +124,11 @@
       <div id="title" tool flex>Competence Matrix
         <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">
-          for {{projectRoute['projectHash']}} or {{adminRoute['projectHash']}}
+          for {{projectRoute['projectHash']}}
         </template>
         <!-- Admin -->
-        <template if="{{ adminRoute['projectHash'] != null }}">
-          admin for {{adminRoute['projectHash']}}
+        <template if="{{ adminRoute['projectHash'] != null && project != null }}">
+          Admin for {{project.name}}
         </template>
       </div>
       <core-icon-button icon="search" tool></core-icon-button>
@@ -123,7 +144,7 @@
           <section name="splash">
             <span fit class="splash wide" cross-fade></span>
           </section>
-          <section name="home-info">
+          <section name="home">
             <div layout horizontal wrap center-justified>
               <div id="card-new" self-center layout vertical>
                 <div fit id="title-box">
@@ -153,6 +174,39 @@
           </section>
         </template>
 
+        <!-- Admin -->
+        <template if="{{ adminRoute['projectHash'] != null }}">
+          <section name="splash">
+            <span fit class="splash wide" cross-fade></span>
+          </section>
+          <section name="input" vertical layout>
+
+            <paper-input label="Project name" floatingLabel error="Project name is required!" required value="{{project.name}}"></paper-input>
+            <paper-input-decorator label="Description" floatingLabel>
+              <paper-autogrow-textarea>
+                <textarea></textarea>
+              </paper-autogrow-textarea>
+            </paper-input-decorator>
+            <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel error="One category, sub-category and competence is required!">
+              <paper-autogrow-textarea id="textareaCategories" rows="10" maxRows="10">
+                <textarea required value="{{project.categoriesAsJson}}"></textarea>
+              </paper-autogrow-textarea>
+            </paper-input-decorator>
+            <paper-input-decorator label="Teams (as JSON)" floatingLabel error="One team is required!">
+              <paper-autogrow-textarea id="textareaTeams" rows="10">
+                <textarea required>{{project.teams}}</textarea>
+              </paper-autogrow-textarea>
+            </paper-input-decorator>
+            <paper-button hidden self-center id="create-button" raised class="colored custom" role="button" tabindex="0">
+              <core-icon icon="create" aria-label="create" role="img"></core-icon>
+              Create project
+            </paper-button>
+          </section>
+          <section name="output" vertical layout>
+
+          </section>
+        </template>
+
         <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">
           <section name="splash">
@@ -161,7 +215,6 @@
           <template repeat="{{category in categories}}">
             <section name="{{category.name}}" id="{{category.name}}" vertical layout>
               <category-pane id="list1" subcategories="{{category.subcategories}}" cross-fade></category-pane>
-              <span id="dummy"></span>
             </section>
           </template>
         </template>

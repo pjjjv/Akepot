@@ -5,7 +5,6 @@ import 'model/model_category.dart';
 import 'model/model_subcategory.dart';
 import 'model/model_competence.dart';
 import 'package:core_elements/core_ajax_dart.dart';
-import "package:google_oauth2_client/google_oauth2_browser.dart";
 
 typedef void ResponseHandler(response, HttpRequest req);
 
@@ -13,7 +12,6 @@ typedef void ResponseHandler(response, HttpRequest req);
 class CompetencesService extends PolymerElement {
   @published List<Category> categories;
   @observable bool signedin = false;
-  GoogleOAuth2 auth;
   CoreAjax ajaxGetProject;
   CoreAjax ajaxUpdateCompetence;
   Map _headers;

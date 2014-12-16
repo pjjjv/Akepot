@@ -102,7 +102,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxNewProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+  void ajaxNewProjectResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = event.detail['response'];
     print("response: $response");
 
@@ -176,7 +176,7 @@ class CompetencesService extends PolymerElement {
     ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$hash";
     ajaxNewProject.body = JSON.encode(project.toJson());
     print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
-    ajaxNewProject.onCoreResponse.listen(ajaxNewProjectResponse);
+    //ajaxNewProject.onCoreResponse.listen(ajaxNewProjectResponse);
     ajaxNewProject.go();
   }
 

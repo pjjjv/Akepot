@@ -2,9 +2,9 @@ name: akepot
 description: A competence matrix
 dependencies:
   browser: any
-  core_elements: ">=0.5.0 <0.7.0"
+  core_elements: ">=0.6.0+1 <0.7.0"
   paper_elements: ">=0.6.0+3 <0.7.0"
-  polymer: ">=0.15.1+5 <0.16.0"
+  polymer: ">=0.15.3+2 <0.16.0"
   intl: any
   sass: any
 transformers:

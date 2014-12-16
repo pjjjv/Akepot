@@ -10,6 +10,7 @@ import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:paper_elements/paper_button.dart';
 import 'package:paper_elements/paper_autogrow_textarea.dart';
+import 'package:akepot/competences_service.dart';
 
 void main() {
   initPolymer().run(() {
@@ -45,12 +46,19 @@ class Content extends Observable {
 
   @observable String selectedSection = "splash";
 
+  @observable String projectHash = "";
+  @observable String userId = "";
+  @observable String newlink;
+  @observable bool loadProject = false;
+
   String generatedHash = null;
   PaperButton newButton;
   PaperButton createButton;
 
   var projectRouter = null;
   var adminRouter = null;
+
+  CompetencesService service;
 
   @observable Project project;
 
@@ -71,6 +79,7 @@ class Content extends Observable {
     if(projectRouter == null || adminRouter == null){
       waitForRouters();
     }
+    service = document.querySelector('#service');
     startup();
   }
 
@@ -87,6 +96,8 @@ class Content extends Observable {
   void startupForProject () {
     print(SPLASH_TIMEOUT);
     new Timer(SPLASH_TIMEOUT, completeStartupForProject);
+    projectHash = projectRoute['projectHash'];
+    loadProject = true;
   }
 
   void startupForAdmin () {
@@ -94,18 +105,16 @@ class Content extends Observable {
     project = new Project.empty(adminRoute['projectHash']);
 
     HttpRequest.getString("data/fresh_categories.json")
-    .then((String text) {
-      project.categoriesAsJson = text;
-      PaperAutogrowTextarea textarea = document.querySelector("#textareaCategories");
-      if(textarea != null) textarea.update();
-    })
+    .then((String text) => project.categoriesAsJson = text)
     .catchError((Error error) => print("Error: $error"));
 
     HttpRequest.getString("data/fresh_teams.json")
-    .then((String text) => project.teams = text)
+    .then((String text) => project.teamsAsJson = text)
     .catchError((Error error) => print("Error: $error"));
 
     new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
+
+    projectHash = adminRoute['projectHash'];
   }
 
   void startupForHome () {
@@ -134,6 +143,10 @@ class Content extends Observable {
 
   void createProject(Event e){
     print ("createProject");
+    projectHash = adminRoute['projectHash'];
+    project.categoriesFromJson();
+    project.teamsFromJson();
+    service.newProject(project);
   }
 
   void completeStartupForHome () {
@@ -141,6 +154,7 @@ class Content extends Observable {
       startupForHome();
       return;
     }
+    projectHash = generatedHash;
     selectedSection = "home";
     newButton = document.querySelector("#new-button");
     newButton.hidden = false;
@@ -163,7 +177,7 @@ class Content extends Observable {
 
   void newProject(Event e){
     String message = context['MoreRouting'].callMethod('urlFor', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
-    print("New project link would be: $message");
+    print("New admin link would be: $message");
     context['MoreRouting'].callMethod('navigateTo', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
   }
 

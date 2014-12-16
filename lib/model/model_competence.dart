@@ -32,13 +32,13 @@ class Competence extends Observable {
 
   toString() => label;
 
-  factory Competence.fromJson(core.Map _json) {
+  factory Competence.fromJson(core.Map _json, [core.bool noId = false]) {
     core.String label = "Competence";
     Text description = new Text("-");
     Rating value = new Rating(0);
     core.bool newCompetence = true;
 
-    if (!_json.containsKey("id")) {
+    if (!_json.containsKey("id") && noId == false) {
       throw new core.Exception("No id.");
     }
     if (_json.containsKey("label")) {
@@ -53,7 +53,7 @@ class Competence extends Observable {
     if (_json.containsKey("newCompetence")) {
       newCompetence = _json["newCompetence"].toString().toLowerCase() == 'true';
     }
-    if (!_json.containsKey("templateId")) {
+    if (!_json.containsKey("templateId") && noId == false) {
       throw new core.Exception("No templateId.");
     }
 

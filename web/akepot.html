@@ -43,6 +43,7 @@
     <link rel="import" href="packages/paper_elements/paper_input_decorator.html">
     <link rel="import" href="packages/paper_elements/paper_autogrow_textarea.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
+    <link rel="import" href="packages/paper_elements/paper_action_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/category_pane.html">
     <link rel="import" href="packages/akepot/top_left.html">
@@ -62,7 +63,7 @@
     <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
     <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
-    <competences-service id="service" categories="{{categories}}"></competences-service>
+    <competences-service id="service" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" loadproject="{{loadProject}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
@@ -187,20 +188,27 @@
                 <textarea></textarea>
               </paper-autogrow-textarea>
             </paper-input-decorator>
-            <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel error="One category, sub-category and competence is required!">
-              <paper-autogrow-textarea id="textareaCategories" rows="10" maxRows="10">
-                <textarea required value="{{project.categoriesAsJson}}"></textarea>
-              </paper-autogrow-textarea>
+            <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel labelVisible error="One category, sub-category and competence is required!">
+              <textarea rows="10" required>{{project.categoriesAsJson}}</textarea>
             </paper-input-decorator>
-            <paper-input-decorator label="Teams (as JSON)" floatingLabel error="One team is required!">
-              <paper-autogrow-textarea id="textareaTeams" rows="10">
-                <textarea required>{{project.teams}}</textarea>
-              </paper-autogrow-textarea>
+            <paper-input-decorator label="Teams (as JSON)" floatingLabel labelVisible error="One team is required!">
+              <textarea rows="10" required>{{project.teamsAsJson}}</textarea>
             </paper-input-decorator>
             <paper-button hidden self-center id="create-button" raised class="colored custom" role="button" tabindex="0">
               <core-icon icon="create" aria-label="create" role="img"></core-icon>
               Create project
             </paper-button>
+            <paper-action-dialog id="dialog" heading="New project created"
+              transition="paper-transition-center" backdrop="true">
+              <p>Write down the following link:<br>
+                 {{newlink}}<br>
+                 <br>
+                 This is the permalink to your project. Share it with your project members!<br>
+                 <br>
+                 Would you like to navigate to it now?</p>
+              <paper-button dismissive>Back</paper-button>
+              <paper-button id="go-button" affirmative>Go</paper-button>
+            </paper-action-dialog>
           </section>
           <section name="output" vertical layout>
 

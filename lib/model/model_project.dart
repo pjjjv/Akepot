@@ -27,7 +27,10 @@ class Project extends Observable {
   @observable core.String categoriesAsJson = "";
 
   /** Not documented yet. */
-  @observable core.String teams = "";
+  @observable core.List<core.String> teams;
+
+  /** Not documented yet. */
+  @observable core.String teamsAsJson = "";
 
   Project(this.id, this.hash, this.name, this.description, this.categories, this.teams);
 
@@ -40,7 +43,7 @@ class Project extends Observable {
     core.String name = "Project";
     Text description = new Text("-");
     core.List<Category> categories = [];
-    core.String teams = "";
+    core.List<core.String> teams = [];
 
     if (!_json.containsKey("id")) {
       throw new core.Exception("No id.");
@@ -57,9 +60,9 @@ class Project extends Observable {
     if (_json.containsKey("categories")) {
       categories = _json["categories"].map((value) => new Category.fromJson(value)).toList();
     }
-    if (_json.containsKey("teams")) {
+    /*if (_json.containsKey("teams")) {
       teams = _json["teams"];
-    }
+    }*/
 
     Project project = new Project(_json["id"], hash, name, description,
         categories, teams);
@@ -94,6 +97,14 @@ class Project extends Observable {
   }
 
   void categoriesFromJson() {
-    categories = JSON.decode(categoriesAsJson).map((value) => new Category.fromJson(value)).toList();
+    categories = JSON.decode(categoriesAsJson.trim().replaceAll("\n", " ")).map((value) => new Category.fromJson(value, true)).toList();
+  }
+
+  void teamsToJson() {
+    teamsAsJson = JSON.encode(teams);
+  }
+
+  void teamsFromJson() {
+    teams = JSON.decode(teamsAsJson.trim().replaceAll("\n", " "));
   }
 }

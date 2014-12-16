@@ -22,12 +22,12 @@ class SubCategory extends Observable {
 
   toString() => name;
 
-  factory SubCategory.fromJson(core.Map _json) {
+  factory SubCategory.fromJson(core.Map _json, [core.bool noId = false]) {
     core.String name = "SubCategory";
     Text description = new Text("-");
     core.List<Competence> competences = [];
 
-    if (!_json.containsKey("id")) {
+    if (!_json.containsKey("id") && noId == false) {
       throw new core.Exception("No id.");
     }
     if (_json.containsKey("name")) {
@@ -37,7 +37,7 @@ class SubCategory extends Observable {
       description = new Text.fromJson(_json["description"]);
     }
     if (_json.containsKey("competences")) {
-      competences = _json["competences"].map((value) => new Competence.fromJson(value)).toList();
+      competences = _json["competences"].map((value) => new Competence.fromJson(value, noId)).toList();
     }
 
     SubCategory subCategory = new SubCategory(_json["id"], name, description,

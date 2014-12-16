@@ -40,7 +40,8 @@ class TopLeft extends PolymerElement {
     }
 
     name = ", "+response['nickname'];
-    String email = response['emails'][0]['value'];
+    //String email = response['emails'][0]['value'];
+    //userid = response['id'];
   }
 
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {

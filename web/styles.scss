@@ -220,13 +220,13 @@ paper-input /deep/ .focused-underline {
   background-color: $accent-color;
 }
 
-/*paper-input-decorator[focused] /deep/ .floated-label .label-text {
+paper-input-decorator[focused] /deep/ .floated-label .label-text {
   color: $accent-color;
 }
 
 paper-input-decorator /deep/ .focused-underline {
   background-color: $accent-color;
-}*/
+}
 
 
 #create-button {

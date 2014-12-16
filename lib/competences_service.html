@@ -6,24 +6,42 @@
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
 
-<polymer-element name="competences-service" attributes="categories">
+<polymer-element name="competences-service" attributes="categories hash newlink loadproject">
   <template>
     <style>
     :host {
       display: none;
     }
     </style>
+    <core-ajax-dart id="ajax-people"
+      url="https://www.googleapis.com/plus/v1/people/me"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
+    </core-ajax-dart>
+
     <core-ajax-dart id="ajaxGetProject"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/a1/u1"
-      on-core-response="{{ajaxGetProjectResponse}}" on-core-error="{{ajaxError}}"
-      handleAs="json" method="GET">
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="GET"><!-- on-core-response="{{ajaxGetProjectResponse}}" -->
     </core-ajax-dart>
       <!--url="data/competences.json"-->
 
     <core-ajax-dart id="ajaxUpdateCompetence"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/a1/u1"
-      on-core-response="{{ajaxUpdateCompetenceResponse}}" on-core-error="{{ajaxError}}"
-      handleAs="json" method="PUT">
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="PUT"><!-- on-core-response="{{ajaxUpdateCompetenceResponse}}" -->
+    </core-ajax-dart>
+
+    <core-ajax-dart id="ajaxNewProject"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewProjectResponse}}" -->
+    </core-ajax-dart>
+
+    <core-ajax-dart id="ajaxNewPerson"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewPersonResponse}}" -->
     </core-ajax-dart>
 
     <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>

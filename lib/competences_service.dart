@@ -55,9 +55,12 @@ class CompetencesService extends PolymerElement {
     var response = event.detail['response'];
 
     if (response == "404: Not Found"){
+      print("API broken?"); //TODO
+    }
+    if ((response as String).startsWith("404: {")){//(response[404]['error']['code'] == 404 && response[404]['error']['message'] == "userPerson not found"){
       newuser = true;
     }
-    if (response == "503: Service Unavailable"){
+    if ((response as String).startsWith("503: {")){//(response[503]['error']['code'] == 503){
       print("project does not exist?"); //TODO
     }
   }

@@ -49,11 +49,13 @@ class Content extends Observable {
   @observable String projectHash = "";
   @observable String userId = "";
   @observable String newlink;
-  @observable bool loadProject = false;
+  @observable bool newuser;
+  @observable bool signedin;
 
   String generatedHash = null;
   PaperButton newButton;
   PaperButton createButton;
+  PaperButton joinButton;
 
   var projectRouter = null;
   var adminRouter = null;
@@ -87,7 +89,7 @@ class Content extends Observable {
     if(projectRoute != null && projectRoute['projectHash'] != null){
       startupForProject();
     } else if (adminRoute != null && adminRoute['projectHash'] != null){
-      startupForAdmin();
+      startupForAdmin(true);
     } else {
       startupForHome();
       generatedHash = generateId();
@@ -96,25 +98,25 @@ class Content extends Observable {
   void startupForProject () {
     print(SPLASH_TIMEOUT);
     new Timer(SPLASH_TIMEOUT, completeStartupForProject);
-    projectHash = projectRoute['projectHash'];
-    loadProject = true;
   }
 
-  void startupForAdmin () {
+  void startupForAdmin (bool first) {
     print(SPLASH_TIMEOUT);
-    project = new Project.empty(adminRoute['projectHash']);
+    if(first){
+      project = new Project.empty(adminRoute['projectHash']);
 
-    HttpRequest.getString("data/fresh_categories.json")
-    .then((String text) => project.categoriesAsJson = text)
-    .catchError((Error error) => print("Error: $error"));
+      HttpRequest.getString("data/fresh_categories.json")
+      .then((String text) => project.categoriesAsJson = text)
+      .catchError((Error error) => print("Error: $error"));
 
-    HttpRequest.getString("data/fresh_teams.json")
-    .then((String text) => project.teamsAsJson = text)
-    .catchError((Error error) => print("Error: $error"));
+      HttpRequest.getString("data/fresh_teams.json")
+      .then((String text) => project.teamsAsJson = text)
+      .catchError((Error error) => print("Error: $error"));
 
+      projectHash = adminRoute['projectHash'];
+    }
     new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
 
-    projectHash = adminRoute['projectHash'];
   }
 
   void startupForHome () {
@@ -123,22 +125,51 @@ class Content extends Observable {
   }
 
   void completeStartupForProject () {
-    if(categories.isEmpty == true){
+    if(signedin == false){
       startupForProject();
       return;
     }
-    selectedSection = "Technical Competence";//TODO
+    startGetProject(true);
+  }
+  void startGetProject (bool first) {
+    print(SPLASH_TIMEOUT);
+    new Timer(SPLASH_TIMEOUT, completeGetProject);
+    if (first) {
+      projectHash = projectRoute['projectHash'];
+      getProject();
+    }
+  }
+
+  void completeGetProject () {
+    if(categories.isEmpty == true && newuser == false){
+      startGetProject(false);
+      return;
+    }
+    if(categories.isEmpty == false){
+      selectedSection = categories.first.name;
+    }
+    if(newuser == true){
+      selectedSection = "join";
+      newuser = false;
+      joinButton = document.querySelector("#join-button");
+      joinButton.onClick.listen(joinProject);
+    }
   }
 
   void completeStartupForAdmin () {
-    /*if(categories.isEmpty == true){
-      startupForAdmin();
+    if(signedin == false){
+      startupForAdmin(false);
       return;
-    }*/
+    }
     selectedSection = "input";
     createButton = document.querySelector("#create-button");
     createButton.hidden = false;
     createButton.onClick.listen(createProject);
+  }
+
+  void getProject(){
+    print("getProject");
+    service.getProject(projectHash);
   }
 
   void createProject(Event e){
@@ -146,7 +177,13 @@ class Content extends Observable {
     projectHash = adminRoute['projectHash'];
     project.categoriesFromJson();
     project.teamsFromJson();
-    service.newProject(project);
+    service.newProject(project, projectHash);
+  }
+
+  void joinProject(Event e){
+    print ("joinProject");
+    service.newPerson("0", projectHash);
+    startGetProject(false);
   }
 
   void completeStartupForHome () {

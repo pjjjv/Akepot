@@ -39,7 +39,11 @@ class TopLeft extends PolymerElement {
       return null;
     }
 
-    name = ", "+response['nickname'];
+    if(response['nickname'] != null){
+      name = ", "+response['nickname'];
+    } else {
+      name = ", "+response['displayName'];
+    }
     //String email = response['emails'][0]['value'];
     //userid = response['id'];
   }

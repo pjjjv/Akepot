@@ -63,7 +63,7 @@
     <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
     <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
-    <competences-service id="service" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" loadproject="{{loadProject}}"></competences-service>
+    <competences-service id="service" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo}}" href="/"><top-left></top-left></core-toolbar>
@@ -185,7 +185,7 @@
             <paper-input label="Project name" floatingLabel error="Project name is required!" required value="{{project.name}}"></paper-input>
             <paper-input-decorator label="Description" floatingLabel>
               <paper-autogrow-textarea>
-                <textarea></textarea>
+                <textarea>{{project.description}}</textarea>
               </paper-autogrow-textarea>
             </paper-input-decorator>
             <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel labelVisible error="One category, sub-category and competence is required!">
@@ -219,6 +219,25 @@
         <template if="{{ projectRoute['projectHash'] != null }}">
           <section name="splash">
             <span fit class="splash wide" cross-fade></span>
+          </section>
+          <section name="join" vertical layout>
+            <div layout horizontal wrap center-justified>
+              <div id="card-new" self-center layout vertical>
+                <div fit id="title-box">
+                  <div id="title">Join this project?</div>
+                </div>
+                <div id="title-box-substitute"></div>
+                <div id="text-box">
+                  <p>Would you like to join this project?</p><br><br>
+                  <p>Team to be added to: (TBD)</p>
+                </div>
+                <div flex></div>
+                <paper-button self-center id="join-button" raised class="colored custom" role="button" tabindex="0">
+                  <core-icon icon="add" aria-label="add" role="img"></core-icon>
+                  Join project
+                </paper-button>
+              </div>
+            </div>
           </section>
           <template repeat="{{category in categories}}">
             <section name="{{category.name}}" id="{{category.name}}" vertical layout>

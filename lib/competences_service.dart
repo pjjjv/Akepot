@@ -15,11 +15,11 @@ typedef void ResponseHandler(response, HttpRequest req);
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
   @published List<Category> categories;
-  @observable bool signedin = false;
+  @published bool signedin = false;
   @published String hash;
   @observable String userid;
   @published String newlink = "";
-  @published bool loadproject;
+  @published bool newuser = false;
   CoreAjax ajaxUserinfo;
   CoreAjax ajaxGetProject;
   CoreAjax ajaxUpdateCompetence;
@@ -46,7 +46,20 @@ class CompetencesService extends PolymerElement {
 
   @reflectable
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
-    print(detail);
+    print(event.detail);
+  }
+
+  @reflectable
+  void ajaxGetProjectError(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    ajaxError(event, null, null);
+    var response = event.detail['response'];
+
+    if (response == "404: Not Found"){
+      newuser = true;
+    }
+    if (response == "503: Service Unavailable"){
+      print("project does not exist?"); //TODO
+    }
   }
 
   @reflectable
@@ -72,7 +85,7 @@ class CompetencesService extends PolymerElement {
         }
       }
       return category;
-      }).toList());//['items'] was new
+      }).toList());
     return categories;
   }
 
@@ -120,7 +133,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+  void ajaxAddAdminPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
     print("response: $response");
 
@@ -144,17 +157,34 @@ class CompetencesService extends PolymerElement {
     dialog.toggle();
   }
 
+  @reflectable
+  void ajaxNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    var response = event.detail['response'];
+    print("response: $response");
+
+    try {
+      if (response == null) {
+        return;//TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    getProject(hash);
+  }
+
   void onGoButtonClick(Event e){
     context['MoreRouting'].callMethod('navigateTo', ['projectRoute', new JsObject.jsify({'projectHash': '$hash'})]);
   }
 
-  void getProject(){
+  void getProject(String thishash){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$hash/$userid";
+    ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/$userid";
     print("url: ${ajaxGetProject.url}");
     ajaxGetProject.onCoreResponse.listen(ajaxGetProjectResponse);
+    ajaxGetProject.onCoreError.listen(ajaxGetProjectError);
     ajaxGetProject.go();//TODO: can be disabled to exclude expensive rest queries
   }
 
@@ -169,11 +199,11 @@ class CompetencesService extends PolymerElement {
     ajaxUpdateCompetence.go();
   }
 
-  void newProject(Project project){
+  void newProject(Project project, String thishash){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$hash";
+    ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
     ajaxNewProject.body = JSON.encode(project.toJson());
     print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
     ajaxNewProject.onCoreResponse.listen(ajaxNewProjectResponse);
@@ -195,13 +225,31 @@ class CompetencesService extends PolymerElement {
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
+    ajaxNewPerson.onCoreResponse.listen(ajaxAddAdminPersonResponse);
+    ajaxNewPerson.go();
+  }
+
+  void newPerson(String teamId, String thishash){
+    if(!signedin){
+      throw new Exception("Not signed in.");
+    }
+    Map map = {};
+    map['nickName'] = nickname;
+    map['firstName'] = firstname;
+    map['lastName'] = lastname;
+    map['emailAddress'] = {};
+    map['emailAddress']['email'] = email;
+    map['token'] = userid;
+
+    ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
+    ajaxNewPerson.body = JSON.encode(map);
+    print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
     ajaxNewPerson.onCoreResponse.listen(ajaxNewPersonResponse);
     ajaxNewPerson.go();
   }
 
   @reflectable
-  void signedIn(CustomEvent event, Map response){
-    signedin = true;
+  void signedIn(CustomEvent event, Map response){//TODO: if signin fails: Exception: Uncaught Error: type 'JsObject' is not a subtype of type 'Map' of 'response'.
     if(response==null || response['result']==null){
       throw new Exception("Not authorized and repsonse is null.");
     }
@@ -214,9 +262,6 @@ class CompetencesService extends PolymerElement {
   }
 
   void getUserinfo(){
-    if(!signedin){
-      throw new Exception("Not signed in.");
-    }
     ajaxUserinfo.onCoreResponse.listen(parseUserinfoResponse);
     ajaxUserinfo.go();
   }
@@ -238,17 +283,17 @@ class CompetencesService extends PolymerElement {
     //name = ", "+response['nickname'];
     email = response['emails'][0]['value'];
     userid = response['id'];
-    nickname = response['nickname'];
+    nickname = "";
+    if(response['nickname'] != null){
+      nickname = response['nickname'];
+    }
     firstname = response['name']['givenName'];
     lastname = response['name']['familyName'];
 
     if (userid == "" || userid == null) {
       print("userid empty");
     }
-    print("loadproject: $loadproject");
-    if(loadproject == true){
-      getProject();
-    }
+    signedin = true;
   }
 
   @reflectable

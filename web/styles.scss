@@ -241,3 +241,16 @@ paper-input-decorator /deep/ .focused-underline {
 #create-button::shadow core-icon{
   vertical-align: baseline;
 }
+
+#join-button {
+  display: block;
+  margin-top: 20px;
+  //padding: 16px;//match padding
+  color: white;
+  background-color: $accent-color;
+  @include text-button();
+}
+
+#join-button::shadow core-icon{
+  vertical-align: baseline;
+}

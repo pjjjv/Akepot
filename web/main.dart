@@ -202,6 +202,10 @@ class Content extends Observable {
     print("wentTo");
   }
 
+  void goTo2(Event e) {
+    print("wentTo");
+  }
+
   // String generateId(int length);
   //   length - must be an even number (default: 20)
   String generateId([int length = 20]) {

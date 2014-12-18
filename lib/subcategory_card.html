@@ -12,10 +12,10 @@
       <div class="front">
         <paper-fab mini id="help-button" class="flip-button" icon="help"></paper-fab>
         <div id="image-box">
-          <core-image fit src="../../images/ilias.jpg" sizing="cover" preload fade></core-image>
+          <core-image fit src="../../images/ilias2.jpg" sizing="cover" preload fade></core-image>
         </div>
         <div id="title-box">
-          <div fit id="title">Component Knowledge: {{subcategory.name}}</div>
+          <div fit id="title">{{subcategory.name}}</div>
         </div>
         <template repeat="{{competence in subcategory.competences}}">
           <single-strength-item id="{{competence.id['id']}}" title="{{competence.label}}" desc="{{competence.description.value}}" number="{{competence.value.rating}}" on-toggleotherdescs="{{toggleOtherDescs}}"></single-strength-item>

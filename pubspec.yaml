@@ -7,17 +7,19 @@ dependencies:
   polymer: ">=0.15.3+2 <0.16.0"
   intl: any
   sass: any
+  google_signin_dart: any
 transformers:
 - sass:
     compass: true                 # Include compass
 - polymer:
     entry_points:
     - web/akepot.html
+    csp: false
 - $dart2js:
-    checked: true
+    checked: false
     minify: false
     verbose: true
     suppressWarnings: false
     suppressHints: false
     terse: false
-    csp: true
+    csp: false

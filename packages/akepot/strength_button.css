@@ -1,0 +1,17 @@
+.button {
+  background: #1DE9B6;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: white;
+  min-width: 3em;
+  min-height: 2em; }
+
+:host {
+  margin: 0.5em 1em 0.5em 0;
+  right: 1em; }
+
+:host([notselected]) .button {
+  background: #eaeaea !important;
+  color: #a8a8a8 !important; }

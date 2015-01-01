@@ -1,0 +1,18 @@
+.pub
+.buildlog
+pubspec.yaml~
+.gitignore~
+
+# Don¡¯t commit the following directories created by pub.
+build/
+
+# Or the temporary files created by dart2js.
+*.dart.precompiled.js
+*.js_
+*.js.deps
+*.js.map
+*._data
+*._buildLogs*
+
+# Include when developing application packages.
+pubspec.lock

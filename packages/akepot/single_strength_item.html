@@ -1,0 +1,41 @@
+
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="strength_button_slider.html">
+<link rel="import" href="../../packages/core_elements/core_animation_group.html">
+
+<polymer-element name="single-strength-item" attributes="title desc number">
+  <template>
+    <link href="single_strength_item.css" rel="stylesheet">
+    <div id="main" layout horizontal center>
+      <span id="title" flex on-tap="{{toggleDesc}}">{{title}}</span>
+      <strength-button-slider id="single_button" selected="{{number}}" max="5"></strength-button-slider>
+    </div>
+    <div id="secondary" layout horizontal end-justified>
+      <p id="desc" hidden class="core-animation-target" on-tap="{{toggleDesc}}">{{desc}}</p>
+    </div>
+    <core-animation-group on-core-animation-finish="{{finishToggleDesc}}" direction="reverse" fill="both" easing="ease-in-out" id="slide-down" type="par">
+      <core-animation duration="450" endDelay="150" fill="both">
+        <core-animation-keyframe>
+          <core-animation-prop name="opacity" value="0">
+          </core-animation-prop>
+        </core-animation-keyframe>
+        <core-animation-keyframe>
+          <core-animation-prop name="opacity" value="1">
+          </core-animation-prop>
+        </core-animation-keyframe>
+      </core-animation>
+      <core-animation duration="600" fill="both">
+        <core-animation-keyframe>
+          <core-animation-prop id="slide-down-prop" name="transform" value="translate(0,-150px)">
+          </core-animation-prop>
+        </core-animation-keyframe>
+        <core-animation-keyframe>
+          <core-animation-prop name="transform" value="translate(0,0)">
+          </core-animation-prop>
+        </core-animation-keyframe>
+      </core-animation>
+    </core-animation-group>
+  </template>
+
+  <script type="application/dart" src="single_strength_item.dart"></script>
+</polymer-element>

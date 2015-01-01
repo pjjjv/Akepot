@@ -1,0 +1,18 @@
+
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<polymer-element name="strength-button" attributes="number selected">
+  <template>
+    <link href="strength_button.css" rel="stylesheet">
+    <template if="{{selected}}">
+      <paper-button raised class="button">{{number}}</paper-button>
+    </template>
+    <template if="{{!selected}}">
+      <paper-button class="button">{{number}}</paper-button>
+    </template>
+
+  </template>
+
+  <script type="application/dart" src="strength_button.dart"></script>
+</polymer-element>

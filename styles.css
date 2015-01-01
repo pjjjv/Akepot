@@ -1,5 +1,5 @@
 html {
-  font-family: "Roboto", "Noto", "Open Sans", sans-serif;
+  font-family: "RobotoDraft", "Roboto", "Noto", "Open Sans", sans-serif;
   font-size: 62.5%;
   /* 16px * .625 => 10px */
   /*font-size: 20px;
@@ -98,7 +98,7 @@ core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /dee
   background-color: white;
   background-repeat: no-repeat;
   background-position: 50%;
-  background-image: url(../images/splash.svg); }
+  background-image: url(images/splash.svg); }
 
 .splash.wide {
   background-size: 512px; }

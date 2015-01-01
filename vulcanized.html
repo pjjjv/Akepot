@@ -92,12 +92,12 @@ o=o.split("/?").shift().split("/").pop()}console.group("mutations (%d) [%s]",e.l
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" sizes="96x96" href="icons/icon-96.png">
+    <link rel="icon" sizes="196x196" href="icons/icon-196.png">
     <meta name="application-name" content="Akepot">
 
     <title>Akepot</title>
     <style>html {
-  font-family: "Roboto", "Noto", "Open Sans", sans-serif;
+  font-family: "RobotoDraft", "Roboto", "Noto", "Open Sans", sans-serif;
   font-size: 62.5%;
   /* 16px * .625 => 10px */
   /*font-size: 20px;
@@ -196,7 +196,7 @@ core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /dee
   background-color: white;
   background-repeat: no-repeat;
   background-position: 50%;
-  background-image: url("../images/splash.svg"); }
+  background-image: url("images/splash.svg"); }
 
 .splash.wide {
   background-size: 512px; }
@@ -299,7 +299,8 @@ paper-input-decorator /deep/ .focused-underline {
 #join-button::shadow core-icon {
   vertical-align: baseline; }
 </style>
-    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,300italic,500italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=RobotoDraft:400,300,500" rel="stylesheet" type="text/css">
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400italic,300italic,500italic' rel='stylesheet' type='text/css'>-->
 
     <!--<script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>-->
@@ -12857,7 +12858,7 @@ core-image {
       <div class="front">
         <paper-fab mini="" id="help-button" class="flip-button" icon="help"></paper-fab>
         <div id="image-box">
-          <core-image fit="" src="../images/ilias2.jpg" sizing="cover" preload="" fade=""></core-image>
+          <core-image fit="" src="images/ilias2.jpg" sizing="cover" preload="" fade=""></core-image>
         </div>
         <div id="title-box">
           <div fit="" id="title">{{subcategory.name}}</div>

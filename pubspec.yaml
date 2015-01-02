@@ -14,3 +14,11 @@ transformers:
 - polymer:
     entry_points:
     - web/akepot.html
+- $dart2js:
+    checked: false
+    minify: true
+    verbose: false
+    suppressWarnings: false
+    suppressHints: false
+    terse: false
+    csp: false

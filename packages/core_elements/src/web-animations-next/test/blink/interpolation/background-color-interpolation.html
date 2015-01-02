@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .target {
   width: 60px;
   height: 60px;
@@ -10,7 +12,12 @@
   background-color: green;
   margin-right: 15px;
 }
-</style><body><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 assertInterpolation({
   property: 'background-color',
   from: 'white',
@@ -35,4 +42,5 @@ assertInterpolation({
   {at: 1, is: 'transparent'},
   {at: 1.5, is: 'transparent'},
 ]);
-</script></body>
+</script>
+</body>

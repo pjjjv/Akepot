@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .target {
   width: 80px;
   height: 100px;
@@ -15,7 +17,12 @@
   margin-right: 10px;
   border-color: green;
 }
-</style><body><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 // Matched keywords in size value list.
 assertInterpolation({
   property: 'background-size',
@@ -90,4 +97,5 @@ assertInterpolation({
   {at: 1, is:     '40px 40px, 80px  80px, 0px  80px, 40px 40px'},
   {at: 1.25, is:  '50px 50px, 80px 100px, 0px 100px, 30px 50px'},
 ]);
-</script></body>
+</script>
+</body>

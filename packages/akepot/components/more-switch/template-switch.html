@@ -1,4 +1,24 @@
-<link rel=import href="../../../../packages/polymer/polymer.html">ml"><link rel=import href="more-switch.html"><polymer-element name=template-switch extends=more-switch><script>
+<link rel="import" href="../../../../packages/polymer/polymer.html">ml">
+
+<link rel="import" href="more-switch.html">
+
+<!--
+`template-switch` is like `more-switch` except it stamps templates on demand.
+
+This can be useful if you want to ensure that elements aren't hanging around,
+but be aware that templates aren't cheap.
+
+## Example:
+
+    <template-switch>
+      <template when="{{foo == 1}}">One!</template>
+      <template when="{{foo == 2}}">Two!</template>
+      <template else>Default</template>
+    </template-switch>
+
+-->
+<polymer-element name="template-switch" extends="more-switch">
+  <script>
     Polymer('template-switch', {
 
       /** @override */
@@ -29,4 +49,5 @@
       },
 
     });
-  </script></polymer-element>
+  </script>
+</polymer-element>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .target {
   color: white;
   width: 100px;
@@ -20,7 +22,15 @@
 .test {
   overflow: hidden;
 }
-</style><body><template id=target-template><div></div></template><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<template id="target-template">
+<div></div>
+</template>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 
 assertInterpolation({
   property: 'transform',
@@ -119,4 +129,5 @@ assertInterpolation({
   {at: 2, is: 'matrix3d(0.39048513570444376, 0.14780794797065988, 0.6963068100217401, -4.857907861239344, -2.967682789284791, 0.6004978769584385, -3.5472376016872444, 26.675324787979896, -2.5953724498995308, 1.6280843851961373, 0.8163834310586356, 9.001735256585825, 1.34375, -1, 0.9375, -14.881239394516227)'},
 ]);
 
-</script></body>
+</script>
+</body>

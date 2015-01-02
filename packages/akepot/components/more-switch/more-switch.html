@@ -1,4 +1,20 @@
-<link rel=import href="../../../../packages/polymer/polymer.html"><polymer-element name=more-switch><script>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<!--
+`more-switch` provides `switch`-like behavior.
+
+The first template whose `when` statement evaluates truthy will be activated,
+the rest deactivated. `else` is equivalent to `when="{{true}}"`.
+
+    <more-switch>
+      <div when="{{foo == 1}}">One!</div>
+      <div when="{{foo == 2}}">Two!</div>
+      <div else>Default</div>
+    </more-switch>
+
+-->
+<polymer-element name="more-switch">
+  <script>
     Polymer('more-switch', {
       publish: {
         /**
@@ -124,4 +140,5 @@
         return true;
       },
     });
-  </script></polymer-element>
+  </script>
+</polymer-element>

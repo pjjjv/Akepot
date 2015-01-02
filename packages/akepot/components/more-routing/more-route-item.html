@@ -1,8 +1,25 @@
-<link rel=import href="../../../../packages/polymer/polymer.html"><link rel=import href="../../../../packages/core_elements/core_item.html"><link rel=import href="more-route.html"><polymer-element name=more-route-item extends=core-item on-tap="{{_onTap}}"><template><shadow></shadow><style>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../../packages/core_elements/core_item.html">
+
+<link rel="import" href="more-route.html">
+
+<!--
+
+-->
+<polymer-element name="more-route-item" extends="core-item" on-tap="{{_onTap}}">
+  <template>
+    <shadow></shadow>
+
+    <style>
       :host {
         cursor: pointer;
       }
-    </style><more-route id=route name="{{name}}" path="{{path}}"></more-route></template><script>
+    </style>
+
+    <more-route id="route" name="{{name}}" path="{{path}}"></more-route>
+  </template>
+
+  <script>
     Polymer('more-route-item', {
       publish: {
         /**
@@ -61,4 +78,5 @@
         this.$.route.navigateTo(this.params);
       },
     });
-  </script></polymer-element>
+  </script>
+</polymer-element>

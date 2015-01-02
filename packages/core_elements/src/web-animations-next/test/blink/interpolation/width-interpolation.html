@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .container {
   width: 100px;
   height: 100px;
@@ -15,7 +17,17 @@
 .replica {
   background-color: green;
 }
-</style><body><template id=target-template><div class=container><div class=target></div></div></template><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<template id="target-template">
+  <div class="container">
+    <div class="target"></div>
+  </div>
+</template>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 assertInterpolation({
   property: 'width',
   from: '0px',
@@ -40,4 +52,5 @@ assertInterpolation({
   {at: 1, is: '100px'},
   {at: 1.5, is: '145px'}
 ]);
-</script></body>
+</script>
+</body>

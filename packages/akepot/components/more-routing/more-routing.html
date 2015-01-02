@@ -1,4 +1,16 @@
-<link rel=import href="../../../../packages/polymer/polymer.html"><link rel=import href="routing.html"><link rel=import href="driver/hash.html"><link rel=import href="driver/mock.html"><link rel=import href="driver/path.html"><polymer-element name=more-routing><script>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<link rel="import" href="routing.html">
+<!-- TODO(nevir): import on demand? -->
+<link rel="import" href="driver/hash.html">
+<link rel="import" href="driver/mock.html">
+<link rel="import" href="driver/path.html">
+
+<!--
+TODO(nevir): Document.
+-->
+<polymer-element name="more-routing">
+  <script>
     Polymer('more-routing', {
       publish: {
         /**
@@ -41,4 +53,5 @@
         return config;
       },
     });
-  </script></polymer-element>
+  </script>
+</polymer-element>

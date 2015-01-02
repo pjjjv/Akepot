@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .target {
   width: 100px;
   height: 100px;
@@ -10,7 +12,12 @@
   border-color: green;
   margin-right: 2px;
 }
-</style><body><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 // Image to image
 var from = 'url(../resources/blue-100.png)';
 var to = 'url(../resources/green-100.png)';
@@ -132,4 +139,5 @@ assertInterpolation({
   {at: 1, is: to},
   {at: 1.5, is: to},
 ]);
-</script></body>
+</script>
+</body>

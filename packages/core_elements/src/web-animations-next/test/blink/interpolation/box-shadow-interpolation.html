@@ -1,4 +1,6 @@
-<!DOCTYPE html><meta charset=UTF-8><style>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
 .target {
   display: inline-block;
   width: 60px;
@@ -11,7 +13,12 @@
 .replica {
   margin-right: 40px;
 }
-</style><body><script src="../testharness/testharness.js"></script><script src="../testharness/testharnessreport.js"></script><script src="resources/interpolation-test.js"></script><script>
+</style>
+<body>
+<script src="../testharness/testharness.js"></script>
+<script src="../testharness/testharnessreport.js"></script>
+<script src="resources/interpolation-test.js"></script>
+<script>
 // Test basic functionality, and clipping blur at 0
 assertInterpolation({
   property: 'box-shadow',
@@ -53,4 +60,5 @@ assertInterpolation({
   {at: 1, is: 'inset 5px 10px green, 15px 20px blue'},
   {at: 1.5, is: 'inset 5px 10px green, 15px 20px blue'},
 ]);
-</script></body>
+</script>
+</body>

@@ -1,19 +1,4 @@
-<link rel="import" href="../../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../../packages/akepot/components/more-switch/template-switch.html">
-
-<link rel="import" href="more-route.html">
-<link rel="import" href="routing.html">
-
-<!--
-
--->
-<polymer-element name="more-route-switch" extends="template-switch">
-  <template>
-    <shadow></shadow>
-    <more-route id="activeRouteEl"></more-route>
-  </template>
-
-  <script>
+<link rel=import href="../../../../packages/polymer/polymer.html"><link rel=import href="../../../../packages/akepot/components/more-switch/template-switch.html"><link rel=import href="more-route.html"><link rel=import href="routing.html"><polymer-element name=more-route-switch extends=template-switch><template><shadow></shadow><more-route id=activeRouteEl></more-route></template><script>
     Polymer('more-route-switch', {
       publish: {
         routeContext: false,
@@ -93,5 +78,4 @@
         return MoreRouting.getRouteByPath(path);
       },
     });
-  </script>
-</polymer-element>
+  </script></polymer-element>

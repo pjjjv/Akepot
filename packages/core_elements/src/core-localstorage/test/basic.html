@@ -1,1 +1,26 @@
-<!doctype html><html><head><meta charset=UTF-8><title>core-localstorage-basic</title><meta name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-localstorage.html"></head><body><core-localstorage id=localstorage name=core-localstorage-test></core-localstorage><script>window.localStorage.setItem("core-localstorage-test",'{"foo":"bar"}');var storage=document.querySelector("#localstorage");suite("basic",function(){test("load",function(){assert.isNotNull(storage.value);assert.equal(storage.value.foo,"bar")});test("save",function(a){var b={foo:"zot"};storage.value=b;asyncPlatformFlush(function(){var c=window.localStorage.getItem(storage.name);c=JSON.parse(c);assert.equal(c.foo,b.foo);a()})})});</script></body></html>
+<!doctype html><html><head><meta charset=UTF-8><title>core-localstorage-basic</title><meta name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-localstorage.html"></head><body><core-localstorage id=localstorage name=core-localstorage-test></core-localstorage><script>
+
+    window.localStorage.setItem('core-localstorage-test', '{"foo":"bar"}');
+    var storage = document.querySelector('#localstorage');
+    
+    suite('basic', function() {
+
+      test('load', function() {
+        assert.isNotNull(storage.value);
+        assert.equal(storage.value.foo, 'bar');
+      });
+      
+      test('save', function(done) {
+        var newValue = {'foo': 'zot'};
+        storage.value = newValue;
+        asyncPlatformFlush(function() {
+          var v = window.localStorage.getItem(storage.name);
+          v = JSON.parse(v);
+          assert.equal(v.foo, newValue.foo);
+          done();
+        });
+      });
+
+    });
+
+  </script></body></html>

@@ -1,4 +1,112 @@
-<!doctype html><html><style>@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:url(https://themes.googleusercontent.com/static/fonts/montserrat/v4/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff')}@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:url(https://themes.googleusercontent.com/static/fonts/montserrat/v4/IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff) format('woff')}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;src:url(https://themes.googleusercontent.com/static/fonts/roboto/v10/Hgo13k-tfSpn0qi1SFdUfbO3LdcAZYWl9Si6vvxL-qU.woff) format('woff')}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://themes.googleusercontent.com/static/fonts/roboto/v10/CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff) format('woff')}body{width:80vw;margin:20px;font-family:Roboto,sans-serif;background-color:#f0f0f0}h2{font-family:Montserrat,sans-serif;box-sizing:border-box;color:#484848;display:block;font-style:normal;font-variant:normal;font-weight:normal}div:target{background-color:#fff;border:1px solid #888;border-radius:5px;padding:0 10px 2px 10px;box-shadow:7px 7px 5px #888;margin-bottom:15px}h3{font-family:Montserrat,sans-serif;box-sizing:border-box;color:#484848;display:block;font-style:normal;font-variant:normal;font-weight:normal}div:target>h3{font-weight:bold}pre{display:block;padding:9.5px;margin:0 0 10px;color:#333;word-break:break-all;word-wrap:break-word;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}code{font-family:Menlo,Monaco,Consolas,"Courier New",monospace;box-sizing:border-box;padding:0;font-size:90%;color:#0084c5;white-space:nowrap;border-radius:4px;background-color:#f9f2f4}pre code{white-space:inherit;color:inherit;background-color:inherit}a{color:#2a6496}h3>a{display:none;font-size:.8em}h3:hover>a{display:inline}</style><body><h2>Messages from package <code>code_transformers</code></h2><hr/><div id=code_transformers_1><h3>Absolute paths not allowed <a href="#code_transformers_1">#1</a></h3><p>The transformers processing your code were trying to resolve a URL and identify a file that they correspond to. Currently only relative paths can be resolved.</p></div><hr/><div id=code_transformers_2><h3>Invalid URL to reach another package <a href="#code_transformers_2">#2</a></h3><p>To reach an asset that belongs to another package, use <code>package:</code> URLs in Dart code, but in any other language (like HTML or CSS) use relative URLs that first go all the way to the <code>packages/</code> directory.</p><p>The rules for correctly writing these imports are subtle and have a lot of special cases. Please review <a href="//www.dartlang.org/polymer/app-directories.html">https://www.dartlang.org/polymer/app-directories.html</a> to learn more.</p></div><hr/><div id=code_transformers_3><h3>Incomplete URL to asset in another package <a href="#code_transformers_3">#3</a></h3><p>URLs that refer to assets in other packages need to explicitly mention the <code>packages/</code> directory. In the future this requirement might be removed, but for now you must use a canonical URL form for it.</p><p>For example, if <code>packages/a/a.html</code> needs to import <code>packages/b/b.html</code>, you might expect a.html to import <code>../b/b.html</code>. Instead, it must import <code>../../packages/b/b.html</code>.</p><p>See <a href="//dartbug.com/15797">issue 15797</a> and <a href="//www.dartlang.org/polymer/app-directories.html">https://www.dartlang.org/polymer/app-directories.html</a> to learn more.</p></div><hr/><h2>Messages from package <code>observe</code></h2><hr/><div id=observe_1><h3><code>@observable</code> not supported on libraries <a href="#observe_1">#1</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_2><h3><code>@observable</code> not supported on top-level fields <a href="#observe_2">#2</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_3><h3><code>@observable</code> not supported on classes <a href="#observe_3">#3</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_4><h3><code>@observable</code> not supported on static fields <a href="#observe_4">#4</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_5><h3><code>@observable</code> field not in an <code>Observable</code> class <a href="#observe_5">#5</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><h2>Messages from package <code>polymer</code></h2><hr/><div id=polymer_1><h3>Import not found <a href="#polymer_1">#1</a></h3><p>An HTML import seems to be broken. This could be because the file doesn't exist or because the link URL is incorrect.</p></div><hr/><div id=polymer_2><h3>Duplicate definition <a href="#polymer_2">#2</a></h3><p>Custom element names are global and can only be defined once. Some common reasons why you might get two definitions:</p><ul><li>Two different elements are declared with the same name.</li><li><p>A single HTML file defining an element, has been imported using two different URLs.</p></li></ul></div><hr/><div id=polymer_3><h3>Missing import to polymer.html <a href="#polymer_3">#3</a></h3><p>Starting with polymer 0.11.0, each file that uses the definition of polymer-element must import it either directly or transitively.</p></div><hr/><div id=polymer_4><h3>Invalid import inside &lt;polymer-element><a href="#polymer_4">#4</a></h3><p>HTML imports are expected at the top of each document, outside of any polymer-element definitions. The polymer build process combines all your HTML files together so you can deploy a single HTML file with your application. This build process ignores imports that appear to be in the wrong location.</p></div><hr/><div id=polymer_5><h3>Missing call to <code>initPolymer()</code><a href="#polymer_5">#5</a></h3><p>Your application entry point didn't have any Dart script tags, so it's missing some initialization needed for polymer.dart.</p></div><hr/><div id=polymer_6><h3>Script tags with experimental bootstrap <a href="#polymer_6">#6</a></h3><p>This experimental feature is no longer supported.</p></div><hr/><div id=polymer_7><h3>Multiple Dart script tags per document <a href="#polymer_7">#7</a></h3><p>Dartium currently allows only one script tag per document. Any additional script tags might be ignored or result in an error. This will likely change in the future, but for now, combine the script tags together into a single Dart library.</p></div><hr/><div id=polymer_8><h3>Imports before script tags <a href="#polymer_8">#8</a></h3><p>It is good practice to put all your HTML imports at the beginning of the document, above any Dart script tags. Today, the execution of Dart script tags is not synchronous in Dartium, so the difference is not noticeable. However, Dartium that will eventually change and make the timing of script tags execution match how they are in JavaScript. At that point the order of your imports with respect to script tags will be important. Following the practice of putting imports first protects your app from a future breaking change in this respect.</p></div><hr/><div id=polymer_9><h3>Missing href on a <code>&lt;link&gt;</code> tag <a href="#polymer_9">#9</a></h3><p>All <code>&lt;link&gt;</code> tags should have a valid URL to a resource.</p></div><hr/><div id=polymer_10><h3><code>&lt;element&gt;</code> is deprecated <a href="#polymer_10">#10</a></h3><p>Long ago <code>&lt;polymer-element&gt;</code> used to be called <code>&lt;element&gt;</code>. You probably ran into this error if you were migrating code that was written on a very early version of polymer.</p></div><hr/><div id=polymer_11><h3>Definition of a custom element not found <a href="#polymer_11">#11</a></h3><p>The polymer build was not able to find the definition of a custom element. This can happen if an element is defined with a <code>&lt;polymer-element&gt;</code> tag, but you are missing an HTML import or the import link is incorrect.</p><p>This warning can also be a false alarm. For instance, when an element is defined programatically using <code>document.registerElement</code>. In that case the polymer build will not be able to see the definition and will produce this warning.</p></div><hr/><div id=polymer_12><h3>Empty script tag <a href="#polymer_12">#12</a></h3><p>Script tags should either have a <code>src</code> attribute or a non-empty body.</p></div><hr/><div id=polymer_13><h3>Expected Dart mime-type <a href="#polymer_13">#13</a></h3><p>You seem to have a <code>.dart</code> extension on a script tag, but the mime-type doesn't match <code>application/dart</code>.</p></div><hr/><div id=polymer_14><h3>Expected Dart file extension <a href="#polymer_14">#14</a></h3><p>You are using the <code>application/dart</code> mime-type on a script tag, so the URL to the script source URL should have a <code>.dart</code> extension.</p></div><hr/><div id=polymer_15><h3>Script with both src and inline text <a href="#polymer_15">#15</a></h3><p>You have a script tag that includes both a <code>src</code> attribute and inline script text. You must choose one or the other.</p></div><hr/><div id=polymer_16><h3>Incorrect instantiation: missing base tag in instantiation <a href="#polymer_16">#16</a></h3><p>When you declare that a custom element extends from a base tag, for example:</p><pre><code>&lt;polymer-element name="my-example" extends="ul"&gt;
+<!doctype html><html><style>
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://themes.googleusercontent.com/static/fonts/montserrat/v4/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://themes.googleusercontent.com/static/fonts/montserrat/v4/IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(https://themes.googleusercontent.com/static/fonts/roboto/v10/Hgo13k-tfSpn0qi1SFdUfbO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://themes.googleusercontent.com/static/fonts/roboto/v10/CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+}
+
+body {
+  width: 80vw;
+  margin: 20px;
+  font-family: Roboto, sans-serif;
+  background-color: #f0f0f0;
+}
+
+h2 {
+  font-family: Montserrat, sans-serif;
+  box-sizing: border-box;
+  color: rgb(72, 72, 72);
+  display: block;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+}
+
+div:target {
+  background-color: #fff;
+  border: 1px solid #888;
+  border-radius: 5px;
+  padding: 0px 10px 2px 10px;
+  box-shadow: 7px 7px 5px #888888;
+  margin-bottom: 15px;
+}
+
+
+h3 {
+  font-family: Montserrat, sans-serif;
+  box-sizing: border-box;
+  color: rgb(72, 72, 72);
+  display: block;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+}
+
+div:target > h3 {
+  font-weight: bold;
+}
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+code {
+   font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+   box-sizing: border-box;
+   padding: 0;
+   font-size: 90%;
+   color: #0084c5;
+   white-space: nowrap;
+   border-radius: 4px;
+   background-color: #f9f2f4;
+}
+
+pre code {
+   white-space: inherit;
+   color: inherit;
+   background-color: inherit;
+}
+
+a {
+  color: rgb(42, 100, 150);
+}
+
+h3 > a {
+  display: none;
+  font-size: 0.8em;
+}
+
+h3:hover > a {
+  display: inline;
+}
+</style><body><h2>Messages from package <code>code_transformers</code></h2><hr/><div id=code_transformers_1><h3>Absolute paths not allowed <a href="#code_transformers_1">#1</a></h3><p>The transformers processing your code were trying to resolve a URL and identify a file that they correspond to. Currently only relative paths can be resolved.</p></div><hr/><div id=code_transformers_2><h3>Invalid URL to reach another package <a href="#code_transformers_2">#2</a></h3><p>To reach an asset that belongs to another package, use <code>package:</code> URLs in Dart code, but in any other language (like HTML or CSS) use relative URLs that first go all the way to the <code>packages/</code> directory.</p><p>The rules for correctly writing these imports are subtle and have a lot of special cases. Please review <a href="//www.dartlang.org/polymer/app-directories.html">https://www.dartlang.org/polymer/app-directories.html</a> to learn more.</p></div><hr/><div id=code_transformers_3><h3>Incomplete URL to asset in another package <a href="#code_transformers_3">#3</a></h3><p>URLs that refer to assets in other packages need to explicitly mention the <code>packages/</code> directory. In the future this requirement might be removed, but for now you must use a canonical URL form for it.</p><p>For example, if <code>packages/a/a.html</code> needs to import <code>packages/b/b.html</code>, you might expect a.html to import <code>../b/b.html</code>. Instead, it must import <code>../../packages/b/b.html</code>.</p><p>See <a href="//dartbug.com/15797">issue 15797</a> and <a href="//www.dartlang.org/polymer/app-directories.html">https://www.dartlang.org/polymer/app-directories.html</a> to learn more.</p></div><hr/><h2>Messages from package <code>observe</code></h2><hr/><div id=observe_1><h3><code>@observable</code> not supported on libraries <a href="#observe_1">#1</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_2><h3><code>@observable</code> not supported on top-level fields <a href="#observe_2">#2</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_3><h3><code>@observable</code> not supported on classes <a href="#observe_3">#3</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_4><h3><code>@observable</code> not supported on static fields <a href="#observe_4">#4</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><div id=observe_5><h3><code>@observable</code> field not in an <code>Observable</code> class <a href="#observe_5">#5</a></h3><p>Only instance fields on <code>Observable</code> classes can be observable, and you must explicitly annotate each observable field as <code>@observable</code>.</p><p>Support for using the <code>@observable</code> annotation in libraries, classes, and elsewhere is deprecated.</p></div><hr/><h2>Messages from package <code>polymer</code></h2><hr/><div id=polymer_1><h3>Import not found <a href="#polymer_1">#1</a></h3><p>An HTML import seems to be broken. This could be because the file doesn't exist or because the link URL is incorrect.</p></div><hr/><div id=polymer_2><h3>Duplicate definition <a href="#polymer_2">#2</a></h3><p>Custom element names are global and can only be defined once. Some common reasons why you might get two definitions:</p><ul><li>Two different elements are declared with the same name.</li><li><p>A single HTML file defining an element, has been imported using two different URLs.</p></li></ul></div><hr/><div id=polymer_3><h3>Missing import to polymer.html <a href="#polymer_3">#3</a></h3><p>Starting with polymer 0.11.0, each file that uses the definition of polymer-element must import it either directly or transitively.</p></div><hr/><div id=polymer_4><h3>Invalid import inside &lt;polymer-element><a href="#polymer_4">#4</a></h3><p>HTML imports are expected at the top of each document, outside of any polymer-element definitions. The polymer build process combines all your HTML files together so you can deploy a single HTML file with your application. This build process ignores imports that appear to be in the wrong location.</p></div><hr/><div id=polymer_5><h3>Missing call to <code>initPolymer()</code><a href="#polymer_5">#5</a></h3><p>Your application entry point didn't have any Dart script tags, so it's missing some initialization needed for polymer.dart.</p></div><hr/><div id=polymer_6><h3>Script tags with experimental bootstrap <a href="#polymer_6">#6</a></h3><p>This experimental feature is no longer supported.</p></div><hr/><div id=polymer_7><h3>Multiple Dart script tags per document <a href="#polymer_7">#7</a></h3><p>Dartium currently allows only one script tag per document. Any additional script tags might be ignored or result in an error. This will likely change in the future, but for now, combine the script tags together into a single Dart library.</p></div><hr/><div id=polymer_8><h3>Imports before script tags <a href="#polymer_8">#8</a></h3><p>It is good practice to put all your HTML imports at the beginning of the document, above any Dart script tags. Today, the execution of Dart script tags is not synchronous in Dartium, so the difference is not noticeable. However, Dartium that will eventually change and make the timing of script tags execution match how they are in JavaScript. At that point the order of your imports with respect to script tags will be important. Following the practice of putting imports first protects your app from a future breaking change in this respect.</p></div><hr/><div id=polymer_9><h3>Missing href on a <code>&lt;link&gt;</code> tag <a href="#polymer_9">#9</a></h3><p>All <code>&lt;link&gt;</code> tags should have a valid URL to a resource.</p></div><hr/><div id=polymer_10><h3><code>&lt;element&gt;</code> is deprecated <a href="#polymer_10">#10</a></h3><p>Long ago <code>&lt;polymer-element&gt;</code> used to be called <code>&lt;element&gt;</code>. You probably ran into this error if you were migrating code that was written on a very early version of polymer.</p></div><hr/><div id=polymer_11><h3>Definition of a custom element not found <a href="#polymer_11">#11</a></h3><p>The polymer build was not able to find the definition of a custom element. This can happen if an element is defined with a <code>&lt;polymer-element&gt;</code> tag, but you are missing an HTML import or the import link is incorrect.</p><p>This warning can also be a false alarm. For instance, when an element is defined programatically using <code>document.registerElement</code>. In that case the polymer build will not be able to see the definition and will produce this warning.</p></div><hr/><div id=polymer_12><h3>Empty script tag <a href="#polymer_12">#12</a></h3><p>Script tags should either have a <code>src</code> attribute or a non-empty body.</p></div><hr/><div id=polymer_13><h3>Expected Dart mime-type <a href="#polymer_13">#13</a></h3><p>You seem to have a <code>.dart</code> extension on a script tag, but the mime-type doesn't match <code>application/dart</code>.</p></div><hr/><div id=polymer_14><h3>Expected Dart file extension <a href="#polymer_14">#14</a></h3><p>You are using the <code>application/dart</code> mime-type on a script tag, so the URL to the script source URL should have a <code>.dart</code> extension.</p></div><hr/><div id=polymer_15><h3>Script with both src and inline text <a href="#polymer_15">#15</a></h3><p>You have a script tag that includes both a <code>src</code> attribute and inline script text. You must choose one or the other.</p></div><hr/><div id=polymer_16><h3>Incorrect instantiation: missing base tag in instantiation <a href="#polymer_16">#16</a></h3><p>When you declare that a custom element extends from a base tag, for example:</p><pre><code>&lt;polymer-element name="my-example" extends="ul"&gt;
 </code></pre><p>or:</p><pre><code>&lt;polymer-element name="my-example2" extends="ul"&gt;
 &lt;polymer-element name="my-example" extends="my-example2"&gt;
 </code></pre><p>You should instantiate <code>my-example</code> by using this syntax:</p><pre><code>&lt;ul is="my-example"&gt;

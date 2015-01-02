@@ -1,1 +1,38 @@
-<link href="../polymer/polymer.html" rel=import><link href="../paper-shadow/paper-shadow.html" rel=import><link href="paper-dialog-base.html" rel=import><polymer-element name=paper-action-dialog extends=paper-dialog-base role=dialog><template><style>:host{background:#fff;color:rgba(0,0,0,0.87);margin:32px;overflow:visible !important}h1{font-size:20px}#scroller{overflow:auto;box-sizing:border-box;padding:24px 24px 0 24px}#actions{padding:16px}</style><paper-shadow z=3 fit></paper-shadow><div id=scroller relative><template if="{{heading}}"><h1>{{heading}}</h1></template><content select=":not([affirmative]):not([dismissive])"></content></div><div id=actions relative layout horizontal><content select="[dismissive]"></content><div flex></div><content select="[affirmative]"></content></div></template><script>Polymer({publish:{closeSelector:"[affirmative],[dismissive]"}});</script></polymer-element>
+<link href="../polymer/polymer.html" rel=import><link href="../paper-shadow/paper-shadow.html" rel=import><link href="paper-dialog-base.html" rel=import><polymer-element name=paper-action-dialog extends=paper-dialog-base role=dialog><template><style>
+    :host {
+      background: #fff;
+      color: rgba(0, 0, 0, 0.87);
+      margin: 32px;
+      overflow: visible !important;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    #scroller {
+      overflow: auto;
+      box-sizing: border-box;
+      padding: 24px 24px 0 24px;
+    }
+
+    #actions {
+      padding: 16px;
+    }
+  </style><paper-shadow z=3 fit></paper-shadow><div id=scroller relative><template if="{{heading}}"><h1>{{heading}}</h1></template><content select=":not([affirmative]):not([dismissive])"></content></div><div id=actions relative layout horizontal><content select="[dismissive]"></content><div flex></div><content select="[affirmative]"></content></div></template><script>
+
+  Polymer({
+
+    publish: {
+
+      /**
+       * @attribute closeSelector
+       * @type string
+       * @default '[affirmative],[dismissive]'
+       */
+      closeSelector: '[affirmative],[dismissive]'
+    }
+
+  });
+
+</script></polymer-element>

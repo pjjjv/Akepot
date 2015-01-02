@@ -1,1 +1,262 @@
-<!doctype html><html><head><title>core-ajax</title><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-ajax.html"></head><body><core-ajax></core-ajax><script>suite("core-ajax",function(){var b,c,a;suiteSetup(function(){b=sinon.useFakeXMLHttpRequest();a=document.querySelector("core-ajax");b.onCreate=function(d){c.push(d)};a.auto=false;a.url="";a.params="";a.handleAs="text";a.body=""});setup(function(){c=[]});suite("handleAs",function(){suite("text",function(){var d={"Content-Type":"text/plain"};setup(function(e){async.series([function(f){a.handleAs="text";a.url="http://example.com/text";a.auto=true;f()},animationFrameFlush,function(f){c[0].respond(200,d,"test text");f()}],e)});test("Raw text should pass through",function(){assert.equal(a.response,"test text")})});suite("xml",function(){var d={"Content-Type":"text/xml"};setup(function(e){async.series([function(f){a.handleAs="xml";a.url="http://example.com/xml";a.auto=true;f()},animationFrameFlush,function(f){c[0].respond(200,d,"<note><to>AJ</to><from>Dog</from><subject>Reminder</subject><body><q>Feed me!</q></body></note>");f()}],e)});test("XML should be returned with queryable structure",function(){var e=a.response.querySelector("note body q");assert.equal(e.childNodes[0].textContent,"Feed me!");var f=a.response.querySelector("to");assert.equal(f.childNodes[0].textContent,"AJ")})});suite("json",function(){var d={"Content-Type":"text/json"};setup(function(e){async.series([function(f){a.handleAs="json";a.url="http://example.com/json";a.auto=true;f()},animationFrameFlush,function(f){c[0].respond(200,d,'{"object" : {"list" : [2, 3, {"key": "value"}]}}');f()}],e)});test("JSON should be returned as an Object",function(){var e=a.response;assert.equal(e.object.list[1],3);assert.equal(e.object.list[2].key,"value")})});suite("arraybuffer",function(){var d={"Content-Type":"text/plain"};setup(function(e){async.series([function(f){a.handleAs="arraybuffer";a.url="http://example.com/data";a.auto=true;f()},animationFrameFlush,function(f){var g=new ArrayBuffer(8*4);var h=new Int32Array(g);h[3]=12;h[6]=21;c[0].response=g;c[0].respond(200,d,"blahblahblah");f()}],e)});test("arraybuffer response should be passed through",function(){var e=a.response;var f=new Int32Array(e);assert.equal(f[3],12);assert.equal(f[6],21)})});suite("blob",function(){});suite("document",function(){})});suite("auto",function(){suiteSetup(function(){a.url="http://example.com/";a.auto=true});test("url change should trigger request",function(d){async.series([function(e){a.url="http://example.com/auto";e()},animationFrameFlush,function(e){assert.equal(c.length,1);e()}],d)});test("params change should trigger request",function(d){async.series([function(e){a.params={param:"value"};e()},animationFrameFlush,function(e){assert.equal(c.length,1);e()}],d)});test("body change should trigger request",function(d){async.series([function(e){a.method="POST";a.body="bodystuff";e()},animationFrameFlush,function(e){assert.equal(c.length,1);e()}],d)})});suite("events",function(){var f={"Content-Type":"text/plain"};var d="somebodytext";var e;setup(function(g){async.series([function(h){a.auto=false;h()},animationFrameFlush,function(h){a.handleAs="text";a.url="http://example.com/text";a.auto=true;h()},animationFrameFlush],g);e=false});suite("core-response",function(){test("core-response should be fired on success",function(g){window.addEventListener("core-response",function(h,i){e=true});c[0].respond(200,f,d);assert.isTrue(e);g()});test("core-response should not be fired on failure",function(g){window.addEventListener("core-response",function(h,i){e=true});c[0].respond(404,f,d);assert.isFalse(e);g()})});suite("core-error",function(){test("core-error should be fired on failure",function(g){window.addEventListener("core-error",function(h,i){e=true});c[0].respond(404,f,d);assert.isTrue(e);g()});test("core-error should not be fired on success",function(g){var h=false;window.addEventListener("core-error",function(i,j){h=true});c[0].respond(200,f,d);assert.isFalse(h);g()})});suite("core-complete",function(){test("core-complete should be fired on success",function(g){window.addEventListener("core-complete",function(h,i){e=true});c[0].respond(200,f,d);assert.isTrue(e);g()});test("core-complete should be fired on failure",function(g){var h=false;window.addEventListener("core-complete",function(i,j){h=true});c[0].respond(404,f,d);assert.isTrue(h);g()})})})});</script></body></html>
+<!doctype html><html><head><title>core-ajax</title><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-ajax.html"></head><body><core-ajax></core-ajax><script>
+  suite('core-ajax', function() {
+    var xhr, requests, ajax;
+    suiteSetup(function() {
+      xhr = sinon.useFakeXMLHttpRequest();
+      ajax = document.querySelector("core-ajax");
+      xhr.onCreate = function (xhr) {
+        requests.push(xhr);
+      };
+      // Reset the core-ajax element before each test.
+      ajax.auto = false;
+      ajax.url = '';
+      ajax.params = '';
+      ajax.handleAs = 'text';
+      ajax.body = '';
+    });
+    setup(function() {
+      requests = [];
+    });
+    suite('handleAs', function() {
+      suite('text', function(){
+        var headers = {
+          "Content-Type": "text/plain"
+        };
+        setup(function(done){
+          async.series([
+            function(cb){
+              ajax.handleAs = 'text';
+              ajax.url = "http://example.com/text"
+              ajax.auto = true;
+              cb();
+            },
+            animationFrameFlush,
+            function(cb){
+              requests[0].respond(200, headers, "test text");
+              cb();
+            }
+            ], done);
+        });
+        test('Raw text should pass through', function(){
+          assert.equal(ajax.response, "test text")
+        });
+      });
+      suite('xml', function(){
+        var headers = {
+          "Content-Type": "text/xml"
+        };
+        setup(function(done){
+          async.series([
+            function(cb){
+              ajax.handleAs = 'xml';
+              ajax.url = "http://example.com/xml"
+              ajax.auto = true;
+              cb();
+            },
+            animationFrameFlush,
+            function(cb){
+              requests[0].respond(200, headers,
+                          "<note>" +
+                          "<to>AJ</to>" +
+                          "<from>Dog</from>" +
+                          "<subject>Reminder</subject>" +
+                          "<body><q>Feed me!</q></body>" +
+                          "</note>");
+              cb();
+            }
+            ], done);
+        });
+        test('XML should be returned with queryable structure', function(){
+          var q = ajax.response.querySelector("note body q");
+          assert.equal(q.childNodes[0].textContent, "Feed me!");
+          var to = ajax.response.querySelector("to");
+          assert.equal(to.childNodes[0].textContent, "AJ");
+        })});
+      suite('json', function(){
+        var headers = {
+          "Content-Type": "text/json"
+        };
+        setup(function(done){
+          async.series([
+            function(cb){
+              ajax.handleAs = 'json';
+              ajax.url = "http://example.com/json"
+              ajax.auto = true;
+              cb();
+            },
+            animationFrameFlush,
+            function(cb){
+              requests[0].respond(200, headers,
+                          '{"object" : {"list" : [2, 3, {"key": "value"}]}}');
+              cb();
+            }
+            ], done);
+        });
+        test('JSON should be returned as an Object', function(){
+          var r = ajax.response;
+          assert.equal(r.object.list[1], 3);
+          assert.equal(r.object.list[2].key, "value");
+        });
+      });
+      suite('arraybuffer', function(){
+        var headers = {
+          "Content-Type": "text/plain"
+        };
+        setup(function(done){
+          async.series([
+            function(cb){
+              ajax.handleAs = 'arraybuffer';
+              ajax.url = "http://example.com/data"
+              ajax.auto = true;
+              cb();
+            },
+            animationFrameFlush,
+            function(cb){
+              var buf = new ArrayBuffer(8*4);
+              var resp = new Int32Array(buf);
+              resp[3] = 12;
+              resp[6] = 21;
+              requests[0].response = buf;
+              requests[0].respond(200, headers, 'blahblahblah');
+              cb();
+            }
+            ], done);
+        });
+        test('arraybuffer response should be passed through', function(){
+          var r = ajax.response;
+          var ints = new Int32Array(r);
+          assert.equal(ints[3], 12);
+          assert.equal(ints[6], 21);
+        });
+      });
+      suite('blob', function(){});
+      suite('document', function(){});
+    });
+    suite('auto', function() {
+      suiteSetup(function(){
+        ajax.url = "http://example.com/"
+        ajax.auto = true;
+      });
+      test('url change should trigger request', function(done){
+        async.series([
+          function(cb){
+            ajax.url = "http://example.com/auto";
+            cb();
+          },
+          animationFrameFlush,
+          function(cb){
+            assert.equal(requests.length, 1);
+            cb();
+          }
+          ], done);
+      });
+      test('params change should trigger request', function(done){
+        async.series([
+          function(cb){
+            ajax.params = {param: "value"};
+            cb();
+          },
+          animationFrameFlush,
+          function(cb){
+            assert.equal(requests.length, 1);
+            cb();
+          }
+          ], done);
+      });
+      test('body change should trigger request', function(done){
+        async.series([
+          function(cb){
+            ajax.method = "POST";
+            ajax.body = "bodystuff";
+            cb();
+          },
+          animationFrameFlush,
+          function(cb){
+            assert.equal(requests.length, 1);
+            cb();
+          }
+          ], done);
+      });
+    });
+    suite('events', function(){
+      var headers = {
+        "Content-Type": "text/plain"
+      };
+      var body = "somebodytext";
+      var responded;
+      setup(function(done){
+        async.series([
+          function(cb){
+            ajax.auto = false;
+            cb();
+          },
+          animationFrameFlush,
+          function(cb){;
+            ajax.handleAs = 'text';
+            ajax.url = "http://example.com/text"
+            ajax.auto = true;
+            cb();
+          },
+          animationFrameFlush,
+          ], done);
+        responded = false;
+      });
+      suite('core-response', function(){
+        test('core-response should be fired on success', function(done){
+          window.addEventListener('core-response', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(200, headers, body);
+          assert.isTrue(responded);
+          done();
+        });
+        test('core-response should not be fired on failure', function(done){
+          window.addEventListener('core-response', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(404, headers, body);
+          assert.isFalse(responded);
+          done();
+        });
+      });
+      suite('core-error', function(){
+        test('core-error should be fired on failure', function(done){
+          window.addEventListener('core-error', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(404, headers, body);
+          assert.isTrue(responded);
+          done();
+        });
+        test('core-error should not be fired on success', function(done){
+          var responded = false;
+          window.addEventListener('core-error', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(200, headers, body);
+          assert.isFalse(responded);
+          done();
+        });
+      });
+      suite('core-complete', function(){
+        test('core-complete should be fired on success', function(done){
+          window.addEventListener('core-complete', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(200, headers, body);
+          assert.isTrue(responded);
+          done();
+        });
+        test('core-complete should be fired on failure', function(done){
+          var responded = false;
+          window.addEventListener('core-complete', function(response, xhr){
+            responded = true;
+          });
+          requests[0].respond(404, headers, body);
+          assert.isTrue(responded);
+          done();
+        });
+      });
+    });
+  });
+  </script></body></html>

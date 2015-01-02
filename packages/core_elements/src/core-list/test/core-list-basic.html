@@ -1,1 +1,294 @@
-<!doctype html><html><head><title>core-list</title><meta name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-list.html"><style>body{margin:0;height:100%}core-list{display:block;height:100%;margin:0 auto}input{width:20px}.item{height:80px;background:lightblue}.item.selected{background:orange}</style></head><body fit><core-list id=list><template><div class="item {{ {selected: selected} | tokenList }}"><span id=index>{{index}}</span><br><span id=id>{{model.id}}</span><br><input id=checkbox type=checkbox checked"{{model.checked}}"><input id=input type=number _value="{{model.value}}" class=narrow><select id=select selectedIndex="{{model.type}}"><option>a</option><option>b</option><option>c</option></select></div></template></core-list><script>test("core-list-basic",function(a){var c=document.querySelector("core-list");var g=80;var h=Math.ceil(c.offsetHeight/g);var b=0;var i;var f=function(){return{id:Math.floor(Math.random()*10000),checked:!!Math.floor(Math.random()*2),value:Math.floor(Math.random()*10000),type:Math.floor(Math.random()*3)}};var e=function(j){var k=document.elementFromPoint(c.clientWidth-50,0);chai.assert(k&&k.templateInstance&&k.templateInstance.model&&k.templateInstance.model.index==b,"top item index should be "+b+" "+j);chai.assert(k.templateInstance.model.model==c.data[b],"top item model should be data["+b+"]  "+j);chai.assert(k.querySelector("#index").textContent==b,"top item index content should be "+b+" "+j);chai.assert(k.querySelector("#id").textContent==c.data[b].id,"top item id content should be "+c.data[b].id+" "+j);chai.assert(k.querySelector("#checkbox").checked==c.data[b].checked,"top item checkbox should be "+c.data[b].checked+" "+j);chai.assert(k.querySelector("#input").value==c.data[b].value,"top item input should be "+c.data[b].value+" "+j);chai.assert(k.querySelector("#select").selectedIndex==c.data[b].type,"top item select should be "+c.data[b].type+" "+j)};var d=function(k,j){b+=k;c.scrollTop+=k*g;waitFor(function(){e("when scrolled to item "+b)},j)};async.series([function(j){c.data=[f(),f()];waitFor(function(){chai.assert(c.children.length==3,"children.length should be 3 (1 template + count of data elements");e("after initialization")},j)},function(j){waitFor(function(){var k=document.elementFromPoint(c.clientWidth-50,0);chai.assert(k,"item should exist at top of list");k.dispatchEvent(new MouseEvent("tap",{view:window,bubbles:true}))},j)},function(j){waitFor(function(){chai.assert(c.selection&&c.selection.id==c.data[0].id,"first item should be selected; selected id was "+c.selection&&c.selection.id)},j)},function(j){var k=document.elementFromPoint(c.clientWidth-50,g);k.dispatchEvent(new MouseEvent("tap",{view:window,bubbles:true}));waitFor(function(){chai.assert(c.selection&&c.selection.id==c.data[1].id,"second item should be selected; selection "+c.selection&&c.selection.id)},j)},function(j){c.multi=true;var k=document.elementFromPoint(c.clientWidth-50,0);k.dispatchEvent(new MouseEvent("tap",{view:window,bubbles:true}));waitFor(function(){chai.assert(c.selection&&c.selection.length==2,"selection length should be 2");chai.assert(c.selection[0].id==c.data[1].id&&c.selection[1].id==c.data[0].id,"first and second items should be selected; selected ids: "+c.selection[0].id+", "+c.selection[1].id)},j)},function(j){c.data.length=1;waitFor(function(){chai.assert(c.children.length==3,"children.length should stay 3 (1 template, plus 2 originally created items)");chai.assert(c.children[2].getAttribute("hidden")!==null,"last element should be hidden");chai.assert(c.selection.length==1,"selection length should be 1");chai.assert(c.selection[0].id==c.data[0].id,"first element should be selected")},j)},function(j){var k=document.elementFromPoint(c.clientWidth-50,0);k.dispatchEvent(new MouseEvent("tap",{view:window,bubbles:true}));waitFor(function(){chai.assert(c.selection.length===0,"selection length should be 0")},j)},function(k){var j=h*20;while(j--){c.data.push(f())}waitFor(function(){chai.assert(c.children.length>h+1,"children.length should be "+h+" (1 template + max number of elements")},k)},function(j){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){d(h,function(){j()})})})})})})})})})})})})},function(j){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){d(-h,function(){j()})})})})})})})})})})})})},function(j){c.scrollTop=99999999;b=c.data.length-Math.ceil(c.offsetHeight/g);waitFor(function(){e("at bottom of list")},j)},function(j){var k=document.elementFromPoint(c.clientWidth-50,0);k.dispatchEvent(new MouseEvent("tap",{view:window,bubbles:true}));waitFor(function(){chai.assert(c.selection.length===1,"selection length should be 1");chai.assert(c.selection[0].id==c.data[b].id,"top item at bottom of list (index "+b+") should be selected")},j)},function(j){c.data.length=c.data.length-1;var k=b;b=c.data.length-Math.ceil(c.offsetHeight/g);waitFor(function(){e("at bottom of list after deleting one item from end of list");chai.assert(c.selection.length===1,"selection length should be 1");chai.assert(c.selection[0].id==c.data[k].id,"previously selected item (index "+k+") should stay selected")},j)},function(j){c.data.length=c.data.length-Math.floor(c.data.length/2);var k=b;b=c.data.length-Math.ceil(c.offsetHeight/g);waitFor(function(){e("at bottom of list after deleting half of items items from end of list");chai.assert(c.selection.length===0,"selection length should be 0")},j)},function(j){c.data.splice(0,Math.floor(c.data.length/2));b=c.data.length-Math.ceil(c.offsetHeight/g);waitFor(function(){e("at bottom of list after deleting half of items items from top of list")},j,32)},function(j){c.data.splice(0,Math.floor(c.data.length/2));b=c.data.length-Math.ceil(c.offsetHeight/g);waitFor(function(){e("at bottom of list after deleting half of items items from top of list (again)")},j)}],a)});</script></body></html>
+<!doctype html><html><head><title>core-list</title><meta name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><script src="../../webcomponentsjs/webcomponents.js"></script><script src="../../web-component-tester/browser.js"></script><link rel=import href="../core-list.html"><style>
+    body {
+      margin: 0;
+      height: 100%;
+    }
+    core-list {
+      display: block;
+      height: 100%;
+      margin: 0 auto;
+    }
+    input {
+      width: 20px;
+    }
+    .item {
+      height: 80px;
+      background: lightblue;
+    }
+    .item.selected {
+      background: orange;
+    }
+  </style></head><body fit><core-list id=list><template><div class="item {{ {selected: selected} | tokenList }}"><span id=index>{{index}}</span><br><span id=id>{{model.id}}</span><br><input id=checkbox type=checkbox checked"{{model.checked}}"><input id=input type=number _value="{{model.value}}" class=narrow><select id=select selectedIndex="{{model.type}}"><option>a</option><option>b</option><option>c</option></select></div></template></core-list><script>
+  test('core-list-basic', function(done) {
+    // Initial setup
+    var list = document.querySelector('core-list');
+    var height = 80;
+    var physicalCount = Math.ceil(list.offsetHeight  / height);
+    var index = 0;
+    var item;
+    // Helper to create random items
+    var generateItem = function() {
+      return {
+        id: Math.floor(Math.random()*10000),
+        checked: !!Math.floor(Math.random()*2),
+        value: Math.floor(Math.random()*10000),
+        type: Math.floor(Math.random()*3)
+      };
+    };
+    // Helper to assert top item is rendered as expected
+    var checkTopItem = function(positionDescription) {
+      // Measure from top-right (to avoid template children)
+      var item = document.elementFromPoint(list.clientWidth-50, 0);
+      chai.assert(item && 
+        item.templateInstance && 
+        item.templateInstance.model && 
+        item.templateInstance.model.index == index,
+          'top item index should be ' + index + ' ' + positionDescription);
+      chai.assert(item.templateInstance.model.model == list.data[index],
+          'top item model should be data[' + index + ']  ' + positionDescription);
+      chai.assert(item.querySelector('#index').textContent == index,
+          'top item index content should be ' + index + ' ' + positionDescription);
+      chai.assert(item.querySelector('#id').textContent == list.data[index].id,
+          'top item id content should be ' + list.data[index].id + ' ' + positionDescription);
+      chai.assert(item.querySelector('#checkbox').checked == list.data[index].checked,
+          'top item checkbox should be ' + list.data[index].checked + ' ' + positionDescription);
+      chai.assert(item.querySelector('#input').value == list.data[index].value,
+          'top item input should be ' + list.data[index].value + ' ' + positionDescription);
+      chai.assert(item.querySelector('#select').selectedIndex == list.data[index].type,
+          'top item select should be ' + list.data[index].type + ' ' + positionDescription);
+    };
+    var scrollItemsAndCheck = function(count, next) {
+      index += count;
+      list.scrollTop += count * height;
+      waitFor(function() {
+        checkTopItem('when scrolled to item ' + index);
+      }, next);
+    };
+    async.series([
+      // Initialize list with two items
+      function(next) {
+        list.data = [
+          generateItem(),
+          generateItem()
+        ];
+        waitFor(function() {
+          chai.assert(list.children.length == 3, // (+1 for template)
+            'children.length should be 3 (1 template + count of data elements');
+          checkTopItem('after initialization');
+        }, next);
+      },
+      // Select first item
+      function(next) {
+        waitFor(function() {
+          var item = document.elementFromPoint(list.clientWidth-50, 0);
+          chai.assert(item, 'item should exist at top of list');
+          item.dispatchEvent(new MouseEvent('tap', {'view': window, 'bubbles': true}));
+        }, next);
+      },
+      function(next) {
+        waitFor(function() {
+          chai.assert(list.selection && list.selection.id == list.data[0].id, 
+            'first item should be selected; selected id was ' + list.selection && list.selection.id);
+        }, next);
+      },
+      // Select second item
+      function(next) {
+        var item = document.elementFromPoint(list.clientWidth-50, height);
+        item.dispatchEvent(new MouseEvent('tap', {'view': window, 'bubbles': true}));
+        waitFor(function() {
+          chai.assert(list.selection && list.selection.id == list.data[1].id, 
+            'second item should be selected; selection ' + list.selection && list.selection.id);
+        }, next);
+      },
+      // Enable multiple-selection, and select the first item (for total of 2 selected)
+      function(next) {
+        list.multi = true;
+        var item = document.elementFromPoint(list.clientWidth-50, 0);
+        item.dispatchEvent(new MouseEvent('tap', {'view': window, 'bubbles': true}));
+        waitFor(function() {
+          chai.assert(list.selection && list.selection.length == 2, 
+            'selection length should be 2');
+          // Note, selection is maintained in order, so last item selected is last in selection
+          chai.assert(list.selection[0].id == list.data[1].id && list.selection[1].id == list.data[0].id, 
+            'first and second items should be selected; selected ids: ' +  
+            list.selection[0].id + ', ' + list.selection[1].id);
+        }, next);
+      },
+      // Delete one item
+      function(next) {
+        list.data.length = 1;
+        waitFor(function() {
+          chai.assert(list.children.length == 3,
+            'children.length should stay 3 (1 template, plus 2 originally created items)');
+          chai.assert(list.children[2].getAttribute('hidden') !== null, 
+            'last element should be hidden');
+          chai.assert(list.selection.length == 1, 
+            'selection length should be 1');
+          chai.assert(list.selection[0].id == list.data[0].id, 
+            'first element should be selected');
+        }, next);
+      },
+      // Deselect first item
+      function(next) {
+        var item = document.elementFromPoint(list.clientWidth-50, 0);
+        item.dispatchEvent(new MouseEvent('tap', {'view': window, 'bubbles': true}));
+        waitFor(function() {
+          chai.assert(list.selection.length === 0, 
+            'selection length should be 0');
+        }, next);
+      },
+      // Add many more than viewport
+      function(next) {
+        var more = physicalCount * 20;
+        while (more--) {
+          list.data.push(generateItem());
+        }
+        waitFor(function() {
+          chai.assert(list.children.length > physicalCount + 1, // (+1 for template)
+            'children.length should be ' + physicalCount + ' (1 template + max number of elements');
+        }, next);
+      },
+      function(next) {
+        // Scroll down
+        scrollItemsAndCheck(physicalCount, function() {
+          scrollItemsAndCheck(physicalCount, function() {
+            scrollItemsAndCheck(physicalCount, function() {
+              scrollItemsAndCheck(physicalCount, function() {
+                scrollItemsAndCheck(physicalCount, function() {
+                  scrollItemsAndCheck(physicalCount, function() {
+                    scrollItemsAndCheck(physicalCount, function() {
+                      scrollItemsAndCheck(physicalCount, function() {
+                        scrollItemsAndCheck(physicalCount, function() {
+                          scrollItemsAndCheck(physicalCount, function() {
+                            scrollItemsAndCheck(physicalCount, function() {
+                              scrollItemsAndCheck(physicalCount, function() {
+                                next();
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      },
+      function(next) {
+        // Scroll back up
+        scrollItemsAndCheck(-physicalCount, function() {
+          scrollItemsAndCheck(-physicalCount, function() {
+            scrollItemsAndCheck(-physicalCount, function() {
+              scrollItemsAndCheck(-physicalCount, function() {
+                scrollItemsAndCheck(-physicalCount, function() {
+                  scrollItemsAndCheck(-physicalCount, function() {
+                    scrollItemsAndCheck(-physicalCount, function() {
+                      scrollItemsAndCheck(-physicalCount, function() {
+                        scrollItemsAndCheck(-physicalCount, function() {
+                          scrollItemsAndCheck(-physicalCount, function() {
+                            scrollItemsAndCheck(-physicalCount, function() {
+                              scrollItemsAndCheck(-physicalCount, function() {
+                                next();
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      },
+      // Scroll all the way to bottom
+      function(next) {
+        list.scrollTop = 99999999;
+        index = list.data.length - Math.ceil(list.offsetHeight / height);
+        waitFor(function() {
+          checkTopItem('at bottom of list');
+        }, next);
+      },
+      // Select item
+      function(next) {
+        var item = document.elementFromPoint(list.clientWidth-50, 0);
+        item.dispatchEvent(new MouseEvent('tap', {'view': window, 'bubbles': true}));
+        waitFor(function() {
+          chai.assert(list.selection.length === 1, 
+            'selection length should be 1');
+          chai.assert(list.selection[0].id == list.data[index].id, 
+            'top item at bottom of list (index ' + index + ') should be selected');
+        }, next);
+      },
+      // Delete one item from bottom
+      function(next) {
+        list.data.length = list.data.length - 1;
+        var lastIndex = index;
+        index = list.data.length - Math.ceil(list.offsetHeight / height);
+        waitFor(function() {
+          checkTopItem('at bottom of list after deleting one item from end of list');
+          chai.assert(list.selection.length === 1, 
+            'selection length should be 1');
+          chai.assert(list.selection[0].id == list.data[lastIndex].id, 
+            'previously selected item (index ' + lastIndex + ') should stay selected');
+        }, next);
+      },
+      // Delete from bottom
+      function(next) {
+        list.data.length = list.data.length - Math.floor(list.data.length/2);
+        var lastIndex = index;
+        index = list.data.length - Math.ceil(list.offsetHeight / height);
+        waitFor(function() {
+          checkTopItem('at bottom of list after deleting half of items items from end of list');
+          chai.assert(list.selection.length === 0, 
+            'selection length should be 0');
+        }, next);
+      },
+      // Delete from top
+      function(next) {
+        list.data.splice(0, Math.floor(list.data.length/2));
+        index = list.data.length - Math.ceil(list.offsetHeight / height);
+        waitFor(function() {
+          checkTopItem('at bottom of list after deleting half of items items from top of list');
+        }, next, 32);
+      },
+      // Delete from top
+      function(next) {
+        list.data.splice(0, Math.floor(list.data.length/2));
+        index = list.data.length - Math.ceil(list.offsetHeight / height);
+        waitFor(function() {
+          checkTopItem('at bottom of list after deleting half of items items from top of list (again)');
+        }, next);
+      },
+      // Webdriver-based: Tap on first item
+      // function(next) {
+      //   requiresWebdriver(function() {
+      //
+      //     // Method 1: click element directly by reference
+      //     var item = document.elementFromPoint(list.clientWidth-50, 0);
+      //     webdriverCommand(['clickElement', item], function(err) {
+      //       waitFor(function() {
+      //         chai.assert(list.selection && list.selection.id == list.data[0].id, 
+      //           'first item should be selected; selection was ' + (list.selection && list.selection.id));
+      //       }, next);
+      //     }, next);
+      //
+      //     // Method 2: move mouse, then click mouse
+      //     webdriverCommand(['moveTo', null, list.offsetWidth-50, 0], function(err) {
+      //       webdriverCommand(['click', 0], function(err) {
+      //         waitFor(function() {
+      //           chai.assert(list.selection && list.selection.id == list.data[0].id, 
+      //             'first item should be selected; selection was ' + (list.selection && list.selection.id));
+      //         }, next);
+      //       }, next);
+      //     }, next);
+      //   }, function(){});
+      //
+      // },
+    ], done);
+  });
+
+</script></body></html>

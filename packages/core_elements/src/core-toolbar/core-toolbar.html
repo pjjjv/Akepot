@@ -1,1 +1,68 @@
-<link rel=import href="../polymer/polymer.html"><polymer-element name=core-toolbar attributes="justify middleJustify bottomJustify"><template><link rel=stylesheet href="core-toolbar.css"><div id=bottomBar class=toolbar-tools center horizontal layout><content select=".bottom"></content></div><div id=middleBar class=toolbar-tools center horizontal layout><content select=".middle"></content></div><div id=topBar class=toolbar-tools center horizontal layout><content></content></div></template><script>(function(){Polymer("core-toolbar",{justify:"",middleJustify:"",bottomJustify:"",justifyChanged:function(a){this.updateBarJustify(this.$.topBar,this.justify,a)},middleJustifyChanged:function(a){this.updateBarJustify(this.$.middleBar,this.middleJustify,a)},bottomJustifyChanged:function(a){this.updateBarJustify(this.$.bottomBar,this.bottomJustify,a)},updateBarJustify:function(c,b,a){if(a){c.removeAttribute(this.toLayoutAttrName(a))}if(this.justify){c.setAttribute(this.toLayoutAttrName(b),"")}},toLayoutAttrName:function(a){return a==="between"?"justified":a+"-justified"}})})();</script></polymer-element>
+<link rel=import href="../polymer/polymer.html"><polymer-element name=core-toolbar attributes="justify middleJustify bottomJustify"><template><link rel=stylesheet href="core-toolbar.css"><div id=bottomBar class=toolbar-tools center horizontal layout><content select=".bottom"></content></div><div id=middleBar class=toolbar-tools center horizontal layout><content select=".middle"></content></div><div id=topBar class=toolbar-tools center horizontal layout><content></content></div></template><script>
+
+(function() {
+
+  Polymer('core-toolbar', {
+    
+    /**
+     * Controls how the items are aligned horizontally.
+     * Options are `start`, `center`, `end`, `between` and `around`.
+     *
+     * @attribute justify
+     * @type string
+     * @default ''
+     */
+    justify: '',
+    
+    /**
+     * Controls how the items are aligned horizontally when they are placed
+     * in the middle.
+     * Options are `start`, `center`, `end`, `between` and `around`.
+     *
+     * @attribute middleJustify
+     * @type string
+     * @default ''
+     */
+    middleJustify: '',
+    
+    /**
+     * Controls how the items are aligned horizontally when they are placed
+     * at the bottom.
+     * Options are `start`, `center`, `end`, `between` and `around`.
+     *
+     * @attribute bottomJustify
+     * @type string
+     * @default ''
+     */
+    bottomJustify: '',
+    
+    justifyChanged: function(old) {
+      this.updateBarJustify(this.$.topBar, this.justify, old);
+    },
+    
+    middleJustifyChanged: function(old) {
+      this.updateBarJustify(this.$.middleBar, this.middleJustify, old);
+    },
+    
+    bottomJustifyChanged: function(old) {
+      this.updateBarJustify(this.$.bottomBar, this.bottomJustify, old);
+    },
+    
+    updateBarJustify: function(bar, justify, old) {
+      if (old) {
+        bar.removeAttribute(this.toLayoutAttrName(old));
+      }
+      if (this.justify) {
+        bar.setAttribute(this.toLayoutAttrName(justify), '');
+      }
+    },
+    
+    toLayoutAttrName: function(value) {
+      return value === 'between' ? 'justified' : value + '-justified';
+    }
+    
+  });
+
+})();
+
+</script></polymer-element>

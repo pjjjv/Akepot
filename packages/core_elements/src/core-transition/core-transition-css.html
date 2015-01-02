@@ -1,1 +1,102 @@
-<link rel=import href="core-transition.html"><polymer-element name=core-transition-css extends=core-transition attributes=transitionType><template><link no-shim rel=stylesheet href="core-transition-overlay.css"></template><script>Polymer("core-transition-css",{baseClass:"core-transition",openedClass:"core-opened",closedClass:"core-closed",completeEventName:"transitionend",publish:{transitionType:null},registerCallback:function(a){this.transitionStyle=a.templateContent().firstElementChild},fetchTemplate:function(){return null},go:function(a,b){if(b.opened!==undefined){this.transitionOpened(a,b.opened)}},setup:function(a){if(!a._hasTransitionStyle){if(!a.shadowRoot){a.createShadowRoot().innerHTML="<content></content>"}this.installScopeStyle(this.transitionStyle,"transition",a.shadowRoot);a._hasTransitionStyle=true}a.classList.add(this.baseClass);if(this.transitionType){a.classList.add(this.baseClass+"-"+this.transitionType)}},teardown:function(a){a.classList.remove(this.baseClass);if(this.transitionType){a.classList.remove(this.baseClass+"-"+this.transitionType)}},transitionOpened:function(a,b){this.listenOnce(a,this.completeEventName,function(){if(!b){a.classList.remove(this.closedClass)}this.complete(a)});a.classList.toggle(this.openedClass,b);a.classList.toggle(this.closedClass,!b)}});</script></polymer-element><core-transition-css id=core-transition-fade></core-transition-css><core-transition-css id=core-transition-center transitionType=center></core-transition-css><core-transition-css id=core-transition-top transitionType=top></core-transition-css><core-transition-css id=core-transition-bottom transitionType=bottom></core-transition-css><core-transition-css id=core-transition-left transitionType=left></core-transition-css><core-transition-css id=core-transition-right transitionType=right></core-transition-css>
+<link rel=import href="core-transition.html"><polymer-element name=core-transition-css extends=core-transition attributes=transitionType><template><link no-shim rel=stylesheet href="core-transition-overlay.css"></template><script>
+
+  Polymer('core-transition-css', {
+
+    /**
+     * The class that will be applied to all animated nodes.
+     *
+     * @attribute baseClass
+     * @type string
+     * @default "core-transition"
+     */
+    baseClass: 'core-transition',
+
+    /**
+     * The class that will be applied to nodes in the opened state.
+     *
+     * @attribute openedClass
+     * @type string
+     * @default "core-opened"
+     */
+    openedClass: 'core-opened',
+
+    /**
+     * The class that will be applied to nodes in the closed state.
+     *
+     * @attribute closedClass
+     * @type string
+     * @default "core-closed"
+     */
+    closedClass: 'core-closed',
+
+    /**
+     * Event to listen to for animation completion.
+     *
+     * @attribute completeEventName
+     * @type string
+     * @default "transitionEnd"
+     */
+    completeEventName: 'transitionend',
+
+    publish: {
+      /**
+       * A secondary configuration attribute for the animation. The class
+       * `<baseClass>-<transitionType` is applied to the animated node during
+       * `setup`.
+       *
+       * @attribute transitionType
+       * @type string
+       */
+      transitionType: null
+    },
+
+    registerCallback: function(element) {
+      this.transitionStyle = element.templateContent().firstElementChild;
+    },
+
+    // template is just for loading styles, we don't need a shadowRoot
+    fetchTemplate: function() {
+      return null;
+    },
+
+    go: function(node, state) {
+      if (state.opened !== undefined) {
+        this.transitionOpened(node, state.opened);
+      }
+    },
+
+    setup: function(node) {
+      if (!node._hasTransitionStyle) {
+        if (!node.shadowRoot) {
+          node.createShadowRoot().innerHTML = '<content></content>';
+        }
+        this.installScopeStyle(this.transitionStyle, 'transition',
+            node.shadowRoot);
+        node._hasTransitionStyle = true;
+      }
+      node.classList.add(this.baseClass);
+      if (this.transitionType) {
+        node.classList.add(this.baseClass + '-' + this.transitionType);
+      }
+    },
+
+    teardown: function(node) {
+      node.classList.remove(this.baseClass);
+      if (this.transitionType) {
+        node.classList.remove(this.baseClass + '-' + this.transitionType);
+      }
+    },
+
+    transitionOpened: function(node, opened) {
+      this.listenOnce(node, this.completeEventName, function() {
+        if (!opened) {
+          node.classList.remove(this.closedClass);
+        }
+        this.complete(node);
+      });
+      node.classList.toggle(this.openedClass, opened);
+      node.classList.toggle(this.closedClass, !opened);
+    }
+
+  });
+</script></polymer-element><core-transition-css id=core-transition-fade></core-transition-css><core-transition-css id=core-transition-center transitionType=center></core-transition-css><core-transition-css id=core-transition-top transitionType=top></core-transition-css><core-transition-css id=core-transition-bottom transitionType=bottom></core-transition-css><core-transition-css id=core-transition-left transitionType=left></core-transition-css><core-transition-css id=core-transition-right transitionType=right></core-transition-css>

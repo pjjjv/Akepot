@@ -1,1 +1,32 @@
-<link rel=import href="../../../../packages/polymer/polymer.html">ml"><link rel=import href="more-switch.html"><polymer-element name=template-switch extends=more-switch><script>Polymer("template-switch",{activateChild:function(f,c,e){if(this._activeContent){this._activeContent.remove()}var d=this.children[c];if(!d){return}var b=this.modelForChild(d,c);var a=d.createInstance(b,this.bindingDelegate);this._activeContent=document.createElement("div");this._activeContent.appendChild(a);this.appendChild(this._activeContent)},modelForChild:function(b,a){return this.templateInstance&&this.templateInstance.model||{}}});</script></polymer-element>
+<link rel=import href="../../../../packages/polymer/polymer.html">ml"><link rel=import href="more-switch.html"><polymer-element name=template-switch extends=more-switch><script>
+    Polymer('template-switch', {
+
+      /** @override */
+      activateChild: function(child, index, external) {
+        if (this._activeContent) {
+          this._activeContent.remove();
+        }
+        var template = this.children[index];
+        if (!template) return;
+
+        var model    = this.modelForChild(template, index);
+        var fragment = template.createInstance(model, this.bindingDelegate);
+
+        this._activeContent = document.createElement('div');
+        this._activeContent.appendChild(fragment);
+        this.appendChild(this._activeContent);
+      },
+
+      /**
+       * @method modelForChild
+       * @protected
+       * @param {!HTMLElement} child The child element.
+       * @param {number}       index The index of the child.
+       * @return {!Object} The object to use as a template model.
+       */
+      modelForChild: function(child, index) {
+        return this.templateInstance && this.templateInstance.model || {};
+      },
+
+    });
+  </script></polymer-element>

@@ -1,1 +1,17 @@
-<link rel=import href="../driver.html"><script>(function(b){var d=b.MoreRouting=b.MoreRouting||{};d.MockDriver=a;function a(){d.Driver.apply(this,arguments)}a.prototype=Object.create(d.Driver.prototype);a.prototype.navigateToUrl=function c(e){this.setCurrentPath(e)}})(window);</script>
+<link rel=import href="../driver.html"><script>
+(function(scope) {
+var MoreRouting = scope.MoreRouting = scope.MoreRouting || {};
+MoreRouting.MockDriver = MockDriver;
+
+/** A mock driver for use in your tests. */
+function MockDriver() {
+  MoreRouting.Driver.apply(this, arguments);
+}
+MockDriver.prototype = Object.create(MoreRouting.Driver.prototype);
+
+MockDriver.prototype.navigateToUrl = function navigateToUrl(url) {
+  this.setCurrentPath(url);
+};
+
+})(window);
+</script>

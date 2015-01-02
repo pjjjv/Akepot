@@ -1,1 +1,190 @@
-<link rel=import href="../../../../packages/polymer/polymer.html"><link rel=import href="more-route.html"><polymer-element name=more-route-selector><script>Polymer("more-route-selector",{publish:{routes:[],multi:false,selectedIndex:-1,selectedRoute:null,selectedPath:null,selectedParams:{}},ready:function(){if(this.routes.length>0&&this.children.length>0){throw new Error('more-route-selector supports either routes="..." or child elements, not both')}},attached:function(){this.parent=this._findParent();this.async(function(){this._buildRoutes();this._observeRoutes();this.evaluate()})},evaluate:function(){var k=-1;var h=this.selectedIndex;for(var e=0,j;j=this._routeRefs[e];e++){if(j.active){k=e;break}}if(k===h){return}var b=this.selectedRoute;var a=this.selectedPath;var d=this.selectedParams;var c=this._routeRefs[k];var g=c?c.path:null;var f=c?c.params:{};this.selectedRoute=c;this.selectedIndex=k;this.selectedPath=g;this.selectedParams=f;this.fire("more-route-change",{newRoute:c,oldRoute:b,newIndex:k,oldIndex:h,newPath:g,oldPath:a,newParams:f,oldParams:d})},_buildRoutes:function(){if(this.routes.length>0){this._routeRefs=this._routesFromAttributes()}else{this._routeRefs=this._routesFromChildren()}},_routesFromAttributes:function(){var a=this.parent&&this.parent.path||"";return this.routes.map(function(b){if(MoreRouting.isPath(b)){return MoreRouting.getRouteByPath(a+b)}else{return MoreRouting.getRouteByName(b)}})},_routesFromChildren:function(){var a=[];for(var b=0,c;c=this.children[b];b++){a.push(c.route)}return a},_observeRoutes:function(){if(this._observer){this._observer.close()}this._observer=new CompoundObserver();for(var b=0,a;a=this._routeRefs[b];b++){this._observer.addPath(a,"active")}this._observer.open(this.evaluate.bind(this))},_findParent:function(){var b=this;while(b){b=b.parentNode||b.host;var a=b&&b.moreRouteContext||b;if(a instanceof this.constructor&&a!==this){return a}}return null}});</script></polymer-element>
+<link rel=import href="../../../../packages/polymer/polymer.html"><link rel=import href="more-route.html"><polymer-element name=more-route-selector><script>
+    Polymer('more-route-selector', {
+      /**
+       * @event more-route-change fires when a new route is selected.
+       * @param {{
+       *   newRoute:  MoreRouting.Route, oldRoute: MoreRouting.Route,
+       *   newIndex:  number,  oldIndex:  number,
+       *   newPath:   ?string, oldPath:   ?string,
+       *   newParams: Object,  oldParams: Object,
+       * }}
+       */
+
+      publish: {
+        /**
+         * Routes to select from, as either a path expression or route name.
+         *
+         * You can either specify routes via this attribute, or as child nodes
+         * to this element, but not both.
+         *
+         * @attribute routes
+         * @type Array.<string>
+         */
+        routes: [],
+
+        /**
+         * Whether more than one route can be selected at a time. If not, the
+         * _first_ active route will be selected.
+         *
+         * @attribute multi
+         * @type boolean
+         * @default false
+         */
+        multi: false,
+
+        /**
+         * The index of the selected route (relative to `routes`). -1 when there
+         * is no active route.
+         *
+         * @attribute selectedIndex
+         * @type integer
+         * @readonly
+         */
+        selectedIndex: -1,
+
+        /**
+         * The selected `MoreRouting.Route` object, or `null`.
+         *
+         * @attribute selectedRoute
+         * @type MoreRouting.Route
+         * @readonly
+         */
+        selectedRoute: null,
+
+        /**
+         * The path expression of the selected route, or `null` if no route.
+         *
+         * @attribute selectedPath
+         * @type ?string
+         * @readonly
+         */
+        selectedPath: null,
+
+        /**
+         * The params of the selected route, or an empty object if no route.
+         *
+         * @attribute selectedParams
+         * @type Object
+         * @readonly
+         */
+        selectedParams: {},
+      },
+
+      /** @override */
+      ready: function() {
+        if (this.routes.length > 0 && this.children.length > 0) {
+          // We don't want to deal with ordering confusion.
+          throw new Error('more-route-selector supports either routes="..." or child elements, not both');
+        }
+      },
+
+      /** @override */
+      attached: function() {
+        this.parent = this._findParent();
+        this.async(function() {
+          this._buildRoutes();
+          this._observeRoutes();
+          this.evaluate();
+        });
+      },
+
+      /**
+       * TODO(nevir): Document
+       */
+      evaluate: function() {
+        var newIndex = -1;
+        var oldIndex = this.selectedIndex;
+
+        for (var i = 0, route; route = this._routeRefs[i]; i++) {
+          if (route.active) {
+            newIndex = i;
+            break;
+          }
+        }
+        if (newIndex === oldIndex) return;
+
+        var oldRoute  = this.selectedRoute;
+        var oldPath   = this.selectedPath;
+        var oldParams = this.selectedParams;
+
+        var newRoute  = this._routeRefs[newIndex];
+        var newPath   = newRoute ? newRoute.path   : null;
+        var newParams = newRoute ? newRoute.params : {};
+
+        this.selectedRoute  = newRoute;
+        this.selectedIndex  = newIndex;
+        this.selectedPath   = newPath;
+        this.selectedParams = newParams;
+
+        this.fire('more-route-change', {
+          newRoute:  newRoute,  oldRoute:  oldRoute,
+          newIndex:  newIndex,  oldIndex:  oldIndex,
+          newPath:   newPath,   oldPath:   oldPath,
+          newParams: newParams, oldParams: oldParams,
+        });
+      },
+
+      /**
+       * We attach values of `routes` as `more-route` child elements so that we
+       * can ensure that we're adopting proper behavior for nesting/etc.
+       */
+      _buildRoutes: function() {
+        if (this.routes.length > 0) {
+          this._routeRefs = this._routesFromAttributes();
+        } else {
+          this._routeRefs = this._routesFromChildren();
+        }
+      },
+
+      /** Return `Route` objects the routes defined by `routes`. */
+      _routesFromAttributes: function() {
+        var parentPath = this.parent && this.parent.path || '';
+        return this.routes.map(function(route) {
+          if (MoreRouting.isPath(route)) {
+            return MoreRouting.getRouteByPath(parentPath + route);
+          } else {
+            return MoreRouting.getRouteByName(route);
+          }
+        });
+      },
+
+      /** Return `Route` objects declared by child `more-route`s. */
+      _routesFromChildren: function() {
+        var result = [];
+        for (var i = 0, child; child = this.children[i]; i++) {
+          result.push(child.route);
+        }
+        return result;
+      },
+
+      /**
+       * Tracks changes to the routes.
+       *
+       * TODO(nevir): Consider having a global 'route-changed' event so we're
+       * just observing one object (MoreRouting.driver.currentPathParts?).
+       */
+      _observeRoutes: function() {
+        if (this._observer) {
+          this._observer.close();
+        }
+        this._observer = new CompoundObserver();
+        for (var i = 0, route; route = this._routeRefs[i]; i++) {
+          this._observer.addPath(route, 'active');
+        }
+        this._observer.open(this.evaluate.bind(this));
+      },
+
+      /** TODO(nevir): Break out into a shared helper/mixin */
+      _findParent: function() {
+        var node = this;
+        while (node) {
+          node = node.parentNode || node.host;
+          var route = node && node.moreRouteContext || node;
+          if (route instanceof this.constructor && route !== this) {
+            return route;
+          }
+        }
+        return null;
+      },
+    });
+  </script></polymer-element>

@@ -1,1 +1,37 @@
-<link rel=import href="../paper-radio-button/paper-radio-button.html"><polymer-element name=paper-checkbox extends=paper-radio-button role=checkbox><template><link rel=stylesheet href="paper-checkbox.css"><div id=checkboxContainer class="{{ {labeled: label} | tokenList }}"><paper-ripple id=ink class="circle recenteringTouch" checked?="{{!checked}}"></paper-ripple><div id=checkbox on-animationend="{{checkboxAnimationEnd}}" on-webkitAnimationEnd="{{checkboxAnimationEnd}}"></div></div><div id=checkboxLabel hidden?="{{!label}}">{{label}}<content></content></div></template><script>Polymer("paper-checkbox",{toggles:true,checkedChanged:function(){var a=this.$.checkbox.classList;a.toggle("checked",this.checked);a.toggle("unchecked",!this.checked);a.toggle("checkmark",!this.checked);a.toggle("box",this.checked);this.setAttribute("aria-checked",this.checked?"true":"false");this.fire("core-change")},checkboxAnimationEnd:function(){var a=this.$.checkbox.classList;a.toggle("checkmark",this.checked&&!a.contains("checkmark"));a.toggle("box",!this.checked&&!a.contains("box"))}});</script></polymer-element>
+<link rel=import href="../paper-radio-button/paper-radio-button.html"><polymer-element name=paper-checkbox extends=paper-radio-button role=checkbox><template><link rel=stylesheet href="paper-checkbox.css"><div id=checkboxContainer class="{{ {labeled: label} | tokenList }}"><paper-ripple id=ink class="circle recenteringTouch" checked?="{{!checked}}"></paper-ripple><div id=checkbox on-animationend="{{checkboxAnimationEnd}}" on-webkitAnimationEnd="{{checkboxAnimationEnd}}"></div></div><div id=checkboxLabel hidden?="{{!label}}">{{label}}<content></content></div></template><script>
+
+  Polymer('paper-checkbox', {
+    
+    /**
+     * Fired when the checked state changes due to user interaction.
+     *
+     * @event change
+     */
+     
+    /**
+     * Fired when the checked state changes.
+     *
+     * @event core-change
+     */
+    
+    toggles: true,
+
+    checkedChanged: function() {
+      var cl = this.$.checkbox.classList;
+      cl.toggle('checked', this.checked);
+      cl.toggle('unchecked', !this.checked);
+      cl.toggle('checkmark', !this.checked);
+      cl.toggle('box', this.checked);
+      this.setAttribute('aria-checked', this.checked ? 'true': 'false');
+      this.fire('core-change');
+    },
+
+    checkboxAnimationEnd: function() {
+      var cl = this.$.checkbox.classList;
+      cl.toggle('checkmark', this.checked && !cl.contains('checkmark'));
+      cl.toggle('box', !this.checked && !cl.contains('box'));
+    }
+
+  });
+  
+</script></polymer-element>

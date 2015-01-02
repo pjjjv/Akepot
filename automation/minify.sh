@@ -1,12 +1,12 @@
 #!/bin/bash
 #
 #My script to uglify js and css and html files.
- find ../build/ -iname "*.js" | \
-  while read I; do
-   uglifyjs "$I" -o "$I.uglified" --screw-ie8 -m -c
-   mv -v "$I.uglified" "$I"
-   #rm "$I.uglified"
-  done
+# find ../build/ -iname "*.js" | \
+#  while read I; do
+#   uglifyjs "$I" -o "$I.uglified" --screw-ie8 -m -c
+#   mv -v "$I.uglified" "$I"
+#   #rm "$I.uglified"
+#  done
 
 
  find ../build/ -iname "*.css" | \

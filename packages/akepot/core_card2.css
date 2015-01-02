@@ -1,1 +1,74 @@
-:host{display:inline-block}.flip-container{margin:64px 32px;-webkit-perspective:1000px;-o-perspective:1000px;perspective:1000px;position:relative;transition:width .20s}.flip-container,#front,#back{min-width:450px;min-height:675px}#front,#back{padding:20px 16px;border-radius:4px;background-color:rgba(255,255,255,0.02);box-shadow:0 2px 5px 0 rgba(0,0,0,0.26);-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-o-backface-visibility:hidden;backface-visibility:hidden;position:absolute;top:0;left:-16px;overflow:hidden}.flip{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-o-backface-visibility:hidden;backface-visibility:hidden}.flipper,.flip{-webkit-transition:.6s;-webkit-transform-style:preserve-3d;-moz-transition:.6s;-moz-transform-style:preserve-3d;-o-transition:.6s;-o-transform-style:preserve-3d;transition:.6s;transform-style:preserve-3d;position:relative}.flip-container .flipper{-webkit-transform:rotateY(180deg);-moz-transform:rotateY(180deg);-o-transform:rotateY(180deg);transform:rotateY(180deg)}#front{z-index:2}#back{width:100%;-webkit-transform:rotateY(180deg);-moz-transform:rotateY(180deg);-o-transform:rotateY(180deg);transform:rotateY(180deg)}
+:host {
+  display: inline-block; }
+
+.flip-container {
+  margin: 64px 32px;
+  -webkit-perspective: 1000px;
+  -o-perspective: 1000px;
+  perspective: 1000px;
+  position: relative;
+  transition: width .20s; }
+
+.flip-container, #front, #back {
+  min-width: 450px;
+  min-height: 675px; }
+
+#front, #back {
+  padding: 20px 16px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -16px;
+  overflow: hidden; }
+
+.flip {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden; }
+
+.flipper, .flip {
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative; }
+
+.flip-container .flipper {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
+
+#front {
+  z-index: 2; }
+
+#back {
+  width: 100%;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
+
+/* Smartphones (portrait and landscape) ----------- */
+/*@media only screen and (min-width : 100px) and (max-width : 480px) {
+    #front,.back{
+     width: 80%;
+   }
+   .flip-container{
+    width: 77%;
+   }
+  :host{
+    display: inline;
+  }
+}*/

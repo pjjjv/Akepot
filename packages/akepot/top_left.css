@@ -1,1 +1,5 @@
-.welcome{display:block}:host{margin:.5em}
+.welcome {
+  display: block; }
+
+:host {
+  margin: 0.5em; }

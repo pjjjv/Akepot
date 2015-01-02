@@ -1,1 +1,86 @@
-!function(e,r){function n(e){e._registered||(e._registered=!0,a.push(e),u||(u=!0,requestAnimationFrame(t)))}function t(){var e=a;a=[],e.sort(function(e,r){return e._sequenceNumber-r._sequenceNumber}),e.filter(function(e){return e(),(!e._player||e._player.finished||e._player.paused)&&(e._registered=!1),e._registered}),a.push.apply(a,e),a.length?(u=!0,requestAnimationFrame(t)):u=!1}var i=(document.createElement("div"),0);r.bindPlayerForCustomEffect=function(r){var t=r.source.target,a=r.source.effect,u=r.source.timing,c=void 0;u=e.normalizeTimingInput(u);var l=function(){var n=l._player?l._player.currentTime:null;null!==n&&(n=e.calculateTimeFraction(e.calculateActiveDuration(u),n,u),isNaN(n)&&(n=null)),n!==c&&a(n,t,r.source),c=n};l._player=r,l._registered=!1,l._sequenceNumber=i++,r._callback=l,n(l)};var a=[],u=!1;r.Player.prototype._register=function(){this._callback&&n(this._callback)}}(webAnimationsShared,webAnimationsMaxifill,webAnimationsTesting);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+// limitations under the License.
+(function(shared, scope, testing) {
+
+  var nullTarget = document.createElement('div');
+
+  var sequenceNumber = 0;
+  scope.bindPlayerForCustomEffect = function(player) {
+    var target = player.source.target;
+    var effect = player.source.effect;
+    var timing = player.source.timing;
+    var last = undefined;
+    timing = shared.normalizeTimingInput(timing);
+    var callback = function() {
+      var t = callback._player ? callback._player.currentTime : null;
+      if (t !== null) {
+        t = shared.calculateTimeFraction(shared.calculateActiveDuration(timing), t, timing);
+        if (isNaN(t))
+          t = null;
+      }
+      // FIXME: There are actually more conditions under which the effect
+      // should be called.
+      if (t !== last)
+        effect(t, target, player.source);
+      last = t;
+    };
+
+    callback._player = player;
+    callback._registered = false;
+    callback._sequenceNumber = sequenceNumber++;
+    player._callback = callback;
+    register(callback);
+  };
+
+  var callbacks = [];
+  var ticking = false;
+  function register(callback) {
+    if (callback._registered)
+      return;
+    callback._registered = true;
+    callbacks.push(callback);
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(tick);
+    }
+  }
+
+  function tick(t) {
+    var updating = callbacks;
+    callbacks = [];
+    updating.sort(function(left, right) {
+      return left._sequenceNumber - right._sequenceNumber;
+    });
+    updating.filter(function(callback) {
+      callback();
+      if (!callback._player || callback._player.finished || callback._player.paused)
+        callback._registered = false;
+      return callback._registered;
+    });
+    callbacks.push.apply(callbacks, updating);
+
+    if (callbacks.length) {
+      ticking = true;
+      requestAnimationFrame(tick);
+    } else {
+      ticking = false;
+    }
+  }
+
+  scope.Player.prototype._register = function() {
+    if (this._callback)
+      register(this._callback);
+  };
+
+})(webAnimationsShared, webAnimationsMaxifill, webAnimationsTesting);

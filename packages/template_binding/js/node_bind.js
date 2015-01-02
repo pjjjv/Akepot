@@ -1,1 +1,343 @@
-!function(){"use strict";function e(e){for(;e.parentNode;)e=e.parentNode;return"function"==typeof e.getElementById?e:null}function t(e,t,n){var r=e.bindings_;return r||(r=e.bindings_={}),r[t]&&n[t].close(),r[t]=n}function n(e,t,n){return n}function r(e){return null==e?"":e}function i(e,t){e.data=r(t)}function o(e){return function(t){return i(e,t)}}function u(e,t,n,i){return n?void(i?e.setAttribute(t,""):e.removeAttribute(t)):void e.setAttribute(t,r(i))}function c(e,t,n){return function(r){u(e,t,n,r)}}function a(e){switch(e.type){case"checkbox":return E;case"radio":case"select-multiple":case"select-one":return"change";case"range":if(/Trident|MSIE/.test(navigator.userAgent))return"change";default:return"input"}}function s(e,t,n,i){e[t]=(i||r)(n)}function l(e,t,n){return function(r){return s(e,t,r,n)}}function f(){}function d(e,t,n,r){function i(){n.setValue(e[t]),n.discardChanges(),(r||f)(e),Platform.performMicrotaskCheckpoint()}var o=a(e);return e.addEventListener(o,i),{close:function(){e.removeEventListener(o,i),n.close()},observable_:n}}function h(e){return Boolean(e)}function v(t){if(t.form)return y(t.form.elements,function(e){return e!=t&&"INPUT"==e.tagName&&"radio"==e.type&&e.name==t.name});var n=e(t);if(!n)return[];var r=n.querySelectorAll('input[type="radio"][name="'+t.name+'"]');return y(r,function(e){return e!=t&&!e.form})}function p(e){"INPUT"===e.tagName&&"radio"===e.type&&v(e).forEach(function(e){var t=e.bindings_.checked;t&&t.observable_.setValue(!1)})}function b(e,t){var n,i,o,u=e.parentNode;u instanceof HTMLSelectElement&&u.bindings_&&u.bindings_.value&&(n=u,i=n.bindings_.value,o=n.value),e.value=r(t),n&&n.value!=o&&(i.observable_.setValue(n.value),i.observable_.discardChanges(),Platform.performMicrotaskCheckpoint())}function m(e){return function(t){b(e,t)}}var y=Array.prototype.filter.call.bind(Array.prototype.filter);Node.prototype.bind=function(e,t){console.error("Unhandled binding to Node: ",this,e,t)},Node.prototype.bindFinished=function(){};var g=n;Object.defineProperty(Platform,"enableBindingsReflection",{get:function(){return g===t},set:function(e){return g=e?t:n,e},configurable:!0}),Text.prototype.bind=function(e,t,n){if("textContent"!==e)return Node.prototype.bind.call(this,e,t,n);if(n)return i(this,t);var r=t;return i(this,r.open(o(this))),g(this,e,r)},Element.prototype.bind=function(e,t,n){var r="?"==e[e.length-1];if(r&&(this.removeAttribute(e),e=e.slice(0,-1)),n)return u(this,e,r,t);var i=t;return u(this,e,r,i.open(c(this,e,r))),g(this,e,i)};var E;!function(){var e=document.createElement("div"),t=e.appendChild(document.createElement("input"));t.setAttribute("type","checkbox");var n,r=0;t.addEventListener("click",function(){r++,n=n||"click"}),t.addEventListener("change",function(){r++,n=n||"change"});var i=document.createEvent("MouseEvent");i.initMouseEvent("click",!0,!0,window,0,0,0,0,0,!1,!1,!1,!1,0,null),t.dispatchEvent(i),E=1==r?"change":n}(),HTMLInputElement.prototype.bind=function(e,n,i){if("value"!==e&&"checked"!==e)return HTMLElement.prototype.bind.call(this,e,n,i);this.removeAttribute(e);var o="checked"==e?h:r,u="checked"==e?p:f;if(i)return s(this,e,n,o);var c=n,a=d(this,e,c,u);return s(this,e,c.open(l(this,e,o)),o),t(this,e,a)},HTMLTextAreaElement.prototype.bind=function(e,t,n){if("value"!==e)return HTMLElement.prototype.bind.call(this,e,t,n);if(this.removeAttribute("value"),n)return s(this,"value",t);var i=t,o=d(this,"value",i);return s(this,"value",i.open(l(this,"value",r))),g(this,e,o)},HTMLOptionElement.prototype.bind=function(e,t,n){if("value"!==e)return HTMLElement.prototype.bind.call(this,e,t,n);if(this.removeAttribute("value"),n)return b(this,t);var r=t,i=d(this,"value",r);return b(this,r.open(m(this))),g(this,e,i)},HTMLSelectElement.prototype.bind=function(e,n,r){if("selectedindex"===e&&(e="selectedIndex"),"selectedIndex"!==e&&"value"!==e)return HTMLElement.prototype.bind.call(this,e,n,r);if(this.removeAttribute(e),r)return s(this,e,n);var i=n,o=d(this,e,i);return s(this,e,i.open(l(this,e))),t(this,e,o)}}(this);
+// Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+// This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+// The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+// The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+// Code distributed by Google as part of the polymer project is also
+// subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+
+(function(global) {
+  'use strict';
+
+  var filter = Array.prototype.filter.call.bind(Array.prototype.filter);
+
+  function getTreeScope(node) {
+    while (node.parentNode) {
+      node = node.parentNode;
+    }
+
+    return typeof node.getElementById === 'function' ? node : null;
+  }
+
+  Node.prototype.bind = function(name, observable) {
+    console.error('Unhandled binding to Node: ', this, name, observable);
+  };
+
+  Node.prototype.bindFinished = function() {};
+
+  function updateBindings(node, name, binding) {
+    var bindings = node.bindings_;
+    if (!bindings)
+      bindings = node.bindings_ = {};
+
+    if (bindings[name])
+      binding[name].close();
+
+    return bindings[name] = binding;
+  }
+
+  function returnBinding(node, name, binding) {
+    return binding;
+  }
+
+  function sanitizeValue(value) {
+    return value == null ? '' : value;
+  }
+
+  function updateText(node, value) {
+    node.data = sanitizeValue(value);
+  }
+
+  function textBinding(node) {
+    return function(value) {
+      return updateText(node, value);
+    };
+  }
+
+  var maybeUpdateBindings = returnBinding;
+
+  Object.defineProperty(Platform, 'enableBindingsReflection', {
+    get: function() {
+      return maybeUpdateBindings === updateBindings;
+    },
+    set: function(enable) {
+      maybeUpdateBindings = enable ? updateBindings : returnBinding;
+      return enable;
+    },
+    configurable: true
+  });
+
+  Text.prototype.bind = function(name, value, oneTime) {
+    if (name !== 'textContent')
+      return Node.prototype.bind.call(this, name, value, oneTime);
+
+    if (oneTime)
+      return updateText(this, value);
+
+    var observable = value;
+    updateText(this, observable.open(textBinding(this)));
+    return maybeUpdateBindings(this, name, observable);
+  }
+
+  function updateAttribute(el, name, conditional, value) {
+    if (conditional) {
+      if (value)
+        el.setAttribute(name, '');
+      else
+        el.removeAttribute(name);
+      return;
+    }
+
+    el.setAttribute(name, sanitizeValue(value));
+  }
+
+  function attributeBinding(el, name, conditional) {
+    return function(value) {
+      updateAttribute(el, name, conditional, value);
+    };
+  }
+
+  Element.prototype.bind = function(name, value, oneTime) {
+    var conditional = name[name.length - 1] == '?';
+    if (conditional) {
+      this.removeAttribute(name);
+      name = name.slice(0, -1);
+    }
+
+    if (oneTime)
+      return updateAttribute(this, name, conditional, value);
+
+
+    var observable = value;
+    updateAttribute(this, name, conditional,
+        observable.open(attributeBinding(this, name, conditional)));
+
+    return maybeUpdateBindings(this, name, observable);
+  };
+
+  var checkboxEventType;
+  (function() {
+    // Attempt to feature-detect which event (change or click) is fired first
+    // for checkboxes.
+    var div = document.createElement('div');
+    var checkbox = div.appendChild(document.createElement('input'));
+    checkbox.setAttribute('type', 'checkbox');
+    var first;
+    var count = 0;
+    checkbox.addEventListener('click', function(e) {
+      count++;
+      first = first || 'click';
+    });
+    checkbox.addEventListener('change', function() {
+      count++;
+      first = first || 'change';
+    });
+
+    var event = document.createEvent('MouseEvent');
+    event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false,
+        false, false, false, 0, null);
+    checkbox.dispatchEvent(event);
+    // WebKit/Blink don't fire the change event if the element is outside the
+    // document, so assume 'change' for that case.
+    checkboxEventType = count == 1 ? 'change' : first;
+  })();
+
+  function getEventForInputType(element) {
+    switch (element.type) {
+      case 'checkbox':
+        return checkboxEventType;
+      case 'radio':
+      case 'select-multiple':
+      case 'select-one':
+        return 'change';
+      case 'range':
+        if (/Trident|MSIE/.test(navigator.userAgent))
+          return 'change';
+      default:
+        return 'input';
+    }
+  }
+
+  function updateInput(input, property, value, santizeFn) {
+    input[property] = (santizeFn || sanitizeValue)(value);
+  }
+
+  function inputBinding(input, property, santizeFn) {
+    return function(value) {
+      return updateInput(input, property, value, santizeFn);
+    }
+  }
+
+  function noop() {}
+
+  function bindInputEvent(input, property, observable, postEventFn) {
+    var eventType = getEventForInputType(input);
+
+    function eventHandler() {
+      observable.setValue(input[property]);
+      observable.discardChanges();
+      (postEventFn || noop)(input);
+      Platform.performMicrotaskCheckpoint();
+    }
+    input.addEventListener(eventType, eventHandler);
+
+    return {
+      close: function() {
+        input.removeEventListener(eventType, eventHandler);
+        observable.close();
+      },
+
+      observable_: observable
+    }
+  }
+
+  function booleanSanitize(value) {
+    return Boolean(value);
+  }
+
+  // |element| is assumed to be an HTMLInputElement with |type| == 'radio'.
+  // Returns an array containing all radio buttons other than |element| that
+  // have the same |name|, either in the form that |element| belongs to or,
+  // if no form, in the document tree to which |element| belongs.
+  //
+  // This implementation is based upon the HTML spec definition of a
+  // "radio button group":
+  //   http://www.whatwg.org/specs/web-apps/current-work/multipage/number-state.html#radio-button-group
+  //
+  function getAssociatedRadioButtons(element) {
+    if (element.form) {
+      return filter(element.form.elements, function(el) {
+        return el != element &&
+            el.tagName == 'INPUT' &&
+            el.type == 'radio' &&
+            el.name == element.name;
+      });
+    } else {
+      var treeScope = getTreeScope(element);
+      if (!treeScope)
+        return [];
+      var radios = treeScope.querySelectorAll(
+          'input[type="radio"][name="' + element.name + '"]');
+      return filter(radios, function(el) {
+        return el != element && !el.form;
+      });
+    }
+  }
+
+  function checkedPostEvent(input) {
+    // Only the radio button that is getting checked gets an event. We
+    // therefore find all the associated radio buttons and update their
+    // check binding manually.
+    if (input.tagName === 'INPUT' &&
+        input.type === 'radio') {
+      getAssociatedRadioButtons(input).forEach(function(radio) {
+        var checkedBinding = radio.bindings_.checked;
+        if (checkedBinding) {
+          // Set the value directly to avoid an infinite call stack.
+          checkedBinding.observable_.setValue(false);
+        }
+      });
+    }
+  }
+
+  HTMLInputElement.prototype.bind = function(name, value, oneTime) {
+    if (name !== 'value' && name !== 'checked')
+      return HTMLElement.prototype.bind.call(this, name, value, oneTime);
+
+    this.removeAttribute(name);
+    var sanitizeFn = name == 'checked' ? booleanSanitize : sanitizeValue;
+    var postEventFn = name == 'checked' ? checkedPostEvent : noop;
+
+    if (oneTime)
+      return updateInput(this, name, value, sanitizeFn);
+
+
+    var observable = value;
+    var binding = bindInputEvent(this, name, observable, postEventFn);
+    updateInput(this, name,
+                observable.open(inputBinding(this, name, sanitizeFn)),
+                sanitizeFn);
+
+    // Checkboxes may need to update bindings of other checkboxes.
+    return updateBindings(this, name, binding);
+  }
+
+  HTMLTextAreaElement.prototype.bind = function(name, value, oneTime) {
+    if (name !== 'value')
+      return HTMLElement.prototype.bind.call(this, name, value, oneTime);
+
+    this.removeAttribute('value');
+
+    if (oneTime)
+      return updateInput(this, 'value', value);
+
+    var observable = value;
+    var binding = bindInputEvent(this, 'value', observable);
+    updateInput(this, 'value',
+                observable.open(inputBinding(this, 'value', sanitizeValue)));
+    return maybeUpdateBindings(this, name, binding);
+  }
+
+  function updateOption(option, value) {
+    var parentNode = option.parentNode;;
+    var select;
+    var selectBinding;
+    var oldValue;
+    if (parentNode instanceof HTMLSelectElement &&
+        parentNode.bindings_ &&
+        parentNode.bindings_.value) {
+      select = parentNode;
+      selectBinding = select.bindings_.value;
+      oldValue = select.value;
+    }
+
+    option.value = sanitizeValue(value);
+
+    if (select && select.value != oldValue) {
+      selectBinding.observable_.setValue(select.value);
+      selectBinding.observable_.discardChanges();
+      Platform.performMicrotaskCheckpoint();
+    }
+  }
+
+  function optionBinding(option) {
+    return function(value) {
+      updateOption(option, value);
+    }
+  }
+
+  HTMLOptionElement.prototype.bind = function(name, value, oneTime) {
+    if (name !== 'value')
+      return HTMLElement.prototype.bind.call(this, name, value, oneTime);
+
+    this.removeAttribute('value');
+
+    if (oneTime)
+      return updateOption(this, value);
+
+    var observable = value;
+    var binding = bindInputEvent(this, 'value', observable);
+    updateOption(this, observable.open(optionBinding(this)));
+    return maybeUpdateBindings(this, name, binding);
+  }
+
+  HTMLSelectElement.prototype.bind = function(name, value, oneTime) {
+    if (name === 'selectedindex')
+      name = 'selectedIndex';
+
+    if (name !== 'selectedIndex' && name !== 'value')
+      return HTMLElement.prototype.bind.call(this, name, value, oneTime);
+
+    this.removeAttribute(name);
+
+    if (oneTime)
+      return updateInput(this, name, value);
+
+    var observable = value;
+    var binding = bindInputEvent(this, name, observable);
+    updateInput(this, name,
+                observable.open(inputBinding(this, name)));
+
+    // Option update events may need to access select bindings.
+    return updateBindings(this, name, binding);
+  }
+})(this);

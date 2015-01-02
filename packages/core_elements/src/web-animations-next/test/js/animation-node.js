@@ -1,1 +1,114 @@
-suite("animation-node",function(){test("normalize timing input",function(){assert.equal(normalizeTimingInput(1).duration,1),assert.equal(normalizeTimingInput(1).easing(.2),.2),assert.equal(normalizeTimingInput(void 0).duration,0)}),test("calculating active duration",function(){assert.equal(calculateActiveDuration({duration:1e3,playbackRate:4,iterations:20}),5e3),assert.equal(calculateActiveDuration({duration:500,playbackRate:.1,iterations:300}),15e5)}),test("conversion of timing functions",function(){function e(e){assert.equal(e(.1),.1),assert.equal(e(.4),.4),assert.equal(e(.9),.9)}for(var a=toTimingFunction("ease"),t=toTimingFunction("cubic-bezier(.25, 0.1, 0.25, 1.)"),i=0;1>i;i+=.1)assert.equal(a(i),t(i));assert.closeTo(a(.1844),.2601,.01),assert.closeTo(t(.1844),.2601,.01),a=toTimingFunction("cubic-bezier(0, 1, 1, 0)"),assert.closeTo(a(.104),.392,.01),a=toTimingFunction("cubic-bezier(0, 1, -1, 1)"),e(a),a=toTimingFunction("an elephant"),e(a),a=toTimingFunction("cubic-bezier(-1, 1, 1, 1)"),e(a),a=toTimingFunction("cubic-bezier(1, 1, 1)"),e(a),a=toTimingFunction("steps(10, end)"),assert.equal(a(0),0),assert.equal(a(.09),0),assert.equal(a(.1),.1),assert.equal(a(.25),.2)}),test("calculating phase",function(){assert.equal(calculatePhase(1e3,100,{delay:0}),PhaseActive),assert.equal(calculatePhase(1e3,100,{delay:200}),PhaseBefore),assert.equal(calculatePhase(1e3,2e3,{delay:200}),PhaseAfter),assert.equal(calculatePhase(1e3,null,{delay:200}),PhaseNone)}),test("calculating active time",function(){assert.equal(calculateActiveTime(1e3,"forwards",100,PhaseActive,0),100),assert.equal(calculateActiveTime(1e3,"forwards",100,PhaseBefore,200),null),assert.equal(calculateActiveTime(1e3,"both",100,PhaseBefore,200),0),assert.equal(calculateActiveTime(1e3,"forwards",500,PhaseActive,200),300),assert.equal(calculateActiveTime(1e3,"forwards",1100,PhaseAfter,200),1e3),assert.equal(calculateActiveTime(1e3,"none",1100,PhaseAfter,200),null),assert.equal(calculateActiveTime(1/0,"both",5e6,PhaseActive,2e6),3e6),assert.equal(calculateActiveTime(1/0,"both",5e4,PhaseBefore,2e6),0)}),test("calculating scaled active time",function(){assert.equal(calculateScaledActiveTime(1e3,200,300,{playbackRate:1.5}),600),assert.equal(calculateScaledActiveTime(1e3,200,300,{playbackRate:-4}),3500),assert.equal(calculateScaledActiveTime(1/0,400,200,{playbackRate:1}),600),assert.equal(calculateScaledActiveTime(1/0,400,200,{playbackRate:-4}),1/0)}),test("calculating iteration time",function(){assert.equal(calculateIterationTime(500,5e3,600,100,{iterations:10,iterationStart:0}),100),assert.equal(calculateIterationTime(500,5e3,1/0,100,{iterations:10,iterationStart:0}),500),assert.equal(calculateIterationTime(500,5e3,5100,100,{iterations:3.2,iterationStart:.8}),500)}),test("calculating current iteration",function(){assert.equal(calculateCurrentIteration(1e3,400,4400,{iterations:50,iterationStart:.8}),4),assert.equal(calculateCurrentIteration(1e3,1e3,4400,{iterations:50.2,iterationStart:.8}),50)}),test("calculating transformed time",function(){assert.equal(calculateTransformedTime(4,1e3,200,{easing:function(e){return e},direction:"normal"}),200),assert.equal(calculateTransformedTime(4,1e3,200,{easing:function(e){return e},direction:"reverse"}),800),assert.closeTo(calculateTransformedTime(4,1e3,200,{easing:function(e){return e*e},direction:"reverse"}),640,1e-4),assert.closeTo(calculateTransformedTime(4,1e3,600,{easing:function(e){return e*e},direction:"alternate"}),360,1e-4),assert.closeTo(calculateTransformedTime(3,1e3,600,{easing:function(e){return e*e},direction:"alternate"}),160,1e-4),assert.closeTo(calculateTransformedTime(4,1e3,600,{easing:function(e){return e*e},direction:"alternate-reverse"}),160,1e-4),assert.closeTo(calculateTransformedTime(3,1e3,600,{easing:function(e){return e*e},direction:"alternate-reverse"}),360,1e-4)}),test("Animation Node",function(){var e=normalizeTimingInput({duration:1e3,iterations:4,iterationStart:.5,easing:"linear",direction:"alternate",delay:100,fill:"forwards"}),a=normalizeTimingInput({duration:1e3,iterations:4,iterationStart:.5,easing:"ease",direction:"alternate",delay:100,fill:"forwards"}),t=webAnimationsMinifill.AnimationNode(e),i=webAnimationsMinifill.AnimationNode(a);assert.equal(t(0),null),assert.equal(t(100),.5),assert.closeTo(i(100),.8,.005),assert.equal(t(600),1),assert.closeTo(i(600),1,.005),assert.equal(t(700),.9),assert.closeTo(i(700),.99,.005),assert.equal(t(1600),0),assert.closeTo(i(1600),0,.005),assert.equal(t(4e3),.4),assert.closeTo(i(4e3),.68,.005),assert.equal(t(4100),.5),assert.closeTo(i(4100),.8,.005),assert.equal(t(6e3),.5),assert.closeTo(i(6e3),.8,.005)})});
+suite('animation-node', function() {
+  test('normalize timing input', function() {
+    assert.equal(normalizeTimingInput(1).duration, 1);
+    assert.equal(normalizeTimingInput(1).easing(0.2), 0.2);
+    assert.equal(normalizeTimingInput(undefined).duration, 0);
+  });
+  test('calculating active duration', function() {
+    assert.equal(calculateActiveDuration({duration: 1000, playbackRate: 4, iterations: 20}), 5000);
+    assert.equal(calculateActiveDuration({duration: 500, playbackRate: 0.1, iterations: 300}), 1500000);
+  });
+  test('conversion of timing functions', function() {
+    var f = toTimingFunction('ease');
+    var g = toTimingFunction('cubic-bezier(.25, 0.1, 0.25, 1.)');
+    for (var i = 0; i < 1; i += 0.1) {
+      assert.equal(f(i), g(i));
+    }
+    assert.closeTo(f(0.1844), 0.2601, 0.01);
+    assert.closeTo(g(0.1844), 0.2601, 0.01);
+
+    f = toTimingFunction('cubic-bezier(0, 1, 1, 0)');
+    assert.closeTo(f(0.104), 0.392, 0.01);
+
+    function isLinear(f) {
+      assert.equal(f(0.1), 0.1);
+      assert.equal(f(0.4), 0.4);
+      assert.equal(f(0.9), 0.9);
+    }
+
+    f = toTimingFunction('cubic-bezier(0, 1, -1, 1)');
+    isLinear(f);
+
+    f = toTimingFunction('an elephant');
+    isLinear(f);
+
+    f = toTimingFunction('cubic-bezier(-1, 1, 1, 1)');
+    isLinear(f);
+
+    f = toTimingFunction('cubic-bezier(1, 1, 1)');
+    isLinear(f);
+
+    f = toTimingFunction('steps(10, end)');
+    assert.equal(f(0), 0);
+    assert.equal(f(0.09), 0);
+    assert.equal(f(0.1), 0.1);
+    assert.equal(f(0.25), 0.2);
+  });
+  test('calculating phase', function() {
+    // calculatePhase(activeDuration, localTime, timing);
+    assert.equal(calculatePhase(1000, 100, {delay: 0}), PhaseActive);
+    assert.equal(calculatePhase(1000, 100, {delay: 200}), PhaseBefore);
+    assert.equal(calculatePhase(1000, 2000, {delay: 200}), PhaseAfter);
+    assert.equal(calculatePhase(1000, null, {delay: 200}), PhaseNone);
+  });
+  test('calculating active time', function() {
+    // calculateActiveTime(activeDuration, fillMode, localTime, phase, delay);
+    assert.equal(calculateActiveTime(1000, 'forwards', 100, PhaseActive, 0), 100);
+    assert.equal(calculateActiveTime(1000, 'forwards', 100, PhaseBefore, 200), null);
+    assert.equal(calculateActiveTime(1000, 'both', 100, PhaseBefore, 200), 0);
+    assert.equal(calculateActiveTime(1000, 'forwards', 500, PhaseActive, 200), 300);
+    assert.equal(calculateActiveTime(1000, 'forwards', 1100, PhaseAfter, 200), 1000);
+    assert.equal(calculateActiveTime(1000, 'none', 1100, PhaseAfter, 200), null);
+    assert.equal(calculateActiveTime(Infinity, 'both', 5000000, PhaseActive, 2000000), 3000000);
+    assert.equal(calculateActiveTime(Infinity, 'both', 50000, PhaseBefore, 2000000), 0);
+  });
+  test('calculating scaled active time', function() {
+    // calculateScaledActiveTime(activeDuration, activeTime, startOffset, timingInput);
+    assert.equal(calculateScaledActiveTime(1000, 200, 300, {playbackRate: 1.5}), 600);
+    assert.equal(calculateScaledActiveTime(1000, 200, 300, {playbackRate: -4}), 3500);
+    assert.equal(calculateScaledActiveTime(Infinity, 400, 200, {playbackRate: 1}), 600);
+    assert.equal(calculateScaledActiveTime(Infinity, 400, 200, {playbackRate: -4}), Infinity);
+  });
+  test('calculating iteration time', function() {
+    // calculateIterationTime(iterationDuration, repeatedDuration, scaledActiveTime, startOffset, timingInput);
+    assert.equal(calculateIterationTime(500, 5000, 600, 100, {iterations: 10, iterationStart: 0}), 100);
+    assert.equal(calculateIterationTime(500, 5000, Infinity, 100, {iterations: 10, iterationStart: 0}), 500);
+    assert.equal(calculateIterationTime(500, 5000, 5100, 100, {iterations: 3.2, iterationStart: 0.8}), 500);
+  });
+  test('calculating current iteration', function() {
+    // calculateCurrentIteration(iterationDuration, iterationTime, scaledActiveTime, timingInput);
+    assert.equal(calculateCurrentIteration(1000, 400, 4400, {iterations: 50, iterationStart: 0.8}), 4);
+    assert.equal(calculateCurrentIteration(1000, 1000, 4400, {iterations: 50.2, iterationStart: 0.8}), 50);
+  });
+  test('calculating transformed time', function() {
+    // calculateTransformedTime(currentIteration, iterationDuration, iterationTime, timingInput);
+    assert.equal(calculateTransformedTime(4, 1000, 200, {easing: function(x) { return x; }, direction: 'normal'}), 200);
+    assert.equal(calculateTransformedTime(4, 1000, 200, {easing: function(x) { return x; }, direction: 'reverse'}), 800);
+    assert.closeTo(calculateTransformedTime(4, 1000, 200, {easing: function(x) { return x * x; }, direction: 'reverse'}), 640, 0.0001);
+    assert.closeTo(calculateTransformedTime(4, 1000, 600, {easing: function(x) { return x * x; }, direction: 'alternate'}), 360, 0.0001);
+    assert.closeTo(calculateTransformedTime(3, 1000, 600, {easing: function(x) { return x * x; }, direction: 'alternate'}), 160, 0.0001);
+    assert.closeTo(calculateTransformedTime(4, 1000, 600, {easing: function(x) { return x * x; }, direction: 'alternate-reverse'}), 160, 0.0001);
+    assert.closeTo(calculateTransformedTime(3, 1000, 600, {easing: function(x) { return x * x; }, direction: 'alternate-reverse'}), 360, 0.0001);
+  });
+  test('Animation Node', function() {
+    var timing = normalizeTimingInput({duration: 1000, iterations: 4, iterationStart: 0.5, easing: 'linear', direction: 'alternate', delay: 100, fill: 'forwards'});
+    var timing2 = normalizeTimingInput({duration: 1000, iterations: 4, iterationStart: 0.5, easing: 'ease', direction: 'alternate', delay: 100, fill: 'forwards'});
+    var node = webAnimationsMinifill.AnimationNode(timing);
+    var node2 = webAnimationsMinifill.AnimationNode(timing2);
+    assert.equal(node(0), null);
+    assert.equal(node(100), 0.5);
+    assert.closeTo(node2(100), 0.8, 0.005);
+    assert.equal(node(600), 1);
+    assert.closeTo(node2(600), 1, 0.005);
+    assert.equal(node(700), 0.9);
+    assert.closeTo(node2(700), 0.99, 0.005);
+    assert.equal(node(1600), 0);
+    assert.closeTo(node2(1600), 0, 0.005);
+    assert.equal(node(4000), 0.4);
+    assert.closeTo(node2(4000), 0.68, 0.005);
+    assert.equal(node(4100), 0.5);
+    assert.closeTo(node2(4100), 0.8, 0.005);
+    assert.equal(node(6000), 0.5);
+    assert.closeTo(node2(6000), 0.8, 0.005);
+  });
+});

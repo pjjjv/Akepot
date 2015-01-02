@@ -1,1 +1,57 @@
-!function(n){function e(e){return n.consumeLengthOrPercent(e)||n.consumeToken(/^auto/,e)}function o(o){var r=n.consumeList([n.ignore(n.consumeToken.bind(null,/^rect/)),n.ignore(n.consumeToken.bind(null,/^\(/)),n.consumeRepeated.bind(null,e,/^,/),n.ignore(n.consumeToken.bind(null,/^\)/))],o);return r&&4==r[0].length?r[0]:void 0}function r(e,o){return"auto"==e||"auto"==o?[!0,!1,function(r){var i=r?e:o;if("auto"==i)return"auto";var t=n.mergeDimensions(i,i);return t[2](t[0])}]:n.mergeDimensions(e,o)}function i(n){return"rect("+n+")"}var t=n.mergeWrappedNestedRepeated.bind(null,i,r,", ");n.parseBox=o,n.mergeBoxes=t,n.addPropertiesHandler(o,t,["clip"])}(webAnimationsMinifill,webAnimationsTesting);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+// limitations under the License.
+
+(function(scope, testing) {
+  function consumeLengthPercentOrAuto(string) {
+    return scope.consumeLengthOrPercent(string) || scope.consumeToken(/^auto/, string);
+  }
+  function parseBox(string) {
+    var result = scope.consumeList([
+      scope.ignore(scope.consumeToken.bind(null, /^rect/)),
+      scope.ignore(scope.consumeToken.bind(null, /^\(/)),
+      scope.consumeRepeated.bind(null, consumeLengthPercentOrAuto, /^,/),
+      scope.ignore(scope.consumeToken.bind(null, /^\)/)),
+    ], string);
+    if (result && result[0].length == 4) {
+      return result[0];
+    }
+  }
+
+  function mergeComponent(left, right) {
+    if (left == 'auto' || right == 'auto') {
+      return [true, false, function(t) {
+        var result = t ? left : right;
+        if (result == 'auto') {
+          return 'auto';
+        }
+        // FIXME: There's probably a better way to turn a dimension back into a string.
+        var merged = scope.mergeDimensions(result, result);
+        return merged[2](merged[0]);
+      }];
+    }
+    return scope.mergeDimensions(left, right);
+  }
+
+  function wrap(result) {
+    return 'rect(' + result + ')';
+  }
+
+  var mergeBoxes = scope.mergeWrappedNestedRepeated.bind(null, wrap, mergeComponent, ', ');
+
+  scope.parseBox = parseBox;
+  scope.mergeBoxes = mergeBoxes;
+
+  scope.addPropertiesHandler(parseBox, mergeBoxes, ['clip']);
+
+})(webAnimationsMinifill, webAnimationsTesting);

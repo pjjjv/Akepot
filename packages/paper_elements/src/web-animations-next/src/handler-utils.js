@@ -1,1 +1,177 @@
-!function(n){function e(n,e){var r=n.exec(e);return r?(r=n.ignoreCase?r[0].toLowerCase():r[0],[r,e.substr(r.length)]):void 0}function r(n,e){e=e.replace(/^\s*/,"");var r=n(e);return r?[r[0],r[1].replace(/^\s*/,"")]:void 0}function t(n,t,u){n=r.bind(null,n);for(var i=[];;){var o=n(u);if(!o)return[i,u];if(i.push(o[0]),u=o[1],o=e(t,u),!o||""==o[1])return[i,u];u=o[1]}}function u(n,e){for(var r=0,t=0;t<e.length&&(!/\s|,/.test(e[t])||0!=r);t++)if("("==e[t])r++;else if(")"==e[t]&&(r--,0==r&&t++,0>=r))break;var u=n(e.substr(0,t));return void 0==u?void 0:[u,e.substr(t)]}function i(n,e){for(var r=n,t=e;r&&t;)r>t?r%=t:t%=r;return r=n*e/(r+t)}function o(n){return function(e){var r=n(e);return r&&(r[0]=void 0),r}}function s(n,e){return function(r){var t=n(r);return t?t:[e,r]}}function f(e,r){for(var t=[],u=0;u<e.length;u++){var i=n.consumeTrimmed(e[u],r);if(!i||""==i[0])return;void 0!==i[0]&&t.push(i[0]),r=i[1]}return""==r?t:void 0}function a(n,e,r,t,u){for(var o=[],s=[],f=[],a=i(t.length,u.length),c=0;a>c;c++){var v=e(t[c%t.length],u[c%u.length]);if(!v)return;o.push(v[0]),s.push(v[1]),f.push(v[2])}return[o,s,function(e){var t=e.map(function(n,e){return f[e](n)}).join(r);return n?n(t):t}]}function c(n,e,r){for(var t=[],u=[],i=[],o=0,s=0;s<r.length;s++)if("function"==typeof r[s]){var f=r[s](n[o],e[o++]);t.push(f[0]),u.push(f[1]),i.push(f[2])}else!function(n){t.push(!1),u.push(!1),i.push(function(){return r[n]})}(s);return[t,u,function(n){for(var e="",r=0;r<n.length;r++)e+=i[r](n[r]);return e}]}n.consumeToken=e,n.consumeTrimmed=r,n.consumeRepeated=t,n.consumeParenthesised=u,n.ignore=o,n.optional=s,n.consumeList=f,n.mergeNestedRepeated=a.bind(null,null),n.mergeWrappedNestedRepeated=a,n.mergeList=c}(webAnimationsMinifill);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+// limitations under the License.
+
+(function(scope) {
+
+  // consume* functions return a 2 value array of [parsed-data, '' or not-yet consumed input]
+
+  // Regex should be anchored with /^
+  function consumeToken(regex, string) {
+    var result = regex.exec(string);
+    if (result) {
+      result = regex.ignoreCase ? result[0].toLowerCase() : result[0];
+      return [result, string.substr(result.length)];
+    }
+  }
+
+  function consumeTrimmed(consumer, string) {
+    string = string.replace(/^\s*/, '');
+    var result = consumer(string);
+    if (result) {
+      return [result[0], result[1].replace(/^\s*/, '')];
+    }
+  }
+
+  function consumeRepeated(consumer, separator, string) {
+    consumer = consumeTrimmed.bind(null, consumer);
+    var list = [];
+    while (true) {
+      var result = consumer(string);
+      if (!result) {
+        return [list, string];
+      }
+      list.push(result[0]);
+      string = result[1];
+      result = consumeToken(separator, string);
+      if (!result || result[1] == '') {
+        return [list, string];
+      }
+      string = result[1];
+    }
+  }
+
+  // Consumes a token or expression with balanced parentheses
+  function consumeParenthesised(parser, string) {
+    var nesting = 0;
+    for (var n = 0; n < string.length; n++) {
+      if (/\s|,/.test(string[n]) && nesting == 0) {
+        break;
+      } else if (string[n] == '(') {
+        nesting++;
+      } else if (string[n] == ')') {
+        nesting--;
+        if (nesting == 0)
+          n++;
+        if (nesting <= 0)
+          break;
+      }
+    }
+    var parsed = parser(string.substr(0, n));
+    return parsed == undefined ? undefined : [parsed, string.substr(n)];
+  }
+
+  function lcm(a, b) {
+    var c = a;
+    var d = b;
+    while (c && d)
+      c > d ? c %= d : d %= c;
+    c = (a * b) / (c + d);
+    return c;
+  }
+
+  function ignore(value) {
+    return function(input) {
+      var result = value(input);
+      if (result)
+        result[0] = undefined;
+      return result;
+    }
+  }
+
+  function optional(value, defaultValue) {
+    return function(input) {
+      var result = value(input);
+      if (result)
+        return result;
+      return [defaultValue, input];
+    }
+  }
+
+  function consumeList(list, input) {
+    var output = [];
+    for (var i = 0; i < list.length; i++) {
+      var result = scope.consumeTrimmed(list[i], input);
+      if (!result || result[0] == '')
+        return;
+      if (result[0] !== undefined)
+        output.push(result[0]);
+      input = result[1];
+    }
+    if (input == '') {
+      return output;
+    }
+  }
+
+  function mergeWrappedNestedRepeated(wrap, nestedMerge, separator, left, right) {
+    var matchingLeft = [];
+    var matchingRight = [];
+    var reconsititution = [];
+    var length = lcm(left.length, right.length);
+    for (var i = 0; i < length; i++) {
+      var thing = nestedMerge(left[i % left.length], right[i % right.length]);
+      if (!thing) {
+        return;
+      }
+      matchingLeft.push(thing[0]);
+      matchingRight.push(thing[1]);
+      reconsititution.push(thing[2]);
+    }
+    return [matchingLeft, matchingRight, function(positions) {
+      var result = positions.map(function(position, i) {
+        return reconsititution[i](position);
+      }).join(separator);
+      return wrap ? wrap(result) : result;
+    }];
+  }
+
+  function mergeList(left, right, list) {
+    var lefts = [];
+    var rights = [];
+    var functions = [];
+    var j = 0;
+    for (var i = 0; i < list.length; i++) {
+      if (typeof list[i] == 'function') {
+        var result = list[i](left[j], right[j++]);
+        lefts.push(result[0]);
+        rights.push(result[1]);
+        functions.push(result[2]);
+      } else {
+        (function(pos) {
+          lefts.push(false);
+          rights.push(false);
+          functions.push(function() { return list[pos]; });
+        })(i);
+      }
+    }
+    return [lefts, rights, function(results) {
+      var result = '';
+      for (var i = 0; i < results.length; i++) {
+        result += functions[i](results[i]);
+      }
+      return result;
+    }];
+  }
+
+  scope.consumeToken = consumeToken;
+  scope.consumeTrimmed = consumeTrimmed;
+  scope.consumeRepeated = consumeRepeated;
+  scope.consumeParenthesised = consumeParenthesised;
+  scope.ignore = ignore;
+  scope.optional = optional;
+  scope.consumeList = consumeList;
+  scope.mergeNestedRepeated = mergeWrappedNestedRepeated.bind(null, null);
+  scope.mergeWrappedNestedRepeated = mergeWrappedNestedRepeated;
+  scope.mergeList = mergeList;
+
+})(webAnimationsMinifill);

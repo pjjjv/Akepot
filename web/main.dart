@@ -27,6 +27,8 @@ void main() {
       window.onHashChange.listen((HashChangeEvent e) {
         window.location.reload();
       });
+
+      new AppCache(window.applicationCache);
     });
   });
 }
@@ -227,4 +229,41 @@ class Content extends Observable {
 void setAkepotTransitionSpeed(int timeInMs){
   /*CoreStyle.g.transitions.duration = timeInMs + 'ms';
   CoreStyle.g.transitions.scaleDelay = CoreStyle.g.transitions.duration;*/
+}
+
+class AppCache {
+  ApplicationCache appCache;
+
+  AppCache(this.appCache) {
+    // Set up handlers to log all of the cache events or errors.
+    appCache.onCached.listen(onCachedEvent);
+    appCache.onError.listen(onCacheError);
+
+    // Set up a more interesting handler to swap in the new app when ready.
+    appCache.onUpdateReady.listen((e) => updateReady());
+  }
+
+  void updateReady() {
+    if (appCache.status == ApplicationCache.UPDATEREADY) {
+      // The browser downloaded a new app cache. Alert the user and swap it in
+      // to get the new hotness.
+      appCache.swapCache();
+
+      if (window.confirm('A new version of this site is available. Reload?')) {
+        window.location.reload();
+      }
+    }
+  }
+
+  void onCachedEvent(Event e) {
+    window.alert("Finished downloading into cache. This web app can now be used offline.");
+    print('Cache event: ${e}');
+  }
+
+  void onCacheError(Event e) {
+    // For the sake of this sample alert the reader that an error has occurred.
+    // Of course we would *never* do it this way in real life.
+    window.alert("Oh no! A cache error occurred: ${e}");
+    print('Cache error: ${e}');
+  }
 }

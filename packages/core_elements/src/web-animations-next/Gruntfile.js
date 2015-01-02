@@ -1,1 +1,279 @@
-module.exports=function(e){function t(e,t,a){return m.uglify[t]={options:{sourceMap:!0,sourceMapName:t+".map",wrap:!1,compress:{global_defs:a,dead_code:!1},mangle:!1},nonull:!0,dest:t,src:e},"uglify:"+t}function a(a,n,r){var i=t([a],n,r),s=m.uglify[n];return s.options.sourceMapIn=a+".map",s.options.banner=e.file.read("templates/boilerplate"),s.options.wrap=!0,s.options.compress.dead_code=!0,s.options.mangle={eval:!0},i}function n(e){var t=c[e],a=[r("templates/web-animations.js",{target:e},e+".dev.js"),r("templates/web-animations.html",{src:t.src},e+".dev.html"),r("templates/runner.html",{target:e},"test/runner-"+e+".html")];return a}function r(e,t,a){var n={};return n[a]=[e],m.template[a]={options:{data:t},files:n},"template:"+a}function i(e,t){return m.wrap[t]={source:e,preamble:'(function() {\n  if (document.documentElement.animate) {\n    var player = document.documentElement.animate([], 0);\n    var load = true;\n    if (player) {\n      load = false;\n      "play|currentTime|pause|reverse|playbackRate|cancel|finish|startTime|playState".split("|").forEach(function(t) {\n        if (player[t] === undefined) {\n          load = true;\n        }\n      });\n    }\n    if (!load) { return; }  }\n',postamble:"})();"},"wrap:"+t}function s(e,t){return m.sourceMapConcat[t]={sources:e},"sourceMapConcat:"+t}function o(e){var r=c[e];return n(e).concat([t(r.scopeSrc.concat(r.sharedSrc).concat(r.minifillSrc),"inter-raw-"+e+".js",p),i("inter-raw-"+e+".js","inter-"+e+".js"),a("inter-"+e+".js",e+".min.js",p)])}function l(e){var r=c[e];return n(e).concat([t(r.scopeSrc.concat(r.sharedSrc),"inter-"+e+"-preamble.js",p),t(r.minifillSrc,"inter-component-"+e+"minifill.js",p),i("inter-component-"+e+"minifill.js","inter-guarded-"+e+"-minifill.js"),t(r.maxifillSrc,"inter-component-"+e+".js",p),s(["inter-"+e+"-preamble.js","inter-guarded-"+e+"-minifill.js","inter-component-"+e+".js"],"inter-"+e+".js"),a("inter-"+e+".js",e+".min.js",p)])}e.loadNpmTasks("grunt-contrib-uglify"),e.loadNpmTasks("grunt-gjslint"),e.loadNpmTasks("grunt-checkrepo"),e.loadNpmTasks("grunt-karma"),e.loadNpmTasks("grunt-saucelabs"),e.loadNpmTasks("grunt-git-status"),e.loadNpmTasks("grunt-template");var c=require("./target-config.js"),u=require("source-map"),m={uglify:{},template:{},wrap:{},sourceMapConcat:{}},p={WEB_ANIMATIONS_TESTING:!1};e.registerTask("web-animations",o("web-animations")),e.registerTask("web-animations-next",l("web-animations-next")),e.registerTask("web-animations-next-lite",l("web-animations-next-lite"));var g={"web-animations":{},"web-animations-next":{}};e.initConfig({uglify:m.uglify,template:m.template,wrap:m.wrap,sourceMapConcat:m.sourceMapConcat,checkrepo:{all:{clean:!0}},"git-status":{all:{}},gjslint:{options:{flags:["--nojsdoc","--strict","--disable 7,121,110"],reporter:{name:"console"}},all:{src:["src/*.js","test/*.js","test/js/*.js"]}},test:g,sauce:g}),e.task.registerMultiTask("test","Run <target> tests under Karma",function(){var e=this.async(),t=require("karma/lib/config").parseConfig(require("path").resolve("test/karma-config.js"),{}),a=c[this.target];t.files=["test/runner.js"].concat(a.src,a.test);var n=require("karma").server;n.start(t,function(t){e(0===t)})}),e.task.registerMultiTask("sauce","Run <target> tests under Karma on Saucelabs",function(){var e=this.async(),t=require("karma/lib/config").parseConfig(require("path").resolve("test/karma-config-ci.js"),{}),a=c[this.target];t.files=["test/runner.js"].concat(a.src,a.test),t.sauceLabs.testName="web-animation-next "+this.target+" Unit tests";var n=require("karma").server;n.start(t,function(t){e(0===t)})}),e.task.registerMultiTask("sourceMapConcat","concat source files and produce combined source map",function(){for(var t=this.data.sources.map(e.file.read),a=this.data.sources.map(function(t){return e.file.read(t+".map")}),n="",r=new u.SourceMapGenerator({file:this.target}),i=0,s=0;s<t.length;s++){n+=t[s],new u.SourceMapConsumer(a[s]).eachMapping(function(e){r.addMapping({generated:{line:e.generatedLine+i,column:e.generatedColumn},original:{line:e.originalLine,column:e.originalColumn},source:e.source,name:e.name})});var o=t[s].split("\n");i+=o.length,"\n"!==t[s][t[s].length-1]&&(n+="\n")}e.file.write(this.target,n),e.file.write(this.target+".map",r.toString())}),e.task.registerMultiTask("wrap","Wrap <target> source file and update source map",function(){for(var t=e.file.read(this.data.source),a=e.file.read(this.data.source+".map"),n=t.split("\n"),r=0;n[r].length<2||"//"==n[r].substring(0,2);)r++;var i=this.data.postamble;if("//# sourceMappingURL="==n[n.length-1].substring(0,21)&&(i+="\n//# sourceMappingURL="+this.target+".map"),r>0)var s=n.slice(0,r).join("\n")+"\n";else var s="";var o=n.slice(r,n.length-1).join("\n");e.file.write(this.target,s+this.data.preamble+o+i);var l=this.data.preamble.split("\n"),c=l.length;if("\n"==this.data.preamble[this.data.preamble.length-1])var m=0;else{var m=l[c-1].length;c-=1}var p=new u.SourceMapConsumer(a),g=new u.SourceMapGenerator({file:this.target});p.eachMapping(function(e){e.generatedLine==r+1&&(e.generatedColumn+=m),e.generatedLine+=c,g.addMapping({generated:{line:e.generatedLine,column:e.generatedColumn},original:{line:e.originalLine,column:e.originalColumn},source:e.source,name:e.name})}),e.file.write(this.target+".map",g.toString())}),e.task.registerTask("clean","Remove files generated by grunt",function(){e.file.expand("web-animations*").concat(e.file.expand("test/runner-*.html")).concat(e.file.expand("inter-*")).forEach(function(t){e.file.delete(t),e.log.writeln("File "+t+" removed")})}),e.task.registerTask("default",["web-animations","web-animations-next","web-animations-next-lite","gjslint"])};
+module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-gjslint');
+  grunt.loadNpmTasks('grunt-checkrepo');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-saucelabs');
+  grunt.loadNpmTasks('grunt-git-status');
+  grunt.loadNpmTasks('grunt-template');
+
+  var targetConfig = require('./target-config.js');
+
+  var sourceMap = require('source-map');
+
+  var config = {
+    uglify: {},
+    template: {},
+    wrap: {},
+    sourceMapConcat: {},
+  };
+
+  function concat(sources, target, defines) {
+    config.uglify[target] = {
+      options: {
+        sourceMap: true,
+        sourceMapName: target + '.map',
+        wrap: false,
+        compress: {
+          global_defs: defines,
+          dead_code: false
+        },
+        mangle: false
+      },
+      nonull: true,
+      dest: target,
+      src: sources
+    };
+    return 'uglify:' + target;
+  }
+
+  function compress(source, target, defines) {
+    var name = concat([source], target, defines);
+    var record = config.uglify[target];
+    record.options.sourceMapIn = source + '.map';
+    record.options.banner = grunt.file.read('templates/boilerplate');
+    record.options.wrap = true;
+    record.options.compress.dead_code = true;
+    record.options.mangle = { eval: true };
+    return name;
+  }
+
+  function genTarget(target) {
+    var config = targetConfig[target];
+    var newGens = [
+      generateFromTemplate('templates/web-animations.js', {target: target}, target + '.dev.js'),
+      generateFromTemplate('templates/web-animations.html', {src: config.src}, target + '.dev.html'),
+      generateFromTemplate('templates/runner.html', {target: target}, 'test/runner-' + target + '.html')];
+    return newGens;
+  }
+
+  function generateFromTemplate(source, data, target) {
+    var targetSpec = {};
+    targetSpec[target] = [source];
+    config.template[target] = {
+      options: {
+        data: data
+      },
+      files: targetSpec
+    }
+    return 'template:' + target;
+  }
+
+  function guard(source, target) {
+    config.wrap[target] = {
+      source: source,
+      preamble: '(function() {\n' +
+                '  if (document.documentElement.animate) {\n' +
+                '    var player = document.documentElement.animate([], 0);\n' +
+                '    var load = true;\n' +
+                '    if (player) {\n' +
+                '      load = false;\n' +
+                '      "play|currentTime|pause|reverse|playbackRate|cancel|finish|startTime|playState".split("|").forEach(function(t) {\n' +
+                '        if (player[t] === undefined) {\n' +
+                '          load = true;\n' +
+                '        }\n' +
+                '      });\n' +
+                '    }\n' +
+                '    if (!load) { return; }' +
+                '  }\n',
+      postamble: '})();'
+    };
+    return 'wrap:' + target;
+  }
+
+  function concatWithMaps(sources, target) {
+    config.sourceMapConcat[target] = {
+      sources: sources
+    }
+    return 'sourceMapConcat:' + target;
+  };
+
+  var concatDefines = {
+    WEB_ANIMATIONS_TESTING: false
+  };
+
+  function buildMinifill(target) {
+    var config = targetConfig[target];
+    return genTarget(target).concat([
+      concat(config.scopeSrc.concat(config.sharedSrc).concat(config.minifillSrc), 'inter-raw-' + target + '.js', concatDefines),
+      guard('inter-raw-' + target + '.js', 'inter-' + target + '.js'),
+      compress('inter-' + target + '.js', target + '.min.js', concatDefines)
+    ]);
+  }
+
+  function buildMaxifill(target) {
+    var config = targetConfig[target];
+    return genTarget(target).concat([
+      concat(config.scopeSrc.concat(config.sharedSrc), 'inter-' + target + '-preamble.js', concatDefines),
+      concat(config.minifillSrc, 'inter-component-' + target + 'minifill.js', concatDefines),
+      guard('inter-component-' + target + 'minifill.js', 'inter-guarded-' + target + '-minifill.js'),
+      concat(config.maxifillSrc, 'inter-component-' + target + '.js', concatDefines),
+      concatWithMaps(['inter-' + target + '-preamble.js', 'inter-guarded-' + target + '-minifill.js', 'inter-component-' + target + '.js'],
+          'inter-' + target + '.js'),
+      compress('inter-' + target + '.js', target + '.min.js', concatDefines)
+    ]);
+  }
+
+  grunt.registerTask('web-animations', buildMinifill('web-animations'));
+  grunt.registerTask('web-animations-next', buildMaxifill('web-animations-next'));
+  grunt.registerTask('web-animations-next-lite', buildMaxifill('web-animations-next-lite'));
+
+  var testTargets = {'web-animations': {}, 'web-animations-next': {}};
+
+  grunt.initConfig({
+    uglify: config.uglify,
+    template: config.template,
+    wrap: config.wrap,
+    sourceMapConcat: config.sourceMapConcat,
+    checkrepo: {
+      all: {
+        clean: true,
+      },
+    },
+    'git-status': {
+      all: {
+      },
+    },
+    gjslint: {
+      options: {
+        flags: [
+          '--nojsdoc',
+          '--strict',
+          '--disable 7,121,110', //   7: Wrong blank line count
+                                 // 121: Illegal comma at end of object literal
+                                 // 110: Line too long
+        ],
+        reporter: {
+          name: 'console'
+        }
+      },
+      all: {
+        src: [
+          'src/*.js',
+          'test/*.js',
+          'test/js/*.js',
+        ],
+      }
+    },
+    test: testTargets,
+    sauce: testTargets,
+  });
+
+
+  grunt.task.registerMultiTask('test', 'Run <target> tests under Karma', function() {
+    var done = this.async();
+    var karmaConfig = require('karma/lib/config').parseConfig(require('path').resolve('test/karma-config.js'), {});
+    var config = targetConfig[this.target];
+    karmaConfig.files = ['test/runner.js'].concat(config.src, config.test);
+    var karmaServer = require('karma').server;
+    karmaServer.start(karmaConfig, function(exitCode) {
+      done(exitCode === 0);
+    });
+  });
+
+  grunt.task.registerMultiTask('sauce', 'Run <target> tests under Karma on Saucelabs', function() {
+    var done = this.async();
+    var karmaConfig = require('karma/lib/config').parseConfig(require('path').resolve('test/karma-config-ci.js'), {});
+    var config = targetConfig[this.target];
+    karmaConfig.files = ['test/runner.js'].concat(config.src, config.test);
+    karmaConfig.sauceLabs.testName = 'web-animation-next ' + this.target + ' Unit tests';
+    var karmaServer = require('karma').server;
+    karmaServer.start(karmaConfig, function(exitCode) {
+      done(exitCode === 0);
+    });
+  });
+
+  grunt.task.registerMultiTask('sourceMapConcat', 'concat source files and produce combined source map',
+    function() {
+      var sources = this.data.sources.map(grunt.file.read);
+      var sourceMaps = this.data.sources.map(function(f) { return grunt.file.read(f + '.map'); });
+      var out = "";
+      var outMapGenerator = new sourceMap.SourceMapGenerator({file: this.target});
+      var lineDelta = 0;
+      for (var i = 0; i < sources.length; i++) {
+        out += sources[i];
+        new sourceMap.SourceMapConsumer(sourceMaps[i]).eachMapping(function(mapping) {
+          outMapGenerator.addMapping({
+            generated: {line: mapping.generatedLine + lineDelta, column: mapping.generatedColumn},
+            original: {line: mapping.originalLine, column: mapping.originalColumn},
+            source: mapping.source, name: mapping.name});
+        });
+        var sourceLines = sources[i].split('\n');
+        lineDelta += sourceLines.length;
+        if (sources[i][sources[i].length - 1] !== '\n') {
+          out += '\n';
+        }
+      }
+      grunt.file.write(this.target, out);
+      grunt.file.write(this.target + '.map', outMapGenerator.toString());
+    });
+
+  grunt.task.registerMultiTask('wrap', 'Wrap <target> source file and update source map',
+    function() {
+      var inFile = grunt.file.read(this.data.source);
+      var inMap = grunt.file.read(this.data.source + '.map');
+      var inLines = inFile.split('\n');
+      var i = 0;
+
+      // Discover copyright header
+      while (inLines[i].length < 2 || inLines[i].substring(0, 2) == '//') {
+        i++;
+      }
+
+      // Fix mapping footer
+      var postamble = this.data.postamble;
+      if (inLines[inLines.length - 1].substring(0, 21) == '//# sourceMappingURL=') {
+        postamble += '\n//# sourceMappingURL=' + this.target + '.map';
+      }
+
+      if (i > 0) {
+        var banner = inLines.slice(0, i).join('\n') + '\n';
+      } else {
+        var banner = '';
+      }
+
+      var source = inLines.slice(i, inLines.length - 1).join('\n');
+
+      grunt.file.write(this.target, banner + this.data.preamble + source + postamble);
+      var preLines = this.data.preamble.split('\n');
+      var lineDelta = preLines.length;
+      if (this.data.preamble[this.data.preamble.length - 1] == '\n') {
+        var charDelta = 0;
+      } else {
+        var charDelta = preLines[lineDelta - 1].length;
+        lineDelta -= 1;
+      }
+      var inMapConsumer = new sourceMap.SourceMapConsumer(inMap);
+      var outMapGenerator = new sourceMap.SourceMapGenerator({file: this.target});
+      inMapConsumer.eachMapping(function(mapping) {
+        if (mapping.generatedLine == i + 1) {
+          mapping.generatedColumn += charDelta;
+        }
+        mapping.generatedLine += lineDelta;
+        outMapGenerator.addMapping(
+          {generated: {line: mapping.generatedLine, column: mapping.generatedColumn},
+          original: {line: mapping.originalLine, column: mapping.originalColumn},
+          source: mapping.source, name: mapping.name});
+      });
+      grunt.file.write(this.target + '.map', outMapGenerator.toString());
+    });
+
+  grunt.task.registerTask('clean', 'Remove files generated by grunt', function() {
+    grunt.file.expand('web-animations*').concat(grunt.file.expand('test/runner-*.html')).concat(grunt.file.expand('inter-*')).forEach(function(file) {
+      grunt.file.delete(file);
+      grunt.log.writeln('File ' + file + ' removed');
+    });
+  });
+
+  grunt.task.registerTask('default', ['web-animations', 'web-animations-next', 'web-animations-next-lite', 'gjslint']);
+};

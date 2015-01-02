@@ -1,1 +1,183 @@
-!function(t,e){function r(t,e,r){r.enumerable=!0,r.configurable=!0,Object.defineProperty(t,e,r)}function s(t){WEB_ANIMATIONS_TESTING&&console.assert(!(t.style instanceof s),"Element must not already have an animated style attached."),this._surrogateElement=document.createElement("div"),this._surrogateStyle=this._surrogateElement.style,this._style=t.style,this._length=0,this._isAnimatedProperty={};for(var e=0;e<this._style.length;e++){var r=this._style[e];this._surrogateStyle[r]=this._style[r]}this._updateIndices()}function n(t){if(!t._webAnimationsPatchedStyle){var e=new s(t);r(t,"style",{get:function(){return e}}),t._webAnimationsPatchedStyle=t.style}}var i={cssText:1,length:1,parentRule:1},o={getPropertyCSSValue:1,getPropertyPriority:1,getPropertyValue:1,item:1,removeProperty:1,setProperty:1},l={removeProperty:1,setProperty:1};s.prototype={get cssText(){return this._surrogateStyle.cssText},set cssText(t){for(var e={},r=0;r<this._surrogateStyle.length;r++)e[this._surrogateStyle[r]]=!0;this._surrogateStyle.cssText=t,this._updateIndices();for(var r=0;r<this._surrogateStyle.length;r++)e[this._surrogateStyle[r]]=!0;for(var s in e)this._isAnimatedProperty[s]||this._style.setProperty(s,this._surrogateStyle.getPropertyValue(s))},get length(){return this._surrogateStyle.length},get parentRule(){return this._style.parentRule},_updateIndices:function(){for(;this._length<this._surrogateStyle.length;)Object.defineProperty(this,this._length,{configurable:!0,enumerable:!1,get:function(t){return function(){return this._surrogateStyle[t]}}(this._length)}),this._length++;for(;this._length>this._surrogateStyle.length;)this._length--,Object.defineProperty(this,this._length,{configurable:!0,enumerable:!1,value:void 0})},_set:function(t,e){this._style[t]=e,this._isAnimatedProperty[t]=!0},_clear:function(t){this._style[t]=this._surrogateStyle[t],delete this._isAnimatedProperty[t]}};for(var a in o)s.prototype[a]=function(t,e){return function(){var r=this._surrogateStyle[t].apply(this._surrogateStyle,arguments);return e&&(this._isAnimatedProperty[arguments[0]]||this._style[t].apply(this._style,arguments),this._updateIndices()),r}}(a,a in l);for(var u in document.documentElement.style)u in i||u in o||!function(t){r(s.prototype,t,{get:function(){return this._surrogateStyle[t]},set:function(e){this._surrogateStyle[t]=e,this._updateIndices(),this._isAnimatedProperty[t]||(this._style[t]=e)}})}(u);t.apply=function(e,r,s){n(e),e.style._set(t.propertyName(r),s)},t.clear=function(e,r){e._webAnimationsPatchedStyle&&e.style._clear(t.propertyName(r))},WEB_ANIMATIONS_TESTING&&(e.ensureStyleIsPatched=n)}(webAnimationsMinifill,webAnimationsTesting);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+// limitations under the License.
+
+(function(scope, testing) {
+
+  var styleAttributes = {
+    cssText: 1,
+    length: 1,
+    parentRule: 1,
+  };
+
+  var styleMethods = {
+    getPropertyCSSValue: 1,
+    getPropertyPriority: 1,
+    getPropertyValue: 1,
+    item: 1,
+    removeProperty: 1,
+    setProperty: 1,
+  };
+
+  var styleMutatingMethods = {
+    removeProperty: 1,
+    setProperty: 1,
+  };
+
+  function configureProperty(object, property, descriptor) {
+    descriptor.enumerable = true;
+    descriptor.configurable = true;
+    Object.defineProperty(object, property, descriptor);
+  }
+
+  function AnimatedCSSStyleDeclaration(element) {
+    WEB_ANIMATIONS_TESTING && console.assert(!(element.style instanceof AnimatedCSSStyleDeclaration),
+        'Element must not already have an animated style attached.');
+
+    // Stores the inline style of the element on its behalf while the
+    // polyfill uses the element's inline style to simulate web animations.
+    // This is needed to fake regular inline style CSSOM access on the element.
+    this._surrogateElement = document.createElement('div');
+    this._surrogateStyle = this._surrogateElement.style;
+    this._style = element.style;
+    this._length = 0;
+    this._isAnimatedProperty = {};
+
+    // Copy the inline style contents over to the surrogate.
+    for (var i = 0; i < this._style.length; i++) {
+      var property = this._style[i];
+      this._surrogateStyle[property] = this._style[property];
+    }
+    this._updateIndices();
+  }
+
+  AnimatedCSSStyleDeclaration.prototype = {
+    get cssText() {
+      return this._surrogateStyle.cssText;
+    },
+    set cssText(text) {
+      var isAffectedProperty = {};
+      for (var i = 0; i < this._surrogateStyle.length; i++) {
+        isAffectedProperty[this._surrogateStyle[i]] = true;
+      }
+      this._surrogateStyle.cssText = text;
+      this._updateIndices();
+      for (var i = 0; i < this._surrogateStyle.length; i++) {
+        isAffectedProperty[this._surrogateStyle[i]] = true;
+      }
+      for (var property in isAffectedProperty) {
+        if (!this._isAnimatedProperty[property]) {
+          this._style.setProperty(property, this._surrogateStyle.getPropertyValue(property));
+        }
+      }
+    },
+    get length() {
+      return this._surrogateStyle.length;
+    },
+    get parentRule() {
+      return this._style.parentRule;
+    },
+    // Mirror the indexed getters and setters of the surrogate style.
+    _updateIndices: function() {
+      while (this._length < this._surrogateStyle.length) {
+        Object.defineProperty(this, this._length, {
+          configurable: true,
+          enumerable: false,
+          get: (function(index) {
+            return function() { return this._surrogateStyle[index]; };
+          })(this._length)
+        });
+        this._length++;
+      }
+      while (this._length > this._surrogateStyle.length) {
+        this._length--;
+        Object.defineProperty(this, this._length, {
+          configurable: true,
+          enumerable: false,
+          value: undefined
+        });
+      }
+    },
+    _set: function(property, value) {
+      this._style[property] = value;
+      this._isAnimatedProperty[property] = true;
+    },
+    _clear: function(property) {
+      this._style[property] = this._surrogateStyle[property];
+      delete this._isAnimatedProperty[property];
+    },
+  };
+
+  // Wrap the style methods.
+  for (var method in styleMethods) {
+    AnimatedCSSStyleDeclaration.prototype[method] = (function(method, modifiesStyle) {
+      return function() {
+        var result = this._surrogateStyle[method].apply(this._surrogateStyle, arguments);
+        if (modifiesStyle) {
+          if (!this._isAnimatedProperty[arguments[0]])
+            this._style[method].apply(this._style, arguments);
+          this._updateIndices();
+        }
+        return result;
+      }
+    })(method, method in styleMutatingMethods);
+  }
+
+  // Wrap the style.cssProperty getters and setters.
+  for (var property in document.documentElement.style) {
+    if (property in styleAttributes || property in styleMethods) {
+      continue;
+    }
+    (function(property) {
+      configureProperty(AnimatedCSSStyleDeclaration.prototype, property, {
+        get: function() {
+          return this._surrogateStyle[property];
+        },
+        set: function(value) {
+          this._surrogateStyle[property] = value;
+          this._updateIndices();
+          if (!this._isAnimatedProperty[property])
+            this._style[property] = value;
+        }
+      });
+    })(property);
+  }
+
+  function ensureStyleIsPatched(element) {
+    if (element._webAnimationsPatchedStyle)
+      return;
+
+    // If this style patch fails (on Safari and iOS) use the apply-preserving-inline-style-methods.js
+    // module instead and restrict inline style interactions to the methods listed in styleMethods.
+    var animatedStyle = new AnimatedCSSStyleDeclaration(element);
+    configureProperty(element, 'style', { get: function() { return animatedStyle; } });
+
+    // We must keep a handle on the patched style to prevent it from getting GC'd.
+    element._webAnimationsPatchedStyle = element.style;
+  }
+
+  scope.apply = function(element, property, value) {
+    ensureStyleIsPatched(element);
+    element.style._set(scope.propertyName(property), value);
+  };
+
+  scope.clear = function(element, property) {
+    if (element._webAnimationsPatchedStyle) {
+      element.style._clear(scope.propertyName(property));
+    }
+  };
+
+  if (WEB_ANIMATIONS_TESTING)
+    testing.ensureStyleIsPatched = ensureStyleIsPatched;
+
+})(webAnimationsMinifill, webAnimationsTesting);

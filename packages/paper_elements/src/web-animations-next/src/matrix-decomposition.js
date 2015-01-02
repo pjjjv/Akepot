@@ -1,1 +1,452 @@
-!function(r){function t(r,t){for(var a=0,e=0;e<r.length;e++)a+=r[e]*t[e];return a}function a(r,t){return[r[0]*t[0]+r[4]*t[1]+r[8]*t[2]+r[12]*t[3],r[1]*t[0]+r[5]*t[1]+r[9]*t[2]+r[13]*t[3],r[2]*t[0]+r[6]*t[1]+r[10]*t[2]+r[14]*t[3],r[3]*t[0]+r[7]*t[1]+r[11]*t[2]+r[15]*t[3],r[0]*t[4]+r[4]*t[5]+r[8]*t[6]+r[12]*t[7],r[1]*t[4]+r[5]*t[5]+r[9]*t[6]+r[13]*t[7],r[2]*t[4]+r[6]*t[5]+r[10]*t[6]+r[14]*t[7],r[3]*t[4]+r[7]*t[5]+r[11]*t[6]+r[15]*t[7],r[0]*t[8]+r[4]*t[9]+r[8]*t[10]+r[12]*t[11],r[1]*t[8]+r[5]*t[9]+r[9]*t[10]+r[13]*t[11],r[2]*t[8]+r[6]*t[9]+r[10]*t[10]+r[14]*t[11],r[3]*t[8]+r[7]*t[9]+r[11]*t[10]+r[15]*t[11],r[0]*t[12]+r[4]*t[13]+r[8]*t[14]+r[12]*t[15],r[1]*t[12]+r[5]*t[13]+r[9]*t[14]+r[13]*t[15],r[2]*t[12]+r[6]*t[13]+r[10]*t[14]+r[14]*t[15],r[3]*t[12]+r[7]*t[13]+r[11]*t[14]+r[15]*t[15]]}function e(r){switch(r.t){case"rotatex":var t=r.d[0].rad||0,a=r.d[0].deg||0,e=a*Math.PI/180+t;return[1,0,0,0,0,Math.cos(e),Math.sin(e),0,0,-Math.sin(e),Math.cos(e),0,0,0,0,1];case"rotatey":var t=r.d[0].rad||0,a=r.d[0].deg||0,e=a*Math.PI/180+t;return[Math.cos(e),0,-Math.sin(e),0,0,1,0,0,Math.sin(e),0,Math.cos(e),0,0,0,0,1];case"rotate":case"rotatez":var t=r.d[0].rad||0,a=r.d[0].deg||0,e=a*Math.PI/180+t;return[Math.cos(e),Math.sin(e),0,0,-Math.sin(e),Math.cos(e),0,0,0,0,1,0,0,0,0,1];case"rotate3d":var n=r.d[0],s=r.d[1],u=r.d[2],t=r.d[3].rad||0,a=r.d[3].deg||0,e=a*Math.PI/180+t,d=n*n+s*s+u*u;if(0===d)n=1,s=0,u=0;else if(1!==d){var c=Math.sqrt(d);n/=c,s/=c,u/=c}var i=Math.sin(e/2),h=i*Math.cos(e/2),o=i*i;return[1-2*(s*s+u*u)*o,2*(n*s*o+u*h),2*(n*u*o-s*h),0,2*(n*s*o-u*h),1-2*(n*n+u*u)*o,2*(s*u*o+n*h),0,2*(n*u*o+s*h),2*(s*u*o-n*h),1-2*(n*n+s*s)*o,0,0,0,0,1];case"scale":return[r.d[0],0,0,0,0,r.d[1],0,0,0,0,1,0,0,0,0,1];case"scalex":return[r.d[0],0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];case"scaley":return[1,0,0,0,0,r.d[0],0,0,0,0,1,0,0,0,0,1];case"scalez":return[1,0,0,0,0,1,0,0,0,0,r.d[0],0,0,0,0,1];case"scale3d":return[r.d[0],0,0,0,0,r.d[1],0,0,0,0,r.d[2],0,0,0,0,1];case"skew":var v=r.d[0].deg||0,M=r.d[0].rad||0,p=r.d[1].deg||0,f=r.d[1].rad||0,l=v*Math.PI/180+M,x=p*Math.PI/180+f;return[1,Math.tan(x),0,0,Math.tan(l),1,0,0,0,0,1,0,0,0,0,1];case"skewx":var t=r.d[0].rad||0,a=r.d[0].deg||0,e=a*Math.PI/180+t;return[1,0,0,0,Math.tan(e),1,0,0,0,0,1,0,0,0,0,1];case"skewy":var t=r.d[0].rad||0,a=r.d[0].deg||0,e=a*Math.PI/180+t;return[1,Math.tan(e),0,0,0,1,0,0,0,0,1,0,0,0,0,1];case"translate":var n=r.d[0].px||0,s=r.d[1].px||0;return[1,0,0,0,0,1,0,0,0,0,1,0,n,s,0,1];case"translatex":var n=r.d[0].px||0;return[1,0,0,0,0,1,0,0,0,0,1,0,n,0,0,1];case"translatey":var s=r.d[0].px||0;return[1,0,0,0,0,1,0,0,0,0,1,0,0,s,0,1];case"translatez":var u=r.d[0].px||0;return[1,0,0,0,0,1,0,0,0,0,1,0,0,0,u,1];case"translate3d":var n=r.d[0].px||0,s=r.d[1].px||0,u=r.d[2].px||0;return[1,0,0,0,0,1,0,0,0,0,1,0,n,s,u,1];case"perspective":var m=r.d[0].px?-1/r.d[0].px:0;return[1,0,0,0,0,1,0,0,0,0,1,m,0,0,0,1];case"matrix":return[r.d[0],r.d[1],0,0,r.d[2],r.d[3],0,0,0,0,1,0,r.d[4],r.d[5],0,1];case"matrix3d":return r.d;default:WEB_ANIMATIONS_TESTING&&console.assert(!1,"Transform item type "+r.t+" conversion to matrix not yet implemented.")}}function n(r){return 0===r.length?[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]:r.map(e).reduce(a)}function s(r){return[u(n(r))]}var u=function(){function r(r){return r[0][0]*r[1][1]*r[2][2]+r[1][0]*r[2][1]*r[0][2]+r[2][0]*r[0][1]*r[1][2]-r[0][2]*r[1][1]*r[2][0]-r[1][2]*r[2][1]*r[0][0]-r[2][2]*r[0][1]*r[1][0]}function a(t){for(var a=1/r(t),e=t[0][0],n=t[0][1],s=t[0][2],u=t[1][0],d=t[1][1],c=t[1][2],i=t[2][0],h=t[2][1],o=t[2][2],v=[[(d*o-c*h)*a,(s*h-n*o)*a,(n*c-s*d)*a,0],[(c*i-u*o)*a,(e*o-s*i)*a,(s*u-e*c)*a,0],[(u*h-d*i)*a,(i*n-e*h)*a,(e*d-n*u)*a,0]],M=[],p=0;3>p;p++){for(var f=0,l=0;3>l;l++)f+=t[3][l]*v[l][p];M.push(f)}return M.push(1),v.push(M),v}function e(r){return[[r[0][0],r[1][0],r[2][0],r[3][0]],[r[0][1],r[1][1],r[2][1],r[3][1]],[r[0][2],r[1][2],r[2][2],r[3][2]],[r[0][3],r[1][3],r[2][3],r[3][3]]]}function n(r,t){for(var a=[],e=0;4>e;e++){for(var n=0,s=0;4>s;s++)n+=r[s]*t[s][e];a.push(n)}return a}function s(r){var t=u(r);return[r[0]/t,r[1]/t,r[2]/t]}function u(r){return Math.sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2])}function d(r,t,a,e){return[a*r[0]+e*t[0],a*r[1]+e*t[1],a*r[2]+e*t[2]]}function c(r,t){return[r[1]*t[2]-r[2]*t[1],r[2]*t[0]-r[0]*t[2],r[0]*t[1]-r[1]*t[0]]}function i(i){var h=[i.slice(0,4),i.slice(4,8),i.slice(8,12),i.slice(12,16)];if(1!==h[3][3])return null;for(var o=[],v=0;4>v;v++)o.push(h[v].slice());for(var v=0;3>v;v++)o[v][3]=0;if(0===r(o))return!1;var M,p=[];if(h[0][3]||h[1][3]||h[2][3]){p.push(h[0][3]),p.push(h[1][3]),p.push(h[2][3]),p.push(h[3][3]);var f=a(o),l=e(f);M=n(p,l)}else M=[0,0,0,1];var x=h[3].slice(0,3),m=[];m.push(h[0].slice(0,3));var g=[];g.push(u(m[0])),m[0]=s(m[0]);var I=[];m.push(h[1].slice(0,3)),I.push(t(m[0],m[1])),m[1]=d(m[1],m[0],1,-I[0]),g.push(u(m[1])),m[1]=s(m[1]),I[0]/=g[1],m.push(h[2].slice(0,3)),I.push(t(m[0],m[2])),m[2]=d(m[2],m[0],1,-I[1]),I.push(t(m[1],m[2])),m[2]=d(m[2],m[1],1,-I[2]),g.push(u(m[2])),m[2]=s(m[2]),I[1]/=g[2],I[2]/=g[2];var P=c(m[1],m[2]);if(t(m[0],P)<0)for(var v=0;3>v;v++)g[v]*=-1,m[v][0]*=-1,m[v][1]*=-1,m[v][2]*=-1;var q,w,y=m[0][0]+m[1][1]+m[2][2]+1;return y>1e-4?(q=.5/Math.sqrt(y),w=[(m[2][1]-m[1][2])*q,(m[0][2]-m[2][0])*q,(m[1][0]-m[0][1])*q,.25/q]):m[0][0]>m[1][1]&&m[0][0]>m[2][2]?(q=2*Math.sqrt(1+m[0][0]-m[1][1]-m[2][2]),w=[.25*q,(m[0][1]+m[1][0])/q,(m[0][2]+m[2][0])/q,(m[2][1]-m[1][2])/q]):m[1][1]>m[2][2]?(q=2*Math.sqrt(1+m[1][1]-m[0][0]-m[2][2]),w=[(m[0][1]+m[1][0])/q,.25*q,(m[1][2]+m[2][1])/q,(m[0][2]-m[2][0])/q]):(q=2*Math.sqrt(1+m[2][2]-m[0][0]-m[1][1]),w=[(m[0][2]+m[2][0])/q,(m[1][2]+m[2][1])/q,.25*q,(m[1][0]-m[0][1])/q]),[x,g,I,w,M]}return i}();r.dot=t,r.makeMatrixDecomposition=s}(webAnimationsMinifill,webAnimationsTesting);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+// limitations under the License.
+
+(function(scope, testing) {
+  var decomposeMatrix = (function() {
+    function determinant(m) {
+      return m[0][0] * m[1][1] * m[2][2] +
+             m[1][0] * m[2][1] * m[0][2] +
+             m[2][0] * m[0][1] * m[1][2] -
+             m[0][2] * m[1][1] * m[2][0] -
+             m[1][2] * m[2][1] * m[0][0] -
+             m[2][2] * m[0][1] * m[1][0];
+    }
+
+    // from Wikipedia:
+    //
+    // [A B]^-1 = [A^-1 + A^-1B(D - CA^-1B)^-1CA^-1     -A^-1B(D - CA^-1B)^-1]
+    // [C D]      [-(D - CA^-1B)^-1CA^-1                (D - CA^-1B)^-1      ]
+    //
+    // Therefore
+    //
+    // [A [0]]^-1 = [A^-1       [0]]
+    // [C  1 ]      [ -CA^-1     1 ]
+    function inverse(m) {
+      var iDet = 1 / determinant(m);
+      var a = m[0][0], b = m[0][1], c = m[0][2];
+      var d = m[1][0], e = m[1][1], f = m[1][2];
+      var g = m[2][0], h = m[2][1], k = m[2][2];
+      var Ainv = [
+        [(e * k - f * h) * iDet, (c * h - b * k) * iDet,
+         (b * f - c * e) * iDet, 0],
+        [(f * g - d * k) * iDet, (a * k - c * g) * iDet,
+         (c * d - a * f) * iDet, 0],
+        [(d * h - e * g) * iDet, (g * b - a * h) * iDet,
+         (a * e - b * d) * iDet, 0]
+      ];
+      var lastRow = [];
+      for (var i = 0; i < 3; i++) {
+        var val = 0;
+        for (var j = 0; j < 3; j++) {
+          val += m[3][j] * Ainv[j][i];
+        }
+        lastRow.push(val);
+      }
+      lastRow.push(1);
+      Ainv.push(lastRow);
+      return Ainv;
+    }
+
+    function transposeMatrix4(m) {
+      return [[m[0][0], m[1][0], m[2][0], m[3][0]],
+              [m[0][1], m[1][1], m[2][1], m[3][1]],
+              [m[0][2], m[1][2], m[2][2], m[3][2]],
+              [m[0][3], m[1][3], m[2][3], m[3][3]]];
+    }
+
+    function multVecMatrix(v, m) {
+      var result = [];
+      for (var i = 0; i < 4; i++) {
+        var val = 0;
+        for (var j = 0; j < 4; j++) {
+          val += v[j] * m[j][i];
+        }
+        result.push(val);
+      }
+      return result;
+    }
+
+    function normalize(v) {
+      var len = length(v);
+      return [v[0] / len, v[1] / len, v[2] / len];
+    }
+
+    function length(v) {
+      return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    }
+
+    function combine(v1, v2, v1s, v2s) {
+      return [v1s * v1[0] + v2s * v2[0], v1s * v1[1] + v2s * v2[1],
+              v1s * v1[2] + v2s * v2[2]];
+    }
+
+    function cross(v1, v2) {
+      return [v1[1] * v2[2] - v1[2] * v2[1],
+              v1[2] * v2[0] - v1[0] * v2[2],
+              v1[0] * v2[1] - v1[1] * v2[0]];
+    }
+
+    // TODO: Implement 2D matrix decomposition.
+    // http://dev.w3.org/csswg/css-transforms/#decomposing-a-2d-matrix
+    function decomposeMatrix(matrix) {
+      var m3d = [
+        matrix.slice(0, 4),
+        matrix.slice(4, 8),
+        matrix.slice(8, 12),
+        matrix.slice(12, 16)
+      ];
+
+      // skip normalization step as m3d[3][3] should always be 1
+      if (m3d[3][3] !== 1) {
+        return null;
+      }
+
+      var perspectiveMatrix = [];
+      for (var i = 0; i < 4; i++) {
+        perspectiveMatrix.push(m3d[i].slice());
+      }
+
+      for (var i = 0; i < 3; i++) {
+        perspectiveMatrix[i][3] = 0;
+      }
+
+      if (determinant(perspectiveMatrix) === 0) {
+        return false;
+      }
+
+      var rhs = [];
+
+      var perspective;
+      if (m3d[0][3] || m3d[1][3] || m3d[2][3]) {
+        rhs.push(m3d[0][3]);
+        rhs.push(m3d[1][3]);
+        rhs.push(m3d[2][3]);
+        rhs.push(m3d[3][3]);
+
+        var inversePerspectiveMatrix = inverse(perspectiveMatrix);
+        var transposedInversePerspectiveMatrix =
+            transposeMatrix4(inversePerspectiveMatrix);
+        perspective = multVecMatrix(rhs, transposedInversePerspectiveMatrix);
+      } else {
+        perspective = [0, 0, 0, 1];
+      }
+
+      var translate = m3d[3].slice(0, 3);
+
+      var row = [];
+      row.push(m3d[0].slice(0, 3));
+      var scale = [];
+      scale.push(length(row[0]));
+      row[0] = normalize(row[0]);
+
+      var skew = [];
+      row.push(m3d[1].slice(0, 3));
+      skew.push(dot(row[0], row[1]));
+      row[1] = combine(row[1], row[0], 1.0, -skew[0]);
+
+      scale.push(length(row[1]));
+      row[1] = normalize(row[1]);
+      skew[0] /= scale[1];
+
+      row.push(m3d[2].slice(0, 3));
+      skew.push(dot(row[0], row[2]));
+      row[2] = combine(row[2], row[0], 1.0, -skew[1]);
+      skew.push(dot(row[1], row[2]));
+      row[2] = combine(row[2], row[1], 1.0, -skew[2]);
+
+      scale.push(length(row[2]));
+      row[2] = normalize(row[2]);
+      skew[1] /= scale[2];
+      skew[2] /= scale[2];
+
+      var pdum3 = cross(row[1], row[2]);
+      if (dot(row[0], pdum3) < 0) {
+        for (var i = 0; i < 3; i++) {
+          scale[i] *= -1;
+          row[i][0] *= -1;
+          row[i][1] *= -1;
+          row[i][2] *= -1;
+        }
+      }
+
+      var t = row[0][0] + row[1][1] + row[2][2] + 1;
+      var s;
+      var quaternion;
+
+      if (t > 1e-4) {
+        s = 0.5 / Math.sqrt(t);
+        quaternion = [
+          (row[2][1] - row[1][2]) * s,
+          (row[0][2] - row[2][0]) * s,
+          (row[1][0] - row[0][1]) * s,
+          0.25 / s
+        ];
+      } else if (row[0][0] > row[1][1] && row[0][0] > row[2][2]) {
+        s = Math.sqrt(1 + row[0][0] - row[1][1] - row[2][2]) * 2.0;
+        quaternion = [
+          0.25 * s,
+          (row[0][1] + row[1][0]) / s,
+          (row[0][2] + row[2][0]) / s,
+          (row[2][1] - row[1][2]) / s
+        ];
+      } else if (row[1][1] > row[2][2]) {
+        s = Math.sqrt(1.0 + row[1][1] - row[0][0] - row[2][2]) * 2.0;
+        quaternion = [
+          (row[0][1] + row[1][0]) / s,
+          0.25 * s,
+          (row[1][2] + row[2][1]) / s,
+          (row[0][2] - row[2][0]) / s
+        ];
+      } else {
+        s = Math.sqrt(1.0 + row[2][2] - row[0][0] - row[1][1]) * 2.0;
+        quaternion = [
+          (row[0][2] + row[2][0]) / s,
+          (row[1][2] + row[2][1]) / s,
+          0.25 * s,
+          (row[1][0] - row[0][1]) / s
+        ];
+      }
+
+      return [translate, scale, skew, quaternion, perspective];
+    }
+    return decomposeMatrix;
+  })();
+
+  function dot(v1, v2) {
+    var result = 0;
+    for (var i = 0; i < v1.length; i++) {
+      result += v1[i] * v2[i];
+    }
+    return result;
+  }
+
+  function multiplyMatrices(a, b) {
+    return [
+      a[0] * b[0] + a[4] * b[1] + a[8] * b[2] + a[12] * b[3],
+      a[1] * b[0] + a[5] * b[1] + a[9] * b[2] + a[13] * b[3],
+      a[2] * b[0] + a[6] * b[1] + a[10] * b[2] + a[14] * b[3],
+      a[3] * b[0] + a[7] * b[1] + a[11] * b[2] + a[15] * b[3],
+
+      a[0] * b[4] + a[4] * b[5] + a[8] * b[6] + a[12] * b[7],
+      a[1] * b[4] + a[5] * b[5] + a[9] * b[6] + a[13] * b[7],
+      a[2] * b[4] + a[6] * b[5] + a[10] * b[6] + a[14] * b[7],
+      a[3] * b[4] + a[7] * b[5] + a[11] * b[6] + a[15] * b[7],
+
+      a[0] * b[8] + a[4] * b[9] + a[8] * b[10] + a[12] * b[11],
+      a[1] * b[8] + a[5] * b[9] + a[9] * b[10] + a[13] * b[11],
+      a[2] * b[8] + a[6] * b[9] + a[10] * b[10] + a[14] * b[11],
+      a[3] * b[8] + a[7] * b[9] + a[11] * b[10] + a[15] * b[11],
+
+      a[0] * b[12] + a[4] * b[13] + a[8] * b[14] + a[12] * b[15],
+      a[1] * b[12] + a[5] * b[13] + a[9] * b[14] + a[13] * b[15],
+      a[2] * b[12] + a[6] * b[13] + a[10] * b[14] + a[14] * b[15],
+      a[3] * b[12] + a[7] * b[13] + a[11] * b[14] + a[15] * b[15]
+    ];
+  }
+
+  // TODO: This can probably be made smaller.
+  function convertItemToMatrix(item) {
+    switch (item.t) {
+      // TODO: Handle units other than rads and degs.
+      case 'rotatex':
+        var rads = item.d[0].rad || 0;
+        var degs = item.d[0].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+        return [1, 0, 0, 0,
+                0, Math.cos(angle), Math.sin(angle), 0,
+                0, -Math.sin(angle), Math.cos(angle), 0,
+                0, 0, 0, 1];
+      case 'rotatey':
+        var rads = item.d[0].rad || 0;
+        var degs = item.d[0].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+        return [Math.cos(angle), 0, -Math.sin(angle), 0,
+                0, 1, 0, 0,
+                Math.sin(angle), 0, Math.cos(angle), 0,
+                0, 0, 0, 1];
+      case 'rotate':
+      case 'rotatez':
+        var rads = item.d[0].rad || 0;
+        var degs = item.d[0].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+        return [Math.cos(angle), Math.sin(angle), 0, 0,
+                -Math.sin(angle), Math.cos(angle), 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'rotate3d':
+        var x = item.d[0];
+        var y = item.d[1];
+        var z = item.d[2];
+        var rads = item.d[3].rad || 0;
+        var degs = item.d[3].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+
+        var sqrLength = x * x + y * y + z * z;
+        if (sqrLength === 0) {
+          x = 1;
+          y = 0;
+          z = 0;
+        } else if (sqrLength !== 1) {
+          var length = Math.sqrt(sqrLength);
+          x /= length;
+          y /= length;
+          z /= length;
+        }
+
+        var s = Math.sin(angle / 2);
+        var sc = s * Math.cos(angle / 2);
+        var sq = s * s;
+        return [
+          1 - 2 * (y * y + z * z) * sq,
+          2 * (x * y * sq + z * sc),
+          2 * (x * z * sq - y * sc),
+          0,
+
+          2 * (x * y * sq - z * sc),
+          1 - 2 * (x * x + z * z) * sq,
+          2 * (y * z * sq + x * sc),
+          0,
+
+          2 * (x * z * sq + y * sc),
+          2 * (y * z * sq - x * sc),
+          1 - 2 * (x * x + y * y) * sq,
+          0,
+
+          0, 0, 0, 1
+        ];
+      case 'scale':
+        return [item.d[0], 0, 0, 0,
+                0, item.d[1], 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'scalex':
+        return [item.d[0], 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'scaley':
+        return [1, 0, 0, 0,
+                0, item.d[0], 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'scalez':
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, item.d[0], 0,
+                0, 0, 0, 1];
+      case 'scale3d':
+        return [item.d[0], 0, 0, 0,
+                0, item.d[1], 0, 0,
+                0, 0, item.d[2], 0,
+                0, 0, 0, 1];
+      // FIXME: Skew behaves differently in Blink, FireFox and here. Need to work out why.
+      case 'skew':
+        var xDegs = item.d[0].deg || 0;
+        var xRads = item.d[0].rad || 0;
+        var yDegs = item.d[1].deg || 0;
+        var yRads = item.d[1].rad || 0;
+        var xAngle = (xDegs * Math.PI / 180) + xRads;
+        var yAngle = (yDegs * Math.PI / 180) + yRads;
+        return [1, Math.tan(yAngle), 0, 0,
+                Math.tan(xAngle), 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'skewx':
+        var rads = item.d[0].rad || 0;
+        var degs = item.d[0].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+        return [1, 0, 0, 0,
+                Math.tan(angle), 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      case 'skewy':
+        var rads = item.d[0].rad || 0;
+        var degs = item.d[0].deg || 0;
+        var angle = (degs * Math.PI / 180) + rads;
+        return [1, Math.tan(angle), 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1];
+      // TODO: Work out what to do with non-px values.
+      case 'translate':
+        var x = item.d[0].px || 0;
+        var y = item.d[1].px || 0;
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                x, y, 0, 1];
+      case 'translatex':
+        var x = item.d[0].px || 0;
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                x, 0, 0, 1];
+      case 'translatey':
+        var y = item.d[0].px || 0;
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, y, 0, 1];
+      case 'translatez':
+        var z = item.d[0].px || 0;
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, z, 1];
+      case 'translate3d':
+        var x = item.d[0].px || 0;
+        var y = item.d[1].px || 0;
+        var z = item.d[2].px || 0;
+        return [1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                x, y, z, 1];
+      case 'perspective':
+        var p = item.d[0].px ? (-1 / item.d[0].px) : 0;
+        return [
+          1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1, p,
+          0, 0, 0, 1];
+      case 'matrix':
+        return [item.d[0], item.d[1], 0, 0,
+                item.d[2], item.d[3], 0, 0,
+                0, 0, 1, 0,
+                item.d[4], item.d[5], 0, 1];
+      case 'matrix3d':
+        return item.d;
+      default:
+        WEB_ANIMATIONS_TESTING && console.assert(false, 'Transform item type ' + item.t +
+            ' conversion to matrix not yet implemented.');
+    }
+  }
+
+  function convertToMatrix(transformList) {
+    if (transformList.length === 0) {
+      return [1, 0, 0, 0,
+              0, 1, 0, 0,
+              0, 0, 1, 0,
+              0, 0, 0, 1];
+    }
+    return transformList.map(convertItemToMatrix).reduce(multiplyMatrices);
+  }
+
+  function makeMatrixDecomposition(transformList) {
+    return [decomposeMatrix(convertToMatrix(transformList))];
+  }
+
+  scope.dot = dot;
+  scope.makeMatrixDecomposition = makeMatrixDecomposition;
+
+})(webAnimationsMinifill, webAnimationsTesting);

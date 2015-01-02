@@ -1,1 +1,136 @@
-!function(t,e){function i(t){return t._timing.delay+t.activeDuration+t._timing.endDelay}function n(e){this._frames=t.normalizeKeyframes(e)}function r(){for(var t=!1;s.length;)s.shift()._updateChildren(),t=!0;return t}n.prototype={getFrames:function(){return this._frames}},e.Animation=function(e,i,r){return this.target=e,this._timing=t.normalizeTimingInput(r),this.timing=t.makeTiming(r),this.effect="function"==typeof i?i:new n(i),this._effect=i,this._internalPlayer=null,this.activeDuration=t.calculateActiveDuration(this._timing),this};var a=Element.prototype.animate;Element.prototype.animate=function(t,i){return e.timeline.play(new e.Animation(this,t,i))};var o=document.createElement("div");e.newUnderlyingPlayerForAnimation=function(t){var e=t.target||o,i=t._effect;return"function"==typeof i&&(i=[]),a.apply(e,[i,t.timing])},e.bindPlayerForAnimation=function(t){t.source&&"function"==typeof t.source.effect&&e.bindPlayerForCustomEffect(t)};var s=[];e.awaitStartTime=function(t){null===t.startTime&&t._isGroup&&(0==s.length&&requestAnimationFrame(r),s.push(t))};var u=window.getComputedStyle;Object.defineProperty(window,"getComputedStyle",{configurable:!0,enumerable:!0,value:function(){var t=u.apply(this,arguments);return r()&&(t=u.apply(this,arguments)),t}}),e.Player.prototype._updateChildren=function(){if(null!==this.startTime&&this.source&&this._isGroup)for(var t=this.source._timing.delay,e=0;e<this.source.children.length;e++){var n,r=this.source.children[e];e>=this._childPlayers.length?(n=window.document.timeline.play(r),r.player=this.source.player,this._childPlayers.push(n)):n=this._childPlayers[e],n.startTime!=this.startTime+t&&(n.startTime=this.startTime+t,n._updateChildren()),-1==this.playbackRate&&this.currentTime<t&&-1!==n.currentTime&&(n.currentTime=-1),this.source instanceof window.AnimationSequence&&(t+=i(r))}},window.Animation=e.Animation,window.Element.prototype.getAnimationPlayers=function(){return document.timeline.getAnimationPlayers().filter(function(t){return null!==t.source&&t.source.target==this}.bind(this))},e.groupChildDuration=i}(webAnimationsShared,webAnimationsMaxifill,webAnimationsTesting);
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+// limitations under the License.
+
+(function(shared, scope, testing) {
+
+  function groupChildDuration(node) {
+    return node._timing.delay + node.activeDuration + node._timing.endDelay;
+  };
+
+  function KeyframeEffect(effect) {
+    this._frames = shared.normalizeKeyframes(effect);
+  }
+
+  KeyframeEffect.prototype = {
+    getFrames: function() { return this._frames; }
+  };
+
+  scope.Animation = function(target, effect, timingInput) {
+    this.target = target;
+    // TODO: Make modifications to specified update the underlying player
+    this._timing = shared.normalizeTimingInput(timingInput);
+    this.timing = shared.makeTiming(timingInput);
+    // TODO: Make this a live object - will need to separate normalization of
+    // keyframes into a shared module.
+    if (typeof effect == 'function')
+      this.effect = effect;
+    else
+      this.effect = new KeyframeEffect(effect);
+    this._effect = effect;
+    this._internalPlayer = null;
+    this.activeDuration = shared.calculateActiveDuration(this._timing);
+    return this;
+  };
+
+  var originalElementAnimate = Element.prototype.animate;
+  Element.prototype.animate = function(effect, timing) {
+    return scope.timeline.play(new scope.Animation(this, effect, timing));
+  };
+
+  var nullTarget = document.createElement('div');
+  scope.newUnderlyingPlayerForAnimation = function(animation) {
+    var target = animation.target || nullTarget;
+    var effect = animation._effect;
+    if (typeof effect == 'function') {
+      effect = [];
+    }
+    return originalElementAnimate.apply(target, [effect, animation.timing]);
+  };
+
+  scope.bindPlayerForAnimation = function(player) {
+    if (player.source && typeof player.source.effect == 'function') {
+      scope.bindPlayerForCustomEffect(player);
+    }
+  };
+
+  var pendingGroups = [];
+  scope.awaitStartTime = function(groupPlayer) {
+    if (groupPlayer.startTime !== null || !groupPlayer._isGroup)
+      return;
+    if (pendingGroups.length == 0) {
+      requestAnimationFrame(updatePendingGroups);
+    }
+    pendingGroups.push(groupPlayer);
+  };
+  function updatePendingGroups() {
+    var updated = false;
+    while (pendingGroups.length) {
+      pendingGroups.shift()._updateChildren();
+      updated = true;
+    }
+    return updated;
+  }
+  var originalGetComputedStyle = window.getComputedStyle;
+  Object.defineProperty(window, 'getComputedStyle', {
+    configurable: true,
+    enumerable: true,
+    value: function() {
+      var result = originalGetComputedStyle.apply(this, arguments);
+      if (updatePendingGroups())
+        result = originalGetComputedStyle.apply(this, arguments);
+      return result;
+    },
+  });
+
+  // TODO: Call into this less frequently.
+  scope.Player.prototype._updateChildren = function() {
+    if (this.startTime === null || !this.source || !this._isGroup)
+      return;
+    var offset = this.source._timing.delay;
+    for (var i = 0; i < this.source.children.length; i++) {
+      var child = this.source.children[i];
+      var childPlayer;
+
+      if (i >= this._childPlayers.length) {
+        childPlayer = window.document.timeline.play(child);
+        child.player = this.source.player;
+        this._childPlayers.push(childPlayer);
+      } else {
+        childPlayer = this._childPlayers[i];
+      }
+
+      if (childPlayer.startTime != this.startTime + offset) {
+        childPlayer.startTime = this.startTime + offset;
+        childPlayer._updateChildren();
+      }
+
+      if (this.playbackRate == -1 && this.currentTime < offset && childPlayer.currentTime !== -1) {
+        childPlayer.currentTime = -1;
+      }
+
+      if (this.source instanceof window.AnimationSequence)
+        offset += groupChildDuration(child);
+    }
+  };
+
+  window.Animation = scope.Animation;
+  window.Element.prototype.getAnimationPlayers = function() {
+    return document.timeline.getAnimationPlayers().filter(function(player) {
+      return player.source !== null && player.source.target == this;
+    }.bind(this));
+  };
+
+  scope.groupChildDuration = groupChildDuration;
+
+}(webAnimationsShared, webAnimationsMaxifill, webAnimationsTesting));

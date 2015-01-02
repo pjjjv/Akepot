@@ -1,1 +1,1926 @@
-!function(){function t(){var t=document.getElementsByTagName("title")[0],e=t&&t.firstChild&&t.firstChild.data||"Untitled",s=ue>0?" "+ue:"";return ue++,e+s}function e(e,s,r){var a=s?s:t();r=r?r:{};var n=new $(a,r);n.step(e,n,n),n.phase===n.phases.STARTED&&n.done()}function s(e,s,r){"function"!=typeof e&&(r=s,s=e,e=null);var a=s?s:t();r=r?r:{};var n=new $(a,r);return e&&n.step(e,n,n),n}function r(t,e){var s=null,r={};2===arguments.length?(s=t,r=e):t instanceof Function?s=t:r=t,ce.setup(s,r),pe.setup(r)}function a(){0===ce.tests.length&&ce.set_file_is_test(),ce.file_is_test&&ce.tests[0].done(),ce.end_wait()}function n(t,s,r){Z(s,function(s,a){var n=s[0];e(function(){t.apply(this,s.slice(1))},n,Array.isArray(r)?r[a]:r)})}function o(t,e,s){t.addEventListener(e,s,!1)}function i(t,e){return t.length>e?t.substring(0,e-3)+"...":t}function u(t){if("nodeType"in t&&"nodeName"in t&&"nodeValue"in t&&"childNodes"in t){try{t.nodeType}catch(t){return!1}return!0}return!1}function c(t,e){if(e||(e=[]),"object"==typeof t&&null!==t){if(e.indexOf(t)>=0)return"[...]";e.push(t)}if(Array.isArray(t))return"["+t.map(function(t){return c(t,e)}).join(", ")+"]";switch(typeof t){case"string":t=t.replace("\\","\\\\");for(var s=0;32>s;s++){var r="\\";switch(s){case 0:r+="0";break;case 1:r+="x01";break;case 2:r+="x02";break;case 3:r+="x03";break;case 4:r+="x04";break;case 5:r+="x05";break;case 6:r+="x06";break;case 7:r+="x07";break;case 8:r+="b";break;case 9:r+="t";break;case 10:r+="n";break;case 11:r+="v";break;case 12:r+="f";break;case 13:r+="r";break;case 14:r+="x0e";break;case 15:r+="x0f";break;case 16:r+="x10";break;case 17:r+="x11";break;case 18:r+="x12";break;case 19:r+="x13";break;case 20:r+="x14";break;case 21:r+="x15";break;case 22:r+="x16";break;case 23:r+="x17";break;case 24:r+="x18";break;case 25:r+="x19";break;case 26:r+="x1a";break;case 27:r+="x1b";break;case 28:r+="x1c";break;case 29:r+="x1d";break;case 30:r+="x1e";break;case 31:r+="x1f"}t=t.replace(RegExp(String.fromCharCode(s),"g"),r)}return'"'+t.replace(/"/g,'\\"')+'"';case"boolean":case"undefined":return String(t);case"number":return t===-0&&1/t===-1/0?"-0":String(t);case"object":if(null===t)return"null";if(u(t))switch(t.nodeType){case Node.ELEMENT_NODE:for(var a="<"+t.localName,s=0;s<t.attributes.length;s++)a+=" "+t.attributes[s].name+'="'+t.attributes[s].value+'"';return a+=">"+t.innerHTML+"</"+t.localName+">","Element node "+i(a,60);case Node.TEXT_NODE:return'Text node "'+i(t.data,60)+'"';case Node.PROCESSING_INSTRUCTION_NODE:return"ProcessingInstruction node with target "+c(i(t.target,60))+" and data "+c(i(t.data,60));case Node.COMMENT_NODE:return"Comment node <!--"+i(t.data,60)+"-->";case Node.DOCUMENT_NODE:return"Document node with "+t.childNodes.length+(1==t.childNodes.length?" child":" children");case Node.DOCUMENT_TYPE_NODE:return"DocumentType node";case Node.DOCUMENT_FRAGMENT_NODE:return"DocumentFragment node with "+t.childNodes.length+(1==t.childNodes.length?" child":" children");default:return"Node object of unknown type"}default:return typeof t+' "'+i(String(t),60)+'"'}}function p(t,e){K(t===!0,"assert_true",e,"expected true got ${actual}",{actual:t})}function l(t,e){K(t===!1,"assert_false",e,"expected false got ${actual}",{actual:t})}function h(t,e){return e!==e?t!==t:0===t&&0===e?1/t===1/e:t===e}function _(t,e,s){return typeof t!=typeof e?void K(!1,"assert_equals",s,"expected ("+typeof e+") ${expected} but got ("+typeof t+") ${actual}",{expected:e,actual:t}):void K(h(t,e),"assert_equals",s,"expected ${expected} but got ${actual}",{expected:e,actual:t})}function d(t,e,s){K(!h(t,e),"assert_not_equals",s,"got disallowed value ${actual}",{actual:t})}function f(t,e,s){K(-1!=e.indexOf(t),"assert_in_array",s,"value ${actual} not in array ${expected}",{actual:t,expected:e})}function m(t,e,s){function r(t,e,a){a.push(t);var n;for(n in t)K(e.hasOwnProperty(n),"assert_object_equals",s,"unexpected property ${p}",{p:n}),"object"==typeof t[n]&&null!==t[n]?-1===a.indexOf(t[n])&&r(t[n],e[n],a):K(h(t[n],e[n]),"assert_object_equals",s,"property ${p} expected ${expected} got ${actual}",{p:n,expected:e,actual:t});for(n in e)K(t.hasOwnProperty(n),"assert_object_equals",s,"expected property ${p} missing",{p:n});a.pop()}r(t,e,[])}function y(t,e,s){K(t.length===e.length,"assert_array_equals",s,"lengths differ, expected ${expected} got ${actual}",{expected:e.length,actual:t.length});for(var r=0;r<t.length;r++)K(t.hasOwnProperty(r)===e.hasOwnProperty(r),"assert_array_equals",s,"property ${i}, property expected to be $expected but was $actual",{i:r,expected:e.hasOwnProperty(r)?"present":"missing",actual:t.hasOwnProperty(r)?"present":"missing"}),K(h(e[r],t[r]),"assert_array_equals",s,"property ${i}, expected ${expected} but got ${actual}",{i:r,expected:e[r],actual:t[r]})}function E(t,e,s,r){K("number"==typeof t,"assert_approx_equals",r,"expected a number but got a ${type_actual}",{type_actual:typeof t}),K(Math.abs(t-e)<=s,"assert_approx_equals",r,"expected ${expected} +/- ${epsilon} but got ${actual}",{expected:e,actual:t,epsilon:s})}function g(t,e,s){K("number"==typeof t,"assert_less_than",s,"expected a number but got a ${type_actual}",{type_actual:typeof t}),K(e>t,"assert_less_than",s,"expected a number less than ${expected} but got ${actual}",{expected:e,actual:t})}function b(t,e,s){K("number"==typeof t,"assert_greater_than",s,"expected a number but got a ${type_actual}",{type_actual:typeof t}),K(t>e,"assert_greater_than",s,"expected a number greater than ${expected} but got ${actual}",{expected:e,actual:t})}function T(t,e,s){K("number"==typeof t,"assert_less_than_equal",s,"expected a number but got a ${type_actual}",{type_actual:typeof t}),K(e>=t,"assert_less_than",s,"expected a number less than or equal to ${expected} but got ${actual}",{expected:e,actual:t})}function x(t,e,s){K("number"==typeof t,"assert_greater_than_equal",s,"expected a number but got a ${type_actual}",{type_actual:typeof t}),K(t>=e,"assert_greater_than_equal",s,"expected a number greater than or equal to ${expected} but got ${actual}",{expected:e,actual:t})}function v(t,e,s){K(e.test(t),"assert_regexp_match",s,"expected ${expected} but got ${actual}",{expected:e,actual:t})}function R(t,e,s){_({}.toString.call(t),"[object "+e+"]",s)}function S(t){return function(e,s,r){K(e.hasOwnProperty(s),t,r,"expected property ${p} missing",{p:s})}}function w(t,e,s){K(!t.hasOwnProperty(e),"assert_not_exists",s,"unexpected property ${p} found",{p:e})}function N(t){return function(e,s,r){K("object"==typeof e,t,r,"provided value is not an object"),K("hasOwnProperty"in e,t,r,"provided value is an object but has no hasOwnProperty method"),K(!e.hasOwnProperty(s),t,r,"property ${p} found on object expected in prototype chain",{p:s}),K(s in e,t,r,"property ${p} not found in prototype chain",{p:s})}}function O(t,e,s){var r=t[e];try{t[e]=r+"a",K(h(t[e],r),"assert_readonly",s,"changing property ${p} succeeded",{p:e})}finally{t[e]=r}}function A(t,e,s){try{e.call(this),K(!1,"assert_throws",s,"${func} did not throw",{func:e})}catch(u){if(u instanceof W)throw u;if(null===t)return;if("object"==typeof t)return void K("object"==typeof u&&"name"in u&&u.name==t.name,"assert_throws",s,"${func} threw ${actual} (${actual_name}) expected ${expected} (${expected_name})",{func:e,actual:u,actual_name:u.name,expected:t,expected_name:t.name});var r={INDEX_SIZE_ERR:"IndexSizeError",HIERARCHY_REQUEST_ERR:"HierarchyRequestError",WRONG_DOCUMENT_ERR:"WrongDocumentError",INVALID_CHARACTER_ERR:"InvalidCharacterError",NO_MODIFICATION_ALLOWED_ERR:"NoModificationAllowedError",NOT_FOUND_ERR:"NotFoundError",NOT_SUPPORTED_ERR:"NotSupportedError",INVALID_STATE_ERR:"InvalidStateError",SYNTAX_ERR:"SyntaxError",INVALID_MODIFICATION_ERR:"InvalidModificationError",NAMESPACE_ERR:"NamespaceError",INVALID_ACCESS_ERR:"InvalidAccessError",TYPE_MISMATCH_ERR:"TypeMismatchError",SECURITY_ERR:"SecurityError",NETWORK_ERR:"NetworkError",ABORT_ERR:"AbortError",URL_MISMATCH_ERR:"URLMismatchError",QUOTA_EXCEEDED_ERR:"QuotaExceededError",TIMEOUT_ERR:"TimeoutError",INVALID_NODE_TYPE_ERR:"InvalidNodeTypeError",DATA_CLONE_ERR:"DataCloneError"},a=t in r?r[t]:t,n={IndexSizeError:1,HierarchyRequestError:3,WrongDocumentError:4,InvalidCharacterError:5,NoModificationAllowedError:7,NotFoundError:8,NotSupportedError:9,InvalidStateError:11,SyntaxError:12,InvalidModificationError:13,NamespaceError:14,InvalidAccessError:15,TypeMismatchError:17,SecurityError:18,NetworkError:19,AbortError:20,URLMismatchError:21,QuotaExceededError:22,TimeoutError:23,InvalidNodeTypeError:24,DataCloneError:25,UnknownError:0,ConstraintError:0,DataError:0,TransactionInactiveError:0,ReadOnlyError:0,VersionError:0};if(!(a in n))throw new W('Test bug: unrecognized DOMException code "'+t+'" passed to assert_throws()');var o={code:n[a]};(0===o.code||"name"in u&&u.name!==u.name.toUpperCase()&&"DOMException"!==u.name)&&(o.name=a),K("object"==typeof u,"assert_throws",s,"${func} threw ${e} with type ${type}, not an object",{func:e,e:u,type:typeof u});for(var i in o)K("object"==typeof u&&i in u&&u[i]==o[i],"assert_throws",s,"${func} threw ${e} that is not a DOMException "+t+": property ${prop} is equal to ${actual}, expected ${expected}",{func:e,e:u,prop:i,actual:u[i],expected:o[i]})}}function I(t){K(!1,"assert_unreached",t,"Reached unreachable code")}function k(t,e,s){var r=[].slice.call(arguments,3),a=[],n=!1;if(Z(s,function(s){try{t.apply(this,[e,s].concat(r)),n=!0}catch(t){a.push(t.message)}}),!n)throw new W(a.join("\n\n"))}function $(t,e){if(ce.file_is_test&&ce.tests.length)throw new Error("Tried to create a test with file_is_test");this.name=t,this.phases={INITIAL:0,STARTED:1,HAS_RESULT:2,COMPLETE:3},this.phase=this.phases.INITIAL,this.status=this.NOTRUN,this.timeout_id=null,this.properties=e;var s=e.timeout?e.timeout:ne.test_timeout;this.timeout_length=null!=s?s*ce.timeout_multiplier:null,this.message=null,this.steps=[],this.cleanup_callbacks=[],ce.push(this)}function C(){this.status=null,this.message=null}function M(){this.tests=[],this.num_pending=0,this.phases={INITIAL:0,SETUP:1,HAVE_TESTS:2,HAVE_RESULTS:3,COMPLETE:4},this.phase=this.phases.INITIAL,this.properties={},this.all_loaded=!1,this.wait_for_finish=!1,this.processing_callbacks=!1,this.allow_uncaught_exception=!1,this.file_is_test=!1,this.timeout_multiplier=1,this.timeout_length=this.get_timeout(),this.timeout_id=null,this.start_callbacks=[],this.test_done_callbacks=[],this.all_done_callbacks=[],this.status=new C;var t=this;o(window,"load",function(){t.all_loaded=!0,t.all_done()&&t.complete()}),this.set_timeout()}function L(){null===ce.timeout_length&&ce.timeout()}function D(t){ce.start_callbacks.push(t)}function P(t){ce.test_done_callbacks.push(t)}function U(t){ce.all_done_callbacks.push(t)}function j(){this.output_document=document,this.output_node=null,this.done_count=0,this.enabled=ne.output,this.phase=this.INITIAL}function q(t){return"string"==typeof t[0]}function H(t,e){if("function"==typeof t){var s=t(e);return s?H(s,e):null}return q(t)?V(t,e):X(z(t,function(t){return H(t,e)}),function(t){return null!==t})}function V(t,e){function s(t){for(var s=t.split(n),r=[],a=0;a<s.length;a+=2)r.push(s[a]),s[a+1]&&r.push(String(e[s[a+1]]));return r}function r(e,r){r[1]={};for(var a in t[1])if(e.hasOwnProperty(a)){var n=s(a).join(""),o=s(e[a]).join("");r[1][n]=o}}function a(t,r){for(var a=0;a<t.length;a++)if(t[a]instanceof Object){var n=H(t[a],e);null!==n&&(q(n)?r.push(n):G(r,n))}else G(r,s(String(t[a])));return r}var n=/\$\{([^ }]*)\}/g,o=[];return o.push(s(String(t[0])).join("")),"{text}"===t[0]?a(t.slice(1),o):(r(t[1],o),a(t.slice(2),o)),o}function F(t,e){var s,r=e||document;if("{text}"===t[0]){s=r.createTextNode("");for(var a=1;a<t.length;a++)s.data+=t[a]}else{s=r.createElementNS(oe,t[0]);for(var n in t[1])t[1].hasOwnProperty(n)&&s.setAttribute(n,t[1][n]);for(var a=2;a<t.length;a++)if(t[a]instanceof Object){var o=B(t[a]);s.appendChild(o)}else{var i=r.createTextNode(t[a]);s.appendChild(i)}}return s}function B(t,e,s){return q(t)?F(t,s):z(t,function(t){return F(t,s)})}function Y(t,e,s){return B(H(t,e),s)}function K(t,e,s,r,a){if(0===ce.tests.length&&ce.set_file_is_test(),t!==!0){var n=Q(e,s,r,a);throw new W(n)}}function W(t){this.message=t}function Q(t,e,s,r){for(var a in r)r.hasOwnProperty(a)&&(r[a]=c(r[a]));var n=H(["{text}","${function_name}: ${description}"+s],J({function_name:t,description:e?e+" ":""},r));return n.slice(1).join("")}function X(t,e,s){for(var r=[],a=0;a<t.length;a++)if(t.hasOwnProperty(a)){var n=e.call(s,t[a],a,t);n&&r.push(t[a])}return r}function z(t,e,s){var r=[];r.length=t.length;for(var a=0;a<t.length;a++)t.hasOwnProperty(a)&&(r[a]=e.call(s,t[a],a,t));return r}function G(t,e){Array.prototype.push.apply(t,e)}function Z(t,e,s){for(var r=0;r<t.length;r++)t.hasOwnProperty(r)&&e.call(s,t[r],r,t)}function J(t,e){var s,r={};for(s in t)r[s]=t[s];for(s in e)r[s]=e[s];return r}function te(t,e){for(var s=e.split("."),r=window,a=0;a<s.length-1;a++)s[a]in r||(r[s[a]]={}),r=r[s[a]];r[s[s.length-1]]=t}function ee(t){var e=ee.result_cache;if(!e){e=[[self,!0]];for(var s,r=self,a=0,n=location.ancestorOrigins;r!=r.parent;)r=r.parent,s=n?location.origin==n[a]:se(r),e.push([r,s]),a++;r=window.opener,r&&e.push([r,se(r)]),ee.result_cache=e}Z(e,function(e){t.apply(null,e)})}function se(t){try{return!0}catch(t){return!1}}function re(t){var e,s;try{s=typeof t.postMessage,e="function"===s?!0:"object"===s?!0:!1}catch(t){e=!1}return e}var ae=!1,ne={output:!0,harness_timeout:{normal:1e4,long:6e4},test_timeout:null},oe="http://www.w3.org/1999/xhtml",ie=null;!function(){for(var t=document.getElementsByTagName("script"),e=0;e<t.length;e++){var s;if(t[e].src?s=t[e].src:t[e].href&&(s=t[e].href.baseVal),s&&"testharness.js"===s.slice(s.length-"testharness.js".length)){ie=s.slice(0,s.length-"testharness.js".length);break}}}();var ue=0;te(e,"test"),te(s,"async_test"),te(n,"generate_tests"),te(r,"setup"),te(a,"done"),te(o,"on_event"),te(c,"format_value"),te(p,"assert_true"),te(l,"assert_false"),te(_,"assert_equals"),te(d,"assert_not_equals"),te(f,"assert_in_array"),te(m,"assert_object_equals"),te(y,"assert_array_equals"),te(E,"assert_approx_equals"),te(g,"assert_less_than"),te(b,"assert_greater_than"),te(T,"assert_less_than_equal"),te(x,"assert_greater_than_equal"),te(v,"assert_regexp_match"),te(R,"assert_class_string"),te(S("assert_exists"),"assert_exists"),te(S("assert_own_property"),"assert_own_property"),te(w,"assert_not_exists"),te(N("assert_inherits"),"assert_inherits"),te(N("assert_idl_attribute"),"assert_idl_attribute"),te(O,"assert_readonly"),te(A,"assert_throws"),te(I,"assert_unreached"),te(k,"assert_any"),$.statuses={PASS:0,FAIL:1,TIMEOUT:2,NOTRUN:3},$.prototype=J({},$.statuses),$.prototype.structured_clone=function(){if(!this._structured_clone){var t=this.message;t=t?String(t):t,this._structured_clone=J({name:String(this.name),status:this.status,message:t},$.statuses)}return this._structured_clone},$.prototype.step=function(t,e){if(!(this.phase>this.phases.STARTED)){this.phase=this.phases.STARTED,this.set_status(this.TIMEOUT,"Test timed out"),ce.started=!0,null===this.timeout_id&&this.set_timeout(),this.steps.push(t),1===arguments.length&&(e=this);try{return t.apply(e,Array.prototype.slice.call(arguments,2))}catch(t){if(this.phase>=this.phases.HAS_RESULT)return;var s="object"==typeof t&&null!==t?t.message:t;"undefined"!=typeof t.stack&&"string"==typeof t.message&&(s+="(stack: "+t.stack+")"),this.set_status(this.FAIL,s),this.phase=this.phases.HAS_RESULT,this.done()}}},$.prototype.step_func=function(t,e){var s=this;return 1===arguments.length&&(e=s),function(){return s.step.apply(s,[t,e].concat(Array.prototype.slice.call(arguments)))}},$.prototype.step_func_done=function(t,e){var s=this;return 1===arguments.length&&(e=s),function(){t&&s.step.apply(s,[t,e].concat(Array.prototype.slice.call(arguments))),s.done()}},$.prototype.unreached_func=function(t){return this.step_func(function(){I(t)})},$.prototype.add_cleanup=function(t){this.cleanup_callbacks.push(t)},$.prototype.force_timeout=function(){this.set_status(this.TIMEOUT),this.phase=this.phases.HAS_RESULT},$.prototype.set_timeout=function(){if(null!==this.timeout_length){var t=this;this.timeout_id=setTimeout(function(){t.timeout()},this.timeout_length)}},$.prototype.set_status=function(t,e){this.status=t,this.message=e},$.prototype.timeout=function(){this.timeout_id=null,this.set_status(this.TIMEOUT,"Test timed out"),this.phase=this.phases.HAS_RESULT,this.done()},$.prototype.done=function(){this.phase!=this.phases.COMPLETE&&(this.phase<=this.phases.STARTED&&this.set_status(this.PASS,null),this.status==this.NOTRUN&&alert(this.phase),this.phase=this.phases.COMPLETE,clearTimeout(this.timeout_id),ce.result(this),this.cleanup())},$.prototype.cleanup=function(){Z(this.cleanup_callbacks,function(t){t()})},C.statuses={OK:0,ERROR:1,TIMEOUT:2},C.prototype=J({},C.statuses),C.prototype.structured_clone=function(){if(!this._structured_clone){var t=this.message;t=t?String(t):t,this._structured_clone=J({status:this.status,message:t},C.statuses)}return this._structured_clone},M.prototype.setup=function(t,e){if(!(this.phase>=this.phases.HAVE_RESULTS)){this.phase<this.phases.SETUP&&(this.phase=this.phases.SETUP),this.properties=e;for(var s in e)if(e.hasOwnProperty(s)){var r=e[s];"allow_uncaught_exception"==s?this.allow_uncaught_exception=r:"explicit_done"==s&&r?this.wait_for_finish=!0:"explicit_timeout"==s&&r?(this.timeout_length=null,this.timeout_id&&clearTimeout(this.timeout_id)):"timeout_multiplier"==s&&(this.timeout_multiplier=r)}if(t)try{t()}catch(t){this.status.status=this.status.ERROR,this.status.message=String(t)}this.set_timeout()}},M.prototype.set_file_is_test=function(){if(this.tests.length>0)throw new Error("Tried to set file as test after creating a test");this.wait_for_finish=!0,this.file_is_test=!0,s()},M.prototype.get_timeout=function(){for(var t=document.getElementsByTagName("meta"),e=0;e<t.length;e++)if("timeout"==t[e].name){if("long"==t[e].content)return ne.harness_timeout.long;break}return ne.harness_timeout.normal},M.prototype.set_timeout=function(){var t=this;clearTimeout(this.timeout_id),null!==this.timeout_length&&(this.timeout_id=setTimeout(function(){t.timeout()},this.timeout_length))},M.prototype.timeout=function(){null===this.status.status&&(this.status.status=this.status.TIMEOUT),this.complete()},M.prototype.end_wait=function(){this.wait_for_finish=!1,this.all_done()&&this.complete()},M.prototype.push=function(t){this.phase<this.phases.HAVE_TESTS&&this.start(),this.num_pending++,this.tests.push(t)},M.prototype.all_done=function(){return this.tests.length>0&&this.all_loaded&&0===this.num_pending&&!this.wait_for_finish&&!this.processing_callbacks},M.prototype.start=function(){this.phase=this.phases.HAVE_TESTS,this.notify_start()},M.prototype.notify_start=function(){var t=this;Z(this.start_callbacks,function(e){e(t.properties)}),ee(function(e,s){if(s&&e.start_callback)try{e.start_callback(t.properties)}catch(t){if(ae)throw t}re(e)&&e!==self&&e.postMessage({type:"start",properties:t.properties},"*")})},M.prototype.result=function(t){this.phase>this.phases.HAVE_RESULTS||(this.phase=this.phases.HAVE_RESULTS,this.num_pending--,this.notify_result(t))},M.prototype.notify_result=function(t){var e=this;this.processing_callbacks=!0,Z(this.test_done_callbacks,function(s){s(t,e)}),ee(function(e,s){if(s&&e.result_callback)try{e.result_callback(t)}catch(t){if(ae)throw t}re(e)&&e!==self&&e.postMessage({type:"result",test:t.structured_clone()},"*")}),this.processing_callbacks=!1,e.all_done()&&e.complete()},M.prototype.complete=function(){if(this.phase!==this.phases.COMPLETE){this.phase=this.phases.COMPLETE;var t=this;this.tests.forEach(function(e){e.status===e.NOTRUN&&(t.notify_result(e),e.cleanup())}),this.notify_complete()}},M.prototype.notify_complete=function(){clearTimeout(this.timeout_id);var t=this,e=z(t.tests,function(t){return t.structured_clone()});null===this.status.status&&(this.status.status=this.status.OK),Z(this.all_done_callbacks,function(e){e(t.tests,t.status)}),ee(function(s,r){if(r&&s.completion_callback)try{s.completion_callback(t.tests,t.status)}catch(t){if(ae)throw t}re(s)&&s!==self&&s.postMessage({type:"complete",tests:e,status:t.status.structured_clone()},"*")})};var ce=new M;addEventListener("error",function(t){if(ce.file_is_test){var e=ce.tests[0];if(e.phase>=e.phases.HAS_RESULT)return;var s=t.message;e.set_status(e.FAIL,s),e.phase=e.phases.HAS_RESULT,e.done(),a()}else ce.allow_uncaught_exception||(ce.status.status=ce.status.ERROR,ce.status.message=t.message)}),te(L,"timeout"),te(D,"add_start_callback"),te(P,"add_result_callback"),te(U,"add_completion_callback"),j.prototype.INITIAL=0,j.prototype.STARTED=1,j.prototype.HAVE_RESULTS=2,j.prototype.COMPLETE=3,j.prototype.setup=function(t){this.phase>this.INITIAL||(this.enabled=this.enabled&&(t.hasOwnProperty("output")?t.output:ne.output))},j.prototype.init=function(t){this.phase>=this.STARTED||(this.output_document=t.output_document?t.output_document:document,this.phase=this.STARTED)},j.prototype.resolve_log=function(){var t;if(t="function"==typeof this.output_document?this.output_document.apply(void 0):this.output_document){var e=t.getElementById("log");if(!e){if(!document.body||"loading"==document.readyState)return;e=t.createElement("div"),e.id="log",t.body.appendChild(e)}this.output_document=t,this.output_node=e}},j.prototype.show_status=function(){this.phase<this.STARTED&&this.init(),this.enabled&&(this.phase<this.HAVE_RESULTS&&(this.resolve_log(),this.phase=this.HAVE_RESULTS),this.done_count++,this.output_node&&(this.done_count<100||this.done_count<1e3&&this.done_count%100===0||this.done_count%1e3===0)&&(this.output_node.textContent="Running, "+this.done_count+" complete, "+ce.num_pending+" remain"))},j.prototype.show_results=function(t,e){function s(t){return t.replace(/\s/g,"").toLowerCase()}function r(t){return t.replace(/\&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function a(){for(var e=0;e<t.length;e++)if(t[e].properties.hasOwnProperty("assert"))return!0;return!1}function n(t){return t.properties.hasOwnProperty("assert")?Array.isArray(t.properties.assert)?t.properties.assert.join(" "):t.properties.assert:""}if(!(this.phase>=this.COMPLETE)&&this.enabled){this.output_node||this.resolve_log(),this.phase=this.COMPLETE;var i=this.output_node;if(i){for(var u=this.output_document;i.lastChild;)i.removeChild(i.lastChild);if(null!=ie){var c=u.createElementNS(oe,"link");c.setAttribute("rel","stylesheet"),c.setAttribute("href",ie+"testharness.css");var p=u.getElementsByTagName("head");p.length&&p[0].appendChild(c)}var l={};l[e.OK]="OK",l[e.ERROR]="Error",l[e.TIMEOUT]="Timeout";var h={};h[$.prototype.PASS]="Pass",h[$.prototype.FAIL]="Fail",h[$.prototype.TIMEOUT]="Timeout",h[$.prototype.NOTRUN]="Not Run";var _={};Z(t,function(t){var e=h[t.status];_.hasOwnProperty(e)?_[e]+=1:_[e]=1});var d=["section",{id:"summary"},["h2",{},"Summary"],function(){var t=l[e.status],r=[["section",{},["p",{},"Harness status: ",["span",{class:s(t)},t]]]];return e.status===e.ERROR&&r[0].push(["pre",{},e.message]),r},["p",{},"Found ${num_tests} tests"],function(){for(var t=[["div",{}]],e=0;h.hasOwnProperty(e);){if(_.hasOwnProperty(h[e])){var r=h[e];t[0].push(["div",{class:s(r)},["label",{},["input",{type:"checkbox",checked:"checked"}],_[r]+" "+r]])}e++}return t}];i.appendChild(Y(d,{num_tests:t.length},u)),Z(u.querySelectorAll("section#summary label"),function(t){o(t,"click",function(e){if(null===u.getElementById("results"))return void e.preventDefault();var s=t.parentNode.getAttribute("class"),r=u.querySelector("style#hide-"+s),a=t.querySelector("input");r||a.checked?r&&a.checked&&r.parentNode.removeChild(r):(r=u.createElementNS(oe,"style"),r.id="hide-"+s,r.textContent="table#results > tbody > tr."+s+"{display:none}",u.body.appendChild(r))})}),i.appendChild(document.createElementNS(oe,"section"));for(var f=a(),m="<h2>Details</h2><table id='results' "+(f?"class='assertions'":"")+"><thead><tr><th>Result</th><th>Test Name</th>"+(f?"<th>Assertion</th>":"")+"<th>Message</th></tr></thead><tbody>",y=0;y<t.length;y++)m+='<tr class="'+r(s(h[t[y].status]))+'"><td>'+r(h[t[y].status])+"</td><td>"+r(t[y].name)+"</td><td>"+(f?r(n(t[y]))+"</td><td>":"")+r(t[y].message?t[y].message:" ")+"</td></tr>";m+="</tbody></table>";try{i.lastChild.innerHTML=m}catch(t){i.appendChild(document.createElementNS(oe,"p")).textContent="Setting innerHTML for the log threw an exception.",i.appendChild(document.createElementNS(oe,"pre")).textContent=m}}}};var pe=new j;D(function(t){pe.init(t)}),P(function(){pe.show_status()}),U(function(t,e){pe.show_results(t,e)}),W.prototype.toString=function(){return this.message}}();
+/*global self*/
+/*jshint latedef: nofunc*/
+/*
+Distributed under both the W3C Test Suite License [1] and the W3C
+3-clause BSD License [2]. To contribute to a W3C Test Suite, see the
+policies and contribution forms [3].
+
+[1] http://www.w3.org/Consortium/Legal/2008/04-testsuite-license
+[2] http://www.w3.org/Consortium/Legal/2008/03-bsd-license
+[3] http://www.w3.org/2004/10/27-testcases
+*/
+
+/* Documentation is in docs/api.md */
+
+(function ()
+{
+    var debug = false;
+    // default timeout is 10 seconds, test can override if needed
+    var settings = {
+        output:true,
+        harness_timeout:{
+            "normal":10000,
+            "long":60000
+        },
+        test_timeout:null
+    };
+
+    var xhtml_ns = "http://www.w3.org/1999/xhtml";
+
+    // script_prefix is used by Output.prototype.show_results() to figure out
+    // where to get testharness.css from.  It's enclosed in an extra closure to
+    // not pollute the library's namespace with variables like "src".
+    var script_prefix = null;
+    (function ()
+    {
+        var scripts = document.getElementsByTagName("script");
+        for (var i = 0; i < scripts.length; i++) {
+            var src;
+            if (scripts[i].src) {
+                src = scripts[i].src;
+            } else if (scripts[i].href) {
+                //SVG case
+                src = scripts[i].href.baseVal;
+            }
+
+            if (src && src.slice(src.length - "testharness.js".length) === "testharness.js") {
+                script_prefix = src.slice(0, src.length - "testharness.js".length);
+                break;
+            }
+        }
+    })();
+
+    /*
+     * API functions
+     */
+
+    var name_counter = 0;
+    function next_default_name()
+    {
+        //Don't use document.title to work around an Opera bug in XHTML documents
+        var title = document.getElementsByTagName("title")[0];
+        var prefix = (title && title.firstChild && title.firstChild.data) || "Untitled";
+        var suffix = name_counter > 0 ? " " + name_counter : "";
+        name_counter++;
+        return prefix + suffix;
+    }
+
+    function test(func, name, properties)
+    {
+        var test_name = name ? name : next_default_name();
+        properties = properties ? properties : {};
+        var test_obj = new Test(test_name, properties);
+        test_obj.step(func, test_obj, test_obj);
+        if (test_obj.phase === test_obj.phases.STARTED) {
+            test_obj.done();
+        }
+    }
+
+    function async_test(func, name, properties)
+    {
+        if (typeof func !== "function") {
+            properties = name;
+            name = func;
+            func = null;
+        }
+        var test_name = name ? name : next_default_name();
+        properties = properties ? properties : {};
+        var test_obj = new Test(test_name, properties);
+        if (func) {
+            test_obj.step(func, test_obj, test_obj);
+        }
+        return test_obj;
+    }
+
+    function setup(func_or_properties, maybe_properties)
+    {
+        var func = null;
+        var properties = {};
+        if (arguments.length === 2) {
+            func = func_or_properties;
+            properties = maybe_properties;
+        } else if (func_or_properties instanceof Function) {
+            func = func_or_properties;
+        } else {
+            properties = func_or_properties;
+        }
+        tests.setup(func, properties);
+        output.setup(properties);
+    }
+
+    function done() {
+        if (tests.tests.length === 0) {
+            tests.set_file_is_test();
+        }
+        if (tests.file_is_test) {
+            tests.tests[0].done();
+        }
+        tests.end_wait();
+    }
+
+    function generate_tests(func, args, properties) {
+        forEach(args, function(x, i)
+                {
+                    var name = x[0];
+                    test(function()
+                         {
+                             func.apply(this, x.slice(1));
+                         },
+                         name,
+                         Array.isArray(properties) ? properties[i] : properties);
+                });
+    }
+
+    function on_event(object, event, callback)
+    {
+        object.addEventListener(event, callback, false);
+    }
+
+    expose(test, 'test');
+    expose(async_test, 'async_test');
+    expose(generate_tests, 'generate_tests');
+    expose(setup, 'setup');
+    expose(done, 'done');
+    expose(on_event, 'on_event');
+
+    /*
+     * Return a string truncated to the given length, with ... added at the end
+     * if it was longer.
+     */
+    function truncate(s, len)
+    {
+        if (s.length > len) {
+            return s.substring(0, len - 3) + "...";
+        }
+        return s;
+    }
+
+    /*
+     * Return true if object is probably a Node object.
+     */
+    function is_node(object)
+    {
+        // I use duck-typing instead of instanceof, because
+        // instanceof doesn't work if the node is from another window (like an
+        // iframe's contentWindow):
+        // http://www.w3.org/Bugs/Public/show_bug.cgi?id=12295
+        if ("nodeType" in object &&
+            "nodeName" in object &&
+            "nodeValue" in object &&
+            "childNodes" in object) {
+            try {
+                object.nodeType;
+            } catch (e) {
+                // The object is probably Node.prototype or another prototype
+                // object that inherits from it, and not a Node instance.
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Convert a value to a nice, human-readable string
+     */
+    function format_value(val, seen)
+    {
+        if (!seen) {
+            seen = [];
+        }
+        if (typeof val === "object" && val !== null) {
+            if (seen.indexOf(val) >= 0) {
+                return "[...]";
+            }
+            seen.push(val);
+        }
+        if (Array.isArray(val)) {
+            return "[" + val.map(function(x) {return format_value(x, seen);}).join(", ") + "]";
+        }
+
+        switch (typeof val) {
+        case "string":
+            val = val.replace("\\", "\\\\");
+            for (var i = 0; i < 32; i++) {
+                var replace = "\\";
+                switch (i) {
+                case 0: replace += "0"; break;
+                case 1: replace += "x01"; break;
+                case 2: replace += "x02"; break;
+                case 3: replace += "x03"; break;
+                case 4: replace += "x04"; break;
+                case 5: replace += "x05"; break;
+                case 6: replace += "x06"; break;
+                case 7: replace += "x07"; break;
+                case 8: replace += "b"; break;
+                case 9: replace += "t"; break;
+                case 10: replace += "n"; break;
+                case 11: replace += "v"; break;
+                case 12: replace += "f"; break;
+                case 13: replace += "r"; break;
+                case 14: replace += "x0e"; break;
+                case 15: replace += "x0f"; break;
+                case 16: replace += "x10"; break;
+                case 17: replace += "x11"; break;
+                case 18: replace += "x12"; break;
+                case 19: replace += "x13"; break;
+                case 20: replace += "x14"; break;
+                case 21: replace += "x15"; break;
+                case 22: replace += "x16"; break;
+                case 23: replace += "x17"; break;
+                case 24: replace += "x18"; break;
+                case 25: replace += "x19"; break;
+                case 26: replace += "x1a"; break;
+                case 27: replace += "x1b"; break;
+                case 28: replace += "x1c"; break;
+                case 29: replace += "x1d"; break;
+                case 30: replace += "x1e"; break;
+                case 31: replace += "x1f"; break;
+                }
+                val = val.replace(RegExp(String.fromCharCode(i), "g"), replace);
+            }
+            return '"' + val.replace(/"/g, '\\"') + '"';
+        case "boolean":
+        case "undefined":
+            return String(val);
+        case "number":
+            // In JavaScript, -0 === 0 and String(-0) == "0", so we have to
+            // special-case.
+            if (val === -0 && 1/val === -Infinity) {
+                return "-0";
+            }
+            return String(val);
+        case "object":
+            if (val === null) {
+                return "null";
+            }
+
+            // Special-case Node objects, since those come up a lot in my tests.  I
+            // ignore namespaces.
+            if (is_node(val)) {
+                switch (val.nodeType) {
+                case Node.ELEMENT_NODE:
+                    var ret = "<" + val.localName;
+                    for (var i = 0; i < val.attributes.length; i++) {
+                        ret += " " + val.attributes[i].name + '="' + val.attributes[i].value + '"';
+                    }
+                    ret += ">" + val.innerHTML + "</" + val.localName + ">";
+                    return "Element node " + truncate(ret, 60);
+                case Node.TEXT_NODE:
+                    return 'Text node "' + truncate(val.data, 60) + '"';
+                case Node.PROCESSING_INSTRUCTION_NODE:
+                    return "ProcessingInstruction node with target " + format_value(truncate(val.target, 60)) + " and data " + format_value(truncate(val.data, 60));
+                case Node.COMMENT_NODE:
+                    return "Comment node <!--" + truncate(val.data, 60) + "-->";
+                case Node.DOCUMENT_NODE:
+                    return "Document node with " + val.childNodes.length + (val.childNodes.length == 1 ? " child" : " children");
+                case Node.DOCUMENT_TYPE_NODE:
+                    return "DocumentType node";
+                case Node.DOCUMENT_FRAGMENT_NODE:
+                    return "DocumentFragment node with " + val.childNodes.length + (val.childNodes.length == 1 ? " child" : " children");
+                default:
+                    return "Node object of unknown type";
+                }
+            }
+
+        /* falls through */
+        default:
+            return typeof val + ' "' + truncate(String(val), 60) + '"';
+        }
+    }
+    expose(format_value, "format_value");
+
+    /*
+     * Assertions
+     */
+
+    function assert_true(actual, description)
+    {
+        assert(actual === true, "assert_true", description,
+                                "expected true got ${actual}", {actual:actual});
+    }
+    expose(assert_true, "assert_true");
+
+    function assert_false(actual, description)
+    {
+        assert(actual === false, "assert_false", description,
+                                 "expected false got ${actual}", {actual:actual});
+    }
+    expose(assert_false, "assert_false");
+
+    function same_value(x, y) {
+        if (y !== y) {
+            //NaN case
+            return x !== x;
+        }
+        if (x === 0 && y === 0) {
+            //Distinguish +0 and -0
+            return 1/x === 1/y;
+        }
+        return x === y;
+    }
+
+    function assert_equals(actual, expected, description)
+    {
+         /*
+          * Test if two primitives are equal or two objects
+          * are the same object
+          */
+        if (typeof actual != typeof expected) {
+            assert(false, "assert_equals", description,
+                          "expected (" + typeof expected + ") ${expected} but got (" + typeof actual + ") ${actual}",
+                          {expected:expected, actual:actual});
+            return;
+        }
+        assert(same_value(actual, expected), "assert_equals", description,
+                                             "expected ${expected} but got ${actual}",
+                                             {expected:expected, actual:actual});
+    }
+    expose(assert_equals, "assert_equals");
+
+    function assert_not_equals(actual, expected, description)
+    {
+         /*
+          * Test if two primitives are unequal or two objects
+          * are different objects
+          */
+        assert(!same_value(actual, expected), "assert_not_equals", description,
+                                              "got disallowed value ${actual}",
+                                              {actual:actual});
+    }
+    expose(assert_not_equals, "assert_not_equals");
+
+    function assert_in_array(actual, expected, description)
+    {
+        assert(expected.indexOf(actual) != -1, "assert_in_array", description,
+                                               "value ${actual} not in array ${expected}",
+                                               {actual:actual, expected:expected});
+    }
+    expose(assert_in_array, "assert_in_array");
+
+    function assert_object_equals(actual, expected, description)
+    {
+         //This needs to be improved a great deal
+         function check_equal(actual, expected, stack)
+         {
+             stack.push(actual);
+
+             var p;
+             for (p in actual) {
+                 assert(expected.hasOwnProperty(p), "assert_object_equals", description,
+                                                    "unexpected property ${p}", {p:p});
+
+                 if (typeof actual[p] === "object" && actual[p] !== null) {
+                     if (stack.indexOf(actual[p]) === -1) {
+                         check_equal(actual[p], expected[p], stack);
+                     }
+                 } else {
+                     assert(same_value(actual[p], expected[p]), "assert_object_equals", description,
+                                                       "property ${p} expected ${expected} got ${actual}",
+                                                       {p:p, expected:expected, actual:actual});
+                 }
+             }
+             for (p in expected) {
+                 assert(actual.hasOwnProperty(p),
+                        "assert_object_equals", description,
+                        "expected property ${p} missing", {p:p});
+             }
+             stack.pop();
+         }
+         check_equal(actual, expected, []);
+    }
+    expose(assert_object_equals, "assert_object_equals");
+
+    function assert_array_equals(actual, expected, description)
+    {
+        assert(actual.length === expected.length,
+               "assert_array_equals", description,
+               "lengths differ, expected ${expected} got ${actual}",
+               {expected:expected.length, actual:actual.length});
+
+        for (var i = 0; i < actual.length; i++) {
+            assert(actual.hasOwnProperty(i) === expected.hasOwnProperty(i),
+                   "assert_array_equals", description,
+                   "property ${i}, property expected to be $expected but was $actual",
+                   {i:i, expected:expected.hasOwnProperty(i) ? "present" : "missing",
+                   actual:actual.hasOwnProperty(i) ? "present" : "missing"});
+            assert(same_value(expected[i], actual[i]),
+                   "assert_array_equals", description,
+                   "property ${i}, expected ${expected} but got ${actual}",
+                   {i:i, expected:expected[i], actual:actual[i]});
+        }
+    }
+    expose(assert_array_equals, "assert_array_equals");
+
+    function assert_approx_equals(actual, expected, epsilon, description)
+    {
+        /*
+         * Test if two primitive numbers are equal withing +/- epsilon
+         */
+        assert(typeof actual === "number",
+               "assert_approx_equals", description,
+               "expected a number but got a ${type_actual}",
+               {type_actual:typeof actual});
+
+        assert(Math.abs(actual - expected) <= epsilon,
+               "assert_approx_equals", description,
+               "expected ${expected} +/- ${epsilon} but got ${actual}",
+               {expected:expected, actual:actual, epsilon:epsilon});
+    }
+    expose(assert_approx_equals, "assert_approx_equals");
+
+    function assert_less_than(actual, expected, description)
+    {
+        /*
+         * Test if a primitive number is less than another
+         */
+        assert(typeof actual === "number",
+               "assert_less_than", description,
+               "expected a number but got a ${type_actual}",
+               {type_actual:typeof actual});
+
+        assert(actual < expected,
+               "assert_less_than", description,
+               "expected a number less than ${expected} but got ${actual}",
+               {expected:expected, actual:actual});
+    }
+    expose(assert_less_than, "assert_less_than");
+
+    function assert_greater_than(actual, expected, description)
+    {
+        /*
+         * Test if a primitive number is greater than another
+         */
+        assert(typeof actual === "number",
+               "assert_greater_than", description,
+               "expected a number but got a ${type_actual}",
+               {type_actual:typeof actual});
+
+        assert(actual > expected,
+               "assert_greater_than", description,
+               "expected a number greater than ${expected} but got ${actual}",
+               {expected:expected, actual:actual});
+    }
+    expose(assert_greater_than, "assert_greater_than");
+
+    function assert_less_than_equal(actual, expected, description)
+    {
+        /*
+         * Test if a primitive number is less than or equal to another
+         */
+        assert(typeof actual === "number",
+               "assert_less_than_equal", description,
+               "expected a number but got a ${type_actual}",
+               {type_actual:typeof actual});
+
+        assert(actual <= expected,
+               "assert_less_than", description,
+               "expected a number less than or equal to ${expected} but got ${actual}",
+               {expected:expected, actual:actual});
+    }
+    expose(assert_less_than_equal, "assert_less_than_equal");
+
+    function assert_greater_than_equal(actual, expected, description)
+    {
+        /*
+         * Test if a primitive number is greater than or equal to another
+         */
+        assert(typeof actual === "number",
+               "assert_greater_than_equal", description,
+               "expected a number but got a ${type_actual}",
+               {type_actual:typeof actual});
+
+        assert(actual >= expected,
+               "assert_greater_than_equal", description,
+               "expected a number greater than or equal to ${expected} but got ${actual}",
+               {expected:expected, actual:actual});
+    }
+    expose(assert_greater_than_equal, "assert_greater_than_equal");
+
+    function assert_regexp_match(actual, expected, description) {
+        /*
+         * Test if a string (actual) matches a regexp (expected)
+         */
+        assert(expected.test(actual),
+               "assert_regexp_match", description,
+               "expected ${expected} but got ${actual}",
+               {expected:expected, actual:actual});
+    }
+    expose(assert_regexp_match, "assert_regexp_match");
+
+    function assert_class_string(object, class_string, description) {
+        assert_equals({}.toString.call(object), "[object " + class_string + "]",
+                      description);
+    }
+    expose(assert_class_string, "assert_class_string");
+
+
+    function _assert_own_property(name) {
+        return function(object, property_name, description)
+        {
+            assert(object.hasOwnProperty(property_name),
+                   name, description,
+                   "expected property ${p} missing", {p:property_name});
+        };
+    }
+    expose(_assert_own_property("assert_exists"), "assert_exists");
+    expose(_assert_own_property("assert_own_property"), "assert_own_property");
+
+    function assert_not_exists(object, property_name, description)
+    {
+        assert(!object.hasOwnProperty(property_name),
+               "assert_not_exists", description,
+               "unexpected property ${p} found", {p:property_name});
+    }
+    expose(assert_not_exists, "assert_not_exists");
+
+    function _assert_inherits(name) {
+        return function (object, property_name, description)
+        {
+            assert(typeof object === "object",
+                   name, description,
+                   "provided value is not an object");
+
+            assert("hasOwnProperty" in object,
+                   name, description,
+                   "provided value is an object but has no hasOwnProperty method");
+
+            assert(!object.hasOwnProperty(property_name),
+                   name, description,
+                   "property ${p} found on object expected in prototype chain",
+                   {p:property_name});
+
+            assert(property_name in object,
+                   name, description,
+                   "property ${p} not found in prototype chain",
+                   {p:property_name});
+        };
+    }
+    expose(_assert_inherits("assert_inherits"), "assert_inherits");
+    expose(_assert_inherits("assert_idl_attribute"), "assert_idl_attribute");
+
+    function assert_readonly(object, property_name, description)
+    {
+         var initial_value = object[property_name];
+         try {
+             //Note that this can have side effects in the case where
+             //the property has PutForwards
+             object[property_name] = initial_value + "a"; //XXX use some other value here?
+             assert(same_value(object[property_name], initial_value),
+                    "assert_readonly", description,
+                    "changing property ${p} succeeded",
+                    {p:property_name});
+         } finally {
+             object[property_name] = initial_value;
+         }
+    }
+    expose(assert_readonly, "assert_readonly");
+
+    function assert_throws(code, func, description)
+    {
+        try {
+            func.call(this);
+            assert(false, "assert_throws", description,
+                   "${func} did not throw", {func:func});
+        } catch (e) {
+            if (e instanceof AssertionError) {
+                throw e;
+            }
+            if (code === null) {
+                return;
+            }
+            if (typeof code === "object") {
+                assert(typeof e == "object" && "name" in e && e.name == code.name,
+                       "assert_throws", description,
+                       "${func} threw ${actual} (${actual_name}) expected ${expected} (${expected_name})",
+                                    {func:func, actual:e, actual_name:e.name,
+                                     expected:code,
+                                     expected_name:code.name});
+                return;
+            }
+
+            var code_name_map = {
+                INDEX_SIZE_ERR: 'IndexSizeError',
+                HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
+                WRONG_DOCUMENT_ERR: 'WrongDocumentError',
+                INVALID_CHARACTER_ERR: 'InvalidCharacterError',
+                NO_MODIFICATION_ALLOWED_ERR: 'NoModificationAllowedError',
+                NOT_FOUND_ERR: 'NotFoundError',
+                NOT_SUPPORTED_ERR: 'NotSupportedError',
+                INVALID_STATE_ERR: 'InvalidStateError',
+                SYNTAX_ERR: 'SyntaxError',
+                INVALID_MODIFICATION_ERR: 'InvalidModificationError',
+                NAMESPACE_ERR: 'NamespaceError',
+                INVALID_ACCESS_ERR: 'InvalidAccessError',
+                TYPE_MISMATCH_ERR: 'TypeMismatchError',
+                SECURITY_ERR: 'SecurityError',
+                NETWORK_ERR: 'NetworkError',
+                ABORT_ERR: 'AbortError',
+                URL_MISMATCH_ERR: 'URLMismatchError',
+                QUOTA_EXCEEDED_ERR: 'QuotaExceededError',
+                TIMEOUT_ERR: 'TimeoutError',
+                INVALID_NODE_TYPE_ERR: 'InvalidNodeTypeError',
+                DATA_CLONE_ERR: 'DataCloneError'
+            };
+
+            var name = code in code_name_map ? code_name_map[code] : code;
+
+            var name_code_map = {
+                IndexSizeError: 1,
+                HierarchyRequestError: 3,
+                WrongDocumentError: 4,
+                InvalidCharacterError: 5,
+                NoModificationAllowedError: 7,
+                NotFoundError: 8,
+                NotSupportedError: 9,
+                InvalidStateError: 11,
+                SyntaxError: 12,
+                InvalidModificationError: 13,
+                NamespaceError: 14,
+                InvalidAccessError: 15,
+                TypeMismatchError: 17,
+                SecurityError: 18,
+                NetworkError: 19,
+                AbortError: 20,
+                URLMismatchError: 21,
+                QuotaExceededError: 22,
+                TimeoutError: 23,
+                InvalidNodeTypeError: 24,
+                DataCloneError: 25,
+
+                UnknownError: 0,
+                ConstraintError: 0,
+                DataError: 0,
+                TransactionInactiveError: 0,
+                ReadOnlyError: 0,
+                VersionError: 0
+            };
+
+            if (!(name in name_code_map)) {
+                throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
+            }
+
+            var required_props = { code: name_code_map[name] };
+
+            if (required_props.code === 0 ||
+               ("name" in e && e.name !== e.name.toUpperCase() && e.name !== "DOMException")) {
+                // New style exception: also test the name property.
+                required_props.name = name;
+            }
+
+            //We'd like to test that e instanceof the appropriate interface,
+            //but we can't, because we don't know what window it was created
+            //in.  It might be an instanceof the appropriate interface on some
+            //unknown other window.  TODO: Work around this somehow?
+
+            assert(typeof e == "object",
+                   "assert_throws", description,
+                   "${func} threw ${e} with type ${type}, not an object",
+                   {func:func, e:e, type:typeof e});
+
+            for (var prop in required_props) {
+                assert(typeof e == "object" && prop in e && e[prop] == required_props[prop],
+                       "assert_throws", description,
+                       "${func} threw ${e} that is not a DOMException " + code + ": property ${prop} is equal to ${actual}, expected ${expected}",
+                       {func:func, e:e, prop:prop, actual:e[prop], expected:required_props[prop]});
+            }
+        }
+    }
+    expose(assert_throws, "assert_throws");
+
+    function assert_unreached(description) {
+         assert(false, "assert_unreached", description,
+                "Reached unreachable code");
+    }
+    expose(assert_unreached, "assert_unreached");
+
+    function assert_any(assert_func, actual, expected_array)
+    {
+        var args = [].slice.call(arguments, 3);
+        var errors = [];
+        var passed = false;
+        forEach(expected_array,
+                function(expected)
+                {
+                    try {
+                        assert_func.apply(this, [actual, expected].concat(args));
+                        passed = true;
+                    } catch (e) {
+                        errors.push(e.message);
+                    }
+                });
+        if (!passed) {
+            throw new AssertionError(errors.join("\n\n"));
+        }
+    }
+    expose(assert_any, "assert_any");
+
+    function Test(name, properties)
+    {
+        if (tests.file_is_test && tests.tests.length) {
+            throw new Error("Tried to create a test with file_is_test");
+        }
+        this.name = name;
+
+        this.phases = {
+            INITIAL:0,
+            STARTED:1,
+            HAS_RESULT:2,
+            COMPLETE:3
+        };
+        this.phase = this.phases.INITIAL;
+
+        this.status = this.NOTRUN;
+        this.timeout_id = null;
+
+        this.properties = properties;
+        var timeout = properties.timeout ? properties.timeout : settings.test_timeout;
+        if (timeout != null) {
+            this.timeout_length = timeout * tests.timeout_multiplier;
+        } else {
+            this.timeout_length = null;
+        }
+
+        this.message = null;
+
+        this.steps = [];
+
+        this.cleanup_callbacks = [];
+
+        tests.push(this);
+    }
+
+    Test.statuses = {
+        PASS:0,
+        FAIL:1,
+        TIMEOUT:2,
+        NOTRUN:3
+    };
+
+    Test.prototype = merge({}, Test.statuses);
+
+    Test.prototype.structured_clone = function()
+    {
+        if (!this._structured_clone) {
+            var msg = this.message;
+            msg = msg ? String(msg) : msg;
+            this._structured_clone = merge({
+                name:String(this.name),
+                status:this.status,
+                message:msg
+            }, Test.statuses);
+        }
+        return this._structured_clone;
+    };
+
+    Test.prototype.step = function(func, this_obj)
+    {
+        if (this.phase > this.phases.STARTED) {
+            return;
+        }
+        this.phase = this.phases.STARTED;
+        //If we don't get a result before the harness times out that will be a test timout
+        this.set_status(this.TIMEOUT, "Test timed out");
+
+        tests.started = true;
+
+        if (this.timeout_id === null) {
+            this.set_timeout();
+        }
+
+        this.steps.push(func);
+
+        if (arguments.length === 1) {
+            this_obj = this;
+        }
+
+        try {
+            return func.apply(this_obj, Array.prototype.slice.call(arguments, 2));
+        } catch (e) {
+            if (this.phase >= this.phases.HAS_RESULT) {
+                return;
+            }
+            var message = (typeof e === "object" && e !== null) ? e.message : e;
+            if (typeof e.stack != "undefined" && typeof e.message == "string") {
+                //Try to make it more informative for some exceptions, at least
+                //in Gecko and WebKit.  This results in a stack dump instead of
+                //just errors like "Cannot read property 'parentNode' of null"
+                //or "root is null".  Makes it a lot longer, of course.
+                message += "(stack: " + e.stack + ")";
+            }
+            this.set_status(this.FAIL, message);
+            this.phase = this.phases.HAS_RESULT;
+            this.done();
+        }
+    };
+
+    Test.prototype.step_func = function(func, this_obj)
+    {
+        var test_this = this;
+
+        if (arguments.length === 1) {
+            this_obj = test_this;
+        }
+
+        return function()
+        {
+            return test_this.step.apply(test_this, [func, this_obj].concat(
+                Array.prototype.slice.call(arguments)));
+        };
+    };
+
+    Test.prototype.step_func_done = function(func, this_obj)
+    {
+        var test_this = this;
+
+        if (arguments.length === 1) {
+            this_obj = test_this;
+        }
+
+        return function()
+        {
+            if (func) {
+                test_this.step.apply(test_this, [func, this_obj].concat(
+                    Array.prototype.slice.call(arguments)));
+            }
+            test_this.done();
+        };
+    };
+
+    Test.prototype.unreached_func = function(description)
+    {
+        return this.step_func(function() {
+            assert_unreached(description);
+        });
+    };
+
+    Test.prototype.add_cleanup = function(callback) {
+        this.cleanup_callbacks.push(callback);
+    };
+
+    Test.prototype.force_timeout = function() {
+        this.set_status(this.TIMEOUT);
+        this.phase = this.phases.HAS_RESULT;
+    }
+
+    Test.prototype.set_timeout = function()
+    {
+        if (this.timeout_length !== null) {
+            var this_obj = this;
+            this.timeout_id = setTimeout(function()
+                                         {
+                                             this_obj.timeout();
+                                         }, this.timeout_length);
+        }
+    };
+
+    Test.prototype.set_status = function(status, message)
+    {
+        this.status = status;
+        this.message = message;
+    };
+
+    Test.prototype.timeout = function()
+    {
+        this.timeout_id = null;
+        this.set_status(this.TIMEOUT, "Test timed out");
+        this.phase = this.phases.HAS_RESULT;
+        this.done();
+    };
+
+    Test.prototype.done = function()
+    {
+        if (this.phase == this.phases.COMPLETE) {
+            return;
+        }
+
+        if (this.phase <= this.phases.STARTED) {
+            this.set_status(this.PASS, null);
+        }
+
+        if (this.status == this.NOTRUN) {
+            alert(this.phase);
+        }
+
+        this.phase = this.phases.COMPLETE;
+
+        clearTimeout(this.timeout_id);
+        tests.result(this);
+        this.cleanup();
+    };
+
+    Test.prototype.cleanup = function() {
+        forEach(this.cleanup_callbacks,
+                function(cleanup_callback) {
+                    cleanup_callback();
+                });
+    };
+
+    /*
+     * Harness
+     */
+
+    function TestsStatus()
+    {
+        this.status = null;
+        this.message = null;
+    }
+
+    TestsStatus.statuses = {
+        OK:0,
+        ERROR:1,
+        TIMEOUT:2
+    };
+
+    TestsStatus.prototype = merge({}, TestsStatus.statuses);
+
+    TestsStatus.prototype.structured_clone = function()
+    {
+        if (!this._structured_clone) {
+            var msg = this.message;
+            msg = msg ? String(msg) : msg;
+            this._structured_clone = merge({
+                status:this.status,
+                message:msg
+            }, TestsStatus.statuses);
+        }
+        return this._structured_clone;
+    };
+
+    function Tests()
+    {
+        this.tests = [];
+        this.num_pending = 0;
+
+        this.phases = {
+            INITIAL:0,
+            SETUP:1,
+            HAVE_TESTS:2,
+            HAVE_RESULTS:3,
+            COMPLETE:4
+        };
+        this.phase = this.phases.INITIAL;
+
+        this.properties = {};
+
+        //All tests can't be done until the load event fires
+        this.all_loaded = false;
+        this.wait_for_finish = false;
+        this.processing_callbacks = false;
+
+        this.allow_uncaught_exception = false;
+
+        this.file_is_test = false;
+
+        this.timeout_multiplier = 1;
+        this.timeout_length = this.get_timeout();
+        this.timeout_id = null;
+
+        this.start_callbacks = [];
+        this.test_done_callbacks = [];
+        this.all_done_callbacks = [];
+
+        this.status = new TestsStatus();
+
+        var this_obj = this;
+
+        on_event(window, "load",
+                 function()
+                 {
+                     this_obj.all_loaded = true;
+                     if (this_obj.all_done())
+                     {
+                         this_obj.complete();
+                     }
+                 });
+
+        this.set_timeout();
+    }
+
+    Tests.prototype.setup = function(func, properties)
+    {
+        if (this.phase >= this.phases.HAVE_RESULTS) {
+            return;
+        }
+
+        if (this.phase < this.phases.SETUP) {
+            this.phase = this.phases.SETUP;
+        }
+
+        this.properties = properties;
+
+        for (var p in properties) {
+            if (properties.hasOwnProperty(p)) {
+                var value = properties[p];
+                if (p == "allow_uncaught_exception") {
+                    this.allow_uncaught_exception = value;
+                } else if (p == "explicit_done" && value) {
+                    this.wait_for_finish = true;
+                } else if (p == "explicit_timeout" && value) {
+                    this.timeout_length = null;
+                    if (this.timeout_id)
+                    {
+                        clearTimeout(this.timeout_id);
+                    }
+                } else if (p == "timeout_multiplier") {
+                    this.timeout_multiplier = value;
+                }
+            }
+        }
+
+        if (func) {
+            try {
+                func();
+            } catch (e) {
+                this.status.status = this.status.ERROR;
+                this.status.message = String(e);
+            }
+        }
+        this.set_timeout();
+    };
+
+    Tests.prototype.set_file_is_test = function() {
+        if (this.tests.length > 0) {
+            throw new Error("Tried to set file as test after creating a test");
+        }
+        this.wait_for_finish = true;
+        this.file_is_test = true;
+        // Create the test, which will add it to the list of tests
+        async_test();
+    };
+
+    Tests.prototype.get_timeout = function() {
+        var metas = document.getElementsByTagName("meta");
+        for (var i = 0; i < metas.length; i++) {
+            if (metas[i].name == "timeout") {
+                if (metas[i].content == "long") {
+                    return settings.harness_timeout.long;
+                }
+                break;
+            }
+        }
+        return settings.harness_timeout.normal;
+    };
+
+    Tests.prototype.set_timeout = function() {
+        var this_obj = this;
+        clearTimeout(this.timeout_id);
+        if (this.timeout_length !== null) {
+            this.timeout_id = setTimeout(function() {
+                                             this_obj.timeout();
+                                         }, this.timeout_length);
+        }
+    };
+
+    Tests.prototype.timeout = function() {
+        if (this.status.status === null) {
+            this.status.status = this.status.TIMEOUT;
+        }
+        this.complete();
+    };
+
+    Tests.prototype.end_wait = function()
+    {
+        this.wait_for_finish = false;
+        if (this.all_done()) {
+            this.complete();
+        }
+    };
+
+    Tests.prototype.push = function(test)
+    {
+        if (this.phase < this.phases.HAVE_TESTS) {
+            this.start();
+        }
+        this.num_pending++;
+        this.tests.push(test);
+    };
+
+    Tests.prototype.all_done = function() {
+        return (this.tests.length > 0 && this.all_loaded && this.num_pending === 0 &&
+                !this.wait_for_finish && !this.processing_callbacks);
+    };
+
+    Tests.prototype.start = function() {
+        this.phase = this.phases.HAVE_TESTS;
+        this.notify_start();
+    };
+
+    Tests.prototype.notify_start = function() {
+        var this_obj = this;
+        forEach (this.start_callbacks,
+                 function(callback)
+                 {
+                     callback(this_obj.properties);
+                 });
+        forEach_windows(
+                function(w, is_same_origin)
+                {
+                    if (is_same_origin && w.start_callback) {
+                        try {
+                            w.start_callback(this_obj.properties);
+                        } catch (e) {
+                            if (debug) {
+                                throw e;
+                            }
+                        }
+                    }
+                    if (supports_post_message(w) && w !== self) {
+                        w.postMessage({
+                            type: "start",
+                            properties: this_obj.properties
+                        }, "*");
+                    }
+                });
+    };
+
+    Tests.prototype.result = function(test)
+    {
+        if (this.phase > this.phases.HAVE_RESULTS) {
+            return;
+        }
+        this.phase = this.phases.HAVE_RESULTS;
+        this.num_pending--;
+        this.notify_result(test);
+    };
+
+    Tests.prototype.notify_result = function(test) {
+        var this_obj = this;
+        this.processing_callbacks = true;
+        forEach(this.test_done_callbacks,
+                function(callback)
+                {
+                    callback(test, this_obj);
+                });
+
+        forEach_windows(
+                function(w, is_same_origin)
+                {
+                    if (is_same_origin && w.result_callback) {
+                        try {
+                            w.result_callback(test);
+                        } catch (e) {
+                            if (debug) {
+                                throw e;
+                            }
+                        }
+                    }
+                    if (supports_post_message(w) && w !== self) {
+                        w.postMessage({
+                            type: "result",
+                            test: test.structured_clone()
+                        }, "*");
+                    }
+                });
+        this.processing_callbacks = false;
+        if (this_obj.all_done()) {
+            this_obj.complete();
+        }
+    };
+
+    Tests.prototype.complete = function() {
+        if (this.phase === this.phases.COMPLETE) {
+            return;
+        }
+        this.phase = this.phases.COMPLETE;
+        var this_obj = this;
+        this.tests.forEach(
+            function(x)
+            {
+                if (x.status === x.NOTRUN) {
+                    this_obj.notify_result(x);
+                    x.cleanup();
+                }
+            }
+        );
+        this.notify_complete();
+    };
+
+    Tests.prototype.notify_complete = function()
+    {
+        clearTimeout(this.timeout_id);
+        var this_obj = this;
+        var tests = map(this_obj.tests,
+                        function(test)
+                        {
+                            return test.structured_clone();
+                        });
+        if (this.status.status === null) {
+            this.status.status = this.status.OK;
+        }
+
+        forEach (this.all_done_callbacks,
+                 function(callback)
+                 {
+                     callback(this_obj.tests, this_obj.status);
+                 });
+
+        forEach_windows(
+                function(w, is_same_origin)
+                {
+                    if (is_same_origin && w.completion_callback) {
+                        try {
+                            w.completion_callback(this_obj.tests, this_obj.status);
+                        } catch (e) {
+                            if (debug) {
+                                throw e;
+                            }
+                        }
+                    }
+                    if (supports_post_message(w) && w !== self) {
+                        w.postMessage({
+                            type: "complete",
+                            tests: tests,
+                            status: this_obj.status.structured_clone()
+                        }, "*");
+                    }
+                });
+    };
+
+    var tests = new Tests();
+
+    addEventListener("error", function(e) {
+        if (tests.file_is_test) {
+            var test = tests.tests[0];
+            if (test.phase >= test.phases.HAS_RESULT) {
+                return;
+            }
+            var message = e.message;
+            test.set_status(test.FAIL, message);
+            test.phase = test.phases.HAS_RESULT;
+            test.done();
+            done();
+        } else if (!tests.allow_uncaught_exception) {
+            tests.status.status = tests.status.ERROR;
+            tests.status.message = e.message;
+        }
+    });
+
+    function timeout() {
+        if (tests.timeout_length === null) {
+            tests.timeout();
+        }
+    }
+    expose(timeout, 'timeout');
+
+    function add_start_callback(callback) {
+        tests.start_callbacks.push(callback);
+    }
+
+    function add_result_callback(callback)
+    {
+        tests.test_done_callbacks.push(callback);
+    }
+
+    function add_completion_callback(callback)
+    {
+       tests.all_done_callbacks.push(callback);
+    }
+
+    expose(add_start_callback, 'add_start_callback');
+    expose(add_result_callback, 'add_result_callback');
+    expose(add_completion_callback, 'add_completion_callback');
+
+    /*
+     * Output listener
+    */
+
+    function Output() {
+        this.output_document = document;
+        this.output_node = null;
+        this.done_count = 0;
+        this.enabled = settings.output;
+        this.phase = this.INITIAL;
+    }
+
+    Output.prototype.INITIAL = 0;
+    Output.prototype.STARTED = 1;
+    Output.prototype.HAVE_RESULTS = 2;
+    Output.prototype.COMPLETE = 3;
+
+    Output.prototype.setup = function(properties) {
+        if (this.phase > this.INITIAL) {
+            return;
+        }
+
+        //If output is disabled in testharnessreport.js the test shouldn't be
+        //able to override that
+        this.enabled = this.enabled && (properties.hasOwnProperty("output") ?
+                                        properties.output : settings.output);
+    };
+
+    Output.prototype.init = function(properties) {
+        if (this.phase >= this.STARTED) {
+            return;
+        }
+        if (properties.output_document) {
+            this.output_document = properties.output_document;
+        } else {
+            this.output_document = document;
+        }
+        this.phase = this.STARTED;
+    };
+
+    Output.prototype.resolve_log = function() {
+        var output_document;
+        if (typeof this.output_document === "function") {
+            output_document = this.output_document.apply(undefined);
+        } else {
+            output_document = this.output_document;
+        }
+        if (!output_document) {
+            return;
+        }
+        var node = output_document.getElementById("log");
+        if (!node) {
+            if (!document.body || document.readyState == "loading") {
+                return;
+            }
+            node = output_document.createElement("div");
+            node.id = "log";
+            output_document.body.appendChild(node);
+        }
+        this.output_document = output_document;
+        this.output_node = node;
+    };
+
+    Output.prototype.show_status = function() {
+        if (this.phase < this.STARTED) {
+            this.init();
+        }
+        if (!this.enabled) {
+            return;
+        }
+        if (this.phase < this.HAVE_RESULTS) {
+            this.resolve_log();
+            this.phase = this.HAVE_RESULTS;
+        }
+        this.done_count++;
+        if (this.output_node) {
+            if (this.done_count < 100 ||
+                (this.done_count < 1000 && this.done_count % 100 === 0) ||
+                this.done_count % 1000 === 0) {
+                this.output_node.textContent = "Running, " +
+                    this.done_count + " complete, " +
+                    tests.num_pending + " remain";
+            }
+        }
+    };
+
+    Output.prototype.show_results = function (tests, harness_status) {
+        if (this.phase >= this.COMPLETE) {
+            return;
+        }
+        if (!this.enabled) {
+            return;
+        }
+        if (!this.output_node) {
+            this.resolve_log();
+        }
+        this.phase = this.COMPLETE;
+
+        var log = this.output_node;
+        if (!log) {
+            return;
+        }
+        var output_document = this.output_document;
+
+        while (log.lastChild) {
+            log.removeChild(log.lastChild);
+        }
+
+        if (script_prefix != null) {
+            var stylesheet = output_document.createElementNS(xhtml_ns, "link");
+            stylesheet.setAttribute("rel", "stylesheet");
+            stylesheet.setAttribute("href", script_prefix + "testharness.css");
+            var heads = output_document.getElementsByTagName("head");
+            if (heads.length) {
+                heads[0].appendChild(stylesheet);
+            }
+        }
+
+        var status_text_harness = {};
+        status_text_harness[harness_status.OK] = "OK";
+        status_text_harness[harness_status.ERROR] = "Error";
+        status_text_harness[harness_status.TIMEOUT] = "Timeout";
+
+        var status_text = {};
+        status_text[Test.prototype.PASS] = "Pass";
+        status_text[Test.prototype.FAIL] = "Fail";
+        status_text[Test.prototype.TIMEOUT] = "Timeout";
+        status_text[Test.prototype.NOTRUN] = "Not Run";
+
+        var status_number = {};
+        forEach(tests,
+                function(test) {
+                    var status = status_text[test.status];
+                    if (status_number.hasOwnProperty(status)) {
+                        status_number[status] += 1;
+                    } else {
+                        status_number[status] = 1;
+                    }
+                });
+
+        function status_class(status)
+        {
+            return status.replace(/\s/g, '').toLowerCase();
+        }
+
+        var summary_template = ["section", {"id":"summary"},
+                                ["h2", {}, "Summary"],
+                                function()
+                                {
+
+                                    var status = status_text_harness[harness_status.status];
+                                    var rv = [["section", {},
+                                               ["p", {},
+                                                "Harness status: ",
+                                                ["span", {"class":status_class(status)},
+                                                 status
+                                                ],
+                                               ]
+                                              ]];
+
+                                    if (harness_status.status === harness_status.ERROR) {
+                                        rv[0].push(["pre", {}, harness_status.message]);
+                                    }
+                                    return rv;
+                                },
+                                ["p", {}, "Found ${num_tests} tests"],
+                                function() {
+                                    var rv = [["div", {}]];
+                                    var i = 0;
+                                    while (status_text.hasOwnProperty(i)) {
+                                        if (status_number.hasOwnProperty(status_text[i])) {
+                                            var status = status_text[i];
+                                            rv[0].push(["div", {"class":status_class(status)},
+                                                        ["label", {},
+                                                         ["input", {type:"checkbox", checked:"checked"}],
+                                                         status_number[status] + " " + status]]);
+                                        }
+                                        i++;
+                                    }
+                                    return rv;
+                                },
+                               ];
+
+        log.appendChild(render(summary_template, {num_tests:tests.length}, output_document));
+
+        forEach(output_document.querySelectorAll("section#summary label"),
+                function(element)
+                {
+                    on_event(element, "click",
+                             function(e)
+                             {
+                                 if (output_document.getElementById("results") === null) {
+                                     e.preventDefault();
+                                     return;
+                                 }
+                                 var result_class = element.parentNode.getAttribute("class");
+                                 var style_element = output_document.querySelector("style#hide-" + result_class);
+                                 var input_element = element.querySelector("input");
+                                 if (!style_element && !input_element.checked) {
+                                     style_element = output_document.createElementNS(xhtml_ns, "style");
+                                     style_element.id = "hide-" + result_class;
+                                     style_element.textContent = "table#results > tbody > tr."+result_class+"{display:none}";
+                                     output_document.body.appendChild(style_element);
+                                 } else if (style_element && input_element.checked) {
+                                     style_element.parentNode.removeChild(style_element);
+                                 }
+                             });
+                });
+
+        // This use of innerHTML plus manual escaping is not recommended in
+        // general, but is necessary here for performance.  Using textContent
+        // on each individual <td> adds tens of seconds of execution time for
+        // large test suites (tens of thousands of tests).
+        function escape_html(s)
+        {
+            return s.replace(/\&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function has_assertions()
+        {
+            for (var i = 0; i < tests.length; i++) {
+                if (tests[i].properties.hasOwnProperty("assert")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function get_assertion(test)
+        {
+            if (test.properties.hasOwnProperty("assert")) {
+                if (Array.isArray(test.properties.assert)) {
+                    return test.properties.assert.join(' ');
+                }
+                return test.properties.assert;
+            }
+            return '';
+        }
+
+        log.appendChild(document.createElementNS(xhtml_ns, "section"));
+        var assertions = has_assertions();
+        var html = "<h2>Details</h2><table id='results' " + (assertions ? "class='assertions'" : "" ) + ">" +
+            "<thead><tr><th>Result</th><th>Test Name</th>" +
+            (assertions ? "<th>Assertion</th>" : "") +
+            "<th>Message</th></tr></thead>" +
+            "<tbody>";
+        for (var i = 0; i < tests.length; i++) {
+            html += '<tr class="' +
+                escape_html(status_class(status_text[tests[i].status])) +
+                '"><td>' +
+                escape_html(status_text[tests[i].status]) +
+                "</td><td>" +
+                escape_html(tests[i].name) +
+                "</td><td>" +
+                (assertions ? escape_html(get_assertion(tests[i])) + "</td><td>" : "") +
+                escape_html(tests[i].message ? tests[i].message : " ") +
+                "</td></tr>";
+        }
+        html += "</tbody></table>";
+        try {
+            log.lastChild.innerHTML = html;
+        } catch (e) {
+            log.appendChild(document.createElementNS(xhtml_ns, "p"))
+               .textContent = "Setting innerHTML for the log threw an exception.";
+            log.appendChild(document.createElementNS(xhtml_ns, "pre"))
+               .textContent = html;
+        }
+    };
+
+    var output = new Output();
+    add_start_callback(function (properties) {output.init(properties);});
+    add_result_callback(function () {output.show_status();});
+    add_completion_callback(function (tests, harness_status) {output.show_results(tests, harness_status);});
+
+    /*
+     * Template code
+     *
+     * A template is just a javascript structure. An element is represented as:
+     *
+     * [tag_name, {attr_name:attr_value}, child1, child2]
+     *
+     * the children can either be strings (which act like text nodes), other templates or
+     * functions (see below)
+     *
+     * A text node is represented as
+     *
+     * ["{text}", value]
+     *
+     * String values have a simple substitution syntax; ${foo} represents a variable foo.
+     *
+     * It is possible to embed logic in templates by using a function in a place where a
+     * node would usually go. The function must either return part of a template or null.
+     *
+     * In cases where a set of nodes are required as output rather than a single node
+     * with children it is possible to just use a list
+     * [node1, node2, node3]
+     *
+     * Usage:
+     *
+     * render(template, substitutions) - take a template and an object mapping
+     * variable names to parameters and return either a DOM node or a list of DOM nodes
+     *
+     * substitute(template, substitutions) - take a template and variable mapping object,
+     * make the variable substitutions and return the substituted template
+     *
+     */
+
+    function is_single_node(template)
+    {
+        return typeof template[0] === "string";
+    }
+
+    function substitute(template, substitutions)
+    {
+        if (typeof template === "function") {
+            var replacement = template(substitutions);
+            if (!replacement) {
+                return null;
+            }
+
+            return substitute(replacement, substitutions);
+        }
+
+        if (is_single_node(template)) {
+            return substitute_single(template, substitutions);
+        }
+
+        return filter(map(template, function(x) {
+                              return substitute(x, substitutions);
+                          }), function(x) {return x !== null;});
+    }
+
+    function substitute_single(template, substitutions)
+    {
+        var substitution_re = /\$\{([^ }]*)\}/g;
+
+        function do_substitution(input) {
+            var components = input.split(substitution_re);
+            var rv = [];
+            for (var i = 0; i < components.length; i += 2) {
+                rv.push(components[i]);
+                if (components[i + 1]) {
+                    rv.push(String(substitutions[components[i + 1]]));
+                }
+            }
+            return rv;
+        }
+
+        function substitute_attrs(attrs, rv)
+        {
+            rv[1] = {};
+            for (var name in template[1]) {
+                if (attrs.hasOwnProperty(name)) {
+                    var new_name = do_substitution(name).join("");
+                    var new_value = do_substitution(attrs[name]).join("");
+                    rv[1][new_name] = new_value;
+                }
+            }
+        }
+
+        function substitute_children(children, rv)
+        {
+            for (var i = 0; i < children.length; i++) {
+                if (children[i] instanceof Object) {
+                    var replacement = substitute(children[i], substitutions);
+                    if (replacement !== null) {
+                        if (is_single_node(replacement)) {
+                            rv.push(replacement);
+                        } else {
+                            extend(rv, replacement);
+                        }
+                    }
+                } else {
+                    extend(rv, do_substitution(String(children[i])));
+                }
+            }
+            return rv;
+        }
+
+        var rv = [];
+        rv.push(do_substitution(String(template[0])).join(""));
+
+        if (template[0] === "{text}") {
+            substitute_children(template.slice(1), rv);
+        } else {
+            substitute_attrs(template[1], rv);
+            substitute_children(template.slice(2), rv);
+        }
+
+        return rv;
+    }
+
+    function make_dom_single(template, doc)
+    {
+        var output_document = doc || document;
+        var element;
+        if (template[0] === "{text}") {
+            element = output_document.createTextNode("");
+            for (var i = 1; i < template.length; i++) {
+                element.data += template[i];
+            }
+        } else {
+            element = output_document.createElementNS(xhtml_ns, template[0]);
+            for (var name in template[1]) {
+                if (template[1].hasOwnProperty(name)) {
+                    element.setAttribute(name, template[1][name]);
+                }
+            }
+            for (var i = 2; i < template.length; i++) {
+                if (template[i] instanceof Object) {
+                    var sub_element = make_dom(template[i]);
+                    element.appendChild(sub_element);
+                } else {
+                    var text_node = output_document.createTextNode(template[i]);
+                    element.appendChild(text_node);
+                }
+            }
+        }
+
+        return element;
+    }
+
+
+
+    function make_dom(template, substitutions, output_document)
+    {
+        if (is_single_node(template)) {
+            return make_dom_single(template, output_document);
+        }
+
+        return map(template, function(x) {
+                       return make_dom_single(x, output_document);
+                   });
+    }
+
+    function render(template, substitutions, output_document)
+    {
+        return make_dom(substitute(template, substitutions), output_document);
+    }
+
+    /*
+     * Utility funcions
+     */
+    function assert(expected_true, function_name, description, error, substitutions)
+    {
+        if (tests.tests.length === 0) {
+            tests.set_file_is_test();
+        }
+        if (expected_true !== true) {
+            var msg = make_message(function_name, description,
+                                   error, substitutions);
+            throw new AssertionError(msg);
+        }
+    }
+
+    function AssertionError(message)
+    {
+        this.message = message;
+    }
+
+    AssertionError.prototype.toString = function() {
+        return this.message;
+    };
+
+    function make_message(function_name, description, error, substitutions)
+    {
+        for (var p in substitutions) {
+            if (substitutions.hasOwnProperty(p)) {
+                substitutions[p] = format_value(substitutions[p]);
+            }
+        }
+        var node_form = substitute(["{text}", "${function_name}: ${description}" + error],
+                                   merge({function_name:function_name,
+                                          description:(description?description + " ":"")},
+                                          substitutions));
+        return node_form.slice(1).join("");
+    }
+
+    function filter(array, callable, thisObj) {
+        var rv = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array.hasOwnProperty(i)) {
+                var pass = callable.call(thisObj, array[i], i, array);
+                if (pass) {
+                    rv.push(array[i]);
+                }
+            }
+        }
+        return rv;
+    }
+
+    function map(array, callable, thisObj)
+    {
+        var rv = [];
+        rv.length = array.length;
+        for (var i = 0; i < array.length; i++) {
+            if (array.hasOwnProperty(i)) {
+                rv[i] = callable.call(thisObj, array[i], i, array);
+            }
+        }
+        return rv;
+    }
+
+    function extend(array, items)
+    {
+        Array.prototype.push.apply(array, items);
+    }
+
+    function forEach (array, callback, thisObj)
+    {
+        for (var i = 0; i < array.length; i++) {
+            if (array.hasOwnProperty(i)) {
+                callback.call(thisObj, array[i], i, array);
+            }
+        }
+    }
+
+    function merge(a,b)
+    {
+        var rv = {};
+        var p;
+        for (p in a) {
+            rv[p] = a[p];
+        }
+        for (p in b) {
+            rv[p] = b[p];
+        }
+        return rv;
+    }
+
+    function expose(object, name)
+    {
+        var components = name.split(".");
+        var target = window;
+        for (var i = 0; i < components.length - 1; i++) {
+            if (!(components[i] in target)) {
+                target[components[i]] = {};
+            }
+            target = target[components[i]];
+        }
+        target[components[components.length - 1]] = object;
+    }
+
+    function forEach_windows(callback) {
+        // Iterate of the the windows [self ... top, opener]. The callback is passed
+        // two objects, the first one is the windows object itself, the second one
+        // is a boolean indicating whether or not its on the same origin as the
+        // current window.
+        var cache = forEach_windows.result_cache;
+        if (!cache) {
+            cache = [[self, true]];
+            var w = self;
+            var i = 0;
+            var so;
+            var origins = location.ancestorOrigins;
+            while (w != w.parent) {
+                w = w.parent;
+                // In WebKit, calls to parent windows' properties that aren't on the same
+                // origin cause an error message to be displayed in the error console but
+                // don't throw an exception. This is a deviation from the current HTML5
+                // spec. See: https://bugs.webkit.org/show_bug.cgi?id=43504
+                // The problem with WebKit's behavior is that it pollutes the error console
+                // with error messages that can't be caught.
+                //
+                // This issue can be mitigated by relying on the (for now) proprietary
+                // `location.ancestorOrigins` property which returns an ordered list of
+                // the origins of enclosing windows. See:
+                // http://trac.webkit.org/changeset/113945.
+                if (origins) {
+                    so = (location.origin == origins[i]);
+                } else {
+                    so = is_same_origin(w);
+                }
+                cache.push([w, so]);
+                i++;
+            }
+            w = window.opener;
+            if (w) {
+                // window.opener isn't included in the `location.ancestorOrigins` prop.
+                // We'll just have to deal with a simple check and an error msg on WebKit
+                // browsers in this case.
+                cache.push([w, is_same_origin(w)]);
+            }
+            forEach_windows.result_cache = cache;
+        }
+
+        forEach(cache,
+                function(a)
+                {
+                    callback.apply(null, a);
+                });
+    }
+
+    function is_same_origin(w) {
+        try {
+            'random_prop' in w;
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function supports_post_message(w)
+    {
+        var supports;
+        var type;
+        // Given IE  implements postMessage across nested iframes but not across
+        // windows or tabs, you can't infer cross-origin communication from the presence
+        // of postMessage on the current window object only.
+        //
+        // Touching the postMessage prop on a window can throw if the window is
+        // not from the same origin AND post message is not supported in that
+        // browser. So just doing an existence test here won't do, you also need
+        // to wrap it in a try..cacth block.
+        try {
+            type = typeof w.postMessage;
+            if (type === "function") {
+                supports = true;
+            }
+
+            // IE8 supports postMessage, but implements it as a host object which
+            // returns "object" as its `typeof`.
+            else if (type === "object") {
+                supports = true;
+            }
+
+            // This is the case where postMessage isn't supported AND accessing a
+            // window property across origins does NOT throw (e.g. old Safari browser).
+            else {
+                supports = false;
+            }
+        } catch (e) {
+            // This is the case where postMessage isn't supported AND accessing a
+            // window property across origins throws (e.g. old Firefox browser).
+            supports = false;
+        }
+        return supports;
+    }
+})();
+// vim: set expandtab shiftwidth=4 tabstop=4:

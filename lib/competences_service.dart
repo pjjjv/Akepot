@@ -17,7 +17,6 @@ class CompetencesService extends PolymerElement {
   @published List<Category> categories;
   @published bool signedin = false;
   @published String hash;
-  @observable String userid;
   @published String newlink = "";
   @published bool newuser = false;
   CoreAjax ajaxUserinfo;
@@ -181,7 +180,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/$userid";
+    ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/${user.userid}";
     print("url: ${ajaxGetProject.url}");
     ajaxGetProject.onCoreResponse.listen(ajaxGetProjectResponse);
     ajaxGetProject.onCoreError.listen(ajaxGetProjectError);
@@ -192,7 +191,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$hash/$userid";
+    ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$hash/${user.userid}";
     ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
     print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
     ajaxUpdateCompetence.onCoreResponse.listen(ajaxUpdateCompetenceResponse);
@@ -220,7 +219,7 @@ class CompetencesService extends PolymerElement {
     map['lastName'] = user.lastname;
     map['emailAddress'] = {};
     map['emailAddress']['email'] = user.email;
-    map['token'] = userid;
+    map['token'] = user.userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
     ajaxNewPerson.body = JSON.encode(map);
@@ -239,7 +238,7 @@ class CompetencesService extends PolymerElement {
     map['lastName'] = user.lastname;
     map['emailAddress'] = {};
     map['emailAddress']['email'] = user.email;
-    map['token'] = userid;
+    map['token'] = user.userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
     ajaxNewPerson.body = JSON.encode(map);
@@ -307,7 +306,7 @@ class CompetencesService extends PolymerElement {
       user.cover = (response['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }
 
-    if (userid == "" || userid == null) {
+    if (user.userid == "" || user.userid == null) {
       print("userid empty");
     }
     signedin = true;

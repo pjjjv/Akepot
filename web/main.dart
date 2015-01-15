@@ -44,7 +44,6 @@ class Content extends Observable {
   @observable String selectedSection = "splash";
 
   @observable String projectHash = "";
-  @observable String userId = "";
   @observable String newlink;
   @observable bool newuser;
   @observable bool signedin;

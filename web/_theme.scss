@@ -2,11 +2,15 @@ $font-stack: 'RobotoDraft', 'Roboto', 'Noto', 'Open Sans', sans-serif;
 $blue500: #2196F3;
 $blue200: #90CAF9;
 $blue700: #1976D2;
+$blue100: #BBDEFB;
 $tealA400: #1DE9B6;
+$tealA200: #64FFDA;
+$tealA100: #A7FFEB;
 $primary-color: $blue500;
 $accent-color: $tealA400;
 $light-color: $blue200;
 $dark-color: $blue700;
+$accent-fallback-color: $tealA200;
 
 $shadow: rgba(0,0,0,.26);
 $seam: #ddd;

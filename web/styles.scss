@@ -43,7 +43,7 @@ core-toolbar {
   color: $text-white;
 }
 core-toolbar.tall {
-  background-color: $primary-color;
+  background-color: $dark-color;
   height: 64px;
 }
 core-toolbar:not(.tall) {
@@ -63,33 +63,210 @@ core-scaffold::shadow {
 }
 
 core-scaffold {
-  core-toolbar{
-    @include text-subhead();
-    color: $text-white;
-    padding: 16px 0px 16px 22px;
-    /*background: url("images/carbon_intake.png") no-repeat center bottom;*/
-  }
-  core-toolbar.tall {
-    height: 150px;
-  }
-  core-selector, core-menu {
-    overflow: auto;
-    margin: 0px;
-    padding: 0px;
-    ::shadow paper-ripple {
+  core-header-panel{
+    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);
+    color: $text-black-secondary;
+
+    .separator {
+      padding: 16px;
+      @include text-caption();
+      border-top: 1px solid #e0e0e0;
+    }
+
+    core-toolbar{
+      @include text-subhead();
+      color: $text-white;
+      padding: 16px 0px 16px 22px;
+      /*background: url("images/carbon_intake.png") no-repeat center bottom;*/
+
+      core-image{
+        width: 400px;
+        height: 400px;
+        background-color: rgba(0,0,0,0);
+      }
+    }
+
+    core-toolbar.tall {
+      height: 192px;
+    }
+
+    core-selector, core-menu {
+      overflow: auto;
+      ::shadow paper-ripple {
+        color: $accent-color;
+      }
+    }
+
+    core-menu {
+      margin: 16px 0 0 0;
+
+      paper-item.core-selected {
+        background-color: #eee;
+      }
+      paper-item.core-selected core-icon {
+        color: $accent-color;
+      }
+    }
+
+    /*
+    paper-item doesn't style this at all, currently :(
+    https://github.com/Polymer/paper-item/issues/12
+    */
+    core-selector .core-selected {
       color: $accent-color;
+      //background-color: $light-color;
+    }
+  }
+}
+
+core-overlay-layer /deep/ paper-action-dialog {
+  color: $text-black-secondary;
+
+  paper-button {
+    @include text-button();
+
+    core-icon {
+      vertical-align: baseline;
+      margin-right: 24px !important;
     }
   }
 
-  /*
-  paper-item doesn't style this at all, currently :(
-  https://github.com/Polymer/paper-item/issues/12
-  */
-  core-selector .core-selected {
+  ::shadow paper-ripple {
     color: $accent-color;
-    //background-color: $light-color;
+  }
+
+  /deep/ h1 {
+    @include text-title();
+  }
+
+  p {
+    @include text-body1();
   }
 }
+
+section /deep/ paper-button {
+  @include text-button();
+
+  core-icon {
+    vertical-align: baseline;
+    margin-right: 24px !important;
+  }
+}
+
+paper-item {
+  @include text-subhead();
+  line-height: inherit;
+}
+
+paper-dropdown {
+  paper-item {
+    color: $text-black-secondary;
+  }
+
+  ::shadow #ripple {
+    color: $accent-color;
+  }
+}
+
+paper-item core-icon {
+  margin-right: 24px !important;
+}
+
+#panel-head {
+  background-image: url('images/beach.jpg');
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-color: #999;
+  background-size: cover;
+  @include text-subhead();
+  line-height: inherit;
+  color: $text-white-primary;
+}
+
+#panel-head img.profile {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
+#panel-head .bottom :last-child {
+  @include text-caption();
+  color: $text-white-secondary;
+}
+
+#panel-head::shadow .toolbar-tools {
+  z-index: 1;
+}
+
+#panel-head::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 600ms ease-in-out;
+}
+
+#panel-head.coverimg::after {
+  opacity: 1;
+}
+
+
+
+
+
+
+#refresh {
+  position: absolute;
+  z-index: -1;
+  bottom: 10px;
+  pointer-events: none;
+  will-change: transform;
+}
+#refresh.snapback {
+  transition: all 100ms ease-out;
+  -webkit-transform: translate3d(0, 81px, 0);
+  transform: translate3d(0, 81px, 0);
+}
+#refresh.snapback.tostart {
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+#refresh.shrink {
+  -webkit-transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
+  transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
+}
+#refresh > div {
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 8px;
+}
+#refresh paper-spinner {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  will-change: opacity;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 core-animated-pages {
   width: 98%;
@@ -108,22 +285,6 @@ core-animated-pages {
   //background-color: #b0bec5;
   padding: 0px;
   margin: 0px;
-}
-
-
-
-paper-button.colored,
-core-icon.colored {
-  color: #4285f4;
-}
-
-paper-button[raised].colored {
-  background: #4285f4;
-  color: #fff;
-}
-
-core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /deep/ core-item, core-menu /deep/ core-item {
-  @include text-body2();
 }
 
 .splash {
@@ -187,7 +348,7 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
     display: block;
     margin-top: 20px;
     //padding: 16px;//match padding
-    z-index: 3;
+    //z-index: 3;
     color: white;
     background-color: $accent-color;
     @include text-button();
@@ -206,6 +367,8 @@ paper-input {
 
 paper-input-decorator {
   max-width: 80%;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 paper-input.narrow {
@@ -253,4 +416,8 @@ paper-input-decorator /deep/ .focused-underline {
 
 #join-button::shadow core-icon{
   vertical-align: baseline;
+}
+
+.welcome {
+  display: block;
 }

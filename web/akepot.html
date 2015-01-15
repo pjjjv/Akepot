@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html manifest="appcache.mf">
+<html ><!--manifest="appcache.mf"-->
   <head>
     <meta charset="utf-8">
     <meta name="theme-color" content="#303F9F">
@@ -8,14 +8,17 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent" >
+    <meta name="apple-mobile-web-app-status-bar-style" content="#2196F3">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="msapplication-TileColor" content="#2196F3">
+    <meta name="msapplication-tap-highlight" content="no">
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" sizes="196x196" href="icons/icon-196.png">
+    <link rel="manifest" href="manifest.json">
     <meta name="application-name" content="Akepot">
 
-    <title>Akepot</title>
+    <title>CompetenceMatrix</title>
     <link rel="stylesheet" href="styles.css">
     <link href='//fonts.googleapis.com/css?family=RobotoDraft:400,300,500' rel='stylesheet' type='text/css'>
     <!--<link href='//fonts.googleapis.com/css?family=Roboto:400italic,300italic,500italic' rel='stylesheet' type='text/css'>-->
@@ -27,6 +30,7 @@
     <link rel="import" href="packages/core_elements/core_scaffold.html">
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_menu.html">
+    <link rel="import" href="packages/core_elements/core_menu_button.html">
     <link rel="import" href="packages/core_elements/core_item.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
     <link rel="import" href="packages/core_elements/core_toolbar.html">
@@ -39,15 +43,18 @@
     <link rel="import" href="packages/core_elements/core_animated_pages.html">
     <link rel="import" href="packages/core_elements/core_image.html">
     <link rel="import" href="packages/paper_elements/paper_button.html">
+    <link rel="import" href="packages/paper_elements/paper_toast.html">
     <link rel="import" href="packages/paper_elements/paper_item.html">
     <link rel="import" href="packages/paper_elements/paper_input.html">
     <link rel="import" href="packages/paper_elements/paper_input_decorator.html">
     <link rel="import" href="packages/paper_elements/paper_autogrow_textarea.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
+    <link rel="import" href="packages/paper_elements/paper_spinner.html">
+    <link rel="import" href="packages/paper_elements/paper_dropdown.html">
     <link rel="import" href="packages/paper_elements/paper_action_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/akepot/category_pane.html">
-    <link rel="import" href="packages/akepot/top_left.html">
+    <link rel="import" href="packages/akepot/login_screen.html">
     <link rel="import" href="packages/akepot/core_card2.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
@@ -74,36 +81,48 @@
   <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
+    <login-screen id="loginscreen" layout vertical center-center fit
+      class="{{signedin ? '' : 'show'}}"></login-screen>
+
     <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
     <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
-    <competences-service id="service" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
-      <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation flex>
-        <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo2}}" href="/"><top-left></top-left></core-toolbar>
-        <core-menu on-tap="{{goTo}}" flex id="panel-list1" class="content" theme="core-light-theme">
+      <core-header-panel mode="scroll" id="core_header_panel" navigation flex>
+        <core-toolbar id="panel-head" class="core-header tall">
+          <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
+          <img class="middle profile" _src="{{user.profile}}" hidden?="{{user.profile == null}}">
+          <div class="bottom" layout vertical>
+            <span>{{user.nickname}}</span>
+            <span>{{user.email}}</span>
+          </div>
+        </core-toolbar>
+        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
 
           <!-- Home -->
           <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
-              <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-                <paper-item href="/" id="menu_item_home" name="home" horizontal center layout>
+              <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+                <paper-item id="menu_item_home" name="home" tabindex="0">
                   <core-icon icon="home"></core-icon>
-                  Home
+                  <span flex>Home</span>
                 </paper-item>
+                <div class="separator"></div>
               </core-selector>
           </template>
 
           <!-- Project -->
           <template if="{{ projectRoute['projectHash'] != null }}">
-            <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-              <paper-item href="/" id="menu_item_home" name="home" horizontal center layout>
+            <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+              <paper-item id="menu_item_home" name="home" tabindex="0">
                 <core-icon icon="home"></core-icon>
-                Home
+                <span flex>Home</span>
               </paper-item>
+              <div class="separator">All categories</div>
               <template repeat="{{category in categories}}">
-                <paper-item href="/booking" id="menu_item1" name="{{category.name}}" horizontal center layout>
+                <paper-item noink id="menu_item_category" name="{{category.name}}" tabindex="0"><!-- Using noink so the ripple doesn't freeze and make the app look slow, https://github.com/Polymer/paper-ripple/issues/10 -->
                   <core-icon icon="assignment-ind"></core-icon>
-                  {{category.name}}
+                  <span flex>{{category.name}}</span>
                 </paper-item>
               </template>
             </core-selector>
@@ -116,25 +135,25 @@
 
           <!-- Admin -->
           <template if="{{ adminRoute['projectHash'] != null }}">
-              <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-                <paper-item href="/" id="menu_item_home" name="home">
+              <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+                <paper-item id="menu_item_home" name="home" tabindex="0">
                   <core-icon icon="home"></core-icon>
-                  Home
+                  <span flex>Home</span>
                 </paper-item>
-                <paper-item href="/" id="menu_item_input" name="input">
-                  <core-icon icon="input"></core-icon>
-                  Input
+                <div class="separator">Admin functions</div>
+                <paper-item noink id="menu_item_input" name="input" tabindex="0">
+                  <core-icon icon="file-upload"></core-icon>
+                  <span flex>Input</span>
                 </paper-item>
-                <paper-item href="/" id="menu_item_output" name="output">
-                  <core-icon icon="output"></core-icon>
-                  Output
+                <paper-item noink id="menu_item_output" name="output" tabindex="0">
+                  <core-icon icon="file-download"></core-icon>
+                  <span flex>Output</span>
                 </paper-item>
               </core-selector>
           </template>
         </core-menu>
 
       </core-header-panel>
-
 
       <div id="title" tool flex>Competence Matrix
         <!-- Project -->
@@ -146,8 +165,27 @@
           Admin for {{project.name}}
         </template>
       </div>
-      <core-icon-button icon="search" tool></core-icon-button>
+      <core-icon-button icon="search" tabindex="0" tool></core-icon-button>
 
+      <core-menu-button class="selected-item" layout horizontal tool><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+        <core-icon-button icon="more-vert"></core-icon-button>
+        <paper-dropdown class="dropdown" halign="right" valign="top">
+          <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
+            <core-icon icon="info"></core-icon>
+            <span flex>About</span>
+          </paper-item>
+          <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
+            <core-icon icon="close"></core-icon>
+            <span flex>Sign out</span>
+          </paper-item>
+        </paper-dropdown>
+      </core-menu-button>
+
+      <div id="refresh" class="bottom fit" layout horizontal center-center on-transitionend="{{onRefreshTransitionEnd}}">
+        <div class="paper-shadow-bottom-z-1">
+          <paper-spinner id="refreshspinner"></paper-spinner>
+        </div>
+      </div>
 
       <core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
 
@@ -170,7 +208,7 @@
                   Create a new project and administrate it for your teams.
                 </div>
                 <div flex></div>
-                <paper-button hidden self-center id="new-button" raised class="colored custom" role="button" tabindex="0">
+                <paper-button hidden self-center id="new-button" raised class="colored custom" role="button" autofocus tabindex="0">
                   <core-icon icon="create" aria-label="create" role="img"></core-icon>
                   Create project
                 </paper-button>
@@ -196,7 +234,7 @@
           </section>
           <section name="input" vertical layout>
 
-            <paper-input label="Project name" floatingLabel error="Project name is required!" required value="{{project.name}}"></paper-input>
+            <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
             <paper-input-decorator label="Description" floatingLabel>
               <paper-autogrow-textarea>
                 <textarea></textarea>
@@ -212,7 +250,7 @@
               <core-icon icon="create" aria-label="create" role="img"></core-icon>
               Create project
             </paper-button>
-            <paper-action-dialog id="dialog" heading="New project created"
+            <paper-action-dialog id="created-dialog" heading="New project created"
               transition="paper-transition-center" backdrop="true">
               <p>Write down the following link:<br>
                  {{newlink}}<br>
@@ -220,8 +258,14 @@
                  This is the permalink to your project. Share it with your project members!<br>
                  <br>
                  Would you like to navigate to it now?</p>
-              <paper-button dismissive>Back</paper-button>
-              <paper-button id="go-button" affirmative>Go</paper-button>
+              <paper-button dismissive tabindex="0">
+                <core-icon icon="close"></core-icon>
+                <span flex>Close</span>
+              </paper-button>
+              <paper-button id="go-button" affirmative tabindex="0" autofocus>
+                <core-icon icon="check"></core-icon>
+                <span flex>Navigate</span>
+              </paper-button>
             </paper-action-dialog>
           </section>
           <section name="output" vertical layout>
@@ -246,7 +290,7 @@
                   <p>Team to be added to: (TBD)</p>
                 </div>
                 <div flex></div>
-                <paper-button self-center id="join-button" raised class="colored custom" role="button" tabindex="0">
+                <paper-button self-center id="join-button" raised class="colored custom" role="button" autofocus tabindex="0">
                   <core-icon icon="add" aria-label="add" role="img"></core-icon>
                   Join project
                 </paper-button>
@@ -262,14 +306,19 @@
 
       </core-animated-pages>
 
-
-
-      <paper-dialog id="dialog" heading="Info on Akepot"
+      <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix"
         transition="paper-transition-center" backdrop="true">
         <p>Made with Polymer and Dart in October 2014.</p>
-        <p>This tool was created by pjv.</p>
-        <paper-button dismissive autofocus>Close</paper-button>
-      </paper-dialog>
+        <p>Copyright 2014-2015 pjv.</p>
+        <paper-button dismissive tabindex="0" autofocus>
+          <core-icon icon="close"></core-icon>
+          <span flex>Close</span>
+        </paper-button>
+      </paper-action-dialog>
+
+      <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
+        <paper-button dismissive tabindex="0" autofocus>Retry</paper-button>
+      </paper-toast>
     </core-scaffold>
     </template>
 

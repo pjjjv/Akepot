@@ -11,6 +11,7 @@ import 'package:akepot/model/model_project.dart';
 import 'package:paper_elements/paper_button.dart';
 import 'package:paper_elements/paper_autogrow_textarea.dart';
 import 'package:akepot/competences_service.dart';
+import 'package:akepot/login_screen.dart';
 
 void main() {
   initPolymer().run(() {
@@ -33,12 +34,6 @@ void main() {
   });
 }
 
-void openMenu(Event e) {
-  print("openMenu");
-  var dialog = querySelector('#dialog');
-  dialog.toggle();
-}
-
 class Content extends Observable {
   //@observable List competences = toObservable([]);
   @observable var projectRoute;
@@ -53,6 +48,7 @@ class Content extends Observable {
   @observable String newlink;
   @observable bool newuser;
   @observable bool signedin;
+  @observable User user;
 
   String generatedHash = null;
   PaperButton newButton;
@@ -200,12 +196,8 @@ class Content extends Observable {
     newButton.onClick.listen(newProject);
   }
 
-  void goTo(Event e) {
-    print("wentTo");
-  }
-
-  void goTo2(Event e) {
-    print("wentTo");
+  void signOut(Event e) {
+    (document.querySelector("#loginscreen") as LoginScreen).signOut();
   }
 
   // String generateId(int length);
@@ -222,6 +214,18 @@ class Content extends Observable {
     String message = context['MoreRouting'].callMethod('urlFor', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
     print("New admin link would be: $message");
     context['MoreRouting'].callMethod('navigateTo', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
+  }
+
+  void about(Event e) {
+    var dialog = querySelector('#about-dialog');
+    dialog.toggle();
+  }
+
+  void navigate(Event e, var detail){
+    var itemId = detail['item'].id;
+    if(itemId == "menu_item_home"){
+      context['MoreRouting'].callMethod('navigateTo', ['/']);
+    }
   }
 
 }

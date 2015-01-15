@@ -2,10 +2,11 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'package:core_elements/core_ajax_dart.dart';
+import 'package:google_signin_dart/google_signin_dart.dart';
 
-@CustomTag('top-left')
-class TopLeft extends PolymerElement {
-  TopLeft.created() : super.created();
+@CustomTag('login-screen')
+class LoginScreen extends PolymerElement {
+  LoginScreen.created() : super.created();
   @observable bool signedin = false;
   @observable String accessToken = "";
   @observable String name = "";
@@ -23,6 +24,11 @@ class TopLeft extends PolymerElement {
   void signedOut(CustomEvent event, dynamic detail){
     print("google-signin-aware-signed-out $detail");
     signedin = false;
+  }
+
+  void signOut(){
+    GoogleSignin button = shadowRoot.querySelector("google-signin");
+    button.signOut();
   }
 
   void parseResponse(CustomEvent event, Map detail, CoreAjax node) {

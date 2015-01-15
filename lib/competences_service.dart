@@ -27,10 +27,7 @@ class CompetencesService extends PolymerElement {
   CoreAjax ajaxNewPerson;
   Map _headers;
 
-  String email;
-  String firstname;
-  String lastname;
-  String nickname;
+  @published User user = new User();
 
   CompetencesService.created() : super.created() {
     categories = new List<Category>();
@@ -152,7 +149,7 @@ class CompetencesService extends PolymerElement {
     print("New project link would be: $newlink");
 
 
-    PaperActionDialog dialog = document.querySelector('#dialog');
+    PaperActionDialog dialog = document.querySelector('#created-dialog');
 
     PaperButton goButton = document.querySelector('#go-button');
     goButton.onClick.listen(onGoButtonClick);
@@ -218,11 +215,11 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     Map map = {};
-    map['nickName'] = nickname;
-    map['firstName'] = firstname;
-    map['lastName'] = lastname;
+    map['nickName'] = user.nickname;
+    map['firstName'] = user.firstname;
+    map['lastName'] = user.lastname;
     map['emailAddress'] = {};
-    map['emailAddress']['email'] = email;
+    map['emailAddress']['email'] = user.email;
     map['token'] = userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
@@ -237,11 +234,11 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     Map map = {};
-    map['nickName'] = nickname;
-    map['firstName'] = firstname;
-    map['lastName'] = lastname;
+    map['nickName'] = user.nickname;
+    map['firstName'] = user.firstname;
+    map['lastName'] = user.lastname;
     map['emailAddress'] = {};
-    map['emailAddress']['email'] = email;
+    map['emailAddress']['email'] = user.email;
     map['token'] = userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
@@ -271,7 +268,7 @@ class CompetencesService extends PolymerElement {
 
   void parseUserinfoResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    //print(response);
+    print(response);
 
     try {
       if (response == null) {
@@ -283,15 +280,32 @@ class CompetencesService extends PolymerElement {
       return null;
     }
 
+    user = new User();
+
     //name = ", "+response['nickname'];
-    email = response['emails'][0]['value'];
-    userid = response['id'];
-    nickname = "";
+    user.email = response['emails'][0]['value'];
+    user.userid = response['id'];
+    user.nickname = "";
     if(response['nickname'] != null){
-      nickname = response['nickname'];
+      user.nickname = response['nickname'];
+    } else if(response['displayName'] != null){
+      user.nickname = response['displayName'];
     }
-    firstname = response['name']['givenName'];
-    lastname = response['name']['familyName'];
+
+    user.firstname = response['name']['givenName'];
+    user.lastname = response['name']['familyName'];
+
+
+    int PROFILE_IMAGE_SIZE = 75;
+    int COVER_IMAGE_SIZE = 315;
+
+    if(response['image'] != null){
+      user.profile = (response['image']['url'] as String).replaceFirst(new RegExp('/(.+)\?sz=\d\d/'), "\$1?sz=" + PROFILE_IMAGE_SIZE.toString());
+    }
+
+    if(response['cover'] != null){
+      user.cover = (response['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
+    }
 
     if (userid == "" || userid == null) {
       print("userid empty");
@@ -303,4 +317,14 @@ class CompetencesService extends PolymerElement {
   void signedOut(CustomEvent event, dynamic detail){
     signedin=false;
   }
+}
+
+class User extends Observable {
+  @observable String email = "";
+  @observable String userid = "";
+  @observable String nickname = "";
+  @observable String firstname = "";
+  @observable String lastname = "";
+  @observable var profile;
+  @observable var cover;
 }

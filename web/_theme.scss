@@ -14,6 +14,8 @@ $accent-fallback-color: $tealA200;
 
 $shadow: rgba(0,0,0,.26);
 $seam: #ddd;
+$light-grey: #eee;
+$grey: #999;
 
 $text-black: black;
 $text-black-primary: rgba(0,0,0,0.87);
@@ -30,8 +32,9 @@ $text-white-dividers: rgba(255,255,255,0.12);
 $background-color: rgba(255,255,255,0.02);
 //$background-color: rgba(250,250,250,1);
 
+$font-size-input: 1.6rem; //Regular 16sp //Input text and hint
 $font-size-button: 1.4rem; //MEDIUM 14sp
-$font-size-caption: 1.2rem; //Regular 12sp
+$font-size-caption: 1.2rem; //Regular 12sp //Also input label
 $font-size-body: 1.3rem; //Regular or Medium 13sp (Desktop)
 $font-size-subhead: 1.5rem; //Regular 15sp (Desktop) //small snippets or when titles are paired with lines of Body-styled text.
 $font-size-title: 2.0rem; //Medium 20sp //app bars
@@ -41,6 +44,7 @@ $font-size-display2: 4.5rem; //Regular 45sp
 $font-size-display3: 5.6rem; //Regular 56sp
 $font-size-display4: 11.2rem; //Light 112sp
 
+$font-weight-input: 400; //Regular 16sp
 $font-weight-button: 500; //MEDIUM 14sp
 $font-weight-caption: 400; //Regular 12sp
 $font-weight-body1: 400; //Regular 13sp (Desktop)
@@ -63,6 +67,7 @@ $line-height-headline: 2.55em; // Leading 32pt
 $line-height-display1: 3.2em; // Leading 40pt
 $line-height-display2: 3.84em; // Leading 48pt
 
+$letter-spacing-input: 0.01em; //Tracking 10
 $letter-spacing-button: 0.01em; //Tracking 10
 $letter-spacing-caption: 0.02em; //Tracking 20
 $letter-spacing-body1: 0.01em; //Tracking 10
@@ -75,6 +80,12 @@ $letter-spacing-display2: 0em; //Tracking 0
 $letter-spacing-display3: -0.005em; //Tracking -5
 $letter-spacing-display4: -0.01em; //Tracking -10
 
+@mixin text-input() {
+  font-size: $font-size-input;
+  font-weight: $font-weight-input;
+  //line-height
+  letter-spacing: $letter-spacing-input;
+}
 @mixin text-button() {
   font-size: $font-size-button;
   font-weight: $font-weight-button;

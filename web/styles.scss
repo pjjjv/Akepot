@@ -24,10 +24,10 @@ body {
   background-position: 50%;
 }
 
+//Toplevel scaffold and toolbars.
 core-scaffold::shadow [drawer] {
   background-color: white;
 }
-
 core-scaffold::shadow [main] {
   background-color: white;
 }
@@ -43,7 +43,6 @@ core-toolbar.tall {
 core-toolbar:not(.tall) {
   background-color: $dark-color;
 }
-
 core-scaffold::shadow {
   core-toolbar {
     @extend core-toolbar;
@@ -55,22 +54,12 @@ core-scaffold::shadow {
     @extend core-toolbar:not(.tall);
   }
 }
-
 core-scaffold {
   core-header-panel{
     box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);
     color: $text-black-secondary;
 
-    .separator {
-      padding: (1 * $component-grid);
-      @include text-caption();
-      border-top: 1px solid #e0e0e0;
-    }
-
-    .separator .empy {
-      min-height: (1 * $component-grid) - 0.1rem;
-    }
-
+    //Left top toolbar
     core-toolbar{
       @include text-subhead();
       color: $text-white;
@@ -82,251 +71,157 @@ core-scaffold {
         background-color: rgba(0,0,0,0);
       }
     }
-
     core-toolbar.tall {
       height: (24 * $component-grid);
     }
 
+    //Only ever applies to our left top core-toolbar here.
+    #panel-head {
+      background-image: url('images/beach.jpg');
+      background-blend-mode: multiply;
+      background-repeat: no-repeat;
+      background-color: $grey;
+      background-size: cover;
+      @include text-subhead();
+      line-height: inherit;
+      color: $text-white-primary;
+    }
+    #panel-head img.profile {
+      border-radius: 50%;
+      width: (8 * $component-grid);
+      height: (8 * $component-grid);
+      margin-bottom: (2.5 * $component-grid);
+    }
+    #panel-head .bottom :last-child {
+      @include text-caption();
+      color: $text-white-secondary;
+    }
+    #panel-head::shadow .toolbar-tools {
+      z-index: 1;
+    }
+    #panel-head::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      background-blend-mode: multiply;
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: 0;
+      opacity: 0;
+      will-change: opacity;
+      transition: opacity 600ms ease-in-out;
+    }
+    #panel-head.coverimg::after {
+      opacity: 1;
+    }
+
+    //Drawer menu
     core-selector, core-menu {
       overflow: auto;
-      ::shadow paper-ripple {
-        color: $accent-color;
-      }
     }
-
     core-menu {
       margin: (1 * $component-grid) 0 0 0;
-
-      paper-item.core-selected {
-        background-color: #eee;
-      }
-      paper-item.core-selected core-icon {
-        color: $accent-color;
-      }
     }
-
-    /*
-    paper-item doesn't style this at all, currently :(
-    https://github.com/Polymer/paper-item/issues/12
-    */
-    core-selector .core-selected {
-      color: $accent-color;
+    .separator {
+      @include text-body2();
+      min-width: (8 * $component-grid);
+      min-height: (2 * $component-grid);
+      padding: (2 * $component-grid);
+      padding-top: (2 * $component-grid) - 0.1rem;
+      border-top: 1px solid $light-grey;
+    }
+    .separator .empty {
+      min-height: (1 * $component-grid);
+      padding: 0;
+      border-top: 0;
     }
   }
 }
 
-core-overlay-layer /deep/ paper-action-dialog {
-  color: $text-black-secondary;
+//All paper (menu) items
+html /deep/ paper-item {
+  @include text-subhead();
+  line-height: inherit;
+  min-width: (8 * $component-grid);
+  min-height: (6 * $component-grid);
 
+  core-icon {
+    vertical-align: baseline;
+    margin-right: (4 * $component-grid);
+    height: (3 * $component-grid);
+    width: (3 * $component-grid);
+  }
+}
+html /deep/ paper-item.core-selected {
+   background-color: $light-grey;
+   color: $accent-color;
+   core-icon {
+     color: $accent-color;
+   }
+}
+html /deep/ paper-item::shadow .button-content {
+  height: inherit;
+  padding: (1.5 * $component-grid) (2 * $component-grid);
+}
+
+//All fold-open menus
+html /deep/ paper-dropdown {
+  paper-item {
+    color: $text-black-secondary;
+  }
+}
+
+//All dialogs
+html /deep/ paper-action-dialog, html /deep/ paper-dialog {
   /deep/ h1 {
     @include text-title();
-    margin: (2 * $component-grid) 0;
+    color: $text-black-primary;
+    margin-bottom: (3 * $component-grid);
   }
 
   p {
     @include text-body1();
-    margin: (2 * $component-grid) 0;
-    margin-bottom: 0;
-  }
-
-  .flatbutton[autofocus] {
-    color: $accent-color;
-  }
-  .flatbutton {
-    @include text-button();
-    margin: (0.5 * $component-grid) (0.5 * $component-grid);//Top-bottom margin halved because button is taller.
-    padding-left: (1 * $component-grid);
-    padding-right: (1 * $component-grid);
-    min-height: (4.5 * $component-grid);//Button is actually taller than wanted height.
-    min-width: (8 * $component-grid);
-    right: (-2 * $component-grid);
-
-    core-icon {
-      vertical-align: baseline;
-      margin-left: (0.5 * $component-grid);
-      margin-right: (0.5 * $component-grid);//On this icon left text-facing margin, and so does not end up 72dp.
-      height: (3 * $component-grid);
-      width: (3 * $component-grid);
-    }
-
-    span {
-      //min-width: (8 * $component-grid);
-      margin-left: (1.5 * $component-grid);
-    }
-  }
-
-  ::shadow paper-ripple {
-    color: $accent-color;
+    color: $text-black-secondary;
   }
 }
 
-
-
-.flatbutton {
+//All flat ink paper buttons
+html /deep/ paper-button.flat-button[autofocus] {
+  color: $accent-color;
+}
+html /deep/ paper-button.flat-button {
   @include text-button();
-  margin: (1 * $component-grid) (0.5 * $component-grid);
-  padding-left: (1 * $component-grid);
-  padding-right: (1 * $component-grid);
-  height: (4.5 * $component-grid);
   min-width: (8 * $component-grid);
 
   core-icon {
     vertical-align: baseline;
-    margin-left: (0.5 * $component-grid);
-    margin-right: (2 * $component-grid);
-    height: (3 * $component-grid);
-    width: (3 * $component-grid);
-  }
-
-  span {
-    min-width: (8 * $component-grid);
-    margin-left: (1 * $component-grid);
+    margin-right: (3 * $component-grid) !important;
   }
 }
 
-section /deep/ paper-button {
+//All raised paper buttons
+html /deep/ paper-button.raised-button.colored {
+  background-color: $accent-color;
+  color: white;
+}
+html /deep/ paper-button.raised-button {
   @include text-button();
+  min-width: (8 * $component-grid);
 
   core-icon {
     vertical-align: baseline;
-    margin-right: 24px !important;
+    margin-right: (3 * $component-grid) !important;
   }
 }
 
-paper-item {
-  @include text-subhead();
-  line-height: inherit;
+//All ink ripples
+html /deep/ paper-ripple {
+  color: $accent-color;
 }
 
-paper-dropdown {
-  paper-item {
-    color: $text-black-secondary;
-  }
-
-  ::shadow #ripple {
-    color: $accent-color;
-  }
-}
-
-paper-item core-icon {
-  margin-right: 24px !important;
-}
-
-#panel-head {
-  background-image: url('images/beach.jpg');
-  background-blend-mode: multiply;
-  background-repeat: no-repeat;
-  background-color: #999;
-  background-size: cover;
-  @include text-subhead();
-  line-height: inherit;
-  color: $text-white-primary;
-}
-
-#panel-head img.profile {
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 20px;
-}
-
-#panel-head .bottom :last-child {
-  @include text-caption();
-  color: $text-white-secondary;
-}
-
-#panel-head::shadow .toolbar-tools {
-  z-index: 1;
-}
-
-#panel-head::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  background-blend-mode: multiply;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 0;
-  opacity: 0;
-  will-change: opacity;
-  transition: opacity 600ms ease-in-out;
-}
-
-#panel-head.coverimg::after {
-  opacity: 1;
-}
-
-
-
-
-
-
-#refresh {
-  position: absolute;
-  z-index: -1;
-  bottom: 10px;
-  pointer-events: none;
-  will-change: transform;
-}
-#refresh.snapback {
-  transition: all 100ms ease-out;
-  -webkit-transform: translate3d(0, 81px, 0);
-  transform: translate3d(0, 81px, 0);
-}
-#refresh.snapback.tostart {
-  -webkit-transform: translate3d(0, 0, 0) !important;
-  transform: translate3d(0, 0, 0) !important;
-}
-#refresh.shrink {
-  -webkit-transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
-  transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
-}
-#refresh > div {
-  width: 22px;
-  height: 22px;
-  background: #fff;
-  border-radius: 50%;
-  padding: 8px;
-}
-#refresh paper-spinner {
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  will-change: opacity;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-core-animated-pages {
-  width: 98%;
-  height: 98%;
-  -webkit-user-select: none;
-}
-
-@media all and (max-width: 480px) {
-  core-animated-pages {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-#main-heading {
-  //background-color: #b0bec5;
-  padding: 0px;
-  margin: 0px;
-}
-
+//Splash screen
 .splash {
   background-color: white;
   background-repeat: no-repeat;
@@ -336,6 +231,62 @@ core-animated-pages {
 .splash.wide {
   background-size: 512px;
 }
+
+//Section margins
+section {
+  margin: (4 * $component-grid) (2 * $component-grid) 0 (2 * $component-grid);
+}
+@media all and (max-width: 640px) {//Mobile phone
+  section {
+    margin: (2 * $component-grid);
+    margin-bottom: 0;
+    //width: 100%;
+    //height: 100%;
+  }
+}
+
+//All paper inputs and paper input decorators for textarea's
+html /deep/ paper-input {
+  /deep/ .floated-label {
+    @include text-caption();
+  }
+  /deep/ .input-body {
+    @include text-input();
+  }
+}
+html /deep/ paper-input.narrow {
+  width: 150px;
+}
+html /deep/ paper-input[focused] /deep/ .floated-label .label-text {
+  color: $accent-color;
+}
+html /deep/ paper-input /deep/ .focused-underline {
+  background-color: $accent-color;
+}
+html /deep/ paper-input-decorator {
+  //Solves bug with garbled text.
+  word-wrap: break-word;
+  word-break: break-all;
+
+  /deep/ .floated-label {
+    @include text-caption();
+  }
+  /deep/ .input-body {
+    @include text-input();
+  }
+}
+html /deep/ paper-input-decorator[focused] /deep/ .floated-label .label-text {
+  color: $accent-color;
+}
+html /deep/ paper-input-decorator /deep/ .focused-underline {
+  background-color: $accent-color;
+}
+
+
+
+
+
+
 
 $card-width2: 300px;
 $card-height2: $card-width2 * 8 / 7;
@@ -401,63 +352,54 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
 
 
 
-paper-input {
-  width: 80%;
-}
-
-paper-input-decorator {
-  max-width: 80%;
-  word-wrap: break-word;
-  word-break: break-all;
-}
-
-paper-input.narrow {
-  width: 150px;
-}
-
-paper-input[focused] /deep/ .floated-label .label-text {
-  color: $accent-color;
-}
-
-paper-input /deep/ .focused-underline {
-  background-color: $accent-color;
-}
-
-paper-input-decorator[focused] /deep/ .floated-label .label-text {
-  color: $accent-color;
-}
-
-paper-input-decorator /deep/ .focused-underline {
-  background-color: $accent-color;
-}
 
 
 #create-button {
   display: block;
   margin-top: 20px;
-  //padding: 16px;//match padding
-  color: white;
-  background-color: $accent-color;
-  @include text-button();
-}
-
-#create-button::shadow core-icon{
-  vertical-align: baseline;
 }
 
 #join-button {
   display: block;
   margin-top: 20px;
-  //padding: 16px;//match padding
-  color: white;
-  background-color: $accent-color;
-  @include text-button();
 }
 
-#join-button::shadow core-icon{
-  vertical-align: baseline;
-}
 
-.welcome {
-  display: block;
+
+
+
+
+
+#refresh {
+  position: absolute;
+  z-index: -1;
+  bottom: 10px;
+  pointer-events: none;
+  will-change: transform;
+}
+#refresh.snapback {
+  transition: all 100ms ease-out;
+  -webkit-transform: translate3d(0, 81px, 0);
+  transform: translate3d(0, 81px, 0);
+}
+#refresh.snapback.tostart {
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+#refresh.shrink {
+  -webkit-transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
+  transform: translate3d(0, 81px, 0) scale(0.001); /* Note: scale(0) doesn't work */
+}
+#refresh > div {
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 8px;
+}
+#refresh paper-spinner {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  will-change: opacity;
 }

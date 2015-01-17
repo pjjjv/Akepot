@@ -202,7 +202,7 @@
                   Create a new project and administrate it for your teams.
                 </div>
                 <div flex></div>
-                <paper-button hidden self-center id="new-button" raised class="colored custom" role="button" autofocus tabindex="0">
+                <paper-button hidden self-center id="new-button" raised class="colored custom raised-button" autofocus tabindex="0">
                   <core-icon icon="create" aria-label="create" role="img"></core-icon>
                   Create project
                 </paper-button>
@@ -240,26 +240,18 @@
             <paper-input-decorator label="Teams (as JSON)" floatingLabel labelVisible error="One team is required!">
               <textarea rows="10" value="{{project.teamsAsJson}}" required></textarea>
             </paper-input-decorator>
-            <paper-button hidden self-center id="create-button" raised class="colored custom" role="button" tabindex="0">
+            <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
               <core-icon icon="create" aria-label="create" role="img"></core-icon>
               Create project
             </paper-button>
             <paper-action-dialog id="created-dialog" heading="New project created"
               transition="paper-transition-center" backdrop="true">
               <p>Write down the following link:<br>
-                 {{newlink}}<br>
-                 <br>
-                 This is the permalink to your project. Share it with your project members!<br>
-                 <br>
-                 Would you like to navigate to it now?</p>
-              <paper-button dismissive tabindex="0">
-                <core-icon icon="close"></core-icon>
-                <span flex>Close</span>
-              </paper-button>
-              <paper-button id="go-button" affirmative tabindex="0" autofocus>
-                <core-icon icon="check"></core-icon>
-                <span flex>Navigate</span>
-              </paper-button>
+                 {{newlink}}<br></p>
+              <p>This is the permalink to your project. Share it with your project members!</p>
+              <p>Would you like to navigate to it now?</p>
+              <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+              <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
             </paper-action-dialog>
           </section>
           <section name="output" vertical layout>
@@ -284,7 +276,7 @@
                   <p>Team to be added to: (TBD)</p>
                 </div>
                 <div flex></div>
-                <paper-button self-center id="join-button" raised class="colored custom" role="button" autofocus tabindex="0">
+                <paper-button self-center id="join-button" raised class="colored custom raised-button" autofocus tabindex="0">
                   <core-icon icon="add" aria-label="add" role="img"></core-icon>
                   Join project
                 </paper-button>
@@ -304,16 +296,11 @@
         transition="paper-transition-center" backdrop="true">
         <p>Made with Polymer and Dart in October 2014.</p>
         <p>Copyright 2014-2015 pjv.</p>
-        <div id="actions" horizontal layout reverse>
-          <paper-button role="button" dismissive tabindex="0" autofocus default class="flatbutton">
-            <core-icon icon="close"></core-icon>
-            <span>Close</span>
-          </paper-button>
-        </div>
+        <paper-button dismissive tabindex="0" autofocus class="flat-button">Close</paper-button>
       </paper-action-dialog>
 
       <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
-        <paper-button dismissive tabindex="0" autofocus>Retry</paper-button>
+        <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>
       </paper-toast>
     </core-scaffold>
     </template>

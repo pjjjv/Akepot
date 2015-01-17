@@ -107,7 +107,7 @@
                   <core-icon icon="home"></core-icon>
                   <span flex>Home</span>
                 </paper-item>
-                <div class="separator"></div>
+                <div class="separator empty"></div>
               </core-selector>
           </template>
 
@@ -304,10 +304,12 @@
         transition="paper-transition-center" backdrop="true">
         <p>Made with Polymer and Dart in October 2014.</p>
         <p>Copyright 2014-2015 pjv.</p>
-        <paper-button dismissive tabindex="0" autofocus>
-          <core-icon icon="close"></core-icon>
-          <span flex>Close</span>
-        </paper-button>
+        <div id="actions" horizontal layout reverse>
+          <paper-button role="button" dismissive tabindex="0" autofocus default class="flatbutton">
+            <core-icon icon="close"></core-icon>
+            <span>Close</span>
+          </paper-button>
+        </div>
       </paper-action-dialog>
 
       <paper-toast id="toast" text="Connection timed out. Showing limited messages.">

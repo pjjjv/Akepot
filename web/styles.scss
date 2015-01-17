@@ -24,12 +24,6 @@ body {
   background-position: 50%;
 }
 
-@media screen and (min-width: 900px) {
-  body {
-    background-size: 512px;
-  }
-}
-
 core-scaffold::shadow [drawer] {
   background-color: white;
 }
@@ -44,7 +38,7 @@ core-toolbar {
 }
 core-toolbar.tall {
   background-color: $dark-color;
-  height: 64px;
+  height: (8 * $component-grid);
 }
 core-toolbar:not(.tall) {
   background-color: $dark-color;
@@ -68,26 +62,29 @@ core-scaffold {
     color: $text-black-secondary;
 
     .separator {
-      padding: 16px;
+      padding: (1 * $component-grid);
       @include text-caption();
       border-top: 1px solid #e0e0e0;
+    }
+
+    .separator .empy {
+      min-height: (1 * $component-grid) - 0.1rem;
     }
 
     core-toolbar{
       @include text-subhead();
       color: $text-white;
-      padding: 16px 0px 16px 22px;
-      /*background: url("images/carbon_intake.png") no-repeat center bottom;*/
+      padding: (2 * $component-grid) 0 (2 * $component-grid) (3 * $component-grid);
 
       core-image{
-        width: 400px;
-        height: 400px;
+        width: (50 * $component-grid);
+        height: (50 * $component-grid);
         background-color: rgba(0,0,0,0);
       }
     }
 
     core-toolbar.tall {
-      height: 192px;
+      height: (24 * $component-grid);
     }
 
     core-selector, core-menu {
@@ -98,7 +95,7 @@ core-scaffold {
     }
 
     core-menu {
-      margin: 16px 0 0 0;
+      margin: (1 * $component-grid) 0 0 0;
 
       paper-item.core-selected {
         background-color: #eee;
@@ -114,7 +111,6 @@ core-scaffold {
     */
     core-selector .core-selected {
       color: $accent-color;
-      //background-color: $light-color;
     }
   }
 }
@@ -122,25 +118,69 @@ core-scaffold {
 core-overlay-layer /deep/ paper-action-dialog {
   color: $text-black-secondary;
 
-  paper-button {
+  /deep/ h1 {
+    @include text-title();
+    margin: (2 * $component-grid) 0;
+  }
+
+  p {
+    @include text-body1();
+    margin: (2 * $component-grid) 0;
+    margin-bottom: 0;
+  }
+
+  .flatbutton[autofocus] {
+    color: $accent-color;
+  }
+  .flatbutton {
     @include text-button();
+    margin: (0.5 * $component-grid) (0.5 * $component-grid);//Top-bottom margin halved because button is taller.
+    padding-left: (1 * $component-grid);
+    padding-right: (1 * $component-grid);
+    min-height: (4.5 * $component-grid);//Button is actually taller than wanted height.
+    min-width: (8 * $component-grid);
+    right: (-2 * $component-grid);
 
     core-icon {
       vertical-align: baseline;
-      margin-right: 24px !important;
+      margin-left: (0.5 * $component-grid);
+      margin-right: (0.5 * $component-grid);//On this icon left text-facing margin, and so does not end up 72dp.
+      height: (3 * $component-grid);
+      width: (3 * $component-grid);
+    }
+
+    span {
+      //min-width: (8 * $component-grid);
+      margin-left: (1.5 * $component-grid);
     }
   }
 
   ::shadow paper-ripple {
     color: $accent-color;
   }
+}
 
-  /deep/ h1 {
-    @include text-title();
+
+
+.flatbutton {
+  @include text-button();
+  margin: (1 * $component-grid) (0.5 * $component-grid);
+  padding-left: (1 * $component-grid);
+  padding-right: (1 * $component-grid);
+  height: (4.5 * $component-grid);
+  min-width: (8 * $component-grid);
+
+  core-icon {
+    vertical-align: baseline;
+    margin-left: (0.5 * $component-grid);
+    margin-right: (2 * $component-grid);
+    height: (3 * $component-grid);
+    width: (3 * $component-grid);
   }
 
-  p {
-    @include text-body1();
+  span {
+    min-width: (8 * $component-grid);
+    margin-left: (1 * $component-grid);
   }
 }
 

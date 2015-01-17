@@ -1,9 +1,19 @@
 <link rel="import" href="../../packages/polymer/polymer.html">
 <link rel="import" href="subcategory_card.html">
+<link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
+<link rel="import" href="../../packages/paper_elements/paper_fab.html">
 
 <polymer-element name="category-pane" attributes="subcategories">
   <template>
     <link href="category_pane.css" rel="stylesheet">
+
+    <core-ajax-dart id="ajax-colour-schemes"
+      url="http://www.colourlovers.com/api/palettes/top?format=json"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
+    </core-ajax-dart>
+
+
     <div layout horizontal wrap center-justified>
       <template repeat="{{subcategory in subcategories}}">
         <subcategory-card id="card" subcategory="{{subcategory}}" self-center layout vertical>

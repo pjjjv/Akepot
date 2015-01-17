@@ -2,6 +2,7 @@
 <link rel="import" href="subcategory_card.html">
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
 <link rel="import" href="../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../../packages/akepot/components/ordered-columns/ordered-columns.html">
 
 <polymer-element name="category-pane" attributes="subcategories">
   <template>
@@ -13,12 +14,13 @@
       handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
     </core-ajax-dart>
 
-
-    <div layout horizontal wrap center-justified>
-      <template repeat="{{subcategory in subcategories}}">
-        <subcategory-card id="card" subcategory="{{subcategory}}" self-center layout vertical>
-        </subcategory-card>
-      </template>
+    <div layout center-justified>
+      <ordered-columns columnWidth="495">
+        <template repeat="{{subcategory in subcategories}}">
+          <subcategory-card role="article" id="card" subcategory="{{subcategory}}">
+          </subcategory-card>
+        </template>
+      </ordered-columns>
     </div>
   </template>
 

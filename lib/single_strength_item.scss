@@ -1,9 +1,5 @@
 @import '../web/theme';
 
-#button {
-  background: gray;
-}
-
 #title {
   @include text-subhead();
 }
@@ -12,7 +8,7 @@
   @include text-body1();
   color: $text-black-secondary;
   max-width: 60ch;
-  z-index: -1;
+  z-index: 0;
   opacity: 0;
 }
 

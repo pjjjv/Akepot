@@ -216,6 +216,16 @@ html /deep/ paper-button.raised-button {
   }
 }
 
+//All floating action buttons
+html /deep/ paper-fab.floating-acton-button {
+  padding: (3 * $component-grid);
+  color: $text-white-primary;
+  background-color: $accent-color;
+
+  core-icon{
+    vertical-align: baseline;
+  }
+
 //All ink ripples
 html /deep/ paper-ripple {
   color: $accent-color;
@@ -333,20 +343,6 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
     display: block;
     margin-top: 20px;
     @include text-subhead();
-  }
-
-  #new-button {
-    display: block;
-    margin-top: 20px;
-    //padding: 16px;//match padding
-    //z-index: 3;
-    color: white;
-    background-color: $accent-color;
-    @include text-button();
-  }
-
-  #new-button::shadow core-icon{
-    vertical-align: baseline;
   }
 }
 

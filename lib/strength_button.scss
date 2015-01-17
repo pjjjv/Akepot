@@ -3,21 +3,19 @@
 .button {
   background: $accent-color;
   @include text-button();
-  color: $text-white;
-  min-width: 3em;
-  min-height: 2em;
+  color: $text-white-primary;
+  min-width: (3.5 * $component-grid);
+  min-height: (2.5 * $component-grid);
 }
 
 :host {
-  margin: 0.5em 1em 0.5em 0;
-  right: 1em;
+  margin: (1 * $component-grid);
+  //right: 1em;
 }
-
-
 
 :host([notselected]) {
   .button {
-    background: #eaeaea !important;
-    color: #a8a8a8 !important;
+    background: $light-grey !important;
+    color: $text-black-secondary !important;
   }
 }

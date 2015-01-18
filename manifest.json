@@ -1,0 +1,13 @@
+{
+"name": "Competence Matrix",
+"short_name": "Akepot",
+"start_url": "https://competencematrix.com/?utm_source=web_app_manifest",
+"display": "standalone",
+"orientation": "portrait",
+"icons": [{
+"src": "icons/icon-196.png",
+"sizes": "196x196",
+"type": "image/png",
+"density": "4.0"
+}]
+}

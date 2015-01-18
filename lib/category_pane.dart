@@ -24,10 +24,18 @@ class CategoryPane extends PolymerElement {
     Map map = {};
     map['numResults'] = 100;
 
+    if(document.querySelector("#cmdebug") != null){
+      ajaxColourSchemes.url = "data/colour_schemes_response.json";
+    }
     ajaxColourSchemes.body = JSON.encode(map);
     print("url: ${ajaxColourSchemes.url}, body: ${ajaxColourSchemes.body}");
     ajaxColourSchemes.onCoreResponse.listen(ajaxColourSchemesResponse);
     ajaxColourSchemes.go();
+  }
+
+  @reflectable
+  void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
+    print(event.detail);
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette
@@ -35,7 +43,7 @@ class CategoryPane extends PolymerElement {
   @reflectable
   void ajaxColourSchemesResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    //print("response: $response");
+    print("ajaxColourSchemesResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {

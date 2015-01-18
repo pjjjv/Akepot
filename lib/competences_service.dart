@@ -64,7 +64,7 @@ class CompetencesService extends PolymerElement {
   @reflectable
   List<Category> ajaxGetProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print("response: $response");
+    print("ajaxGetProjectResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null || response['categories'] == null) {
@@ -91,7 +91,7 @@ class CompetencesService extends PolymerElement {
   @reflectable
   void ajaxUpdateCompetenceResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print(response);
+    print("ajaxUpdateCompetenceResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
@@ -116,7 +116,7 @@ class CompetencesService extends PolymerElement {
   @reflectable
   void ajaxNewProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print("response: $response");
+    print("ajaxNewProjectResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
@@ -134,7 +134,7 @@ class CompetencesService extends PolymerElement {
   @reflectable
   void ajaxAddAdminPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print("response: $response");
+    print("ajaxAddAdminPersonResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
@@ -159,7 +159,7 @@ class CompetencesService extends PolymerElement {
   @reflectable
   void ajaxNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print("response: $response");
+    print("ajaxNewPersonResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
@@ -181,6 +181,10 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/${user.userid}";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxGetProject.url = "data/get_project_response.json";
+      //ajaxGetProject.url = "data/get_project_error_new_user_response.json"; //new user
+    }
     print("url: ${ajaxGetProject.url}");
     ajaxGetProject.onCoreResponse.listen(ajaxGetProjectResponse);
     ajaxGetProject.onCoreError.listen(ajaxGetProjectError);
@@ -192,6 +196,9 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$hash/${user.userid}";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxUpdateCompetence.url = "data/update_competence_response.json";
+    }
     ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
     print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
     ajaxUpdateCompetence.onCoreResponse.listen(ajaxUpdateCompetenceResponse);
@@ -203,6 +210,9 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxNewProject.url = "data/new_project_response.json";
+    }
     ajaxNewProject.body = JSON.encode(project.toJson());
     print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
     ajaxNewProject.onCoreResponse.listen(ajaxNewProjectResponse);
@@ -222,6 +232,9 @@ class CompetencesService extends PolymerElement {
     map['token'] = user.userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxNewPerson.url = "data/add_admin_person_response.json";
+    }
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
     ajaxNewPerson.onCoreResponse.listen(ajaxAddAdminPersonResponse);
@@ -241,6 +254,9 @@ class CompetencesService extends PolymerElement {
     map['token'] = user.userid;
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxNewPerson.url = "data/new_person_response.json";
+    }
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
     ajaxNewPerson.onCoreResponse.listen(ajaxNewPersonResponse);
@@ -262,12 +278,15 @@ class CompetencesService extends PolymerElement {
 
   void getUserinfo(){
     ajaxUserinfo.onCoreResponse.listen(parseUserinfoResponse);
+    /*if(document.querySelector("#cmdebug") != null){
+      ajaxUserinfo.url = "data/userinfo_response.json";
+    }*/
     ajaxUserinfo.go();
   }
 
   void parseUserinfoResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print(response);
+    print("parseUserinfoResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {

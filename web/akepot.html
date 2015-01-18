@@ -78,6 +78,7 @@
   </head>
 <!-- http://localhost:8080/akepot.html#!/project/bla -->
   <body unresolved fullbleed touch-action="auto">
+  <div id="cmdebug" hidden></div>
   <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
@@ -125,6 +126,8 @@
                   <span flex>{{category.name}}</span>
                 </paper-item>
               </template>
+              <paper-item id="menu_item_join_hidden" name="join" hidden>
+              </paper-item>
             </core-selector>
           </template>
 

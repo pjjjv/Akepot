@@ -1,0 +1,13 @@
+404: {
+ "error": {
+  "errors": [
+   {
+    "domain": "global",
+    "reason": "notFound",
+    "message": "userPerson not found"
+   }
+  ],
+  "code": 404,
+  "message": "userPerson not found"
+ }
+}

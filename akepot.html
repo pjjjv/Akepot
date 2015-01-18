@@ -1,4 +1,4 @@
-<!DOCTYPE html><html manifest="appcache.mf"><head><script src="packages/web_components/webcomponents.min.js"></script>
+<!DOCTYPE html><html><!--manifest="appcache.mf"--><head><script src="packages/web_components/webcomponents.min.js"></script>
 <script src="packages/web_components/dart_support.js"></script>
 
     <meta charset="utf-8">
@@ -7,13 +7,17 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#2196F3">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="msapplication-TileColor" content="#2196F3">
+    <meta name="msapplication-tap-highlight" content="no">
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" sizes="196x196" href="icons/icon-196.png">
+    <link rel="manifest" href="manifest.json">
     <meta name="application-name" content="Akepot">
 
-    <title>Akepot</title>
+    <title>CompetenceMatrix</title>
     <style>html {
   font-family: "RobotoDraft", "Roboto", "Noto", "Open Sans", sans-serif;
   font-size: 62.5%;
@@ -37,9 +41,6 @@ body {
   background-repeat: no-repeat;
   background-position: 50%; }
 
-@media screen and (min-width: 900px) {
-  body {
-    background-size: 512px; } }
 core-scaffold::shadow [drawer] {
   background-color: white; }
 
@@ -53,62 +54,160 @@ core-toolbar, core-scaffold::shadow core-toolbar {
   color: white; }
 
 core-toolbar.tall, core-scaffold::shadow core-toolbar.tall {
-  background-color: #2196F3;
-  height: 64px; }
+  background-color: #1976D2;
+  height: 6.4rem; }
 
 core-toolbar:not(.tall), core-scaffold::shadow core-toolbar:not(.tall) {
   background-color: #1976D2; }
 
-core-scaffold {
-  /*
-  paper-item doesn't style this at all, currently :(
-  https://github.com/Polymer/paper-item/issues/12
-  */ }
-  core-scaffold core-toolbar, core-scaffold core-scaffold::shadow core-toolbar, core-scaffold::shadow core-scaffold core-toolbar {
+core-scaffold core-header-panel {
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.54); }
+  core-scaffold core-header-panel core-toolbar {
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 2em;
     letter-spacing: 0.01em;
     color: white;
-    padding: 16px 0px 16px 22px;
-    /*background: url(images/carbon_intake.png) no-repeat center bottom;*/ }
-  core-scaffold core-toolbar.tall, core-scaffold core-scaffold::shadow core-toolbar.tall, core-scaffold::shadow core-scaffold core-toolbar.tall {
-    height: 150px; }
-  core-scaffold core-selector, core-scaffold core-menu {
-    overflow: auto;
-    margin: 0px;
-    padding: 0px; }
-    core-scaffold core-selector ::shadow paper-ripple, core-scaffold core-menu ::shadow paper-ripple {
-      color: #1DE9B6; }
-  core-scaffold core-selector .core-selected {
+    padding: 1.6rem 0 1.6rem 2.4rem; }
+    core-scaffold core-header-panel core-toolbar core-image {
+      width: 40rem;
+      height: 40rem;
+      background-color: transparent; }
+  core-scaffold core-header-panel core-toolbar.tall {
+    height: 19.2rem; }
+  core-scaffold core-header-panel #panel-head {
+    background-image: url(images/beach.jpg);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-color: #999;
+    background-size: cover;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 2em;
+    letter-spacing: 0.01em;
+    line-height: inherit;
+    color: rgba(255, 255, 255, 0.87); }
+  core-scaffold core-header-panel #panel-head img.profile {
+    border-radius: 50%;
+    width: 6.4rem;
+    height: 6.4rem;
+    margin-bottom: 2rem; }
+  core-scaffold core-header-panel #panel-head .bottom :last-child {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.7); }
+  core-scaffold core-header-panel #panel-head::shadow .toolbar-tools {
+    z-index: 1; }
+  core-scaffold core-header-panel #panel-head::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 0;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 600ms ease-in-out; }
+  core-scaffold core-header-panel #panel-head.coverimg::after {
+    opacity: 1; }
+  core-scaffold core-header-panel core-selector, core-scaffold core-header-panel core-menu {
+    overflow: auto; }
+  core-scaffold core-header-panel core-menu {
+    margin: 0.8rem 0 0 0; }
+  core-scaffold core-header-panel .separator {
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 2em;
+    letter-spacing: 0.01em;
+    min-width: 6.4rem;
+    min-height: 1.6rem;
+    padding: 1.6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee; }
+  core-scaffold core-header-panel .separator .empty {
+    min-height: 0.8rem;
+    padding: 0;
+    border-top: 0; }
+
+html /deep/ paper-item {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 2em;
+  letter-spacing: 0.01em;
+  line-height: inherit;
+  min-width: 6.4rem;
+  min-height: 4.8rem; }
+  html /deep/ paper-item core-icon {
+    vertical-align: baseline;
+    margin-right: 3.2rem;
+    height: 2.4rem;
+    width: 2.4rem; }
+
+html /deep/ paper-item.core-selected {
+  background-color: #eee;
+  color: #1DE9B6; }
+  html /deep/ paper-item.core-selected core-icon {
     color: #1DE9B6; }
 
-core-animated-pages {
-  width: 98%;
-  height: 98%;
-  -webkit-user-select: none; }
+html /deep/ paper-item::shadow .button-content {
+  height: inherit;
+  padding: 1.2rem 1.6rem; }
 
-@media all and (max-width: 480px) {
-  core-animated-pages {
-    width: 100%;
-    height: 100%; } }
-#main-heading {
-  padding: 0px;
-  margin: 0px; }
+html /deep/ paper-dropdown paper-item {
+  color: rgba(0, 0, 0, 0.54); }
 
-paper-button.colored,
-core-icon.colored {
-  color: #4285f4; }
-
-paper-button[raised].colored {
-  background: #4285f4;
-  color: #fff; }
-
-core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /deep/ core-item, core-menu /deep/ core-item {
-  font-size: 1.3rem;
+html /deep/ paper-action-dialog /deep/ h1, html /deep/ paper-dialog /deep/ h1 {
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 2em;
-  letter-spacing: 0.01em; }
+  letter-spacing: 0.005em;
+  color: rgba(0, 0, 0, 0.87);
+  margin-bottom: 2.4rem; }
+html /deep/ paper-action-dialog p, html /deep/ paper-dialog p {
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.6em;
+  letter-spacing: 0.01em;
+  color: rgba(0, 0, 0, 0.54); }
+
+html /deep/ paper-button.flat-button[autofocus] {
+  color: #1DE9B6; }
+
+html /deep/ paper-button.flat-button {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  min-width: 6.4rem; }
+  html /deep/ paper-button.flat-button core-icon {
+    vertical-align: baseline;
+    margin-right: 2.4rem !important; }
+
+html /deep/ paper-button.raised-button.colored {
+  background-color: #1DE9B6;
+  color: white; }
+
+html /deep/ paper-button.raised-button {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  min-width: 6.4rem; }
+  html /deep/ paper-button.raised-button core-icon {
+    vertical-align: baseline;
+    margin-right: 2.4rem !important; }
+
+html /deep/ paper-fab.floating-action-button {
+  margin: 2.4rem;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #1DE9B6; }
+
+html /deep/ paper-ripple {
+  color: #1DE9B6; }
 
 .splash {
   background-color: white;
@@ -118,6 +217,49 @@ core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /dee
 
 .splash.wide {
   background-size: 512px; }
+
+section {
+  margin: 3.2rem 1.6rem 0 1.6rem; }
+
+@media all and (max-width: 640px) {
+  section {
+    margin: 1.6rem;
+    margin-bottom: 0; } }
+html /deep/ paper-input /deep/ .floated-label {
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.02em; }
+html /deep/ paper-input /deep/ .input-body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.01em; }
+
+html /deep/ paper-input.narrow {
+  width: 150px; }
+
+html /deep/ paper-input[focused] /deep/ .floated-label .label-text {
+  color: #1DE9B6; }
+
+html /deep/ paper-input /deep/ .focused-underline {
+  background-color: #1DE9B6; }
+
+html /deep/ paper-input-decorator {
+  word-wrap: break-word;
+  word-break: break-all; }
+  html /deep/ paper-input-decorator /deep/ .floated-label {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em; }
+  html /deep/ paper-input-decorator /deep/ .input-body {
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.01em; }
+
+html /deep/ paper-input-decorator[focused] /deep/ .floated-label .label-text {
+  color: #1DE9B6; }
+
+html /deep/ paper-input-decorator /deep/ .focused-underline {
+  background-color: #1DE9B6; }
 
 #card-new, #card-link {
   margin: 100px 32px;
@@ -157,65 +299,49 @@ core-selector /deep/ paper-item, core-menu /deep/ paper-item, core-selector /dee
     font-weight: 400;
     line-height: 2em;
     letter-spacing: 0.01em; }
-  #card-new #new-button, #card-link #new-button {
-    display: block;
-    margin-top: 20px;
-    z-index: 3;
-    color: white;
-    background-color: #1DE9B6;
-    font-size: 1.4rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    text-transform: uppercase; }
-  #card-new #new-button::shadow core-icon, #card-link #new-button::shadow core-icon {
-    vertical-align: baseline; }
-
-paper-input {
-  width: 80%; }
-
-paper-input-decorator {
-  max-width: 80%; }
-
-paper-input.narrow {
-  width: 150px; }
-
-paper-input[focused] /deep/ .floated-label .label-text {
-  color: #1DE9B6; }
-
-paper-input /deep/ .focused-underline {
-  background-color: #1DE9B6; }
-
-paper-input-decorator[focused] /deep/ .floated-label .label-text {
-  color: #1DE9B6; }
-
-paper-input-decorator /deep/ .focused-underline {
-  background-color: #1DE9B6; }
 
 #create-button {
   display: block;
-  margin-top: 20px;
-  color: white;
-  background-color: #1DE9B6;
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-transform: uppercase; }
-
-#create-button::shadow core-icon {
-  vertical-align: baseline; }
+  margin-top: 20px; }
 
 #join-button {
   display: block;
-  margin-top: 20px;
-  color: white;
-  background-color: #1DE9B6;
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-transform: uppercase; }
+  margin-top: 20px; }
 
-#join-button::shadow core-icon {
-  vertical-align: baseline; }
+#refresh {
+  position: absolute;
+  z-index: -1;
+  bottom: 10px;
+  pointer-events: none;
+  will-change: transform; }
+
+#refresh.snapback {
+  transition: all 100ms ease-out;
+  -webkit-transform: translate3d(0, 81px, 0);
+  transform: translate3d(0, 81px, 0); }
+
+#refresh.snapback.tostart {
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important; }
+
+#refresh.shrink {
+  -webkit-transform: translate3d(0, 81px, 0) scale(0.001);
+  /* Note: scale(0) doesn't work */
+  transform: translate3d(0, 81px, 0) scale(0.001);
+  /* Note: scale(0) doesn't work */ }
+
+#refresh > div {
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 8px; }
+
+#refresh paper-spinner {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  will-change: opacity; }
 </style>
     <link href="//fonts.googleapis.com/css?family=RobotoDraft:400,300,500" rel="stylesheet" type="text/css">
     <!--<link href='//fonts.googleapis.com/css?family=Roboto:400italic,300italic,500italic' rel='stylesheet' type='text/css'>-->
@@ -223,6 +349,10 @@ paper-input-decorator /deep/ .focused-underline {
     <!--<script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>-->
 
+    
+    
+    
+    
     
     
     
@@ -3313,6 +3443,412 @@ polyfill-next-selector { content: ':host > core-item'; }
   
 </template>
 </polymer-element>
+
+
+
+
+
+
+<style shim-shadowdom="">
+  html /deep/ core-a11y-keys {
+    display: none;
+  }
+</style>
+
+<polymer-element name="core-a11y-keys">
+<script>
+  (function() {
+    /*
+     * Chrome uses an older version of DOM Level 3 Keyboard Events
+     *
+     * Most keys are labeled as text, but some are Unicode codepoints.
+     * Values taken from: http://www.w3.org/TR/2007/WD-DOM-Level-3-Events-20071221/keyset.html#KeySet-Set
+     */
+    var KEY_IDENTIFIER = {
+      'U+0009': 'tab',
+      'U+001B': 'esc',
+      'U+0020': 'space',
+      'U+002A': '*',
+      'U+0030': '0',
+      'U+0031': '1',
+      'U+0032': '2',
+      'U+0033': '3',
+      'U+0034': '4',
+      'U+0035': '5',
+      'U+0036': '6',
+      'U+0037': '7',
+      'U+0038': '8',
+      'U+0039': '9',
+      'U+0041': 'a',
+      'U+0042': 'b',
+      'U+0043': 'c',
+      'U+0044': 'd',
+      'U+0045': 'e',
+      'U+0046': 'f',
+      'U+0047': 'g',
+      'U+0048': 'h',
+      'U+0049': 'i',
+      'U+004A': 'j',
+      'U+004B': 'k',
+      'U+004C': 'l',
+      'U+004D': 'm',
+      'U+004E': 'n',
+      'U+004F': 'o',
+      'U+0050': 'p',
+      'U+0051': 'q',
+      'U+0052': 'r',
+      'U+0053': 's',
+      'U+0054': 't',
+      'U+0055': 'u',
+      'U+0056': 'v',
+      'U+0057': 'w',
+      'U+0058': 'x',
+      'U+0059': 'y',
+      'U+005A': 'z',
+      'U+007F': 'del'
+    };
+
+    /*
+     * Special table for KeyboardEvent.keyCode.
+     * KeyboardEvent.keyIdentifier is better, and KeyBoardEvent.key is even better than that
+     *
+     * Values from: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent.keyCode#Value_of_keyCode
+     */
+    var KEY_CODE = {
+      9: 'tab',
+      13: 'enter',
+      27: 'esc',
+      33: 'pageup',
+      34: 'pagedown',
+      35: 'end',
+      36: 'home',
+      32: 'space',
+      37: 'left',
+      38: 'up',
+      39: 'right',
+      40: 'down',
+      46: 'del',
+      106: '*'
+    };
+
+    /*
+     * KeyboardEvent.key is mostly represented by printable character made by the keyboard, with unprintable keys labeled
+     * nicely.
+     *
+     * However, on OS X, Alt+char can make a Unicode character that follows an Apple-specific mapping. In this case, we
+     * fall back to .keyCode.
+     */
+    var KEY_CHAR = /[a-z0-9*]/;
+
+    function transformKey(key) {
+      var validKey = '';
+      if (key) {
+        var lKey = key.toLowerCase();
+        if (lKey.length == 1) {
+          if (KEY_CHAR.test(lKey)) {
+            validKey = lKey;
+          }
+        } else if (lKey == 'multiply') {
+          // numpad '*' can map to Multiply on IE/Windows
+          validKey = '*';
+        } else {
+          validKey = lKey;
+        }
+      }
+      return validKey;
+    }
+
+    var IDENT_CHAR = /U\+/;
+    function transformKeyIdentifier(keyIdent) {
+      var validKey = '';
+      if (keyIdent) {
+        if (IDENT_CHAR.test(keyIdent)) {
+          validKey = KEY_IDENTIFIER[keyIdent];
+        } else {
+          validKey = keyIdent.toLowerCase();
+        }
+      }
+      return validKey;
+    }
+
+    function transformKeyCode(keyCode) {
+      var validKey = '';
+      if (Number(keyCode)) {
+        if (keyCode >= 65 && keyCode <= 90) {
+          // ascii a-z
+          // lowercase is 32 offset from uppercase
+          validKey = String.fromCharCode(32 + keyCode);
+        } else if (keyCode >= 112 && keyCode <= 123) {
+          // function keys f1-f12
+          validKey = 'f' + (keyCode - 112);
+        } else if (keyCode >= 48 && keyCode <= 57) {
+          // top 0-9 keys
+          validKey = String(48 - keyCode);
+        } else if (keyCode >= 96 && keyCode <= 105) {
+          // num pad 0-9
+          validKey = String(96 - keyCode);
+        } else {
+          validKey = KEY_CODE[keyCode];
+        }
+      }
+      return validKey;
+    }
+
+    function keyboardEventToKey(ev) {
+      // fall back from .key, to .keyIdentifier, and then to .keyCode
+      var normalizedKey = transformKey(ev.key) || transformKeyIdentifier(ev.keyIdentifier) || transformKeyCode(ev.keyCode) || '';
+      return {
+        shift: ev.shiftKey,
+        ctrl: ev.ctrlKey,
+        meta: ev.metaKey,
+        alt: ev.altKey,
+        key: normalizedKey
+      };
+    }
+
+    /*
+     * Input: ctrl+shift+f7 => {ctrl: true, shift: true, key: 'f7'}
+     * ctrl/space => {ctrl: true} || {key: space}
+     */
+    function stringToKey(keyCombo) {
+      var keys = keyCombo.split('+');
+      var keyObj = Object.create(null);
+      keys.forEach(function(key) {
+        if (key == 'shift') {
+          keyObj.shift = true;
+        } else if (key == 'ctrl') {
+          keyObj.ctrl = true;
+        } else if (key == 'alt') {
+          keyObj.alt = true;
+        } else {
+          keyObj.key = key;
+        }
+      });
+      return keyObj;
+    }
+
+    function keyMatches(a, b) {
+      return Boolean(a.alt) == Boolean(b.alt) && Boolean(a.ctrl) == Boolean(b.ctrl) && Boolean(a.shift) == Boolean(b.shift) && a.key === b.key;
+    }
+
+    /**
+     * Fired when a keycombo in `keys` is pressed.
+     *
+     * @event keys-pressed
+     */
+    function processKeys(ev) {
+      var current = keyboardEventToKey(ev);
+      for (var i = 0, dk; i < this._desiredKeys.length; i++) {
+        dk = this._desiredKeys[i];
+        if (keyMatches(dk, current)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          this.fire('keys-pressed', current, this, false);
+          break;
+        }
+      }
+    }
+
+    function listen(node, handler) {
+      if (node && node.addEventListener) {
+        node.addEventListener('keydown', handler);
+      }
+    }
+
+    function unlisten(node, handler) {
+      if (node && node.removeEventListener) {
+        node.removeEventListener('keydown', handler);
+      }
+    }
+
+    Polymer('core-a11y-keys', {
+      created: function() {
+        this._keyHandler = processKeys.bind(this);
+      },
+      attached: function() {
+        if (!this.target) {
+          this.target = this.parentNode;
+        }
+        listen(this.target, this._keyHandler);
+      },
+      detached: function() {
+        unlisten(this.target, this._keyHandler);
+      },
+      publish: {
+        /**
+         * The set of key combinations to listen for.
+         *
+         * @attribute keys
+         * @type string (keys syntax)
+         * @default ''
+         */
+        keys: '',
+        /**
+         * The node that will fire keyboard events.
+         * Default to this element's parentNode unless one is assigned
+         *
+         * @attribute target
+         * @type Node
+         * @default this.parentNode
+         */
+        target: null
+      },
+      keysChanged: function() {
+        // * can have multiple mappings: shift+8, * on numpad or Multiply on numpad
+        var normalized = this.keys.replace('*', '* shift+*');
+        this._desiredKeys = normalized.toLowerCase().split(' ').map(stringToKey);
+      },
+      targetChanged: function(oldTarget) {
+        unlisten(oldTarget, this._keyHandler);
+        listen(this.target, this._keyHandler);
+      }
+    });
+  })();
+</script>
+</polymer-element>
+
+
+
+<polymer-element name="core-dropdown-base" tabindex="0">
+<script>
+
+  Polymer({
+
+    publish: {
+
+      /**
+       * True if the menu is open.
+       *
+       * @attribute opened
+       * @type boolean
+       * @default false
+       */
+      opened: false
+
+    },
+
+    eventDelegates: {
+      'tap': 'toggleOverlay'
+    },
+
+    overlayListeners: {
+      'core-overlay-open': 'openAction'
+    },
+
+    get dropdown() {
+      if (!this._dropdown) {
+        this._dropdown = this.querySelector('.dropdown');
+        for (var l in this.overlayListeners) {
+          this.addElementListener(this._dropdown, l, this.overlayListeners[l]);
+        }
+      }
+      return this._dropdown;
+    },
+
+    attached: function() {
+      // find the dropdown on attach
+      // FIXME: Support MO?
+      this.dropdown;
+    },
+
+    addElementListener: function(node, event, methodName, capture) {
+      var fn = this._makeBoundListener(methodName);
+      if (node && fn) {
+        Polymer.addEventListener(node, event, fn, capture);
+      }
+    },
+
+    removeElementListener: function(node, event, methodName, capture) {
+      var fn = this._makeBoundListener(methodName);
+      if (node && fn) {
+        Polymer.removeEventListener(node, event, fn, capture);
+      }
+    },
+
+    _makeBoundListener: function(methodName) {
+      var self = this, method = this[methodName];
+      if (!method) {
+        return;
+      }
+      var bound = '_bound' + methodName;
+      if (!this[bound]) {
+        this[bound] = function(e) {
+          method.call(self, e);
+        };
+      }
+      return this[bound];
+    },
+
+    openedChanged: function() {
+      if (this.disabled) {
+        return;
+      }
+      var dropdown = this.dropdown;
+      if (dropdown) {
+        dropdown.opened = this.opened;
+      }
+    },
+
+    openAction: function(e) {
+      this.opened = !!e.detail;
+    },
+
+    toggleOverlay: function() {
+      this.opened = !this.opened;
+    }
+
+  });
+
+</script>
+</polymer-element>
+
+
+<polymer-element name="core-menu-button" extends="core-dropdown-base" relative="">
+<template>
+
+  <style>
+    :host {
+      display: inline-block;
+    }
+
+    :host([disabled]) {
+      pointer-events: none;
+      color: #a8a8a8;
+    }
+
+    polyfill-next-selector { content: ':host([disabled]) *'; }
+    :host([disabled]) ::content * {
+      pointer-events: none;
+    }
+  </style>
+
+  <core-a11y-keys target="{{}}" keys="enter space" on-keys-pressed="{{toggleOverlay}}"></core-a11y-keys>
+
+  <content></content>
+
+</template>
+<script>
+
+  Polymer({
+
+    overlayListeners: {
+      'core-overlay-open': 'openAction',
+      'core-activate': 'activateAction'
+    },
+
+    activateAction: function() {
+      this.opened = false;
+    }
+
+  });
+
+</script>
+</polymer-element>
+
+
+
+
+
 
 
 
@@ -6426,875 +6962,6 @@ html /deep/ .paper-shadow-bottom-z-5 {
 
 
 
-<polymer-element name="paper-item" extends="paper-button-base">
-
-  <template>
-
-    <style>
-
-      :host {
-        display: block;
-        position: relative;
-        font-size: 16px;
-        box-sizing: border-box;
-        min-width: 7em;
-        outline: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-        cursor: pointer;
-        z-index: 0;
-      }
-
-      :host([disabled]) {
-        color: #a8a8a8;
-        cursor: auto;
-        pointer-events: none;
-      }
-
-      :host(.core-selected) {
-        background-color: #eaeaea;
-      }
-
-      #ripple {
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .button-content {
-        height: 100%;
-        padding: 0.9em 1em;
-      }
-
-      polyfill-next-selector { content: '.button-content > a'; }
-      ::content > a {
-        height: 100%;
-        /* flex */
-        -ms-flex: 1 1 0.000000001px;
-        -webkit-flex: 1;
-        flex: 1;
-        -webkit-flex-basis: 0.000000001px;
-        flex-basis: 0.000000001px;
-      }
-
-    </style>
-
-    <!-- this div is needed to position the ripple behind text content -->
-    <div class="button-content" relative="" layout="" horizontal="" center="">
-      <content></content>
-    </div>
-
-  </template>
-
-  <script>
-    Polymer({
-
-      publish: {
-
-        /**
-         * If true, the button will be styled with a shadow.
-         *
-         * @attribute raised
-         * @type boolean
-         * @default false
-         */
-        raised: false,
-
-        /**
-         * By default the ripple emanates from where the user touched the button.
-         * Set this to true to always center the ripple.
-         *
-         * @attribute recenteringTouch
-         * @type boolean
-         * @default false
-         */
-        recenteringTouch: false,
-
-        /**
-         * By default the ripple expands to fill the button. Set this to false to
-         * constrain the ripple to a circle within the button.
-         *
-         * @attribute fill
-         * @type boolean
-         * @default true
-         */
-        fill: true
-
-      }
-
-    });
-  </script>
-</polymer-element>
-
-
-
-
-
-<script>
-// This empty script is here to workaround issue
-// https://github.com/dart-lang/core-elements/issues/11
-</script>
-
-
-
-<script>
-// This empty script is here to workaround issue
-// https://github.com/dart-lang/core-elements/issues/11
-</script>
-
-<script>
-// This empty script is here to workaround issue
-// https://github.com/dart-lang/core-elements/issues/11
-</script>
-
-
-
-
-<script>
-// This empty script is here to workaround issue
-// https://github.com/dart-lang/core-elements/issues/11
-</script>
-
-<core-style id="paper-input-decorator">
-
-.label-text,
-.error {
-  color: {{g.paperInput.labelColor}};
-}
-
-::-webkit-input-placeholder {
-  color: {{g.paperInput.labelColor}};
-}
-
-::-moz-placeholder {
-  color: {{g.paperInput.labelColor}};
-}
-
-:-ms-input-placeholder {
-  color: {{g.paperInput.labelColor}};
-}
-
-.unfocused-underline {
-  background-color: {{g.paperInput.labelColor}};
-}
-
-:host([focused]) .floated-label .label-text {
-  color: {{g.paperInput.focusedColor}};
-}
-
-.focused-underline {
-  background-color: {{g.paperInput.focusedColor}};
-}
-
-.cursor {
-  background-color: {{g.paperInput.cursorColor}};
-}
-
-:host(.invalid) .floated-label .label-text,
-.error {
-  color: {{g.paperInput.invalidColor}};
-}
-
-:host(.invalid) .unfocused-underline,
-:host(.invalid) .focused-underline,
-:host(.invalid) .cursor {
-  background-color: {{g.paperInput.invalidColor}};
-}
-
-</core-style>
-
-<polymer-element name="paper-input-decorator" layout="" vertical="" on-transitionend="{{transitionEndAction}}" on-webkittransitionend="{{transitionEndAction}}" on-input="{{inputAction}}" on-down="{{downAction}}">
-
-  <template>
-
-    <style>/*
- * @license
- * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-
-:host {
-  display: inline-block;
-  outline: none;
-  text-align: inherit;
-  padding: 0.75em 0;
-}
-
-polyfill-next-selector {
-  content: '.input-body > :not(.label):not(.cursor)';
-}
-::content > *,
-::content > input[is="core-input"] {
-  padding: 0;
-  margin: 0.5em 0 0.25em;
-  width: 100%;
-}
-
-polyfill-next-selector {
-  content: 'input, textarea';
-}
-::content input,
-::content input[is=core-input],
-::content textarea {
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
-
-polyfill-next-selector {
-  content: ':invalid';
-}
-::content input:invalid,
-::content textarea:invalid {
-  box-shadow: none;
-}
-
-polyfill-next-selector {
-  content: 'textarea';
-}
-::content textarea {
-  resize: none;
-}
-
-[invisible] {
-  visibility: hidden;
-}
-
-[animated] {
-  visibility: visible !important;
-  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.floated-label {
-  font-size: 0.75em;
-  background: transparent;
-  white-space: nowrap;
-}
-
-.mirror-text {
-  padding: 0.5em 0 0.25em;
-  max-width: 100%;
-  white-space: nowrap;
-}
-
-:host([multiline]) .mirror-text {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.label {
-  padding: 0.5em 0 0.25em;
-  background: transparent;
-  pointer-events: none;
-}
-
-.label-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block;
-  max-width: 100%;
-  -moz-transform-origin: 0% 0%;
-  -webkit-transform-origin: 0% 0%;
-  transform-origin: 0% 0%;
-}
-
-.cursor {
-  position: absolute;
-  top: 0.4em;
-  left: 0;
-  width: 1px;
-  height: 1.4em;
-  opacity: 0.4;
-  -moz-transform-origin: 0%;
-  -webkit-transform-origin: 0%;
-  transform-origin: 0%;
-  -webkit-transform: none;
-  transform: none;
-}
-
-.cursor[invisible] {
-  opacity: 0.75;
-  -webkit-transform: translate3d(3em,0,0) scale3d(50,1,1);
-  transform: translate3d(3em,0,0) scale3d(50,1,1);
-}
-
-.underline {
-  height: 0px;
-  overflow: visible;
-}
-
-:host([disabled]) .underline {
-  border-bottom: 1px dashed #757575;
-}
-
-.unfocused-underline {
-  height: 1px;
-}
-
-.focused-underline {
-  height: 2px;
-  -webkit-transform: none;
-  transform: none;
-}
-
-.focused-underline[invisible] {
-  -webkit-transform: scale3d(0,1,1);
-  transform: scale3d(0,1,1);
-}
-
-.error-text {
-  font-size: 0.75em;
-  padding: 0.5em 0;
-}
-
-.error-icon {
-  height: 20px;
-  width: 20px;
-}
-</style>
-    <core-style ref="paper-input-decorator"></core-style>
-
-    <div class="floated-label" aria-hidden="true" hidden?="{{!floatingLabel}}" invisible?="{{!floatingLabelVisible || labelAnimated}}">
-      <!-- needed for floating label animation measurement -->
-      <span id="floatedLabelText" class="label-text">{{label}}</span>
-    </div>
-
-    <div class="input-body" flex="" auto="" relative="">
-
-      <div class="label" fit="" invisible="" aria-hidden="true">
-        <!-- needed for floating label animation measurement -->
-        <span id="labelText" class="label-text" invisible?="{{!_labelVisible}}" animated?="{{labelAnimated}}">{{label}}</span>
-      </div>
-
-      <div class="cursor" invisible?="{{!cursorAnimated}}" animated?="{{cursorAnimated}}"></div>
-
-      <content></content>
-
-    </div>
-
-    <div id="underline" class="underline" relative="">
-      <div class="unfocused-underline" fit="" invisible?="{{disabled}}"></div>
-      <div id="focusedUnderline" class="focused-underline" fit="" invisible?="{{!focused}}" animated?="{{underlineAnimated}}"></div>
-    </div>
-
-    <div class="error" layout="" horizontal="" center="" hidden?="{{!isInvalid}}">
-      <div class="error-text" flex="" auto="" role="alert" aria-hidden="{{!isInvalid}}">{{error}}</div>
-      <core-icon class="error-icon" icon="warning"></core-icon>
-    </div>
-
-  </template>
-
-  <script>
-
-  (function() {
-
-    var paperInput = CoreStyle.g.paperInput = CoreStyle.g.paperInput || {};
-
-    paperInput.labelColor = '#757575';
-    paperInput.cursorColor = '#4059a9';
-    paperInput.focusedColor = '#4059a9';
-    paperInput.invalidColor = '#d34336';
-
-    Polymer({
-
-      publish: {
-
-        /**
-         * The label for this input. It normally appears as grey text inside
-         * the text input and disappears once the user enters text.
-         *
-         * @attribute label
-         * @type string
-         * @default ''
-         */
-        label: '',
-
-        /**
-         * If true, the label will "float" above the text input once the
-         * user enters text instead of disappearing.
-         *
-         * @attribute floatingLabel
-         * @type boolean
-         * @default false
-         */
-        floatingLabel: false,
-
-        /**
-         * Set to true to style the element as disabled.
-         *
-         * @attribute disabled
-         * @type boolean
-         * @default false
-         */
-        disabled: {value: false, reflect: true},
-
-        /**
-         * Use this property to override the automatic label visibility.
-         * If this property is set to `true` or `false`, the label visibility
-         * will respect this value instead of be based on whether there is
-         * a non-null value in the input.
-         *
-         * @attribute labelVisible
-         * @type boolean
-         * @default false
-         */
-        labelVisible: null,
-
-        /**
-         * Set this property to true to show the error message.
-         *
-         * @attribute isInvalid
-         * @type boolean
-         * @default false
-         */
-        isInvalid: false,
-
-        /**
-         * The message to display if the input value fails validation. If this
-         * is unset or the empty string, a default message is displayed depending
-         * on the type of validation error.
-         *
-         * @attribute error
-         * @type string
-         */
-        error: '',
-
-        focused: {value: false, reflect: true}
-
-      },
-
-      computed: {
-        floatingLabelVisible: 'floatingLabel && !_labelVisible',
-        _labelVisible: '(labelVisible === true || labelVisible === false) ? labelVisible : _autoLabelVisible'
-      },
-
-      ready: function() {
-        // Delegate focus/blur events
-        Polymer.addEventListener(this, 'focus', this.focusAction.bind(this), true);
-        Polymer.addEventListener(this, 'blur', this.blurAction.bind(this), true);
-      },
-
-      attached: function() {
-        this.input = this.querySelector('input,textarea');
-
-        this.mo = new MutationObserver(function() {
-          this.input = this.querySelector('input,textarea');
-        }.bind(this));
-        this.mo.observe(this, {childList: true});
-      },
-
-      detached: function() {
-        this.mo.disconnect();
-        this.mo = null;
-      },
-
-      prepareLabelTransform: function() {
-        var toRect = this.$.floatedLabelText.getBoundingClientRect();
-        var fromRect = this.$.labelText.getBoundingClientRect();
-        if (toRect.width !== 0) {
-          var sy = toRect.height / fromRect.height;
-          this.$.labelText.cachedTransform =
-            'scale3d(' + (toRect.width / fromRect.width) + ',' + sy + ',1) ' +
-            'translate3d(0,' + (toRect.top - fromRect.top) / sy + 'px,0)';
-        }
-      },
-
-      animateFloatingLabel: function() {
-        if (!this.floatingLabel || this.labelAnimated) {
-          return;
-        }
-
-        if (!this.$.labelText.cachedTransform) {
-          this.prepareLabelTransform();
-        }
-
-        // If there's still no cached transform, the input is invisible so don't
-        // do the animation.
-        if (!this.$.labelText.cachedTransform) {
-          return;
-        }
-
-        this.labelAnimated = true;
-        // Handle interrupted animation
-        this.async(function() {
-          this.transitionEndAction();
-        }, null, 250);
-
-        if (this._labelVisible) {
-          // Handle if the label started out floating
-          if (!this.$.labelText.style.webkitTransform && !this.$.labelText.style.transform) {
-            this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
-            this.$.labelText.style.transform = this.$.labelText.cachedTransform;
-            this.$.labelText.offsetTop;
-          }
-          this.$.labelText.style.webkitTransform = '';
-          this.$.labelText.style.transform = '';
-        } else {
-          this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
-          this.$.labelText.style.transform = this.$.labelText.cachedTransform;
-          this.input.placeholder = '';
-        }
-
-      },
-
-      _labelVisibleChanged: function(old) {
-        // do not do the animation on first render
-        if (old !== undefined) {
-          this.animateFloatingLabel();
-        }
-      },
-
-      labelChanged: function() {
-        if (this.input) {
-          this.updateInputLabel(this.input, this.label);
-        }
-      },
-
-      isInvalidChanged: function() {
-        this.classList.toggle('invalid', this.isInvalid);
-      },
-
-      focusedChanged: function() {
-        this.updateLabelVisibility(this.input && this.input.value);
-      },
-
-      inputChanged: function(old) {
-        if (this.input) {
-          this.updateLabelVisibility(this.input.value);
-          this.updateInputLabel(this.input, this.label);
-        }
-        if (old) {
-          this.updateInputLabel(old, '');
-        }
-      },
-
-      focusAction: function() {
-        this.focused = true;
-      },
-
-      blurAction: function(e) {
-        this.focused = false;
-      },
-
-      /**
-       * Updates the label visibility based on a value. This is handled automatically
-       * if the user is typing, but if you imperatively set the input value you need
-       * to call this function.
-       *
-       * @method updateLabelVisibility
-       * @param {string} value
-       */
-      updateLabelVisibility: function(value) {
-        var v = (value !== null && value !== undefined) ? String(value) : value;
-        this._autoLabelVisible = (!this.focused && !v) || (!this.floatingLabel && !v);
-      },
-
-      updateInputLabel: function(input, label) {
-        if (this._labelVisible) {
-          this.input.placeholder = this.label;
-        } else {
-          this.input.placeholder = '';
-        }
-        if (label) {
-          input.setAttribute('aria-label', label);
-        } else {
-          input.removeAttribute('aria-label');
-        }
-      },
-
-      inputAction: function(e) {
-        this.updateLabelVisibility(e.target.value);
-      },
-
-      downAction: function(e) {
-        if (this.disabled) {
-          return;
-        }
-
-        if (this.focused) {
-          return;
-        }
-
-        if (this.input) {
-          this.input.focus();
-          e.preventDefault();
-        }
-
-        // The underline spills from the tap location
-        var rect = this.$.underline.getBoundingClientRect();
-        var right = e.x - rect.left;
-        this.$.focusedUnderline.style.mozTransformOrigin = right + 'px';
-        this.$.focusedUnderline.style.webkitTransformOrigin = right + 'px ';
-        this.$.focusedUnderline.style.transformOriginX = right + 'px';
-
-        // Animations only run when the user interacts with the input
-        this.underlineAnimated = true;
-
-        // Cursor animation only runs if the input is empty
-        if (this._labelVisible) {
-          this.cursorAnimated = true;
-        }
-        // Handle interrupted animation
-        this.async(function() {
-          this.transitionEndAction();
-        }, null, 250);
-      },
-
-      transitionEndAction: function() {
-        this.underlineAnimated = false;
-        this.cursorAnimated = false;
-        this.labelAnimated = false;
-        if (this._labelVisible) {
-          this.input.placeholder = this.label;
-        }
-      }
-
-    });
-
-  }());
-
-  </script>
-
-</polymer-element>
-
-
-<polymer-element name="paper-input">
-
-<template>
-
-  <style>
-    :host {
-      display: inline-block;
-    }
-  </style>
-
-  <paper-input-decorator id="decorator" label="{{label}}" floatinglabel="{{floatingLabel}}" value="{{value}}" disabled?="{{disabled}}">
-    <input is="core-input" value="{{value}}" committedvalue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
-  </paper-input-decorator>
-
-</template>
-
-<script>
-
-  Polymer('paper-input', {
-
-    publish: {
-      /**
-       * The label for this input. It normally appears as grey text inside
-       * the text input and disappears once the user enters text.
-       *
-       * @attribute label
-       * @type string
-       * @default ''
-       */
-      label: '',
-
-      /**
-       * If true, the label will "float" above the text input once the
-       * user enters text instead of disappearing.
-       *
-       * @attribute floatingLabel
-       * @type boolean
-       * @default false
-       */
-      floatingLabel: false,
-
-      /**
-       * Set to true to style the element as disabled.
-       *
-       * @attribute disabled
-       * @type boolean
-       * @default false
-       */
-      disabled: {value: false, reflect: true},
-
-      /**
-       * The current value of the input.
-       *
-       * @attribute value
-       * @type String
-       * @default ''
-       */
-      value: '',
-
-      /**
-       * The most recently committed value of the input.
-       *
-       * @attribute committedValue
-       * @type String
-       * @default ''
-       */
-      committedValue: ''
-
-    },
-
-    valueChanged: function() {
-      this.$.decorator.updateLabelVisibility(this.value);
-    },
-
-    changeAction: function(e) {
-      if (!window.ShadowDOMPolyfill) {
-        // re-fire event that does not bubble across shadow roots
-        this.fire('change', null, this);
-      }
-    }
-
-  });
-
-</script>
-
-</polymer-element>
-
-
-
-
-
-
-
-
-
-
-
-
-<polymer-element name="paper-autogrow-textarea" on-input="{{inputAction}}">
-<template>
-
-  <style>
-    :host {
-      display: inline-block;
-      position: relative;
-      width: 400px;
-    }
-
-    ::content textarea {
-      padding: 0;
-      margin: 0;
-      border: none;
-      outline: none;
-      resize: none;
-      /* see comments in template */
-      width: 100%;
-      height: 100%;
-    }
-
-    ::content textarea:invalid {
-      box-shadow: none;
-    }
-  </style>
-
-  <!-- the mirror sizes the input/textarea so it grows with typing -->
-  <div id="mirror" class="mirror-text" invisible="" aria-hidden="true">&nbsp;</div>
-
-  <!-- size the input/textarea with a div, because the textarea has intrinsic size in ff -->
-  <div class="textarea-container" fit="">
-    <content></content>
-  </div>
-
-</template>
-<script>
-
-  Polymer({
-
-    publish: {
-
-        /**
-         * The textarea that should auto grow.
-         *
-         * @attribute target
-         * @type HTMLTextAreaElement
-         * @default null
-         */
-        target: null,
-
-        /**
-         * The initial number of rows.
-         *
-         * @attribute rows
-         * @type number
-         * @default 1
-         */
-        rows: 1,
-
-        /**
-         * The maximum number of rows this element can grow to until it
-         * scrolls. 0 means no maximum.
-         *
-         * @attribute maxRows
-         * @type number
-         * @default 0
-         */
-        maxRows: 0
-    },
-
-    tokens: null,
-
-    observe: {
-      rows: 'updateCached',
-      maxRows: 'updateCached'
-    },
-
-    constrain: function(tokens) {
-      var _tokens;
-      tokens = tokens || [''];
-      // Enforce the min and max heights for a multiline input to avoid measurement
-      if (this.maxRows > 0 && tokens.length > this.maxRows) {
-        _tokens = tokens.slice(0, this.maxRows);
-      } else {
-        _tokens = tokens.slice(0);
-      }
-      while (this.rows > 0 && _tokens.length < this.rows) {
-        _tokens.push('');
-      }
-      return _tokens.join('<br>') + '&nbsp;';
-    },
-
-    valueForMirror: function(input) {
-      this.tokens = (input && input.value) ? input.value.replace(/&/gm, '&amp;').replace(/"/gm, '&quot;').replace(/'/gm, '&#39;').replace(/</gm, '&lt;').replace(/>/gm, '&gt;').split('\n') : [''];
-      return this.constrain(this.tokens);
-    },
-
-    /**
-     * Sizes this element to fit the input value. This function is automatically called
-     * when the user types in new input, but you must call this function if the value
-     * is updated imperatively.
-     *
-     * @method update
-     * @param Element The input
-     */
-    update: function(input) {
-      this.$.mirror.innerHTML = this.valueForMirror(input);
-    },
-
-    updateCached: function() {
-      this.$.mirror.innerHTML = this.constrain(this.tokens);
-    },
-
-    inputAction: function(e) {
-      this.update(e.target);
-    }
-
-  });
-
-</script>
-</polymer-element>
-
-
-
-
-
-
-
-
-
 <polymer-element name="core-key-helper">
   <script>
     Polymer('core-key-helper', {
@@ -8344,6 +8011,1176 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 // https://github.com/dart-lang/core-elements/issues/11
 </script>
 
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+<polymer-element name="paper-toast" attributes="text duration opened responsiveWidth swipeDisabled autoCloseDisabled" role="status">
+
+<template>
+
+  <style>/*
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+
+:host {
+  display: inline-block;
+  background: #323232;
+  color: #f1f1f1;
+  min-height: 48px;
+  min-width: 288px;
+  padding: 16px 24px 12px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  bottom: 12px;
+  left: 12px;
+  font-size: 14px;
+  cursor: default;
+}
+
+:host(.capsule) {
+  border-radius: 24px;
+}
+
+:host(.fit-bottom) {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-width: 0;
+  border-radius: 0;
+}
+
+:host(.core-transition.dragging) {
+  transition: none;
+}
+
+:host(.core-transition.fade-out-down),
+:host(.core-transition.fade-out-up),
+:host(.core-transition.fade-out-right),
+:host(.core-transition.fade-out-left) {
+  opacity: 0;
+  transition: -webkit-transform 0.08s ease-in-out, opacity 0.08s ease-in-out;
+  transition: transform 0.08s ease-in-out, opacity 0.08s ease-in-out;
+}
+
+:host(.core-transition.fade-out-down) {
+  -webkit-transform: translate(0, 100%);
+  transform: translate(0, 100%);
+}
+
+:host(.core-transition.fade-out-up) {
+  -webkit-transform: translate(0, -100%);
+  transform: translate(0, -100%);
+}
+
+:host(.core-transition.fade-out-right) {
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
+
+:host(.core-transition.fade-out-left) {
+  -webkit-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
+}
+
+.toast-container {
+  overflow: hidden;
+}
+
+.toast-action {
+  padding-left: 24px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+</style>
+
+  <core-overlay id="overlay" autofocusdisabled="" autoclosedisabled="{{autoCloseDisabled}}" opened="{{opened}}" target="{{}}" transition="core-transition-bottom"></core-overlay>
+
+  <div class="toast-container" horizontal="" layout="">
+
+    <div class="toast-text" flex="">{{text}}</div>
+    
+    <div class="toast-text toast-action" on-tap="{{dismiss}}">
+      <content></content>
+    </div>
+
+  </div>
+  
+  <core-media-query query="max-width: {{responsiveWidth}}" querymatches="{{narrowMode}}"></core-media-query>
+
+</template>
+<script>
+
+  (function() {
+  
+    var currentToast;
+  
+    Polymer('paper-toast', {
+  
+      /**
+       * The text shows in a toast.
+       *
+       * @attribute text
+       * @type string
+       * @default ''
+       */
+      text: '',
+      
+      /**
+       * The duration in milliseconds to show the toast.
+       *
+       * @attribute duration
+       * @type number
+       * @default 3000
+       */
+      duration: 3000,
+      
+      /**
+       * Set opened to true to show the toast and to false to hide it.
+       *
+       * @attribute opened
+       * @type boolean
+       * @default false
+       */
+      opened: false,
+      
+      /**
+       * Min-width when the toast changes to narrow layout.  In narrow layout,
+       * the toast fits at the bottom of the screen when opened.
+       *
+       * @attribute responsiveWidth
+       * @type string
+       * @default '480px'
+       */
+      responsiveWidth: '480px',
+      
+      /**
+       * If true, the toast can't be swiped.
+       *
+       * @attribute swipeDisabled
+       * @type boolean
+       * @default false
+       */
+      swipeDisabled: false,
+      
+      /**
+       * By default, the toast will close automatically if the user taps
+       * outside it or presses the escape key. Disable this behavior by setting
+       * the `autoCloseDisabled` property to true.
+       *
+       * @attribute autoCloseDisabled
+       * @type boolean
+       * @default false
+       */
+      autoCloseDisabled: false,
+      
+      narrowMode: false,
+      
+      eventDelegates: {
+        trackstart: 'trackStart',
+        track: 'track',
+        trackend: 'trackEnd',
+        transitionend: 'transitionEnd'
+      },
+      
+      narrowModeChanged: function() {
+        this.classList.toggle('fit-bottom', this.narrowMode);
+        if (this.opened) {
+          this.$.overlay.resizeHandler();
+        }
+      },
+      
+      openedChanged: function() {
+        if (this.opened) {
+          this.dismissJob = this.job(this.dismissJob, this.dismiss, this.duration);
+        } else {
+          this.dismissJob && this.dismissJob.stop();
+          this.dismiss();
+        }
+      },
+      
+      /** 
+       * Toggle the opened state of the toast.
+       * @method toggle
+       */
+      toggle: function() {
+        this.opened = !this.opened;
+      },
+      
+      /** 
+       * Show the toast for the specified duration
+       * @method show
+       */
+      show: function() {
+        if (currentToast) {
+          currentToast.dismiss();
+        }
+        currentToast = this;
+        this.opened = true;
+      },
+      
+      /** 
+       * Dismiss the toast and hide it.
+       * @method dismiss
+       */
+      dismiss: function() {
+        if (this.dragging) {
+          this.shouldDismiss = true;
+        } else {
+          this.opened = false;
+          if (currentToast === this) {
+            currentToast = null;
+          }
+        }
+      },
+      
+      trackStart: function(e) {
+        if (!this.swipeDisabled) {
+          e.preventTap();
+          this.vertical = e.yDirection;
+          this.w = this.offsetWidth;
+          this.h = this.offsetHeight;
+          this.dragging = true;
+          this.classList.add('dragging');
+        }
+      },
+      
+      track: function(e) {
+        if (this.dragging) {
+          var s = this.style;
+          if (this.vertical) {
+            var y = e.dy;
+            s.opacity = (this.h - Math.abs(y)) / this.h;
+            s.transform = s.webkitTransform = 'translate3d(0, ' + y + 'px, 0)';
+          } else {
+            var x = e.dx;
+            s.opacity = (this.w - Math.abs(x)) / this.w;
+            s.transform = s.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
+          }
+        }
+      },
+      
+      trackEnd: function(e) {
+        if (this.dragging) {
+          this.classList.remove('dragging');
+          this.style.opacity = '';
+          this.style.transform = this.style.webkitTransform = '';
+          var cl = this.classList;
+          if (this.vertical) {
+            cl.toggle('fade-out-down', e.yDirection === 1 && e.dy > 0);
+            cl.toggle('fade-out-up', e.yDirection === -1 && e.dy < 0);
+          } else {
+            cl.toggle('fade-out-right', e.xDirection === 1 && e.dx > 0);
+            cl.toggle('fade-out-left', e.xDirection === -1 && e.dx < 0);
+          }
+          this.dragging = false;
+        }
+      },
+      
+      transitionEnd: function() {
+        var cl = this.classList;
+        if (cl.contains('fade-out-right') || cl.contains('fade-out-left') || 
+            cl.contains('fade-out-down') || cl.contains('fade-out-up')) {
+          this.dismiss();
+          cl.remove('fade-out-right', 'fade-out-left', 
+              'fade-out-down', 'fade-out-up');
+        } else if (this.shouldDismiss) {
+          this.dismiss();
+        }
+        this.shouldDismiss = false;
+      }
+  
+    });
+    
+  })();
+
+</script>
+</polymer-element>
+
+
+
+
+
+
+
+
+
+<polymer-element name="paper-item" extends="paper-button-base">
+
+  <template>
+
+    <style>
+
+      :host {
+        display: block;
+        position: relative;
+        font-size: 16px;
+        box-sizing: border-box;
+        min-width: 7em;
+        outline: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+      }
+
+      :host([disabled]) {
+        color: #a8a8a8;
+        cursor: auto;
+        pointer-events: none;
+      }
+
+      :host(.core-selected) {
+        background-color: #eaeaea;
+      }
+
+      #ripple {
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .button-content {
+        height: 100%;
+        padding: 0.9em 1em;
+      }
+
+      polyfill-next-selector { content: '.button-content > a'; }
+      ::content > a {
+        height: 100%;
+        /* flex */
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      }
+
+    </style>
+
+    <!-- this div is needed to position the ripple behind text content -->
+    <div class="button-content" relative="" layout="" horizontal="" center="">
+      <content></content>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      publish: {
+
+        /**
+         * If true, the button will be styled with a shadow.
+         *
+         * @attribute raised
+         * @type boolean
+         * @default false
+         */
+        raised: false,
+
+        /**
+         * By default the ripple emanates from where the user touched the button.
+         * Set this to true to always center the ripple.
+         *
+         * @attribute recenteringTouch
+         * @type boolean
+         * @default false
+         */
+        recenteringTouch: false,
+
+        /**
+         * By default the ripple expands to fill the button. Set this to false to
+         * constrain the ripple to a circle within the button.
+         *
+         * @attribute fill
+         * @type boolean
+         * @default true
+         */
+        fill: true
+
+      }
+
+    });
+  </script>
+</polymer-element>
+
+
+
+
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+
+
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+<core-style id="paper-input-decorator">
+
+.label-text,
+.error {
+  color: {{g.paperInput.labelColor}};
+}
+
+::-webkit-input-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
+::-moz-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
+:-ms-input-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
+.unfocused-underline {
+  background-color: {{g.paperInput.labelColor}};
+}
+
+:host([focused]) .floated-label .label-text {
+  color: {{g.paperInput.focusedColor}};
+}
+
+.focused-underline {
+  background-color: {{g.paperInput.focusedColor}};
+}
+
+.cursor {
+  background-color: {{g.paperInput.cursorColor}};
+}
+
+:host(.invalid) .floated-label .label-text,
+.error {
+  color: {{g.paperInput.invalidColor}};
+}
+
+:host(.invalid) .unfocused-underline,
+:host(.invalid) .focused-underline,
+:host(.invalid) .cursor {
+  background-color: {{g.paperInput.invalidColor}};
+}
+
+</core-style>
+
+<polymer-element name="paper-input-decorator" layout="" vertical="" on-transitionend="{{transitionEndAction}}" on-webkittransitionend="{{transitionEndAction}}" on-input="{{inputAction}}" on-down="{{downAction}}">
+
+  <template>
+
+    <style>/*
+ * @license
+ * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+:host {
+  display: inline-block;
+  outline: none;
+  text-align: inherit;
+  padding: 0.75em 0;
+}
+
+polyfill-next-selector {
+  content: '.input-body > :not(.label):not(.cursor)';
+}
+::content > *,
+::content > input[is="core-input"] {
+  padding: 0;
+  margin: 0.5em 0 0.25em;
+  width: 100%;
+}
+
+polyfill-next-selector {
+  content: 'input, textarea';
+}
+::content input,
+::content input[is=core-input],
+::content textarea {
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+polyfill-next-selector {
+  content: ':invalid';
+}
+::content input:invalid,
+::content textarea:invalid {
+  box-shadow: none;
+}
+
+polyfill-next-selector {
+  content: 'textarea';
+}
+::content textarea {
+  resize: none;
+}
+
+[invisible] {
+  visibility: hidden;
+}
+
+[animated] {
+  visibility: visible !important;
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floated-label {
+  font-size: 0.75em;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.mirror-text {
+  padding: 0.5em 0 0.25em;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+:host([multiline]) .mirror-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.label {
+  padding: 0.5em 0 0.25em;
+  background: transparent;
+  pointer-events: none;
+}
+
+.label-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
+  -moz-transform-origin: 0% 0%;
+  -webkit-transform-origin: 0% 0%;
+  transform-origin: 0% 0%;
+}
+
+.cursor {
+  position: absolute;
+  top: 0.4em;
+  left: 0;
+  width: 1px;
+  height: 1.4em;
+  opacity: 0.4;
+  -moz-transform-origin: 0%;
+  -webkit-transform-origin: 0%;
+  transform-origin: 0%;
+  -webkit-transform: none;
+  transform: none;
+}
+
+.cursor[invisible] {
+  opacity: 0.75;
+  -webkit-transform: translate3d(3em,0,0) scale3d(50,1,1);
+  transform: translate3d(3em,0,0) scale3d(50,1,1);
+}
+
+.underline {
+  height: 0px;
+  overflow: visible;
+}
+
+:host([disabled]) .underline {
+  border-bottom: 1px dashed #757575;
+}
+
+.unfocused-underline {
+  height: 1px;
+}
+
+.focused-underline {
+  height: 2px;
+  -webkit-transform: none;
+  transform: none;
+}
+
+.focused-underline[invisible] {
+  -webkit-transform: scale3d(0,1,1);
+  transform: scale3d(0,1,1);
+}
+
+.error-text {
+  font-size: 0.75em;
+  padding: 0.5em 0;
+}
+
+.error-icon {
+  height: 20px;
+  width: 20px;
+}
+</style>
+    <core-style ref="paper-input-decorator"></core-style>
+
+    <div class="floated-label" aria-hidden="true" hidden?="{{!floatingLabel}}" invisible?="{{!floatingLabelVisible || labelAnimated}}">
+      <!-- needed for floating label animation measurement -->
+      <span id="floatedLabelText" class="label-text">{{label}}</span>
+    </div>
+
+    <div class="input-body" flex="" auto="" relative="">
+
+      <div class="label" fit="" invisible="" aria-hidden="true">
+        <!-- needed for floating label animation measurement -->
+        <span id="labelText" class="label-text" invisible?="{{!_labelVisible}}" animated?="{{labelAnimated}}">{{label}}</span>
+      </div>
+
+      <div class="cursor" invisible?="{{!cursorAnimated}}" animated?="{{cursorAnimated}}"></div>
+
+      <content></content>
+
+    </div>
+
+    <div id="underline" class="underline" relative="">
+      <div class="unfocused-underline" fit="" invisible?="{{disabled}}"></div>
+      <div id="focusedUnderline" class="focused-underline" fit="" invisible?="{{!focused}}" animated?="{{underlineAnimated}}"></div>
+    </div>
+
+    <div class="error" layout="" horizontal="" center="" hidden?="{{!isInvalid}}">
+      <div class="error-text" flex="" auto="" role="alert" aria-hidden="{{!isInvalid}}">{{error}}</div>
+      <core-icon class="error-icon" icon="warning"></core-icon>
+    </div>
+
+  </template>
+
+  <script>
+
+  (function() {
+
+    var paperInput = CoreStyle.g.paperInput = CoreStyle.g.paperInput || {};
+
+    paperInput.labelColor = '#757575';
+    paperInput.cursorColor = '#4059a9';
+    paperInput.focusedColor = '#4059a9';
+    paperInput.invalidColor = '#d34336';
+
+    Polymer({
+
+      publish: {
+
+        /**
+         * The label for this input. It normally appears as grey text inside
+         * the text input and disappears once the user enters text.
+         *
+         * @attribute label
+         * @type string
+         * @default ''
+         */
+        label: '',
+
+        /**
+         * If true, the label will "float" above the text input once the
+         * user enters text instead of disappearing.
+         *
+         * @attribute floatingLabel
+         * @type boolean
+         * @default false
+         */
+        floatingLabel: false,
+
+        /**
+         * Set to true to style the element as disabled.
+         *
+         * @attribute disabled
+         * @type boolean
+         * @default false
+         */
+        disabled: {value: false, reflect: true},
+
+        /**
+         * Use this property to override the automatic label visibility.
+         * If this property is set to `true` or `false`, the label visibility
+         * will respect this value instead of be based on whether there is
+         * a non-null value in the input.
+         *
+         * @attribute labelVisible
+         * @type boolean
+         * @default false
+         */
+        labelVisible: null,
+
+        /**
+         * Set this property to true to show the error message.
+         *
+         * @attribute isInvalid
+         * @type boolean
+         * @default false
+         */
+        isInvalid: false,
+
+        /**
+         * The message to display if the input value fails validation. If this
+         * is unset or the empty string, a default message is displayed depending
+         * on the type of validation error.
+         *
+         * @attribute error
+         * @type string
+         */
+        error: '',
+
+        focused: {value: false, reflect: true}
+
+      },
+
+      computed: {
+        floatingLabelVisible: 'floatingLabel && !_labelVisible',
+        _labelVisible: '(labelVisible === true || labelVisible === false) ? labelVisible : _autoLabelVisible'
+      },
+
+      ready: function() {
+        // Delegate focus/blur events
+        Polymer.addEventListener(this, 'focus', this.focusAction.bind(this), true);
+        Polymer.addEventListener(this, 'blur', this.blurAction.bind(this), true);
+      },
+
+      attached: function() {
+        this.input = this.querySelector('input,textarea');
+
+        this.mo = new MutationObserver(function() {
+          this.input = this.querySelector('input,textarea');
+        }.bind(this));
+        this.mo.observe(this, {childList: true});
+      },
+
+      detached: function() {
+        this.mo.disconnect();
+        this.mo = null;
+      },
+
+      prepareLabelTransform: function() {
+        var toRect = this.$.floatedLabelText.getBoundingClientRect();
+        var fromRect = this.$.labelText.getBoundingClientRect();
+        if (toRect.width !== 0) {
+          var sy = toRect.height / fromRect.height;
+          this.$.labelText.cachedTransform =
+            'scale3d(' + (toRect.width / fromRect.width) + ',' + sy + ',1) ' +
+            'translate3d(0,' + (toRect.top - fromRect.top) / sy + 'px,0)';
+        }
+      },
+
+      animateFloatingLabel: function() {
+        if (!this.floatingLabel || this.labelAnimated) {
+          return;
+        }
+
+        if (!this.$.labelText.cachedTransform) {
+          this.prepareLabelTransform();
+        }
+
+        // If there's still no cached transform, the input is invisible so don't
+        // do the animation.
+        if (!this.$.labelText.cachedTransform) {
+          return;
+        }
+
+        this.labelAnimated = true;
+        // Handle interrupted animation
+        this.async(function() {
+          this.transitionEndAction();
+        }, null, 250);
+
+        if (this._labelVisible) {
+          // Handle if the label started out floating
+          if (!this.$.labelText.style.webkitTransform && !this.$.labelText.style.transform) {
+            this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
+            this.$.labelText.style.transform = this.$.labelText.cachedTransform;
+            this.$.labelText.offsetTop;
+          }
+          this.$.labelText.style.webkitTransform = '';
+          this.$.labelText.style.transform = '';
+        } else {
+          this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
+          this.$.labelText.style.transform = this.$.labelText.cachedTransform;
+          this.input.placeholder = '';
+        }
+
+      },
+
+      _labelVisibleChanged: function(old) {
+        // do not do the animation on first render
+        if (old !== undefined) {
+          this.animateFloatingLabel();
+        }
+      },
+
+      labelChanged: function() {
+        if (this.input) {
+          this.updateInputLabel(this.input, this.label);
+        }
+      },
+
+      isInvalidChanged: function() {
+        this.classList.toggle('invalid', this.isInvalid);
+      },
+
+      focusedChanged: function() {
+        this.updateLabelVisibility(this.input && this.input.value);
+      },
+
+      inputChanged: function(old) {
+        if (this.input) {
+          this.updateLabelVisibility(this.input.value);
+          this.updateInputLabel(this.input, this.label);
+        }
+        if (old) {
+          this.updateInputLabel(old, '');
+        }
+      },
+
+      focusAction: function() {
+        this.focused = true;
+      },
+
+      blurAction: function(e) {
+        this.focused = false;
+      },
+
+      /**
+       * Updates the label visibility based on a value. This is handled automatically
+       * if the user is typing, but if you imperatively set the input value you need
+       * to call this function.
+       *
+       * @method updateLabelVisibility
+       * @param {string} value
+       */
+      updateLabelVisibility: function(value) {
+        var v = (value !== null && value !== undefined) ? String(value) : value;
+        this._autoLabelVisible = (!this.focused && !v) || (!this.floatingLabel && !v);
+      },
+
+      updateInputLabel: function(input, label) {
+        if (this._labelVisible) {
+          this.input.placeholder = this.label;
+        } else {
+          this.input.placeholder = '';
+        }
+        if (label) {
+          input.setAttribute('aria-label', label);
+        } else {
+          input.removeAttribute('aria-label');
+        }
+      },
+
+      inputAction: function(e) {
+        this.updateLabelVisibility(e.target.value);
+      },
+
+      downAction: function(e) {
+        if (this.disabled) {
+          return;
+        }
+
+        if (this.focused) {
+          return;
+        }
+
+        if (this.input) {
+          this.input.focus();
+          e.preventDefault();
+        }
+
+        // The underline spills from the tap location
+        var rect = this.$.underline.getBoundingClientRect();
+        var right = e.x - rect.left;
+        this.$.focusedUnderline.style.mozTransformOrigin = right + 'px';
+        this.$.focusedUnderline.style.webkitTransformOrigin = right + 'px ';
+        this.$.focusedUnderline.style.transformOriginX = right + 'px';
+
+        // Animations only run when the user interacts with the input
+        this.underlineAnimated = true;
+
+        // Cursor animation only runs if the input is empty
+        if (this._labelVisible) {
+          this.cursorAnimated = true;
+        }
+        // Handle interrupted animation
+        this.async(function() {
+          this.transitionEndAction();
+        }, null, 250);
+      },
+
+      transitionEndAction: function() {
+        this.underlineAnimated = false;
+        this.cursorAnimated = false;
+        this.labelAnimated = false;
+        if (this._labelVisible) {
+          this.input.placeholder = this.label;
+        }
+      }
+
+    });
+
+  }());
+
+  </script>
+
+</polymer-element>
+
+
+<polymer-element name="paper-input">
+
+<template>
+
+  <style>
+    :host {
+      display: inline-block;
+    }
+  </style>
+
+  <paper-input-decorator id="decorator" label="{{label}}" floatinglabel="{{floatingLabel}}" value="{{value}}" disabled?="{{disabled}}">
+    <input is="core-input" value="{{value}}" committedvalue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
+  </paper-input-decorator>
+
+</template>
+
+<script>
+
+  Polymer('paper-input', {
+
+    publish: {
+      /**
+       * The label for this input. It normally appears as grey text inside
+       * the text input and disappears once the user enters text.
+       *
+       * @attribute label
+       * @type string
+       * @default ''
+       */
+      label: '',
+
+      /**
+       * If true, the label will "float" above the text input once the
+       * user enters text instead of disappearing.
+       *
+       * @attribute floatingLabel
+       * @type boolean
+       * @default false
+       */
+      floatingLabel: false,
+
+      /**
+       * Set to true to style the element as disabled.
+       *
+       * @attribute disabled
+       * @type boolean
+       * @default false
+       */
+      disabled: {value: false, reflect: true},
+
+      /**
+       * The current value of the input.
+       *
+       * @attribute value
+       * @type String
+       * @default ''
+       */
+      value: '',
+
+      /**
+       * The most recently committed value of the input.
+       *
+       * @attribute committedValue
+       * @type String
+       * @default ''
+       */
+      committedValue: ''
+
+    },
+
+    valueChanged: function() {
+      this.$.decorator.updateLabelVisibility(this.value);
+    },
+
+    changeAction: function(e) {
+      if (!window.ShadowDOMPolyfill) {
+        // re-fire event that does not bubble across shadow roots
+        this.fire('change', null, this);
+      }
+    }
+
+  });
+
+</script>
+
+</polymer-element>
+
+
+
+
+
+
+
+
+
+
+
+
+<polymer-element name="paper-autogrow-textarea" on-input="{{inputAction}}">
+<template>
+
+  <style>
+    :host {
+      display: inline-block;
+      position: relative;
+      width: 400px;
+    }
+
+    ::content textarea {
+      padding: 0;
+      margin: 0;
+      border: none;
+      outline: none;
+      resize: none;
+      /* see comments in template */
+      width: 100%;
+      height: 100%;
+    }
+
+    ::content textarea:invalid {
+      box-shadow: none;
+    }
+  </style>
+
+  <!-- the mirror sizes the input/textarea so it grows with typing -->
+  <div id="mirror" class="mirror-text" invisible="" aria-hidden="true">&nbsp;</div>
+
+  <!-- size the input/textarea with a div, because the textarea has intrinsic size in ff -->
+  <div class="textarea-container" fit="">
+    <content></content>
+  </div>
+
+</template>
+<script>
+
+  Polymer({
+
+    publish: {
+
+        /**
+         * The textarea that should auto grow.
+         *
+         * @attribute target
+         * @type HTMLTextAreaElement
+         * @default null
+         */
+        target: null,
+
+        /**
+         * The initial number of rows.
+         *
+         * @attribute rows
+         * @type number
+         * @default 1
+         */
+        rows: 1,
+
+        /**
+         * The maximum number of rows this element can grow to until it
+         * scrolls. 0 means no maximum.
+         *
+         * @attribute maxRows
+         * @type number
+         * @default 0
+         */
+        maxRows: 0
+    },
+
+    tokens: null,
+
+    observe: {
+      rows: 'updateCached',
+      maxRows: 'updateCached'
+    },
+
+    constrain: function(tokens) {
+      var _tokens;
+      tokens = tokens || [''];
+      // Enforce the min and max heights for a multiline input to avoid measurement
+      if (this.maxRows > 0 && tokens.length > this.maxRows) {
+        _tokens = tokens.slice(0, this.maxRows);
+      } else {
+        _tokens = tokens.slice(0);
+      }
+      while (this.rows > 0 && _tokens.length < this.rows) {
+        _tokens.push('');
+      }
+      return _tokens.join('<br>') + '&nbsp;';
+    },
+
+    valueForMirror: function(input) {
+      this.tokens = (input && input.value) ? input.value.replace(/&/gm, '&amp;').replace(/"/gm, '&quot;').replace(/'/gm, '&#39;').replace(/</gm, '&lt;').replace(/>/gm, '&gt;').split('\n') : [''];
+      return this.constrain(this.tokens);
+    },
+
+    /**
+     * Sizes this element to fit the input value. This function is automatically called
+     * when the user types in new input, but you must call this function if the value
+     * is updated imperatively.
+     *
+     * @method update
+     * @param Element The input
+     */
+    update: function(input) {
+      this.$.mirror.innerHTML = this.valueForMirror(input);
+    },
+
+    updateCached: function() {
+      this.$.mirror.innerHTML = this.constrain(this.tokens);
+    },
+
+    inputAction: function(e) {
+      this.update(e.target);
+    }
+
+  });
+
+</script>
+</polymer-element>
+
+
+
+
+
+
+
+
 <polymer-element name="paper-dialog-base" extends="core-overlay" role="dialog" on-core-overlay-open="{{openAction}}">
 
 <script>
@@ -8437,6 +9274,937 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </template>
 
+</polymer-element>
+
+
+
+
+
+
+
+
+
+
+<!--
+Element providing material design circular spinner.
+
+##### Example
+
+    <paper-spinner active></paper-spinner>
+
+The default spinner cycles between blue, red, yellow and green. It can be customized so
+that it uses one color only.
+
+##### Example
+
+    <style shim-shadowdom>
+      paper-spinner.blue::shadow .circle {
+        border-color: #4285f4;
+      }
+    </style>
+
+    <paper-spinner class="blue" active></paper-spinner>
+
+@element paper-spinner
+@blurb Element providing material design circular spinner.
+@status alpha
+@homepage http://polymerlabs.github.io/paper-spinner
+-->
+
+<polymer-element name="paper-spinner" attributes="active">
+
+  <template>
+    <style>/*
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+/**************************/
+/* STYLES FOR THE SPINNER */
+/**************************/
+
+/*
+ * Constants:
+ *      STROKEWIDTH = 3px
+ *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)
+ *      ARCTIME     = 1333ms (time it takes to expand and contract arc)
+ *      ARCSTARTROT = 216 degrees (how much the start location of the arc
+ *                                should rotate each time, 216 gives us a
+ *                                5 pointed star shape (it's 360/5 * 3).
+ *                                For a 7 pointed star, we might do
+ *                                360/7 * 3 = 154.286)
+ *      CONTAINERWIDTH = 28px
+ *      SHRINK_TIME = 400ms
+ */
+
+:host {
+  display: inline-block;
+  position: relative;
+  width: 28px; /* CONTAINERWIDTH */
+  height: 28px; /* CONTAINERWIDTH */
+}
+
+#spinnerContainer {
+  width: 100%;
+  height: 100%;
+}
+
+#spinnerContainer.active {
+  /* duration: 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
+  -webkit-animation: container-rotate 1568ms linear infinite;
+  animation: container-rotate 1568ms linear infinite;
+}
+
+@-webkit-keyframes container-rotate {
+  to { -webkit-transform: rotate(360deg) }
+}
+
+@keyframes container-rotate {
+  to { transform: rotate(360deg) }
+}
+
+.spinner-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.blue {
+  border-color: #4285f4;
+}
+
+.red {
+  border-color: #db4437;
+}
+
+.yellow {
+  border-color: #f4b400;
+}
+
+.green {
+  border-color: #0f9d58;
+}
+
+/**
+ * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):
+ *
+ * iOS Safari (tested on iOS 8.1) does not handle animation-delay very well - it doesn't
+ * guarantee that the animation will start _exactly_ after that value. So we avoid using
+ * animation-delay and instead set custom keyframes for each color (as redundant as it
+ * seems).
+ *
+ * We write out each animation in full (instead of separating animation-name,
+ * animation-duration, etc.) because under the polyfill, Safari does not recognize those
+ * specific properties properly, treats them as -webkit-animation, and overrides the
+ * other animation rules. See https://github.com/Polymer/platform/issues/53.
+ */
+.active .spinner-layer.blue {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.red {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.yellow {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .spinner-layer.green {
+  /* durations: 4 * ARCTIME */
+  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+@-webkit-keyframes fill-unfill-rotate {
+  12.5% { -webkit-transform: rotate(135deg);  } /* 0.5 * ARCSIZE */
+  25%   { -webkit-transform: rotate(270deg);  } /* 1   * ARCSIZE */
+  37.5% { -webkit-transform: rotate(405deg);  } /* 1.5 * ARCSIZE */
+  50%   { -webkit-transform: rotate(540deg);  } /* 2   * ARCSIZE */
+  62.5% { -webkit-transform: rotate(675deg);  } /* 2.5 * ARCSIZE */
+  75%   { -webkit-transform: rotate(810deg);  } /* 3   * ARCSIZE */
+  87.5% { -webkit-transform: rotate(945deg);  } /* 3.5 * ARCSIZE */
+  to    { -webkit-transform: rotate(1080deg); } /* 4   * ARCSIZE */
+}
+
+@keyframes fill-unfill-rotate {
+  12.5% { transform: rotate(135deg);  } /* 0.5 * ARCSIZE */
+  25%   { transform: rotate(270deg);  } /* 1   * ARCSIZE */
+  37.5% { transform: rotate(405deg);  } /* 1.5 * ARCSIZE */
+  50%   { transform: rotate(540deg);  } /* 2   * ARCSIZE */
+  62.5% { transform: rotate(675deg);  } /* 2.5 * ARCSIZE */
+  75%   { transform: rotate(810deg);  } /* 3   * ARCSIZE */
+  87.5% { transform: rotate(945deg);  } /* 3.5 * ARCSIZE */
+  to    { transform: rotate(1080deg); } /* 4   * ARCSIZE */
+}
+
+@-webkit-keyframes blue-fade-in-out {
+  from { opacity: 1; }
+  25% { opacity: 1; }
+  26% { opacity: 0; }
+  89% { opacity: 0; }
+  90% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes blue-fade-in-out {
+  from { opacity: 1; }
+  25% { opacity: 1; }
+  26% { opacity: 0; }
+  89% { opacity: 0; }
+  90% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes red-fade-in-out {
+  from { opacity: 0; }
+  15% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+}
+
+@keyframes red-fade-in-out {
+  from { opacity: 0; }
+  15% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+}
+
+@-webkit-keyframes yellow-fade-in-out {
+  from { opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 1; }
+  75% { opacity: 1; }
+  76% { opacity: 0; }
+}
+
+@keyframes yellow-fade-in-out {
+  from { opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 1; }
+  75% { opacity: 1; }
+  76% { opacity: 0; }
+}
+
+@-webkit-keyframes green-fade-in-out {
+  from { opacity: 0; }
+  65% { opacity: 0; }
+  75% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes green-fade-in-out {
+  from { opacity: 0; }
+  65% { opacity: 0; }
+  75% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/**
+ * Patch the gap that appear between the two adjacent div.circle-clipper while the
+ * spinner is rotating (appears on Chrome 38, Safari 7.1, and IE 11).
+ */
+.gap-patch {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 45%;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.gap-patch .circle {
+  width: 1000%;
+  left: -450%;
+}
+
+.circle-clipper {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.circle-clipper .circle {
+  width: 200%;
+}
+
+.circle {
+  box-sizing: border-box;
+  height: 100%;
+  border-width: 3px; /* STROKEWIDTH */
+  border-style: solid;
+  border-color: inherit;
+  border-bottom-color: transparent !important;
+  border-radius: 50%;
+  -webkit-animation: none;
+  animation: none;
+}
+
+.circle-clipper.left .circle {
+  border-right-color: transparent !important;
+  -webkit-transform: rotate(129deg);
+  transform: rotate(129deg);
+}
+
+.circle-clipper.right .circle {
+  left: -100%;
+  border-left-color: transparent !important;
+  -webkit-transform: rotate(-129deg);
+  transform: rotate(-129deg);
+}
+
+.active .circle-clipper.left .circle {
+  /* duration: ARCTIME */
+  -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.active .circle-clipper.right .circle {
+  /* duration: ARCTIME */
+  -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  animation: right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+@-webkit-keyframes left-spin {
+  from { -webkit-transform: rotate(130deg); }
+  50% { -webkit-transform: rotate(-5deg); }
+  to { -webkit-transform: rotate(130deg); }
+}
+
+@keyframes left-spin {
+  from { transform: rotate(130deg); }
+  50% { transform: rotate(-5deg); }
+  to { transform: rotate(130deg); }
+}
+
+@-webkit-keyframes right-spin {
+  from { -webkit-transform: rotate(-130deg); }
+  50% { -webkit-transform: rotate(5deg); }
+  to { -webkit-transform: rotate(-130deg); }
+}
+
+@keyframes right-spin {
+  from { transform: rotate(-130deg); }
+  50% { transform: rotate(5deg); }
+  to { transform: rotate(-130deg); }
+}
+
+#spinnerContainer.warmdown {
+  /* duration: SHRINK_TIME */
+  -webkit-animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@-webkit-keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+</style>
+
+    <div id="spinnerContainer">
+      <div class="spinner-layer blue">
+        <div class="circle-clipper left">
+          <div class="circle" fit=""></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit=""></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit=""></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer red">
+        <div class="circle-clipper left">
+          <div class="circle" fit=""></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit=""></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit=""></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer yellow">
+        <div class="circle-clipper left">
+          <div class="circle" fit=""></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit=""></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit=""></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer green">
+        <div class="circle-clipper left">
+          <div class="circle" fit=""></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit=""></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit=""></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      eventDelegates: {
+        'animationend': 'reset',
+        'webkitAnimationEnd': 'reset'
+      },
+      publish: {
+        /**
+         * Displays the spinner.
+         *
+         * @attribute active
+         * @type boolean
+         * @default false
+         */
+        active: {value: false, reflect: true}
+      },
+
+      activeChanged: function() {
+        if (this.active) {
+          this.$.spinnerContainer.classList.add('active');
+        } else {
+          this.$.spinnerContainer.classList.add('warmdown');
+        }
+      },
+
+      reset: function() {
+        this.$.spinnerContainer.classList.remove('active', 'warmdown');
+      }
+    });
+  </script>
+</polymer-element>
+
+
+
+
+
+
+<style shim-shadowdom="">
+  html /deep/ core-dropdown {
+    position: absolute;
+    overflow: auto;
+    background-color: #fff;
+  }
+</style>
+
+<polymer-element name="core-dropdown" extends="core-overlay">
+<script>
+
+(function() {
+
+  function docElem(property) {
+    var t;
+    return ((t = document.documentElement) || (t = document.body.parentNode)) && (typeof t[property] === 'number') ? t : document.body;
+  }
+
+  // View width and height excluding any visible scrollbars
+  // http://www.highdots.com/forums/javascript/faq-topic-how-do-i-296669.html
+  //    1) document.client[Width|Height] always reliable when available, including Safari2
+  //    2) document.documentElement.client[Width|Height] reliable in standards mode DOCTYPE, except for Safari2, Opera<9.5
+  //    3) document.body.client[Width|Height] is gives correct result when #2 does not, except for Safari2
+  //    4) When document.documentElement.client[Width|Height] is unreliable, it will be size of <html> element either greater or less than desired view size
+  //       https://bugzilla.mozilla.org/show_bug.cgi?id=156388#c7
+  //    5) When document.body.client[Width|Height] is unreliable, it will be size of <body> element less than desired view size
+  function viewSize() {
+    // This algorithm avoids creating test page to determine if document.documentElement.client[Width|Height] is greater then view size,
+    // will succeed where such test page wouldn't detect dynamic unreliability,
+    // and will only fail in the case the right or bottom edge is within the width of a scrollbar from edge of the viewport that has visible scrollbar(s).
+    var doc = docElem('clientWidth');
+    var body = document.body;
+    var w, h;
+    return typeof document.clientWidth === 'number' ?
+      {w: document.clientWidth, h: document.clientHeight} :
+      doc === body || (w = Math.max( doc.clientWidth, body.clientWidth )) > self.innerWidth || (h = Math.max( doc.clientHeight, body.clientHeight )) > self.innerHeight ?
+        {w: body.clientWidth, h: body.clientHeight} : {w: w, h: h };
+  }
+
+  Polymer({
+
+    publish: {
+
+      /**
+       * The element associated with this dropdown, usually the element that triggers
+       * the menu. If unset, this property will default to the target's parent node
+       * or shadow host.
+       *
+       * @attribute relatedTarget
+       * @type Node
+       */
+      relatedTarget: null,
+
+      /**
+       * The horizontal alignment of the popup relative to `relatedTarget`. `left`
+       * means the left edges are aligned together. `right` means the right edges
+       * are aligned together.
+       *
+       * @attribute halign
+       * @type 'left' | 'right'
+       * @default 'left'
+       */
+      halign: 'left',
+
+      /**
+       * The vertical alignment of the popup relative to `relatedTarget`. `top` means
+       * the top edges are aligned together. `bottom` means the bottom edges are
+       * aligned together.
+       *
+       * @attribute valign
+       * @type 'top' | 'bottom'
+       * @default 'top'
+       */
+      valign: 'top',
+
+    },
+
+    measure: function() {
+      var target = this.target;
+      // remember position, because core-overlay may have set the property
+      var pos = target.style.position;
+
+      // get the size of the target as if it's positioned in the top left
+      // corner of the screen
+      target.style.position = 'fixed';
+      target.style.left = '0px';
+      target.style.top = '0px';
+
+      var rect = target.getBoundingClientRect();
+
+      target.style.position = pos;
+      target.style.left = null;
+      target.style.top = null;
+
+      return rect;
+    },
+
+    resetTargetDimensions: function() {
+      var dims = this.dimensions;
+      var style = this.target.style;
+      if (dims.position.h_by === this.localName) {
+        style[dims.position.h] = null;
+        dims.position.h_by = null;
+      }
+      if (dims.position.v_by === this.localName) {
+        style[dims.position.v] = null;
+        dims.position.v_by = null;
+      }
+      this.super();
+    },
+
+    positionTarget: function() {
+      if (!this.relatedTarget) {
+        this.relatedTarget = this.target.parentElement || (this.target.parentNode && this.target.parentNode.host);
+        if (!this.relatedTarget) {
+          this.super();
+          return;
+        }
+      }
+
+      // explicitly set width/height, because we don't want it constrained
+      // to the offsetParent
+      var target = this.sizingTarget;
+      var rect = this.measure();
+      target.style.width = Math.ceil(rect.width) + 'px';
+      target.style.height = Math.ceil(rect.height) + 'px';
+
+      if (this.layered) {
+        this.positionLayeredTarget();
+      } else {
+        this.positionNestedTarget();
+      }
+    },
+
+    positionLayeredTarget: function() {
+      var target = this.target;
+      var rect = this.relatedTarget.getBoundingClientRect();
+
+      var dims = this.dimensions;
+      var margin = dims.margin;
+      var vp = viewSize();
+
+      if (!dims.position.h) {
+        if (this.halign === 'right') {
+          target.style.right = vp.w - rect.right - margin.right + 'px';
+          dims.position.h = 'right';
+        } else {
+          target.style.left = rect.left - margin.left + 'px';
+          dims.position.h = 'left';
+        }
+        dims.position.h_by = this.localName;
+      }
+
+      if (!dims.position.v) {
+        if (this.valign === 'bottom') {
+          target.style.bottom = vp.h - rect.bottom - margin.bottom + 'px';
+          dims.position.v = 'bottom';
+        } else {
+          target.style.top = rect.top - margin.top + 'px';
+          dims.position.v = 'top';
+        }
+        dims.position.v_by = this.localName;
+      }
+
+      if (dims.position.h_by || dims.position.v_by) {
+        target.style.position = 'fixed';
+      }
+    },
+
+    positionNestedTarget: function() {
+      var target = this.target;
+      var related = this.relatedTarget;
+
+      var t_op = target.offsetParent;
+      var r_op = related.offsetParent;
+      if (window.ShadowDOMPolyfill) {
+        t_op = wrap(t_op);
+        r_op = wrap(r_op);
+      }
+
+      if (t_op !== r_op && t_op !== related) {
+        console.warn('core-dropdown-overlay: dropdown\'s offsetParent must be the relatedTarget or the relatedTarget\'s offsetParent!');
+      }
+
+      // Don't use CSS to handle halign/valign so we can use
+      // dimensions.position to detect custom positioning
+
+      var dims = this.dimensions;
+      var margin = dims.margin;
+      var inside = t_op === related;
+
+      if (!dims.position.h) {
+        if (this.halign === 'right') {
+          target.style.right = ((inside ? 0 : t_op.offsetWidth - related.offsetLeft - related.offsetWidth) - margin.right) + 'px';
+          dims.position.h = 'right';
+        } else {
+          target.style.left = ((inside ? 0 : related.offsetLeft) - margin.left) + 'px';
+          dims.position.h = 'left';
+        }
+        dims.position.h_by = this.localName;
+      }
+
+      if (!dims.position.v) {
+        if (this.valign === 'bottom') {
+          target.style.bottom = ((inside ? 0 : t_op.offsetHeight - related.offsetTop - related.offsetHeight) - margin.bottom) + 'px';
+          dims.position.v = 'bottom';
+        } else {
+          target.style.top = ((inside ? 0 : related.offsetTop) - margin.top) + 'px';
+          dims.position.v = 'top';
+        }
+        dims.position.v_by = this.localName;
+      }
+    }
+
+  });
+
+})();
+
+</script>
+</polymer-element>
+
+
+
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+
+
+
+<script src="packages/core_elements/src/web-animations-next/src/dev.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/scope.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/timing-utilities.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/normalize-keyframes.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/animation-node.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/effect.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/property-interpolation.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/animation.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/apply.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/element-animatable.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/interpolation.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/player.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/tick.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/handler-utils.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/shadow-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/number-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/visibility-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/color-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/dimension-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/box-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/transform-handler.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/property-names.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/timeline.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/maxifill-player.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/animation-constructor.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/effect-callback.js"></script>
+<script src="packages/core_elements/src/web-animations-next/src/group-constructors.js"></script>
+
+
+
+
+
+<script>
+// This empty script is here to workaround issue
+// https://github.com/dart-lang/core-elements/issues/11
+</script>
+
+<polymer-element name="paper-dropdown-transition" extends="core-transition-css">
+  <template>
+    <style no-shim="">/* Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt */
+
+:host(.core-transition) #ripple,
+:host(.core-transition) #background {
+  opacity: 0;
+}
+
+:host(.core-transition) #scroller {
+  opacity: 0;
+}</style>
+  </template>
+  <script>
+    Polymer('paper-dropdown-transition', {
+
+      publish: {
+
+        /**
+         * The duration of the transition in ms. You can also set the duration by
+         * setting a `duration` attribute on the target:
+         *
+         *    <paper-dropdown duration="1000"></paper-dropdown>
+         *
+         * @attribute duration
+         * @type number
+         * @default 500
+         */
+        duration: 500
+
+      },
+
+      setup: function(node) {
+        this.super(arguments);
+
+        var to = {
+          'top': '0%',
+          'left': '0%',
+          'bottom': '100%',
+          'right': '100%'
+        };
+
+        var bg = node.$.background;
+        bg.style.webkitTransformOrigin = to[node.halign] + ' ' + to[node.valign];
+        bg.style.transformOrigin = to[node.halign] + ' ' + to[node.valign];
+      },
+
+      transitionOpened: function(node, opened) {
+        this.super(arguments);
+
+        if (opened) {
+          if (this.player) {
+            this.player.cancel();
+          }
+
+          var duration = Number(node.getAttribute('duration')) || this.duration;
+
+          var anims = [];
+
+          var size = node.getBoundingClientRect();
+
+          var ink = node.$.ripple;
+          // var offset = 40 / Math.max(size.width, size.height);
+          var offset = 0.2;
+          anims.push(new Animation(ink, [{
+            'opacity': 0.9,
+            'transform': 'scale(0)',
+          }, {
+            'opacity': 0.9,
+            'transform': 'scale(1)'
+          }], {
+            duration: duration * offset
+          }));
+
+          var bg = node.$.background;
+          var sx = 40 / size.width;
+          var sy = 40 / size.height;
+          anims.push(new Animation(bg, [{
+            'opacity': 0.9,
+            'transform': 'scale(' + sx + ',' + sy + ')',
+          }, {
+            'opacity': 1,
+            'transform': 'scale(' + Math.max(sx, 0.95) + ',' + Math.max(sy, 0.5) + ')'
+          }, {
+            'opacity': 1,
+            'transform': 'scale(1, 1)'
+          }], {
+            delay: duration * offset,
+            duration: duration * (1 - offset),
+            fill: 'forwards'
+          }));
+
+          var menu = node.querySelector('.menu');
+          if (menu) {
+            var items = menu.items || menu.children.array();
+            var itemDelay = offset + (1 - offset) / 2;
+            var itemDuration = duration * (1 - itemDelay) / items.length;
+            var reverse = this.valign === 'bottom';
+
+            items.forEach(function(item, i) {
+              anims.push(new Animation(item, [{
+                'opacity': 0
+              }, {
+                'opacity': 1
+              }], {
+                delay: duration * itemDelay + itemDuration * (reverse ? items.length - 1 - i : i),
+                duration: itemDuration,
+                fill: 'both'
+              }));
+            }.bind(this));
+
+            anims.push(new Animation(node.$.scroller, [{
+              'opacity': 1
+            }, {
+              'opacity': 1
+            }], {
+              delay: duration * itemDelay,
+              duration: itemDuration * items.length,
+              fill: 'both'
+            }));
+
+          } else {
+            anims.push(new Animation(node.$.scroller, [{
+              'opacity': 0
+            }, {
+              'opacity': 1
+            }], {
+              delay: duration * (offset + (1 - offset) / 2),
+              duration: duration * 0.5,
+              fill: 'both'
+            }));
+          }
+
+          var group = new AnimationGroup(anims, {
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+          });
+          this.player = document.timeline.play(group);
+          this.player.onfinish = function() {
+            this.fire('core-transitionend', this, node);
+          }.bind(this);
+
+        } else {
+          this.fire('core-transitionend', this, node);
+        }
+      },
+
+    });
+  </script>
+</polymer-element>
+
+<paper-dropdown-transition id="paper-dropdown-transition"></paper-dropdown-transition>
+
+<style shim-shadowdom="">
+  html /deep/ paper-dropdown {
+    position: absolute;
+    overflow: visible;
+    min-height: 40px;
+  }
+</style>
+
+<polymer-element name="paper-dropdown" extends="core-dropdown">
+<template>
+
+  <style>
+    #ripple {
+      background-color: #fff;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.26);
+      opacity: 0;
+    }
+
+    :host([halign=right]) #ripple {
+      left: auto;
+      right: 0;
+    }
+
+    :host([valign=bottom]) #ripple {
+      top: auto;
+      bottom: 0;
+    }
+
+    #background {
+      background-color: #fff;
+      border-radius: inherit;
+    }
+
+    #scroller {
+      overflow: auto;
+      box-sizing: border-box;
+    }
+  </style>
+
+  <div id="ripple"></div>
+
+  <div id="background" fit="">
+    <paper-shadow fit=""></paper-shadow>
+  </div>
+
+  <div id="scroller" relative="">
+    <content></content>
+  </div>
+
+</template>
+<script>
+
+  Polymer({
+
+    publish: {
+      transition: 'paper-dropdown-transition'
+    },
+
+    ready: function() {
+      this.super();
+      this.sizingTarget = this.$.scroller;
+    }
+
+  });
+
+</script>
 </polymer-element>
 
 
@@ -8607,6 +10375,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
+
+
 <polymer-element name="paper-fab" extends="paper-button-base" attributes="src icon mini" role="button">
 
   <template>
@@ -8732,10 +10502,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-
-
-
-
 <polymer-element name="strength-button" attributes="number selected">
   <template>
     <style>.button {
@@ -8744,17 +10510,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   font-weight: 500;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: white;
-  min-width: 3em;
-  min-height: 2em; }
+  color: rgba(255, 255, 255, 0.87);
+  min-width: 4rem;
+  min-height: 4rem; }
 
 :host {
-  margin: 0.5em 1em 0.5em 0;
-  right: 1em; }
+  margin: 0.8rem; }
 
 :host([notselected]) .button {
-  background: #eaeaea !important;
-  color: #a8a8a8 !important; }
+  background: #eee !important;
+  color: rgba(0, 0, 0, 0.54) !important; }
 </style>
     <template if="{{selected}}">
       <paper-button raised="" class="button">{{number}}</paper-button>
@@ -8772,15 +10537,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <polymer-element name="strength-button-slider" attributes="selected max">
   <template>
     <style>:host {
-  margin: 0.5em 1em 0.5em 0;
-  right: 1em; }
+  margin: 0.8rem; }
 
 strength-button {
-  margin: 0;
+  margin: 0.08rem;
   right: 0; }
 
 strength-button::shadow .button {
-  margin: 0 0em; }
+  margin: 0; }
 </style>
     <template repeat="{{number in (max | toArray)}}">
       <template if="{{number != selected}}">
@@ -8795,35 +10559,6 @@ strength-button::shadow .button {
   
 </polymer-element>
 
-
-
-<script src="packages/core_elements/src/web-animations-next/src/dev.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/scope.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/timing-utilities.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/normalize-keyframes.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/animation-node.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/effect.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/property-interpolation.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/animation.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/apply.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/element-animatable.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/interpolation.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/player.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/tick.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/handler-utils.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/shadow-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/number-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/visibility-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/color-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/dimension-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/box-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/transform-handler.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/property-names.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/timeline.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/maxifill-player.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/animation-constructor.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/effect-callback.js"></script>
-<script src="packages/core_elements/src/web-animations-next/src/group-constructors.js"></script>
 
 
 
@@ -9508,18 +11243,14 @@ Example of an animation group to rotate and then fade an element:
 
 
 
-
-
 <polymer-element name="single-strength-item" attributes="title desc number">
   <template>
-    <style>#button {
-  background: gray; }
-
-#title {
+    <style>#title {
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 2em;
-  letter-spacing: 0.01em; }
+  letter-spacing: 0.01em;
+  line-height: 1.6em; }
 
 #desc {
   font-size: 1.3rem;
@@ -9528,7 +11259,7 @@ Example of an animation group to rotate and then fade an element:
   letter-spacing: 0.01em;
   color: rgba(0, 0, 0, 0.54);
   max-width: 60ch;
-  z-index: -1;
+  z-index: 0;
   opacity: 0; }
 
 #main {
@@ -9538,10 +11269,16 @@ Example of an animation group to rotate and then fade an element:
 #secondary {
   display: block;
   overflow: hidden; }
+
+#slider {
+  margin: 0; }
+
+:host {
+  margin: 0.8rem; }
 </style>
     <div id="main" layout="" horizontal="" center="">
       <span id="title" flex="" on-tap="{{toggleDesc}}">{{title}}</span>
-      <strength-button-slider id="single_button" selected="{{number}}" max="5"></strength-button-slider>
+      <strength-button-slider id="slider" selected="{{number}}" max="5" tabindex="0"></strength-button-slider>
     </div>
     <div id="secondary" layout="" horizontal="" end-justified="">
       <p id="desc" hidden="" class="core-animation-target" on-tap="{{toggleDesc}}">{{desc}}</p>
@@ -9671,8 +11408,11 @@ Example of an animation group to rotate and then fade an element:
   
 </polymer-element>
 
+<script src="packages/browser/dart.js"></script>
+<script src="packages/akepot/components/trianglify/d3.v3.min.js"></script>
+<script src="packages/akepot/components/trianglify/trianglify-min.js"></script>
 
-<polymer-element name="subcategory-card" attributes="subcategory">
+<polymer-element name="subcategory-card" attributes="subcategory palette">
   <template>
     <style>core-card2 {
   width: 40%;
@@ -9695,7 +11435,7 @@ core-image {
 #title {
   height: 64px;
   top: 162px;
-  padding-left: 20px;
+  padding-left: 1.6rem;
   font-size: 2.4rem;
   font-weight: 400;
   line-height: 2.55em;
@@ -9706,20 +11446,18 @@ core-image {
 
 .flip-button {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 3;
-  color: white;
-  background-color: #1DE9B6; }
+  top: 0;
+  right: 0;
+  z-index: 1; }
 
-.flip-button::shadow core-icon {
-  vertical-align: baseline; }
+.single-strength-item {
+  margin: 0; }
 </style>
     <core-card2 id="card" self-center="" layout="" vertical="">
       <div class="front">
-        <paper-fab mini="" id="help-button" class="flip-button" icon="help"></paper-fab>
+        <paper-fab mini="" id="help-button" class="flip-button floating-action-button" icon="help" tabindex="0"></paper-fab>
         <div id="image-box">
-          <core-image fit="" src="images/ilias2.jpg" sizing="cover" preload="" fade=""></core-image>
+          <core-image fit="" sizing="cover" id="header" preload="" fade=""></core-image>
         </div>
         <div id="title-box">
           <div fit="" id="title">{{subcategory.name}}</div>
@@ -9735,31 +11473,170 @@ core-image {
 </polymer-element>
 
 
+
+<polymer-element name="core-xhr-dart" hidden="">
+  
+</polymer-element>
+
+
+<polymer-element name="core-ajax-dart" hidden="" attributes="url handleAs auto params response error method headers body contentType withCredentials progress loading">
+  
+</polymer-element>
+
+
+
+
+<polymer-element name="ordered-columns" attributes="count noRedraw columnWidth">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			.column {
+				box-sizing: border-box;
+				display: inline-block;
+				vertical-align: top;
+			}
+		</style>
+		<table style="width:100%" cellpadding="0" cellspacing="0">
+			<tbody><tr>
+        <td template="" repeat="{{width,i in columnWidths}}" id="column{{i}}" class="column" style="width: {{width}};"></td>
+			</tr>
+		</tbody></table>
+	</template>
+	<script>
+	"use strict";
+	Polymer({
+		columnWidth: null,
+		noRedraw: false,
+		ready: function(){
+			var self = this;
+			this.load();
+			window.addEventListener('resize', function(e) {
+				if(!self.noRedraw) self.refresh();
+			});
+			this.onMutation(this, this.append);
+		},
+		count: 1,
+		observe: {
+			'count columnWidth': 'refresh'
+		},
+		append: function(observer, mutations){
+			var self = this;
+			mutations.forEach(function(m) {
+				if(m.type === 'childList'){
+					var newArticles = [].filter.call(m.addedNodes, function(element){
+						return element.nodeName === 'ARTICLE' || (element.getAttribute && element.getAttribute('role') === 'article');
+					});
+					var hasTopItems = false;
+					newArticles.forEach(function(element){
+						if(element.classList.contains('new-article')){
+							hasTopItems = true;
+							self.items.unshift(element);
+						}else self.items.push(element);
+					});
+					if(hasTopItems){
+						self.refresh();
+					}else{
+						self.async(function() {
+							self.moveItems(newArticles);
+						});
+					}
+				}
+			});
+			this.onMutation(this, this.append);
+		},
+		refresh: function(){
+		//console.log('refresh');
+			this.job('refresh', this.refreshJob);
+		},
+		refreshJob: function(){
+		//console.log('refreshJob');
+			var self = this;
+			this.setColumnWidths();
+			this.async(function() {
+				[].forEach.call(self.shadowRoot.querySelectorAll('.column'), function(c){ c.innerHTML = ''; });
+				self.moveItems(self.items);
+			});
+		},
+		load: function(){
+			var self = this;
+			this.setColumnWidths();
+			var items = [];
+			[].forEach.call(this.querySelectorAll('article,[role="article"]'), function(o){
+				if(o.parentNode === self) items.push(o);
+			});
+			if(items.length===0){
+				[].forEach.call(this.children, function(o){
+					if(o.parentNode === self && (o.nodeName === 'ARTICLE' || (o.getAttribute && o.getAttribute('role') === 'article'))) items.push(o);
+				});
+			}
+			this.items = items;
+			this.async(function() {
+				if(self.items.length===0){
+					var items = [];
+					[].forEach.call(self.querySelectorAll('article,[role="article"]'), function(o){
+						if(o.parentNode === self) items.push(o);
+					});
+					self.items = items;
+				}
+				self.moveItems(items || self.items);
+			});
+		},
+		moveItems: function(items){
+		//console.log('moveItems');
+			var columns = this.shadowRoot.querySelectorAll('.column');
+			items.forEach(function(element,i){
+				var column = columns[0];
+				[].forEach.call(columns, function(c){
+					if(c.clientHeight < column.clientHeight) column = c;
+				});
+				column.appendChild(element);
+			});
+		},
+		setColumnWidths: function(){
+		//console.log('setColumnWidths');
+			var arr = [];
+			var columnWidth = +this.columnWidth;
+			if(columnWidth > 0){
+				var width = this.clientWidth;
+				var num = Math.floor(width / columnWidth);
+				if(num === 0) num = 1;
+				this.count = num;
+				for(var i=0;i<num;i++) arr.push(columnWidth + 'px');
+			}else{
+				var count = Math.max(this.count,1);
+				var min = Math.floor(100 / count);
+				for(var i=0;i<count-1;i++) arr.push(min + '%');
+				arr.push((100 - min * (count-1)) + '%');
+			}
+			this.columnWidths = arr;
+		},
+		columnWidths: null,
+		items: null
+	});
+	</script>
+</polymer-element>
+
 <polymer-element name="category-pane" attributes="subcategories">
   <template>
-    <style>#next-button {
-  position: absolute;
-  bottom: 16px;
-  right: -16px;
-  z-index: 3;
-  color: white;
-  background-color: #2196F3; }
+    <style></style>
 
-#next-button::shadow core-icon {
-  vertical-align: baseline; }
-</style>
-    <div layout="" horizontal="" wrap="" center-justified="">
-      <template repeat="{{subcategory in subcategories}}">
-        <subcategory-card id="card" subcategory="{{subcategory}}" self-center="" layout="" vertical="">
-        </subcategory-card>
-      </template>
-      <paper-fab id="next-button" icon="next"></paper-fab>
+    <core-ajax-dart id="ajax-colour-schemes" url="http://www.colourlovers.com/api/palettes/top?format=json" on-core-error="{{ajaxError}}" handleas="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
+    </core-ajax-dart>
+
+    <div layout="" center-justified="">
+      <ordered-columns columnwidth="495">
+        <template repeat="{{subcategory in subcategories}}">
+          <subcategory-card role="article" id="card" subcategory="{{subcategory}}">
+          </subcategory-card>
+        </template>
+      </ordered-columns>
     </div>
   </template>
 
   
 </polymer-element>
-
 
 <polymer-element name="google-signin" extends="paper-button-base" role="button">
   <template>
@@ -10836,31 +12713,24 @@ of where they are in DOM.
 
 
 
-<polymer-element name="core-xhr-dart" hidden="">
-  
-</polymer-element>
-
-
-<polymer-element name="core-ajax-dart" hidden="" attributes="url handleAs auto params response error method headers body contentType withCredentials progress loading">
-  
-</polymer-element>
-
-
-<polymer-element name="top-left">
+<polymer-element name="login-screen">
   <template>
-    <style>.welcome {
-  display: block; }
+    <style>:host {
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 6;
+  visibility: hidden;
+  transition: all 300ms ease-in-out;
+  opacity: 0;
+  will-change: transform;
+  transform: scale(0);
+  margin: 0; }
 
-:host {
-  margin: 0.5em; }
+:host(.show:host) {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1); }
 </style>
-    <template if="{{signedin}}">
-      <span class="welcome">Welcome Back{{name}}</span>
-    </template>
-    <template if="{{!signedin}}">
-      <span class="welcome">Welcome</span>
-    </template>
-    <google-signin raised="" clientid="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile email"></google-signin>
+    <google-signin width="wide" height="tall" clientid="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile email"></google-signin>
 
     <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
 
@@ -12136,7 +14006,7 @@ but be aware that templates aren't cheap.
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 
 
-<polymer-element name="competences-service" attributes="categories hash newlink newuser signedin">
+<polymer-element name="competences-service" attributes="categories hash newlink newuser signedin user">
   <template>
     <style>
     :host {
@@ -12175,70 +14045,79 @@ but be aware that templates aren't cheap.
         s.parentNode.insertBefore(p, s);
     })();
     </script></div>
+  <div id="cmdebug" hidden=""></div>
   <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
+    <login-screen id="loginscreen" layout="" vertical="" center-center="" fit="" class="{{signedin ? '' : 'show'}}"></login-screen>
+
     <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
     <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
-    <competences-service id="service" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
-      <core-header-panel mode="waterfall-tall" id="core_header_panel" navigation="" flex="">
-        <core-toolbar id="panel-head" class="core-header" on-tap="{{goTo2}}" href="/"><top-left></top-left></core-toolbar>
-        <core-menu on-tap="{{goTo}}" flex="" id="panel-list1" class="content" theme="core-light-theme">
+      <core-header-panel mode="scroll" id="core_header_panel" navigation="" flex="">
+        <core-toolbar id="panel-head" class="core-header tall">
+          <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
+          <img class="middle profile" _src="{{user.profile}}" hidden?="{{user.profile == null}}">
+          <div class="bottom" layout="" vertical="">
+            <span>{{user.nickname}}</span>
+            <span>{{user.email}}</span>
+          </div>
+        </core-toolbar>
+        <core-menu flex="" id="panel-list" class="content" theme="core-light-theme" selectedattribute="">
 
           <!-- Home -->
           <template if="{{ projectRoute['projectHash'] == null &amp;&amp; adminRoute['projectHash'] == null }}">
-              <core-selector flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-                <paper-item href="/" id="menu_item_home" name="home" horizontal="" center="" layout="">
+              <core-selector on-core-activate="{{navigate}}" flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+                <paper-item id="menu_item_home" name="home" tabindex="0">
                   <core-icon icon="home"></core-icon>
-                  Home
+                  <span flex="">Home</span>
                 </paper-item>
+                <div class="separator empty"></div>
               </core-selector>
           </template>
 
           <!-- Project -->
           <template if="{{ projectRoute['projectHash'] != null }}">
-            <core-selector flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-              <paper-item href="/" id="menu_item_home" name="home" horizontal="" center="" layout="">
+            <core-selector on-core-activate="{{navigate}}" flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+              <paper-item id="menu_item_home" name="home" tabindex="0">
                 <core-icon icon="home"></core-icon>
-                Home
+                <span flex="">Home</span>
               </paper-item>
+              <div class="separator">All categories</div>
               <template repeat="{{category in categories}}">
-                <paper-item href="/booking" id="menu_item1" name="{{category.name}}" horizontal="" center="" layout="">
+                <paper-item noink="" id="menu_item_category" name="{{category.name}}" tabindex="0"><!-- Using noink so the ripple doesn't freeze and make the app look slow, https://github.com/Polymer/paper-ripple/issues/10 -->
                   <core-icon icon="assignment-ind"></core-icon>
-                  {{category.name}}
+                  <span flex="">{{category.name}}</span>
                 </paper-item>
               </template>
+              <paper-item id="menu_item_join_hidden" name="join" hidden="">
+              </paper-item>
             </core-selector>
-
-            <core-field id="search_field" icon="search" theme="core-light-theme" center="" horizontal="" layout="">
-              <core-icon icon="search" id="search_icon"></core-icon>
-              <input is="core-input" willvalidate="" placeholder="Search for a competency" id="core_input" flex="">
-            </core-field>
           </template>
 
           <!-- Admin -->
           <template if="{{ adminRoute['projectHash'] != null }}">
-              <core-selector flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" theme="core-light-theme">
-                <paper-item href="/" id="menu_item_home" name="home">
+              <core-selector on-core-activate="{{navigate}}" flex="" id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+                <paper-item id="menu_item_home" name="home" tabindex="0">
                   <core-icon icon="home"></core-icon>
-                  Home
+                  <span flex="">Home</span>
                 </paper-item>
-                <paper-item href="/" id="menu_item_input" name="input">
-                  <core-icon icon="input"></core-icon>
-                  Input
+                <div class="separator">Admin functions</div>
+                <paper-item noink="" id="menu_item_input" name="input" tabindex="0">
+                  <core-icon icon="file-upload"></core-icon>
+                  <span flex="">Input</span>
                 </paper-item>
-                <paper-item href="/" id="menu_item_output" name="output">
-                  <core-icon icon="output"></core-icon>
-                  Output
+                <paper-item noink="" id="menu_item_output" name="output" tabindex="0">
+                  <core-icon icon="file-download"></core-icon>
+                  <span flex="">Output</span>
                 </paper-item>
               </core-selector>
           </template>
         </core-menu>
 
       </core-header-panel>
-
 
       <div id="title" tool="" flex="">Competence Matrix
         <!-- Project -->
@@ -12250,8 +14129,26 @@ but be aware that templates aren't cheap.
           Admin for {{project.name}}
         </template>
       </div>
-      <core-icon-button icon="search" tool=""></core-icon-button>
 
+      <core-menu-button class="selected-item" layout="" horizontal="" tool=""><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+        <core-icon-button icon="more-vert"></core-icon-button>
+        <paper-dropdown class="dropdown" halign="right" valign="top">
+          <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
+            <core-icon icon="info"></core-icon>
+            <span flex="">About</span>
+          </paper-item>
+          <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
+            <core-icon icon="close"></core-icon>
+            <span flex="">Sign out</span>
+          </paper-item>
+        </paper-dropdown>
+      </core-menu-button>
+
+      <div id="refresh" class="bottom fit" layout="" horizontal="" center-center="" on-transitionend="{{onRefreshTransitionEnd}}">
+        <div class="paper-shadow-bottom-z-1">
+          <paper-spinner id="refreshspinner"></paper-spinner>
+        </div>
+      </div>
 
       <core-animated-pages fit="" main="" selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
 
@@ -12274,7 +14171,7 @@ but be aware that templates aren't cheap.
                   Create a new project and administrate it for your teams.
                 </div>
                 <div flex=""></div>
-                <paper-button hidden="" self-center="" id="new-button" raised="" class="colored custom" role="button" tabindex="0">
+                <paper-button hidden="" self-center="" id="new-button" raised="" class="colored custom raised-button" autofocus="" tabindex="0">
                   <core-icon icon="create" aria-label="create" role="img"></core-icon>
                   Create project
                 </paper-button>
@@ -12300,7 +14197,7 @@ but be aware that templates aren't cheap.
           </section>
           <section name="input" vertical="" layout="">
 
-            <paper-input label="Project name" floatinglabel="" error="Project name is required!" required="" value="{{project.name}}"></paper-input>
+            <paper-input label="Project name" floatinglabel="" autofocus="" error="Project name is required!" required="" value="{{project.name}}"></paper-input>
             <paper-input-decorator label="Description" floatinglabel="">
               <paper-autogrow-textarea>
                 <textarea></textarea>
@@ -12312,19 +14209,17 @@ but be aware that templates aren't cheap.
             <paper-input-decorator label="Teams (as JSON)" floatinglabel="" labelvisible="" error="One team is required!">
               <textarea rows="10" value="{{project.teamsAsJson}}" required=""></textarea>
             </paper-input-decorator>
-            <paper-button hidden="" self-center="" id="create-button" raised="" class="colored custom" role="button" tabindex="0">
+            <paper-button hidden="" self-center="" id="create-button" raised="" class="colored custom raised-button" tabindex="0">
               <core-icon icon="create" aria-label="create" role="img"></core-icon>
               Create project
             </paper-button>
-            <paper-action-dialog id="dialog" heading="New project created" transition="paper-transition-center" backdrop="true">
+            <paper-action-dialog id="created-dialog" heading="New project created" transition="paper-transition-center" backdrop="true">
               <p>Write down the following link:<br>
-                 {{newlink}}<br>
-                 <br>
-                 This is the permalink to your project. Share it with your project members!<br>
-                 <br>
-                 Would you like to navigate to it now?</p>
-              <paper-button dismissive="">Back</paper-button>
-              <paper-button id="go-button" affirmative="">Go</paper-button>
+                 {{newlink}}<br></p>
+              <p>This is the permalink to your project. Share it with your project members!</p>
+              <p>Would you like to navigate to it now?</p>
+              <paper-button dismissive="" tabindex="0" class="flat-button">Close</paper-button>
+              <paper-button affirmative="" tabindex="0" autofocus="" class="flat-button" id="go-button">Navigate</paper-button>
             </paper-action-dialog>
           </section>
           <section name="output" vertical="" layout="">
@@ -12349,7 +14244,7 @@ but be aware that templates aren't cheap.
                   <p>Team to be added to: (TBD)</p>
                 </div>
                 <div flex=""></div>
-                <paper-button self-center="" id="join-button" raised="" class="colored custom" role="button" tabindex="0">
+                <paper-button self-center="" id="join-button" raised="" class="colored custom raised-button" autofocus="" tabindex="0">
                   <core-icon icon="add" aria-label="add" role="img"></core-icon>
                   Join project
                 </paper-button>
@@ -12365,13 +14260,15 @@ but be aware that templates aren't cheap.
 
       </core-animated-pages>
 
-
-
-      <paper-dialog id="dialog" heading="Info on Akepot" transition="paper-transition-center" backdrop="true">
+      <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix" transition="paper-transition-center" backdrop="true">
         <p>Made with Polymer and Dart in October 2014.</p>
-        <p>This tool was created by pjv.</p>
-        <paper-button dismissive="" autofocus="">Close</paper-button>
-      </paper-dialog>
+        <p>Copyright 2014-2015 pjv.</p>
+        <paper-button dismissive="" tabindex="0" autofocus="" class="flat-button">Close</paper-button>
+      </paper-action-dialog>
+
+      <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
+        <paper-button dismissive="" tabindex="0" autofocus="" class="flat-button">Retry</paper-button>
+      </paper-toast>
     </core-scaffold>
     </template>
 

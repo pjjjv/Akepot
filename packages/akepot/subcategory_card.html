@@ -4,15 +4,17 @@
 <link rel="import" href="../../packages/core_elements/core_icons.html">
 <link rel="import" href="single_strength_item.html">
 <link rel="import" href="core_card2.html">
+<script src="../../packages/browser/dart.js"></script>
+<link rel="import" href="../../packages/akepot/components/trianglify/trianglify.html">
 
-<polymer-element name="subcategory-card" attributes="subcategory">
+<polymer-element name="subcategory-card" attributes="subcategory palette">
   <template>
     <link href="subcategory_card.css" rel="stylesheet">
     <core-card2 id="card" self-center layout vertical>
       <div class="front">
-        <paper-fab mini id="help-button" class="flip-button" icon="help"></paper-fab>
+        <paper-fab mini id="help-button" class="flip-button floating-action-button" icon="help" tabindex="0"></paper-fab>
         <div id="image-box">
-          <core-image fit src="images/ilias2.jpg" sizing="cover" preload fade></core-image>
+          <core-image fit sizing="cover" id="header" preload fade></core-image>
         </div>
         <div id="title-box">
           <div fit id="title">{{subcategory.name}}</div>

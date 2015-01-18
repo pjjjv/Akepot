@@ -9159,7 +9159,7 @@ if(typeof a==="number")return a
 if(typeof a==="string")return a
 if(a instanceof Date)return P.Wu(a.getTime(),!0)
 if(a instanceof RegExp)throw H.b(P.SY("structured clone of RegExp"))
-if(Object.getPrototypeOf(a)===Object.prototype){z=this.f.$1(a)
+if(Object.getPrototypeOf(a)===Object.prototype||Object.getPrototypeOf(a)===null){z=this.f.$1(a)
 y=this.UI.$1(z)
 if(y!=null)return y
 y=P.Fl(null,null)

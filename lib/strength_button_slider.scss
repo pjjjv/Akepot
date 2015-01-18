@@ -2,14 +2,13 @@
 
 :host {
   margin: (1 * $component-grid);
-  //right: 1em;
 }
 
 strength-button {
-  margin: 0;
+  margin: (0.1 * $component-grid);
   right: 0;
 }
 
 strength-button::shadow .button {
-  margin: 0 0em;
+  margin: 0;
 }

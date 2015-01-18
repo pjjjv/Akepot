@@ -4,13 +4,12 @@
   background: $accent-color;
   @include text-button();
   color: $text-white-primary;
-  min-width: (3.5 * $component-grid);
-  min-height: (2.5 * $component-grid);
+  min-width: (5 * $component-grid);
+  min-height: (5 * $component-grid);
 }
 
 :host {
   margin: (1 * $component-grid);
-  //right: 1em;
 }
 
 :host([notselected]) {

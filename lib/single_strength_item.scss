@@ -2,6 +2,7 @@
 
 #title {
   @include text-subhead();
+  line-height: $line-height-body1;
 }
 
 #desc {
@@ -20,4 +21,12 @@
 #secondary {
   display: block;
   overflow: hidden;
+}
+
+#slider {
+  margin: 0;
+}
+
+:host {
+  margin: (1 * $component-grid);
 }

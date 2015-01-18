@@ -8,7 +8,7 @@
     <link href="single_strength_item.css" rel="stylesheet">
     <div id="main" layout horizontal center>
       <span id="title" flex on-tap="{{toggleDesc}}">{{title}}</span>
-      <strength-button-slider id="single_button" selected="{{number}}" max="5" tabindex="0"></strength-button-slider>
+      <strength-button-slider id="slider" selected="{{number}}" max="5" tabindex="0"></strength-button-slider>
     </div>
     <div id="secondary" layout horizontal end-justified>
       <p id="desc" hidden class="core-animation-target" on-tap="{{toggleDesc}}">{{desc}}</p>

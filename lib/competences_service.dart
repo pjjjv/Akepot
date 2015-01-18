@@ -198,6 +198,7 @@ class CompetencesService extends PolymerElement {
     ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$hash/${user.userid}";
     if(document.querySelector("#cmdebug") != null){
       ajaxUpdateCompetence.url = "data/update_competence_response.json";
+      return;//don't PUT
     }
     ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
     print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");

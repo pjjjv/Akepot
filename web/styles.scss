@@ -155,11 +155,11 @@ html /deep/ paper-item {
   }
 }
 html /deep/ paper-item.core-selected {
-   background-color: $light-grey;
+  background-color: $light-grey;
+  color: $accent-color;
+  core-icon {
    color: $accent-color;
-   core-icon {
-     color: $accent-color;
-   }
+  }
 }
 html /deep/ paper-item::shadow .button-content {
   height: inherit;
@@ -225,6 +225,7 @@ html /deep/ paper-fab.floating-acton-button {
   core-icon{
     vertical-align: baseline;
   }
+}
 
 //All ink ripples
 html /deep/ paper-ripple {
@@ -399,3 +400,4 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
   opacity: 0;
   will-change: opacity;
 }
+

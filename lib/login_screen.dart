@@ -31,7 +31,7 @@ class LoginScreen extends PolymerElement {
     button.signOut();
   }
 
-  void parseResponse(CustomEvent event, Map detail, CoreAjax node) {
+  void parseResponse2(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
     //print(response);
 

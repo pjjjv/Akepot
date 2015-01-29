@@ -2,7 +2,6 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:js';
-import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:core_elements/core_style.dart';
 import 'package:template_binding/template_binding.dart';

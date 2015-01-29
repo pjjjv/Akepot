@@ -17,20 +17,9 @@ class CategoryPane extends PolymerElement {
 
   void domReady() {
     ajaxColourSchemes = shadowRoot.querySelector('#ajax-colour-schemes');
-    getColourSchemes();
-  }
-
-  void getColourSchemes(){
-    Map map = {};
-    map['numResults'] = 100;
-
     if(document.querySelector("#cmdebug") != null){
       ajaxColourSchemes.url = "data/colour_schemes_response.json";
     }
-    ajaxColourSchemes.body = JSON.encode(map);
-    print("url: ${ajaxColourSchemes.url}, body: ${ajaxColourSchemes.body}");
-    ajaxColourSchemes.onCoreResponse.listen(ajaxColourSchemesResponse);
-    ajaxColourSchemes.go();
   }
 
   @reflectable

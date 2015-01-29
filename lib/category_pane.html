@@ -11,7 +11,9 @@
     <core-ajax-dart id="ajax-colour-schemes"
       url="http://www.colourlovers.com/api/palettes/top?format=json"
       on-core-error="{{ajaxError}}"
-      handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
+      on-core-response="{{ajaxColourSchemesResponse}}"
+      handleAs="json" method="GET"
+      body="{'numResults': 100}" auto>
     </core-ajax-dart>
 
     <div layout center-justified>

@@ -56,6 +56,9 @@
     <link rel="import" href="packages/akepot/category_pane.html">
     <link rel="import" href="packages/akepot/login_screen.html">
     <link rel="import" href="packages/akepot/core_card2.html">
+    <link rel="import" href="packages/akepot/menu_admin.html">
+    <link rel="import" href="packages/akepot/menu_projects.html">
+    <link rel="import" href="packages/akepot/menu_home.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
@@ -103,51 +106,17 @@
 
           <!-- Home -->
           <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
-              <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
-                <paper-item id="menu_item_home" name="home" tabindex="0">
-                  <core-icon icon="home"></core-icon>
-                  <span flex>Home</span>
-                </paper-item>
-                <div class="separator empty"></div>
-              </core-selector>
+            <menu-home selectedSection="{{selectedSection}}"></menu-home>
           </template>
 
           <!-- Project -->
           <template if="{{ projectRoute['projectHash'] != null }}">
-            <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
-              <paper-item id="menu_item_home" name="home" tabindex="0">
-                <core-icon icon="home"></core-icon>
-                <span flex>Home</span>
-              </paper-item>
-              <div class="separator">All categories</div>
-              <template repeat="{{category in categories}}">
-                <paper-item noink id="menu_item_category" name="{{category.name}}" tabindex="0"><!-- Using noink so the ripple doesn't freeze and make the app look slow, https://github.com/Polymer/paper-ripple/issues/10 -->
-                  <core-icon icon="assignment-ind"></core-icon>
-                  <span flex>{{category.name}}</span>
-                </paper-item>
-              </template>
-              <paper-item id="menu_item_join_hidden" name="join" hidden>
-              </paper-item>
-            </core-selector>
+            <menu-projects selectedSection="{{selectedSection}}" categories="{{categories}}"></menu-projects>
           </template>
 
           <!-- Admin -->
           <template if="{{ adminRoute['projectHash'] != null }}">
-              <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
-                <paper-item id="menu_item_home" name="home" tabindex="0">
-                  <core-icon icon="home"></core-icon>
-                  <span flex>Home</span>
-                </paper-item>
-                <div class="separator">Admin functions</div>
-                <paper-item noink id="menu_item_input" name="input" tabindex="0">
-                  <core-icon icon="file-upload"></core-icon>
-                  <span flex>Input</span>
-                </paper-item>
-                <paper-item noink id="menu_item_output" name="output" tabindex="0">
-                  <core-icon icon="file-download"></core-icon>
-                  <span flex>Output</span>
-                </paper-item>
-              </core-selector>
+            <menu-admin selectedSection="{{selectedSection}}"></menu-admin>
           </template>
         </core-menu>
 

@@ -1,0 +1,29 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../packages/paper_elements/paper_item.html">
+
+<polymer-element name="menu-admin" attributes="selectedSection">
+  <template>
+    <link href="menu_admin.css" rel="stylesheet">
+
+    <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+      <paper-item id="menu_item_home" name="home" tabindex="0">
+        <core-icon icon="home"></core-icon>
+        <span flex>Home</span>
+      </paper-item>
+      <div class="separator">Admin functions</div>
+      <paper-item noink id="menu_item_input" name="input" tabindex="0">
+        <core-icon icon="file-upload"></core-icon>
+        <span flex>Input</span>
+      </paper-item>
+      <paper-item noink id="menu_item_output" name="output" tabindex="0">
+        <core-icon icon="file-download"></core-icon>
+        <span flex>Output</span>
+      </paper-item>
+    </core-selector>
+  </template>
+
+  <script type="application/dart" src="menu_admin.dart"></script>
+</polymer-element>
+

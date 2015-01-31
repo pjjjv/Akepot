@@ -1,0 +1,29 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../packages/paper_elements/paper_item.html">
+
+<polymer-element name="menu-projects" attributes="selectedSection categories">
+  <template>
+    <link href="menu_projects.css" rel="stylesheet">
+
+    <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+      <paper-item id="menu_item_home" name="home" tabindex="0">
+        <core-icon icon="home"></core-icon>
+        <span flex>Home</span>
+      </paper-item>
+      <div class="separator">All categories</div>
+      <template repeat="{{category in categories}}">
+        <paper-item noink id="menu_item_category" name="{{category.name}}" tabindex="0"><!-- Using noink so the ripple doesn't freeze and make the app look slow, https://github.com/Polymer/paper-ripple/issues/10 -->
+          <core-icon icon="assignment-ind"></core-icon>
+          <span flex>{{category.name}}</span>
+        </paper-item>
+      </template>
+      <paper-item id="menu_item_join_hidden" name="join" hidden>
+      </paper-item>
+    </core-selector>
+  </template>
+
+  <script type="application/dart" src="menu_projects.dart"></script>
+</polymer-element>
+

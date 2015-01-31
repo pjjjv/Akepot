@@ -4,9 +4,9 @@
 <link rel="import" href="../../packages/paper_elements/paper_fab.html">
 <link rel="import" href="../../packages/akepot/components/ordered-columns/ordered-columns.html">
 
-<polymer-element name="category-pane" attributes="subcategories">
+<polymer-element name="pane-category" attributes="subcategories">
   <template>
-    <link href="category_pane.css" rel="stylesheet">
+    <link href="pane_category.css" rel="stylesheet">
 
     <core-ajax-dart id="ajax-colour-schemes"
       url="http://www.colourlovers.com/api/palettes/top?format=json"
@@ -26,5 +26,5 @@
     </div>
   </template>
 
-  <script type="application/dart" src="category_pane.dart"></script>
+  <script type="application/dart" src="pane_category.dart"></script>
 </polymer-element>

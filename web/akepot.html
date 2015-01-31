@@ -53,15 +53,17 @@
     <link rel="import" href="packages/paper_elements/paper_dropdown.html">
     <link rel="import" href="packages/paper_elements/paper_action_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
-    <link rel="import" href="packages/akepot/category_pane.html">
+    <link rel="import" href="packages/akepot/pane_category.html">
     <link rel="import" href="packages/akepot/login_screen.html">
     <link rel="import" href="packages/akepot/core_card2.html">
     <link rel="import" href="packages/akepot/menu_admin.html">
-    <link rel="import" href="packages/akepot/menu_projects.html">
+    <link rel="import" href="packages/akepot/menu_project.html">
     <link rel="import" href="packages/akepot/menu_home.html">
     <link rel="import" href="packages/akepot/pane_home.html">
     <link rel="import" href="packages/akepot/pane_input.html">
     <link rel="import" href="packages/akepot/pane_join.html">
+    <link rel="import" href="packages/akepot/dropdown_menu.html">
+    <link rel="import" href="packages/akepot/refresh_spinner.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
@@ -95,7 +97,10 @@
     <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
 
     <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
+
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
+
+
       <core-header-panel mode="scroll" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header tall">
           <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
@@ -105,25 +110,23 @@
             <span>{{user.email}}</span>
           </div>
         </core-toolbar>
-        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
 
+        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
           <!-- Home -->
           <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
             <menu-home selectedSection="{{selectedSection}}"></menu-home>
           </template>
-
           <!-- Project -->
           <template if="{{ projectRoute['projectHash'] != null }}">
-            <menu-projects selectedSection="{{selectedSection}}" categories="{{categories}}"></menu-projects>
+            <menu-project selectedSection="{{selectedSection}}" categories="{{categories}}"></menu-project>
           </template>
-
           <!-- Admin -->
           <template if="{{ adminRoute['projectHash'] != null }}">
             <menu-admin selectedSection="{{selectedSection}}"></menu-admin>
           </template>
         </core-menu>
-
       </core-header-panel>
+
 
       <div id="title" tool flex>Competence Matrix
         <!-- Project -->
@@ -136,95 +139,33 @@
         </template>
       </div>
 
-      <core-menu-button class="selected-item" layout horizontal tool><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
-        <core-icon-button icon="more-vert"></core-icon-button>
-        <paper-dropdown class="dropdown" halign="right" valign="top">
-          <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
-            <core-icon icon="info"></core-icon>
-            <span flex>About</span>
-          </paper-item>
-          <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
-            <core-icon icon="close"></core-icon>
-            <span flex>Sign out</span>
-          </paper-item>
-        </paper-dropdown>
-      </core-menu-button>
 
-      <div id="refresh" class="bottom fit" layout horizontal center-center on-transitionend="{{onRefreshTransitionEnd}}">
-        <div class="paper-shadow-bottom-z-1">
-          <paper-spinner id="refreshspinner"></paper-spinner>
-        </div>
-      </div>
+      <dropdown-menu></dropdown-menu>
+      <refresh-spinner></refresh-spinner>
+
 
       <core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
-
-        <!--<topeka-profile id="profile" name="profile" user="John" wide="100px" center="" layout="" vertical="" class="core-selected" active="">
-        </topeka-profile>-->
-
         <!-- Home -->
         <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
-          <section name="splash">
-            <span fit class="splash wide" cross-fade></span>
-          </section>
-          <section name="home">
-            <div layout horizontal wrap center-justified>
-              <div id="card-new" self-center layout vertical>
-                <div fit id="title-box">
-                  <div id="title">New project</div>
-                </div>
-                <div id="title-box-substitute"></div>
-                <div id="text-box">
-                  Create a new project and administrate it for your teams.
-                </div>
-                <div flex></div>
-                <paper-button hidden self-center id="new-button" raised class="colored custom raised-button" autofocus tabindex="0">
-                  <core-icon icon="create" aria-label="create" role="img"></core-icon>
-                  Create project
-                </paper-button>
-              </div>
-              <div id="card-link" self-center layout vertical>
-                <div fit id="title-box">
-                  <div id="title">... or use link</div>
-                </div>
-                <div id="title-box-substitute"></div>
-                <div id="text-box">
-                  If you just want to fill in your competences as a user, ask your administrator for the deep link to your project.
-                </div>
-                <div flex></div>
-              </div>
-            </div>
-          </section>
+          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
+          <section name="home"><pane-home></pane-home></section>
         </template>
-
         <!-- Admin -->
         <template if="{{ adminRoute['projectHash'] != null }}">
-          <section name="splash">
-            <span fit class="splash wide" cross-fade></span>
-          </section>
-          <section name="input" vertical layout>
-            <pane-input></pane-input>
-          </section>
-          <section name="output" vertical layout>
-
-          </section>
+          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
+          <section name="input" vertical layout><pane-input></pane-input></section>
+          <section name="output" vertical layout></section>
         </template>
-
         <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">
-          <section name="splash">
-            <span fit class="splash wide" cross-fade></span>
-          </section>
-          <section name="join" vertical layout>
-            <pane-join></pane-join>
-          </section>
+          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
+          <section name="join" vertical layout><pane-join></pane-join></section>
           <template repeat="{{category in categories}}">
-            <section name="{{category.name}}" id="{{category.name}}" vertical layout>
-              <category-pane id="list1" subcategories="{{category.subcategories}}" cross-fade></category-pane>
-            </section>
+            <section name="{{category.name}}" id="{{category.name}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
           </template>
         </template>
-
       </core-animated-pages>
+
 
       <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix"
         transition="paper-transition-center" backdrop="true">
@@ -236,6 +177,9 @@
       <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
         <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>
       </paper-toast>
+
+
+
     </core-scaffold>
     </template>
 

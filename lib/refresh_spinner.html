@@ -1,0 +1,21 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../packages/core_elements/core_menu-button.html">
+<link rel="import" href="../../packages/core_elements/core_icon-button.html">
+<link rel="import" href="../../packages/paper_elements/paper_item.html">
+<link rel="import" href="../../packages/paper_elements/paper_dropdown.html">
+
+<polymer-element name="refresh-spinner">
+  <template>
+    <link href="refresh_spinner.css" rel="stylesheet">
+
+    <div id="refresh" class="bottom fit" layout horizontal center-center on-transitionend="{{onRefreshTransitionEnd}}">
+      <div class="paper-shadow-bottom-z-1">
+        <paper-spinner id="refreshspinner"></paper-spinner>
+      </div>
+    </div>
+  </template>
+
+  <script type="application/dart" src="refresh_spinner.dart"></script>
+</polymer-element>
+

@@ -7,9 +7,9 @@ import 'package:core_elements/core_ajax_dart.dart';
 import 'dart:math';
 import 'dart:convert';
 
-@CustomTag('category-pane')
-class CategoryPane extends PolymerElement {
-  CategoryPane.created() : super.created();
+@CustomTag('pane-category')
+class PaneCategory extends PolymerElement {
+  PaneCategory.created() : super.created();
 
   @published List<SubCategory> subcategories;
   @observable List<Palette> palettes = [];

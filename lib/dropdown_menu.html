@@ -1,0 +1,29 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../packages/core_elements/core_menu-button.html">
+<link rel="import" href="../../packages/core_elements/core_icon-button.html">
+<link rel="import" href="../../packages/paper_elements/paper_item.html">
+<link rel="import" href="../../packages/paper_elements/paper_dropdown.html">
+
+<polymer-element name="dropdown-menu">
+  <template>
+    <link href="dropdown_menu.css" rel="stylesheet">
+
+    <core-menu-button class="selected-item" layout horizontal tool><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+      <core-icon-button icon="more-vert"></core-icon-button>
+      <paper-dropdown class="dropdown" halign="right" valign="top">
+        <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
+          <core-icon icon="info"></core-icon>
+          <span flex>About</span>
+        </paper-item>
+        <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
+          <core-icon icon="close"></core-icon>
+          <span flex>Sign out</span>
+        </paper-item>
+      </paper-dropdown>
+    </core-menu-button>
+  </template>
+
+  <script type="application/dart" src="dropdown_menu.dart"></script>
+</polymer-element>
+

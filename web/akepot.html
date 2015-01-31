@@ -59,6 +59,9 @@
     <link rel="import" href="packages/akepot/menu_admin.html">
     <link rel="import" href="packages/akepot/menu_projects.html">
     <link rel="import" href="packages/akepot/menu_home.html">
+    <link rel="import" href="packages/akepot/pane_home.html">
+    <link rel="import" href="packages/akepot/pane_input.html">
+    <link rel="import" href="packages/akepot/pane_join.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
@@ -199,32 +202,7 @@
             <span fit class="splash wide" cross-fade></span>
           </section>
           <section name="input" vertical layout>
-
-            <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
-            <paper-input-decorator label="Description" floatingLabel>
-              <paper-autogrow-textarea>
-                <textarea></textarea>
-              </paper-autogrow-textarea>
-            </paper-input-decorator>
-            <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel labelVisible error="One category, sub-category and competence is required!">
-              <textarea rows="10" value="{{project.categoriesAsJson}}" required></textarea>
-            </paper-input-decorator>
-            <paper-input-decorator label="Teams (as JSON)" floatingLabel labelVisible error="One team is required!">
-              <textarea rows="10" value="{{project.teamsAsJson}}" required></textarea>
-            </paper-input-decorator>
-            <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
-              <core-icon icon="create" aria-label="create" role="img"></core-icon>
-              Create project
-            </paper-button>
-            <paper-action-dialog id="created-dialog" heading="New project created"
-              transition="paper-transition-center" backdrop="true">
-              <p>Write down the following link:<br>
-                 {{newlink}}<br></p>
-              <p>This is the permalink to your project. Share it with your project members!</p>
-              <p>Would you like to navigate to it now?</p>
-              <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
-              <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
-            </paper-action-dialog>
+            <pane-input></pane-input>
           </section>
           <section name="output" vertical layout>
 
@@ -237,23 +215,7 @@
             <span fit class="splash wide" cross-fade></span>
           </section>
           <section name="join" vertical layout>
-            <div layout horizontal wrap center-justified>
-              <div id="card-new" self-center layout vertical>
-                <div fit id="title-box">
-                  <div id="title">Join this project?</div>
-                </div>
-                <div id="title-box-substitute"></div>
-                <div id="text-box">
-                  <p>Would you like to join this project?</p><br><br>
-                  <p>Team to be added to: (TBD)</p>
-                </div>
-                <div flex></div>
-                <paper-button self-center id="join-button" raised class="colored custom raised-button" autofocus tabindex="0">
-                  <core-icon icon="add" aria-label="add" role="img"></core-icon>
-                  Join project
-                </paper-button>
-              </div>
-            </div>
+            <pane-join></pane-join>
           </section>
           <template repeat="{{category in categories}}">
             <section name="{{category.name}}" id="{{category.name}}" vertical layout>

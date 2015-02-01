@@ -1,58 +1,35 @@
 
 import 'package:polymer/polymer.dart';
-import 'package:core_elements/core_animation_group.dart';
-import 'package:core_elements/core_animation.dart';
 import 'dart:html';
+import 'package:core_elements/core_collapse.dart';
 
 @CustomTag('single-strength-item')
 class SingleStrengthItem extends PolymerElement {
   SingleStrengthItem.created() : super.created();
 
-  CoreAnimationGroup animation;
-  HtmlElement descEl;
-  bool hidden = true;
   @published String title = "Software impact analysis";
   @published String desc = "Document that describes software impact analysis.";
   @published int number = 1;
+  CoreCollapse cc;
 
-  domReady() {
-    animation = shadowRoot.querySelector('#slide-down');
-    animation.target = shadowRoot.querySelector('#desc');
-    descEl = shadowRoot.querySelector('#desc');
-
-    descEl.hidden = !descEl.hidden;
-    String height = descEl.contentEdge.height.toString()+"px";
-    descEl.hidden = !descEl.hidden;
-    CoreAnimationProp prop = shadowRoot.querySelector('#slide-down-prop');
-    prop.value = "translate(0,-$height)";
+  void domReady() {
+    cc = shadowRoot.querySelector("core-collapse");
   }
 
-  void toggleDesc(Event e){
-    print('dispatching from child');
-    //dispatchEvent(new CustomEvent('toggleotherdescs'));
-
-    startToggleDesc();
-  }
-
-  void startToggleDesc(){
-    animation.direction = (animation.direction == "reverse") ? "normal" : "reverse";
-    hidden = descEl.hidden;
-
-    if (hidden){
-      descEl.hidden = !descEl.hidden;
+  void toggle(Event e) {
+    //Toggle (close) all others
+    if(!cc.opened){
+      dispatchEvent(new CustomEvent('toggleotherdescs'));
     }
-    animation.play();
+
+    cc.toggle();
   }
 
-  void finishToggleDesc(Event e){
-    if (!hidden){
-      descEl.hidden = !descEl.hidden;
+  void closeDesc(){
+    //Close if open
+    if(cc.opened){
+      cc.toggle();
     }
   }
 
-  void setDescHidden(){
-    if(!descEl.hidden){
-      startToggleDesc();
-    }
-  }
 }

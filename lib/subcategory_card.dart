@@ -18,10 +18,10 @@ class SubCategoryCard extends PolymerElement {
     generateBackground();
   }
 
-  void toggleOtherDescs(Event e) {
+  void closeDesc(Event e) {
     for(SingleStrengthItem item in shadowRoot.querySelectorAll('single-strength-item')){
       print("toggleOtherDescs");
-      item.setDescHidden();
+      item.closeDesc();
     }
   }
 

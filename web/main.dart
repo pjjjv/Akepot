@@ -43,20 +43,17 @@ class Content extends Observable {
   @observable String selectedSection = "splash";
 
   @observable String projectHash = "";
-  @observable String newlink;
   @observable bool newuser;
   @observable bool signedin;
   @observable User user;
 
-  String generatedHash = null;
-  PaperButton newButton;
-  PaperButton createButton;
+  @observable String generatedHash = null;
   PaperButton joinButton;
 
   var projectRouter = null;
   var adminRouter = null;
 
-  CompetencesService service;
+  @observable CompetencesService service;
 
   @observable Project project;
 
@@ -158,22 +155,11 @@ class Content extends Observable {
       return;
     }
     selectedSection = "input";
-    createButton = document.querySelector("#create-button");
-    createButton.hidden = false;
-    createButton.onClick.listen(createProject);
   }
 
   void getProject(){
     print("getProject");
     service.getProject(projectHash);
-  }
-
-  void createProject(Event e){
-    print ("createProject");
-    projectHash = adminRoute['projectHash'];
-    project.categoriesFromJson();
-    project.teamsFromJson();
-    service.newProject(project, projectHash);
   }
 
   void joinProject(Event e){
@@ -189,9 +175,6 @@ class Content extends Observable {
     }
     projectHash = generatedHash;
     selectedSection = "home";
-    newButton = document.querySelector("#new-button");
-    newButton.hidden = false;
-    newButton.onClick.listen(newProject);
   }
 
   void signOut(Event e) {
@@ -208,22 +191,9 @@ class Content extends Observable {
     return result;
   }
 
-  void newProject(Event e){
-    String message = context['MoreRouting'].callMethod('urlFor', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
-    print("New admin link would be: $message");
-    context['MoreRouting'].callMethod('navigateTo', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
-  }
-
   void about(Event e) {
     var dialog = querySelector('#about-dialog');
     dialog.toggle();
-  }
-
-  void navigate(Event e, var detail){
-    var itemId = detail['item'].id;
-    if(itemId == "menu_item_home"){
-      context['MoreRouting'].callMethod('navigateTo', ['/']);
-    }
   }
 
 }

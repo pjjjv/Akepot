@@ -6,10 +6,11 @@
 <link rel="import" href="../../packages/paper_elements/paper_action_dialog.html">
 <link rel="import" href="../../packages/paper_elements/paper_button.html">
 
-<polymer-element name="pane-input" attributes="project">
+<polymer-element name="pane-input" attributes="project projectHash adminRoute service newlink">
   <template>
     <link href="pane_input.css" rel="stylesheet">
 
+    <div  vertical layout>
     <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
     <paper-input-decorator label="Description" floatingLabel>
       <paper-autogrow-textarea>
@@ -35,6 +36,7 @@
       <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
       <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
     </paper-action-dialog>
+    </div>
   </template>
 
   <script type="application/dart" src="pane_input.dart"></script>

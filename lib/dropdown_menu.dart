@@ -1,7 +1,7 @@
 
 import 'package:polymer/polymer.dart';
 
-@CustomTag('menu-admin')
-class MenuAdmin extends PolymerElement {
-  MenuAdmin.created() : super.created();
+@CustomTag('dropdown-menu')
+class DropdownMenu extends PolymerElement {
+  DropdownMenu.created() : super.created();
 }

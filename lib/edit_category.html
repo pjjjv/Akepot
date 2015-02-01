@@ -1,0 +1,16 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<polymer-element name="edit-category" attributes="category form">
+  <template>
+    <link href="edit_category.css" rel="stylesheet">
+
+    <div class="item {{selected}}" tabindex="1" draggable="true" id="{{category.id}}">
+      <span class="form">
+        <span class="nameSpan"><label class="name">{{category.name}}</label><input type="text" class="newName" /></span>
+      </span>
+    </div>
+  </template>
+
+  <script type="application/dart" src="edit_category.dart"></script>
+</polymer-element>
+

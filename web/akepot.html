@@ -62,6 +62,7 @@
     <link rel="import" href="packages/akepot/pane_home.html">
     <link rel="import" href="packages/akepot/pane_input.html">
     <link rel="import" href="packages/akepot/pane_join.html">
+    <link rel="import" href="packages/akepot/edit_category.html">
     <link rel="import" href="packages/akepot/dropdown_menu.html">
     <link rel="import" href="packages/akepot/refresh_spinner.html">
     <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
@@ -155,6 +156,7 @@
           <section name="splash"><span fit class="splash wide" cross-fade></span></section>
           <section name="input"><pane-input project="{{project}}" projectHash="{{projectHash}}" adminRoute="{{adminRoute}}" service="{{service}}" newlink="{{newlink}}"></pane-input></section>
           <section name="output"></section>
+          <section name="edit"><edit-category category="{{project.categories[0]}}" form></edit-category></section>
         </template>
         <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">

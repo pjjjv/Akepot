@@ -151,7 +151,7 @@ class CompetencesService extends PolymerElement {
     PaperActionDialog dialog = document.querySelector('#created-dialog');
 
     PaperButton goButton = document.querySelector('#go-button');
-    goButton.onClick.listen(onGoButtonClick);
+    goButton.onClick.first.then(onGoButtonClick);
 
     dialog.toggle();
   }
@@ -186,8 +186,8 @@ class CompetencesService extends PolymerElement {
       //ajaxGetProject.url = "data/get_project_error_new_user_response.json"; //new user
     }
     print("url: ${ajaxGetProject.url}");
-    ajaxGetProject.onCoreResponse.listen(ajaxGetProjectResponse);
-    ajaxGetProject.onCoreError.listen(ajaxGetProjectError);
+    ajaxGetProject.onCoreResponse.first.then(ajaxGetProjectResponse);
+    ajaxGetProject.onCoreError.first.then(ajaxGetProjectError);
     ajaxGetProject.go();//TODO: can be disabled to exclude expensive rest queries
   }
 
@@ -202,7 +202,7 @@ class CompetencesService extends PolymerElement {
     }
     ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
     print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
-    ajaxUpdateCompetence.onCoreResponse.listen(ajaxUpdateCompetenceResponse);
+    ajaxUpdateCompetence.onCoreResponse.first.then(ajaxUpdateCompetenceResponse);
     ajaxUpdateCompetence.go();
   }
 
@@ -216,7 +216,7 @@ class CompetencesService extends PolymerElement {
     }
     ajaxNewProject.body = JSON.encode(project.toJson());
     print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
-    ajaxNewProject.onCoreResponse.listen(ajaxNewProjectResponse);
+    ajaxNewProject.onCoreResponse.first.then(ajaxNewProjectResponse);
     ajaxNewProject.go();
   }
 
@@ -238,7 +238,7 @@ class CompetencesService extends PolymerElement {
     }
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
-    ajaxNewPerson.onCoreResponse.listen(ajaxAddAdminPersonResponse);
+    ajaxNewPerson.onCoreResponse.first.then(ajaxAddAdminPersonResponse);
     ajaxNewPerson.go();
   }
 
@@ -260,7 +260,7 @@ class CompetencesService extends PolymerElement {
     }
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
-    ajaxNewPerson.onCoreResponse.listen(ajaxNewPersonResponse);
+    ajaxNewPerson.onCoreResponse.first.then(ajaxNewPersonResponse);
     ajaxNewPerson.go();
   }
 
@@ -278,7 +278,7 @@ class CompetencesService extends PolymerElement {
   }
 
   void getUserinfo(){
-    ajaxUserinfo.onCoreResponse.listen(parseUserinfoResponse);
+    ajaxUserinfo.onCoreResponse.first.then(parseUserinfoResponse);
     /*if(document.querySelector("#cmdebug") != null){
       ajaxUserinfo.url = "data/userinfo_response.json";
     }*/

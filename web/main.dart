@@ -14,7 +14,6 @@ import 'package:akepot/login_screen.dart';
 
 void main() {
   initPolymer().run(() {
-    //(querySelector('#menu_button') as PolymerElement).onClick.listen(openMenu);
     Content contentModel;
 
     Polymer.onReady.then((_) {
@@ -145,7 +144,7 @@ class Content extends Observable {
       selectedSection = "join";
       newuser = false;
       joinButton = document.querySelector("#join-button");
-      joinButton.onClick.listen(joinProject);
+      joinButton.onClick.first.then(joinProject);
     }
   }
 

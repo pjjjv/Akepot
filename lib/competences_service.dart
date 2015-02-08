@@ -144,7 +144,7 @@ class CompetencesService extends PolymerElement {
       return;
     }
 
-    newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + context['MoreRouting'].callMethod('urlFor', ['projectRoute', new JsObject.jsify({'projectHash': '$hash'})]);
+    newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/"; //+ projectHash;
     print("New project link would be: $newlink");
 
 
@@ -212,6 +212,7 @@ class CompetencesService extends PolymerElement {
     }
     ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
     if(document.querySelector("#cmdebug") != null){
+      ajaxNewProject.method = "GET";
       ajaxNewProject.url = "data/new_project_response.json";
     }
     ajaxNewProject.body = JSON.encode(project.toJson());
@@ -234,6 +235,7 @@ class CompetencesService extends PolymerElement {
 
     ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
     if(document.querySelector("#cmdebug") != null){
+      ajaxNewPerson.method = "GET";
       ajaxNewPerson.url = "data/add_admin_person_response.json";
     }
     ajaxNewPerson.body = JSON.encode(map);

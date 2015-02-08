@@ -63,7 +63,7 @@ class Content extends Observable {
     if(projectRoute != null && projectRoute['projectHash'] != null){
       startupForProject();
     } else if (adminRoute != null && adminRoute['projectHash'] != null){
-      startupForAdmin(true);
+      //startupForAdmin(true);
     } else {
       //startupForHome();
       //generatedHash = generateId();
@@ -72,25 +72,6 @@ class Content extends Observable {
   void startupForProject () {
     print(SPLASH_TIMEOUT);
     new Timer(SPLASH_TIMEOUT, completeStartupForProject);
-  }
-
-  void startupForAdmin (bool first) {
-    print(SPLASH_TIMEOUT);
-    if(first){
-      project = new Project.empty(adminRoute['projectHash']);
-
-      HttpRequest.getString("data/fresh_categories.json")
-      .then((String text) => project.categoriesAsJson = text)
-      .catchError((Error error) => print("Error: $error"));
-
-      HttpRequest.getString("data/fresh_teams.json")
-      .then((String text) => project.teamsAsJson = text)
-      .catchError((Error error) => print("Error: $error"));
-
-      projectHash = adminRoute['projectHash'];
-    }
-    new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
-
   }
 
   void completeStartupForProject () {
@@ -123,14 +104,6 @@ class Content extends Observable {
       joinButton = document.querySelector("#join-button");
       joinButton.onClick.first.then(joinProject);
     }
-  }
-
-  void completeStartupForAdmin () {
-    if(signedin == false){
-      startupForAdmin(false);
-      return;
-    }
-    selectedSection = "input";
   }
 
   void getProject(){

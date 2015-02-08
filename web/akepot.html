@@ -62,6 +62,7 @@
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/akepot/pages/page_home.html">
+    <link rel="import" href="packages/akepot/pages/pane_input.html">
     <!--<link rel="import" href="packages/akepot/pages/page_input.html">-->
     <link rel="import" href="packages/akepot/pages/page_category.html">
     <link rel="import" href="packages/akepot/pages/page_join.html">
@@ -91,7 +92,7 @@
 
     <app-router mode="hash">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
-      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" template></app-route>
+      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" elem="page-input"></app-route>
       <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
     </app-router>
 

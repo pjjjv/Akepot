@@ -28,13 +28,7 @@ class PaneHome extends PolymerElement {
   }
 
   void newProject(Event e){
-    //String message = window.history.toString();
-    //RouteUri url = new RouteUri.parse(window.location.href);
-
     (document.querySelector('app-router') as AppRouter).go("/admin/$generatedHash/input");
-    //String message = context['MoreRouting'].callMethod('urlFor', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
-    //print("New admin link would be: $message");
-    //context['MoreRouting'].callMethod('navigateTo', ['adminRoute', new JsObject.jsify({'projectHash': '$generatedHash'})]);
   }
 
   void startupForHome () {

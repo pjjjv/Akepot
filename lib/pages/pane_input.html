@@ -7,22 +7,22 @@
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 
-<polymer-element name="pane-input" attributes="router projectHash">
+<polymer-element name="pane-input" attributes="projectHash">
   <template>
     <link href="pane_input.css" rel="stylesheet">
 
     <div  vertical layout>
-    <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{router.templateInstance.model.project.name}}"></paper-input>
+    <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
     <paper-input-decorator label="Description" floatingLabel>
       <paper-autogrow-textarea>
         <textarea></textarea>
       </paper-autogrow-textarea>
     </paper-input-decorator>
     <paper-input-decorator label="Categories, sub-categories and competences (as JSON)" floatingLabel labelVisible error="One category, sub-category and competence is required!">
-      <textarea rows="10" value="{{router.templateInstance.model.project.categoriesAsJson}}" required></textarea>
+      <textarea rows="10" value="{{project.categoriesAsJson}}" required></textarea>
     </paper-input-decorator>
     <paper-input-decorator label="Teams (as JSON)" floatingLabel labelVisible error="One team is required!">
-      <textarea rows="10" value="{{router.templateInstance.model.project.teamsAsJson}}" required></textarea>
+      <textarea rows="10" value="{{project.teamsAsJson}}" required></textarea>
     </paper-input-decorator>
     <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
       <core-icon icon="create" aria-label="create" role="img"></core-icon>

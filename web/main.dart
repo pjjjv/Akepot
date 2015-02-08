@@ -65,8 +65,8 @@ class Content extends Observable {
     } else if (adminRoute != null && adminRoute['projectHash'] != null){
       startupForAdmin(true);
     } else {
-      startupForHome();
-      generatedHash = generateId();
+      //startupForHome();
+      //generatedHash = generateId();
     }
   }
   void startupForProject () {
@@ -91,11 +91,6 @@ class Content extends Observable {
     }
     new Timer(SPLASH_TIMEOUT, completeStartupForAdmin);
 
-  }
-
-  void startupForHome () {
-    print(SPLASH_TIMEOUT);
-    new Timer(SPLASH_TIMEOUT, completeStartupForHome);
   }
 
   void completeStartupForProject () {
@@ -149,27 +144,8 @@ class Content extends Observable {
     startGetProject(false);
   }
 
-  void completeStartupForHome () {
-    if(generatedHash == null){
-      startupForHome();
-      return;
-    }
-    projectHash = generatedHash;
-    selectedSection = "home";
-  }
-
   void signOut(Event e) {
     (document.querySelector("#loginscreen") as LoginScreen).signOut();
-  }
-
-  // String generateId(int length);
-  //   length - must be an even number (default: 20)
-  String generateId([int length = 20]) {
-    Uint8List array = new Uint8List((length / 2).round());
-    window.crypto.getRandomValues(array);
-    String result = array.map((n) => n.toRadixString(16)).join("");
-    print("generateId: $result");
-    return result;
   }
 
   void about(Event e) {

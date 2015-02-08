@@ -9,7 +9,8 @@ dependencies:
   sass: any
   google_signin_dart: any
   app_router: any
-  app_router_test: any
+#  app_router:
+#    path: ../app_router_dart
   pushstate_anchor: any
 transformers:
 - sass:

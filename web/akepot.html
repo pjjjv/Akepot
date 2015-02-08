@@ -62,9 +62,10 @@
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/akepot/pages/page_home.html">
+    <link rel="import" href="packages/akepot/pages/page_input.html">
+    <link rel="import" href="packages/akepot/pages/page_category.html">
+    <link rel="import" href="packages/akepot/pages/page_join.html">
 
-    <!-- have to load ALL used elements here, from page_* sub-elements -->
-    <!--<link rel="import" href="packages/akepot/pages/pane_home.html">-->
     <script>
     var _prum = [['id', '54a6a6c7abe53d46185cc65d'],
                  ['mark', 'firstbyte', (new Date()).getTime()]];
@@ -78,7 +79,7 @@
     </script>
     <meta name="blitz" content="mu-945e2684-1e7d011f-6be36044-cab4553c">
   </head>
-<!-- http://localhost:8080/akepot.html#!/project/bla -->
+
   <body unresolved fullbleed touch-action="auto">
   <div id="cmdebug" hidden></div>
 
@@ -88,11 +89,9 @@
 
     <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
 
-<!-- scaffold was here-->
-
     <app-router mode="hash">
-      <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route><!--elem="page-home"-->
-      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/pane_input.html" elem="pane-input"></app-route>
+      <app-route path="/" imp="packages/akepot/pages/page_home.html" template bindRouter></app-route>
+      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" template bindRouter></app-route>
       <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
     </app-router>
 
@@ -128,11 +127,7 @@
         <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>
       </paper-toast>
 
-<!-- scaffold was here -->
-
     </template>
-
-
     <script src="main.dart" type="application/dart"></script>
     <!--Not if own main: <script type="application/dart">export 'package:polymer/init.dart';</script>-->
     <script src="packages/browser/dart.js"></script>

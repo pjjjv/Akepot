@@ -8,6 +8,7 @@ class MenuAdmin extends PolymerElement {
   MenuAdmin.created() : super.created();
 
   @published String selectedSection;
+  @published String projectHash;
 
   void navigate(Event e, var detail){
     var itemId = detail['item'].id;

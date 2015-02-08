@@ -1,7 +1,7 @@
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_subcategory.dart';
-import 'package:akepot/pane_category.dart';
+import 'package:akepot/pages/pane_category.dart';
 import 'package:akepot/single_strength_item.dart';
 import 'package:core_elements/core_image.dart';
 import 'dart:html';

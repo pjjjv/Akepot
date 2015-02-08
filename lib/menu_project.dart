@@ -10,6 +10,7 @@ class MenuProject extends PolymerElement {
 
   @published List<Category> categories;
   @published String selectedSection;
+  @published String projectHash;
 
   void navigate(Event e, var detail){
     var itemId = detail['item'].id;

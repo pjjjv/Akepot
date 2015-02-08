@@ -1,4 +1,3 @@
-
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'package:paper_elements/paper_button.dart';

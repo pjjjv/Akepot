@@ -27,13 +27,9 @@
     <script src="packages/web_components/dart_support.js"></script>-->
 
     <link rel="import" href="packages/polymer/polymer.html">
-    <link rel="import" href="packages/core_elements/core_scaffold.html">
-    <link rel="import" href="packages/core_elements/core_header_panel.html">
-    <link rel="import" href="packages/core_elements/core_menu.html">
     <link rel="import" href="packages/core_elements/core_menu_button.html">
     <link rel="import" href="packages/core_elements/core_item.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
-    <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/core_elements/core_submenu.html">
     <link rel="import" href="packages/core_elements/core_field.html">
     <link rel="import" href="packages/core_elements/core_icon.html">
@@ -53,25 +49,22 @@
     <link rel="import" href="packages/paper_elements/paper_dropdown.html">
     <link rel="import" href="packages/paper_elements/paper_action_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
-    <link rel="import" href="packages/akepot/pane_category.html">
+    <link rel="import" href="packages/app_router/app_router.html">
+    <link rel="import" href="packages/app_router/app_route.html">
     <link rel="import" href="packages/akepot/login_screen.html">
     <link rel="import" href="packages/akepot/core_card2.html">
-    <link rel="import" href="packages/akepot/menu_admin.html">
-    <link rel="import" href="packages/akepot/menu_project.html">
-    <link rel="import" href="packages/akepot/menu_home.html">
-    <link rel="import" href="packages/akepot/pane_home.html">
-    <link rel="import" href="packages/akepot/pane_input.html">
-    <link rel="import" href="packages/akepot/pane_join.html">
     <link rel="import" href="packages/akepot/edit_category.html">
-    <link rel="import" href="packages/akepot/dropdown_menu.html">
-    <link rel="import" href="packages/akepot/refresh_spinner.html">
-    <link rel="import" href="packages/akepot/components/more-routing/more-routing.html">
-    <link rel="import" href="packages/akepot/components/more-routing/more-route.html">
-    <link rel="import" href="packages/akepot/components/more-routing/more-route-selector.html">
-    <link rel="import" href="packages/akepot/components/more-routing/more-route-switch.html">
-    <link rel="import" href="packages/akepot/components/more-routing/routing.html">
     <link rel="import" href="packages/akepot/competences_service.html">
 
+    <!-- pre-load the most used elements -->
+    <link rel="import" href="packages/akepot/layouts/scaffold_layout.html">
+    <link rel="import" href="packages/core_elements/core_scaffold.html">
+    <link rel="import" href="packages/core_elements/core_header_panel.html">
+    <link rel="import" href="packages/core_elements/core_toolbar.html">
+    <link rel="import" href="packages/akepot/pages/page_home.html">
+
+    <!-- have to load ALL used elements here, from page_* sub-elements -->
+    <!--<link rel="import" href="packages/akepot/pages/pane_home.html">-->
     <script>
     var _prum = [['id', '54a6a6c7abe53d46185cc65d'],
                  ['mark', 'firstbyte', (new Date()).getTime()]];
@@ -88,77 +81,32 @@
 <!-- http://localhost:8080/akepot.html#!/project/bla -->
   <body unresolved fullbleed touch-action="auto">
   <div id="cmdebug" hidden></div>
-  <more-routing driver="hash"></more-routing>
 
     <template is="auto-binding-dart" id="content">
     <login-screen id="loginscreen" layout vertical center-center fit
       class="{{signedin ? '' : 'show'}}"></login-screen>
 
-    <more-route path="/admin/:projectHash" params="{{adminRoute}}" name="adminRoute" id="adminRoute"></more-route>
-    <more-route path="/project/:projectHash" params="{{projectRoute}}" name="projectRoute" id="projectRoute"></more-route>
-
     <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
 
-    <core-scaffold id="core_scaffold" mode="waterfall-tall">
+<!-- scaffold was here-->
 
+    <app-router mode="hash">
+      <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route><!--elem="page-home"-->
+      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/pane_input.html" elem="pane-input"></app-route>
+      <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
+    </app-router>
 
-      <core-header-panel mode="scroll" id="core_header_panel" navigation flex>
-        <core-toolbar id="panel-head" class="core-header tall">
-          <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
-          <img class="middle profile" _src="{{user.profile}}" hidden?="{{user.profile == null}}">
-          <div class="bottom" layout vertical>
-            <span>{{user.nickname}}</span>
-            <span>{{user.email}}</span>
-          </div>
-        </core-toolbar>
-
-        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
-          <!-- Home -->
-          <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
-            <menu-home selectedSection="{{selectedSection}}"></menu-home>
-          </template>
-          <!-- Project -->
-          <template if="{{ projectRoute['projectHash'] != null }}">
-            <menu-project selectedSection="{{selectedSection}}" categories="{{categories}}"></menu-project>
-          </template>
-          <!-- Admin -->
-          <template if="{{ adminRoute['projectHash'] != null }}">
-            <menu-admin selectedSection="{{selectedSection}}"></menu-admin>
-          </template>
-        </core-menu>
-      </core-header-panel>
-
-
-      <div id="title" tool flex>Competence Matrix
-        <!-- Project -->
-        <template if="{{ projectRoute['projectHash'] != null }}">
-          for {{projectRoute['projectHash']}}
-        </template>
-        <!-- Admin -->
-        <template if="{{ adminRoute['projectHash'] != null && project != null }}">
-          Admin for {{project.name}}
-        </template>
-      </div>
-
-
-      <dropdown-menu tool></dropdown-menu>
-      <refresh-spinner></refresh-spinner>
-
-
-      <core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
-        <!-- Home -->
+      <!--<core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
         <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
           <section name="splash"><span fit class="splash wide" cross-fade></span></section>
           <section name="home"><pane-home project="{{project}}" generatedHash="{{generatedHash}}"></pane-home></section>
         </template>
-        <!-- Admin -->
         <template if="{{ adminRoute['projectHash'] != null }}">
           <section name="splash"><span fit class="splash wide" cross-fade></span></section>
           <section name="input"><pane-input project="{{project}}" projectHash="{{projectHash}}" adminRoute="{{adminRoute}}" service="{{service}}" newlink="{{newlink}}"></pane-input></section>
           <section name="output"></section>
           <section name="edit"><edit-category category="{{project.categories[0]}}" form></edit-category></section>
         </template>
-        <!-- Project -->
         <template if="{{ projectRoute['projectHash'] != null }}">
           <section name="splash"><span fit class="splash wide" cross-fade></span></section>
           <section name="join" vertical layout><pane-join></pane-join></section>
@@ -166,7 +114,7 @@
             <section name="{{category.name}}" id="{{category.name}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
           </template>
         </template>
-      </core-animated-pages>
+      </core-animated-pages>-->
 
 
       <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix"
@@ -180,9 +128,8 @@
         <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>
       </paper-toast>
 
+<!-- scaffold was here -->
 
-
-    </core-scaffold>
     </template>
 
 

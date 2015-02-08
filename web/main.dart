@@ -56,11 +56,13 @@ class Content extends Observable {
 
   @observable Project project;
 
+  @observable String newlink = "";
+
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
-    waitForRouters();
+    //waitForRouters();//TODO
   }
 
   void waitForRouters (){

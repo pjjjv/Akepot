@@ -2,8 +2,9 @@
 <link rel="import" href="../../packages/core_elements/core_icon.html">
 <link rel="import" href="../../packages/core_elements/core_selector.html">
 <link rel="import" href="../../packages/paper_elements/paper_item.html">
+<link rel="import" href="../../packages/pushstate_anchor/pushstate_anchor.html">
 
-<polymer-element name="menu-project" attributes="selectedSection categories">
+<polymer-element name="menu-project" attributes="selectedSection projectHash categories">
   <template>
     <link href="menu_project.css" rel="stylesheet">
 
@@ -11,12 +12,14 @@
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <core-icon icon="home"></core-icon>
         <span flex>Home</span>
+        <a is="pushstate-anchor" href="#/"></a>
       </paper-item>
       <div class="separator">All categories</div>
       <template repeat="{{category in categories}}">
         <paper-item noink id="menu_item_category" name="{{category.name}}" tabindex="0"><!-- Using noink so the ripple doesn't freeze and make the app look slow, https://github.com/Polymer/paper-ripple/issues/10 -->
           <core-icon icon="assignment-ind"></core-icon>
           <span flex>{{category.name}}</span>
+          <a is="pushstate-anchor" _href="#/admin/{{projectHash}}/{{category.name}}"></a>
         </paper-item>
       </template>
       <paper-item id="menu_item_join_hidden" name="join" hidden>

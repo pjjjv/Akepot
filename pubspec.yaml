@@ -8,6 +8,9 @@ dependencies:
   intl: any
   sass: any
   google_signin_dart: any
+  app_router: any
+  app_router_test: any
+  pushstate_anchor: any
 transformers:
 - sass:
     compass: true                 # Include compass

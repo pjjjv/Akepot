@@ -3,18 +3,19 @@ import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_project.dart';
 import 'dart:html';
 import 'package:paper_elements/paper_button.dart';
-import 'package:akepot/competences_service.dart';
+//import 'package:akepot/competences_service.dart';
+import 'package:app_router/app_router.dart';
 
 @CustomTag("pane-input")
 class PaneInput extends PolymerElement {
   PaneInput.created() : super.created();
 
-  @published Project project;
+  Project project;
   PaperButton createButton;
+
+  @published AppRouter router;
   @published String projectHash = "";
-  @published var adminRoute;
-  @published CompetencesService service;
-  @published String newlink;
+  @observable String newlink;
 
   void domReady() {
     createButton = shadowRoot.querySelector("#create-button");
@@ -24,9 +25,9 @@ class PaneInput extends PolymerElement {
 
   void createProject(Event e){
     print ("createProject");
-    projectHash = adminRoute['projectHash'];
+    project = router.templateInstance.model.project;
     project.categoriesFromJson();
     project.teamsFromJson();
-    service.newProject(project, projectHash);
+    router.templateInstance.model.service.newProject(project, projectHash);
   }
 }

@@ -8,9 +8,9 @@ dependencies:
   intl: any
   sass: any
   google_signin_dart: any
-  app_router: any
-#  app_router:
-#    path: ../app_router_dart
+#  app_router: any
+  app_router:
+    path: ../app_router_dart
   pushstate_anchor: any
 transformers:
 - sass:
@@ -18,11 +18,11 @@ transformers:
 - polymer:
     entry_points:
     - web/akepot.html
-- $dart2js:
-    checked: false
-    minify: true
-    verbose: false
-    suppressWarnings: false
-    suppressHints: false
-    terse: false
-    csp: false
+#- $dart2js:
+#    checked: false
+#    minify: true
+#    verbose: false
+#    suppressWarnings: false
+#    suppressHints: false
+#    terse: false
+#    csp: false

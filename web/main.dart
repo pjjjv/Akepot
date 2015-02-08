@@ -23,9 +23,9 @@ void main() {
 
       setAkepotTransitionSpeed(350);
 
-      window.onHashChange.listen((HashChangeEvent e) {
+      /*window.onHashChange.listen((HashChangeEvent e) {
         window.location.reload();
-      });
+      });*/
 
       new AppCache(window.applicationCache);
     });
@@ -33,50 +33,30 @@ void main() {
 }
 
 class Content extends Observable {
-  //@observable List competences = toObservable([]);
   @observable var projectRoute;
   @observable var adminRoute;
-
   @observable List<Category> categories = [];
-
   @observable String selectedSection = "splash";
-
   @observable String projectHash = "";
   @observable bool newuser;
   @observable bool signedin;
   @observable User user;
-
   @observable String generatedHash = null;
+  @observable CompetencesService service;
+  @observable Project project;
+  @observable String newlink = "";
+
   PaperButton joinButton;
 
-  var projectRouter = null;
-  var adminRouter = null;
+  //var projectRouter = null;
+  //var adminRouter = null;
 
-  @observable CompetencesService service;
-
-  @observable Project project;
-
-  @observable String newlink = "";
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
-    //waitForRouters();//TODO
-  }
-
-  void waitForRouters (){
-    new Timer(new Duration(milliseconds: 100), completeWaitForRouters);
-  }
-
-  void completeWaitForRouters () {
-    adminRouter = document.querySelector('#adminRoute');
-    projectRouter = document.querySelector('#projectRoute');
-    if(projectRouter == null || adminRouter == null){
-      waitForRouters();
-    }
     service = document.querySelector('#service');
-    startup();
   }
 
   void startup () {

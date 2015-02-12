@@ -6,6 +6,7 @@
 <link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
+<link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
 
 <polymer-element name="pane-input" attributes="projectHash">
   <template>
@@ -38,6 +39,19 @@
       <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
     </paper-action-dialog>
     </div>
+
+
+    <core-ajax-dart id="ajaxNewProject"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewProjectResponse}}" -->
+    </core-ajax-dart>
+
+    <core-ajax-dart id="ajaxNewPerson"
+      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/"
+      on-core-error="{{ajaxError}}"
+      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewPersonResponse}}" -->
+    </core-ajax-dart>
   </template>
 
   <script type="application/dart" src="pane_input.dart"></script>

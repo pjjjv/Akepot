@@ -10,9 +10,7 @@
 
     <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
       <paper-item id="menu_item_home" name="home" tabindex="0">
-        <core-icon icon="home"></core-icon>
-        <span flex>Home</span>
-        <a is="pushstate-anchor" href="#/"></a>
+        <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
       <div class="separator empty"></div>
     </core-selector>

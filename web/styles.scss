@@ -31,18 +31,26 @@ html /deep/ paper-item {
   line-height: inherit;
   min-width: (8 * $component-grid);
   min-height: (6 * $component-grid);
+  text-decoration: none;
 
-  core-icon {
-    vertical-align: baseline;
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  core-icon, a core-icon {
+    //vertical-align: baseline;
     margin-right: (4 * $component-grid);
     height: (3 * $component-grid);
     width: (3 * $component-grid);
+    color: inherit;
+    text-decoration: inherit;
   }
 }
 html /deep/ paper-item.core-selected {
   background-color: $light-grey;
   color: $accent-color;
-  core-icon {
+  core-icon, a core-icon {
    color: $accent-color;
   }
 }

@@ -114,49 +114,6 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxNewProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
-    var response = event.detail['response'];
-    print("ajaxNewProjectResponse: "+JSON.encode(response).toString());
-
-    try {
-      if (response == null) {
-        return;//TODO: error
-      }
-    } catch (e) {
-      return;
-    }
-
-    String teamId = response['teams'][0]['id']['id'];
-
-    addAdminPerson(teamId);
-  }
-
-  @reflectable
-  void ajaxAddAdminPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
-    var response = event.detail['response'];
-    print("ajaxAddAdminPersonResponse: "+JSON.encode(response).toString());
-
-    try {
-      if (response == null) {
-        return;//TODO: error
-      }
-    } catch (e) {
-      return;
-    }
-
-    newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/"; //+ projectHash;
-    print("New project link would be: $newlink");
-
-
-    PaperActionDialog dialog = document.querySelector('#created-dialog');
-
-    PaperButton goButton = document.querySelector('#go-button');
-    goButton.onClick.first.then(onGoButtonClick);
-
-    dialog.toggle();
-  }
-
-  @reflectable
   void ajaxNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
     print("ajaxNewPersonResponse: "+JSON.encode(response).toString());
@@ -170,10 +127,6 @@ class CompetencesService extends PolymerElement {
     }
 
     getProject(hash);
-  }
-
-  void onGoButtonClick(Event e){
-    context['MoreRouting'].callMethod('navigateTo', ['projectRoute', new JsObject.jsify({'projectHash': '$hash'})]);
   }
 
   void getProject(String thishash){
@@ -204,44 +157,6 @@ class CompetencesService extends PolymerElement {
     print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
     ajaxUpdateCompetence.onCoreResponse.first.then(ajaxUpdateCompetenceResponse);
     ajaxUpdateCompetence.go();
-  }
-
-  void newProject(Project project, String thishash){
-    if(!signedin){
-      throw new Exception("Not signed in.");
-    }
-    ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
-    if(document.querySelector("#cmdebug") != null){
-      ajaxNewProject.method = "GET";
-      ajaxNewProject.url = "data/new_project_response.json";
-    }
-    ajaxNewProject.body = JSON.encode(project.toJson());
-    print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
-    ajaxNewProject.onCoreResponse.first.then(ajaxNewProjectResponse);
-    ajaxNewProject.go();
-  }
-
-  void addAdminPerson(String teamId){
-    if(!signedin){
-      throw new Exception("Not signed in.");
-    }
-    Map map = {};
-    map['nickName'] = user.nickname;
-    map['firstName'] = user.firstname;
-    map['lastName'] = user.lastname;
-    map['emailAddress'] = {};
-    map['emailAddress']['email'] = user.email;
-    map['token'] = user.userid;
-
-    ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$hash/$teamId";
-    if(document.querySelector("#cmdebug") != null){
-      ajaxNewPerson.method = "GET";
-      ajaxNewPerson.url = "data/add_admin_person_response.json";
-    }
-    ajaxNewPerson.body = JSON.encode(map);
-    print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
-    ajaxNewPerson.onCoreResponse.first.then(ajaxAddAdminPersonResponse);
-    ajaxNewPerson.go();
   }
 
   void newPerson(String teamId, String thishash){

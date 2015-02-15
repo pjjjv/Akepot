@@ -11,17 +11,17 @@
 
     <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
 
-    <core-selector on-core-activate="{{navigate}}" flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
       <div class="separator">All categories</div>
       <template repeat="{{category in categories}}">
-        <paper-item id="menu_item_category" name="{{category.name}}" tabindex="0">
-          <a _href="#/project/{{projectHash}}/{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
+        <paper-item id="menu_item_category" name="category_{{category.name | encodeUriComponent}}" tabindex="0">
+          <a _href="#/project/{{projectHash}}/category/category_{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
         </paper-item>
       </template>
-      <paper-item id="menu_item_join_hidden" name="join" hidden>
+      <paper-item id="menu_item_join_hidden" name="joinn" hidden>
       </paper-item>
     </core-selector>
   </template>

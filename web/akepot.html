@@ -63,7 +63,7 @@
     <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/akepot/pages/page_home.html">
     <link rel="import" href="packages/akepot/pages/pane_input.html">
-    <link rel="import" href="packages/akepot/pages/page_join.html">
+    <link rel="import" href="packages/akepot/pages/pane_join.html">
     <link rel="import" href="packages/akepot/pages/panes_category.html">
 
     <script>
@@ -87,13 +87,14 @@
     <login-screen id="loginscreen" layout vertical center-center fit
       class="{{signedin ? '' : 'show'}}"></login-screen>
 
-    <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}" newuser="{{newuser}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}" hash="{{projectHash}}" newlink="{{newlink}}"></competences-service>
 
     <app-router mode="hash" trailingSlash="ignore">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
       <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" elem="page-input"></app-route>
       <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
-      <app-route path="/project/:projectHash/:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
+      <app-route path="/project/:projectHash/category/category_:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
+      <app-route path="/project/:projectHash/join" imp="packages/akepot/pages/page_join.html" elem="page-join"></app-route>
       <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
     </app-router>
 

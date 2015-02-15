@@ -13,7 +13,6 @@ class PanesCategory extends PolymerElement {
   CompetencesService service;
   @published String projectHash = "";
   @published String selectedCategory = "";
-  @published String selectedSection;
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
@@ -32,8 +31,7 @@ class PanesCategory extends PolymerElement {
     categories = service.categories;
     if(!categories.isEmpty && (selectedCategory == "" || selectedCategory == null)){
       String newSelectedCategory = encodeUriComponent(categories.first.name);
-      (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/$newSelectedCategory");
-
+      (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/category/category_$newSelectedCategory");
     }
   }
 
@@ -57,23 +55,20 @@ class PanesCategory extends PolymerElement {
     print(SPLASH_TIMEOUT);
     new Timer(SPLASH_TIMEOUT, completeGetProject);
     if (first) {
-      //projectHash = projectRoute['projectHash'];
       getProject();
     }
   }
 
   void completeGetProject () {
-    if(categories.isEmpty == true && service.newuser == false){
+    if(categories.isEmpty == true){
       startGetProject(false);
       return;
     }
-    if(categories.isEmpty == false){
-      selectedSection = categories.first.name;
-    }
     copyProject(null, null, null);
-    if(service.newuser == true){
-      (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
-    }
+  }
+
+  void newUser(Event e, var detail, Node target){
+    (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
   }
 
   void getProject(){

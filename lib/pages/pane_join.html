@@ -2,13 +2,17 @@
 <link rel="import" href="../../../packages/core_elements/core_icon.html">
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
 
-<polymer-element name="pane-join">
+<polymer-element name="pane-join" attributes="projectHash">
   <template>
     <link href="pane_join.css" rel="stylesheet">
 
+    <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
+    <core-signals on-core-signal-getprojectresponsenewuser="{{newUser}}"></core-signals>
+
     <div layout horizontal wrap center-justified>
-      <div id="card-new" self-center layout vertical>
+      <div id="card-join" self-center layout vertical>
         <div fit id="title-box">
           <div id="title">Join this project?</div>
         </div>
@@ -17,8 +21,8 @@
           <p>Would you like to join this project?</p><br><br>
           <p>Team to be added to: (TBD)</p>
         </div>
-        <div flex></div>
-        <paper-button self-center id="join-button" raised class="colored custom raised-button" autofocus tabindex="0">
+        <div flex></div><!-- active="false" -->
+        <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">
           <core-icon icon="add" aria-label="add" role="img"></core-icon>
           Join project
         </paper-button>

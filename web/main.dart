@@ -7,7 +7,6 @@ import 'package:core_elements/core_style.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
-import 'package:paper_elements/paper_button.dart';
 import 'package:paper_elements/paper_autogrow_textarea.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/login_screen.dart';
@@ -42,35 +41,12 @@ class Content extends Observable {
   @observable Project project;
   @observable String newlink = "";
 
-  PaperButton joinButton;
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
     service = document.querySelector('#service');
-  }
-
-  void completeGetProject () {
-    if(categories.isEmpty == true && newuser == false){
-      startGetProject(false);
-      return;
-    }
-    if(categories.isEmpty == false){
-      selectedSection = categories.first.name;
-    }
-    if(newuser == true){
-      selectedSection = "join";
-      newuser = false;
-      joinButton = document.querySelector("#join-button");
-      joinButton.onClick.first.then(joinProject);
-    }
-  }
-
-  void joinProject(Event e){
-    print ("joinProject");
-    service.newPerson("0", projectHash);
-    startGetProject(false);
   }
 
   void signOut(Event e) {

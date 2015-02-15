@@ -7,10 +7,13 @@
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 <link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
 
 <polymer-element name="pane-input" attributes="projectHash">
   <template>
     <link href="pane_input.css" rel="stylesheet">
+
+    <core-signals on-core-signal-getaddadminpersonresponse="{{showDialog}}"></core-signals>
 
     <div  vertical layout>
     <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
@@ -39,19 +42,6 @@
       <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
     </paper-action-dialog>
     </div>
-
-
-    <core-ajax-dart id="ajaxNewProject"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/"
-      on-core-error="{{ajaxError}}"
-      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewProjectResponse}}" -->
-    </core-ajax-dart>
-
-    <core-ajax-dart id="ajaxNewPerson"
-      url="https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/"
-      on-core-error="{{ajaxError}}"
-      handleAs="json" method="POST"><!-- on-core-response="{{ajaxNewPersonResponse}}" -->
-    </core-ajax-dart>
   </template>
 
   <script type="application/dart" src="pane_input.dart"></script>

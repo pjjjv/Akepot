@@ -18,7 +18,6 @@ class CompetencesService extends PolymerElement {
   @published bool signedin = false;
   @published String hash;
   @published String newlink = "";
-  @published bool newuser = false;
   CoreAjax ajaxUserinfo;
   CoreAjax ajaxGetProject;
   CoreAjax ajaxUpdateCompetence;
@@ -54,7 +53,7 @@ class CompetencesService extends PolymerElement {
       print("API broken?"); //TODO
     }
     if ((response as String).startsWith("404: {")){//(response[404]['error']['code'] == 404 && response[404]['error']['message'] == "userPerson not found"){
-      newuser = true;
+      this.fire( "core-signal", detail: { "name": "getprojectresponsenewuser" } );
     }
     if ((response as String).startsWith("503: {")){//(response[503]['error']['code'] == 503){
       print("project does not exist?"); //TODO
@@ -67,14 +66,25 @@ class CompetencesService extends PolymerElement {
     print("ajaxGetProjectResponse: "+JSON.encode(response).toString());
 
     try {
-      if (response == null || response['categories'] == null) {
+      if (response == null) {
         return [];//TODO: empty list
       }
     } catch (e) {
       return null;
     }
 
+    //Only for debugging, reroute loaded in error file to actual error response.
+    if ((response as String).startsWith("404: {")){
+      ajaxGetProjectError(event);
+    }
 
+    try {
+      if (response['categories'] == null) {
+        return [];//TODO: empty list
+      }
+    } catch (e) {
+      return null;
+    }
 
     categories = toObservable(response['categories'].map((s){
       Category category = new Category.fromJson(s);
@@ -163,6 +173,21 @@ class CompetencesService extends PolymerElement {
     ajaxUpdateCompetence.go();
   }
 
+  void newProject(Project project, String thishash){
+    if(!signedin){
+      throw new Exception("Not signed in.");
+    }
+    ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxNewProject.method = "GET";
+      ajaxNewProject.url = "data/new_project_response.json";
+    }
+    ajaxNewProject.body = JSON.encode(project.toJson());
+    print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
+    ajaxNewProject.onCoreResponse.first.then(ajaxNewProjectResponse);
+    ajaxNewProject.go();
+  }
+
   void newPerson(String teamId, String thishash){
     if(!signedin){
       throw new Exception("Not signed in.");
@@ -183,6 +208,64 @@ class CompetencesService extends PolymerElement {
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
     ajaxNewPerson.onCoreResponse.first.then(ajaxNewPersonResponse);
     ajaxNewPerson.go();
+  }
+
+  void addAdminPerson(String teamId, String thishash){
+    if(!signedin){
+      throw new Exception("Not signed in.");
+    }
+    Map map = {};
+    map['nickName'] = user.nickname;
+    map['firstName'] = user.firstname;
+    map['lastName'] = user.lastname;
+    map['emailAddress'] = {};
+    map['emailAddress']['email'] = user.email;
+    map['token'] = user.userid;
+
+    ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
+    if(document.querySelector("#cmdebug") != null){
+      ajaxNewPerson.method = "GET";
+      ajaxNewPerson.url = "data/add_admin_person_response.json";
+    }
+    ajaxNewPerson.body = JSON.encode(map);
+    print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
+    ajaxNewPerson.onCoreResponse.first.then(ajaxAddAdminPersonResponse);
+    ajaxNewPerson.go();
+  }
+
+  @reflectable
+  void ajaxNewProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    var response = event.detail['response'];
+    print("ajaxNewProjectResponse: "+JSON.encode(response).toString());
+
+    try {
+      if (response == null) {
+        return;//TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    String teamId = response['teams'][0]['id']['id'];
+    String hash = response['hash'];
+
+    addAdminPerson(teamId, hash);
+  }
+
+  @reflectable
+  void ajaxAddAdminPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    var response = event.detail['response'];
+    print("ajaxAddAdminPersonResponse: "+JSON.encode(response).toString());
+
+    try {
+      if (response == null) {
+        return;//TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    this.fire( "core-signal", detail: { "name": "getaddadminpersonresponse" } );
   }
 
   @reflectable

@@ -8,11 +8,4 @@ class MenuHome extends PolymerElement {
   MenuHome.created() : super.created();
 
   @published String selectedSection;
-
-  void navigate(Event e, var detail){
-    var itemId = detail['item'].id;
-    if(itemId == "menu_item_home"){
-      context['MoreRouting'].callMethod('navigateTo', ['/']);
-    }
-  }
 }

@@ -81,7 +81,7 @@ html /deep/ paper-action-dialog, html /deep/ paper-dialog {
 }
 
 //All flat ink paper buttons
-html /deep/ paper-button.flat-button[autofocus] {
+html /deep/ paper-button.flat-button[autofocus]:not([disabled]) {
   color: $accent-color;
 }
 html /deep/ paper-button.flat-button {
@@ -95,7 +95,7 @@ html /deep/ paper-button.flat-button {
 }
 
 //All raised paper buttons
-html /deep/ paper-button.raised-button.colored {
+html /deep/ paper-button.raised-button:not([disabled]).colored {
   background-color: $accent-color;
   color: white;
 }
@@ -110,7 +110,7 @@ html /deep/ paper-button.raised-button {
 }
 
 //All floating action buttons
-html /deep/ paper-fab.floating-action-button {
+html /deep/ paper-fab.floating-action-button:not([disabled]) {
   margin: (3 * $component-grid);
   color: $text-white-primary;
   background-color: $accent-color;

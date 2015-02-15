@@ -19,13 +19,6 @@ class MenuProject extends PolymerElement {
     copyProject(null, null, null);
   }
 
-  void navigate(Event e, var detail){
-    var itemId = detail['item'].id;
-    if(itemId == "menu_item_home"){
-      context['MoreRouting'].callMethod('navigateTo', ['/']);
-    }
-  }
-
   encodeUriComponent(String str) => Uri.encodeComponent(str);
 
   void copyProject(Event e, var detail, Node target){

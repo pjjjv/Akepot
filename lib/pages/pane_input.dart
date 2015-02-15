@@ -144,7 +144,7 @@ class PaneInput extends PolymerElement {
       return;
     }
 
-    newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/"; //+ projectHash;
+    newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/" + projectHash;
     print("New project link would be: $newlink");
 
 

@@ -7,4 +7,5 @@ class ScaffoldLayout extends PolymerElement {
 
   @published String selected;
   @published String menu;
+  @published String projectHash;
 }

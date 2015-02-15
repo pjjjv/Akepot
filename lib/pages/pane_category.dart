@@ -22,6 +22,7 @@ class PaneCategory extends PolymerElement {
     }
   }
 
+
   @reflectable
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
     print(event.detail);

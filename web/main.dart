@@ -23,10 +23,6 @@ void main() {
 
       setAkepotTransitionSpeed(350);
 
-      /*window.onHashChange.listen((HashChangeEvent e) {
-        window.location.reload();
-      });*/
-
       new AppCache(window.applicationCache);
     });
   });
@@ -48,46 +44,11 @@ class Content extends Observable {
 
   PaperButton joinButton;
 
-  //var projectRouter = null;
-  //var adminRouter = null;
-
-
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
     service = document.querySelector('#service');
-  }
-
-  void startup () {
-    if(projectRoute != null && projectRoute['projectHash'] != null){
-      startupForProject();
-    } else if (adminRoute != null && adminRoute['projectHash'] != null){
-      //startupForAdmin(true);
-    } else {
-      //startupForHome();
-      //generatedHash = generateId();
-    }
-  }
-  void startupForProject () {
-    print(SPLASH_TIMEOUT);
-    new Timer(SPLASH_TIMEOUT, completeStartupForProject);
-  }
-
-  void completeStartupForProject () {
-    if(signedin == false){
-      startupForProject();
-      return;
-    }
-    startGetProject(true);
-  }
-  void startGetProject (bool first) {
-    print(SPLASH_TIMEOUT);
-    new Timer(SPLASH_TIMEOUT, completeGetProject);
-    if (first) {
-      projectHash = projectRoute['projectHash'];
-      getProject();
-    }
   }
 
   void completeGetProject () {
@@ -104,11 +65,6 @@ class Content extends Observable {
       joinButton = document.querySelector("#join-button");
       joinButton.onClick.first.then(joinProject);
     }
-  }
-
-  void getProject(){
-    print("getProject");
-    service.getProject(projectHash);
   }
 
   void joinProject(Event e){

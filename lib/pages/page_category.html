@@ -1,10 +1,11 @@
-<link rel="import" href="../../../packages/akepot/pages/pane_category.html">
+<link rel="import" href="../../../packages/akepot/pages/panes_category.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 
-<template>
-  <scaffold-layout menu="project" selected="category">
-    <div class="title">Competence Matrix for {{projectRoute['projectHash']}}</div>
-    <pane-category></pane-category>
-  </scaffold-layout>
-</template>
-
+<polymer-element name="page-category" attributes="projectHash selectedCategory" noscript>
+  <template>
+    <scaffold-layout menu="project" selected="{{selectedSection}}" projectHash="{{projectHash}}">
+      <div class="title">Competence Matrix for {{projectHash}}</div>
+      <panes-category projectHash="{{projectHash}}" selectedCategory="{{selectedCategory}}" selectedSection="{{selectedSection}}"></panes-category>
+    </scaffold-layout>
+  </template>
+</polymer-element>

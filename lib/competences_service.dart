@@ -85,6 +85,10 @@ class CompetencesService extends PolymerElement {
       }
       return category;
       }).toList());
+
+
+    this.fire( "core-signal", detail: { "name": "getprojectresponse" } );
+
     return categories;
   }
 

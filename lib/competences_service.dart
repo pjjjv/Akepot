@@ -1,14 +1,11 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'dart:convert';
-import 'dart:js';
 import 'model/model_category.dart';
 import 'model/model_subcategory.dart';
 import 'model/model_competence.dart';
 import 'model/model_project.dart';
 import 'package:core_elements/core_ajax_dart.dart';
-import 'package:paper_elements/paper_action_dialog.dart';
-import 'package:paper_elements/paper_button.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
@@ -16,8 +13,8 @@ typedef void ResponseHandler(response, HttpRequest req);
 class CompetencesService extends PolymerElement {
   @published List<Category> categories;
   @published bool signedin = false;
-  @published String hash;
-  @published String newlink = "";
+  @published User user = new User();
+  String _hash;
   CoreAjax ajaxUserinfo;
   CoreAjax ajaxGetProject;
   CoreAjax ajaxUpdateCompetence;
@@ -25,7 +22,6 @@ class CompetencesService extends PolymerElement {
   CoreAjax ajaxNewPerson;
   Map _headers;
 
-  @published User user = new User();
 
   CompetencesService.created() : super.created() {
     categories = new List<Category>();
@@ -144,13 +140,14 @@ class CompetencesService extends PolymerElement {
       return;
     }
 
-    getProject(hash);
+    getProject(_hash);
   }
 
   void getProject(String thishash){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
+    _hash = thishash;
     ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/${user.userid}";
     if(document.querySelector("#cmdebug") != null){
       ajaxGetProject.url = "data/get_project_response.json";
@@ -166,7 +163,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$hash/${user.userid}";
+    ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$_hash/${user.userid}";
     if(document.querySelector("#cmdebug") != null){
       ajaxUpdateCompetence.url = "data/update_competence_response.json";
       return;//don't PUT
@@ -181,6 +178,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
+    _hash = thishash;
     ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
     if(document.querySelector("#cmdebug") != null){
       ajaxNewProject.method = "GET";
@@ -196,6 +194,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
+    _hash = thishash;
     Map map = {};
     map['nickName'] = user.nickname;
     map['firstName'] = user.firstname;
@@ -218,6 +217,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
+    _hash = thishash;
     Map map = {};
     map['nickName'] = user.nickname;
     map['firstName'] = user.firstname;
@@ -251,9 +251,9 @@ class CompetencesService extends PolymerElement {
     }
 
     String teamId = response['teams'][0]['id']['id'];
-    String hash = response['hash'];
+    _hash = response['hash'];
 
-    addAdminPerson(teamId, hash);
+    addAdminPerson(teamId, _hash);
   }
 
   @reflectable
@@ -338,6 +338,8 @@ class CompetencesService extends PolymerElement {
       print("userid empty");
     }
     signedin = true;
+
+    this.fire( "core-signal", detail: { "name": "getuserinforesponse" } );
   }
 
   @reflectable

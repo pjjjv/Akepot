@@ -1,13 +1,8 @@
 import 'dart:html';
-import 'dart:async';
-import 'dart:typed_data';
-import 'dart:js';
 import 'package:polymer/polymer.dart';
-import 'package:core_elements/core_style.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
-import 'package:paper_elements/paper_autogrow_textarea.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/login_screen.dart';
 
@@ -28,18 +23,11 @@ void main() {
 }
 
 class Content extends Observable {
-  @observable var projectRoute;
-  @observable var adminRoute;
   @observable List<Category> categories = [];
-  @observable String selectedSection = "splash";
-  @observable String projectHash = "";
-  @observable bool newuser;
   @observable bool signedin;
   @observable User user;
-  @observable String generatedHash = null;
   @observable CompetencesService service;
   @observable Project project;
-  @observable String newlink = "";
 
 
   static const int MIN_SPLASH_TIME = 1000;
@@ -48,16 +36,6 @@ class Content extends Observable {
   Content () {
     service = document.querySelector('#service');
   }
-
-  void signOut(Event e) {
-    (document.querySelector("#loginscreen") as LoginScreen).signOut();
-  }
-
-  void about(Event e) {
-    var dialog = querySelector('#about-dialog');
-    dialog.toggle();
-  }
-
 }
 
 void setAkepotTransitionSpeed(int timeInMs){

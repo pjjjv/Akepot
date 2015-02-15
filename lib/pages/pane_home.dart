@@ -4,7 +4,6 @@ import 'package:paper_elements/paper_button.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:app_router/app_router.dart';
 //import 'package:akepot/competences_service.dart';
-import 'dart:js';
 import 'dart:async';
 import 'dart:typed_data';
 

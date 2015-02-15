@@ -17,11 +17,11 @@
       </paper-item>
       <div class="separator">All categories</div>
       <template repeat="{{category in categories}}">
-        <paper-item id="menu_item_category" name="category_{{category.name | encodeUriComponent}}" tabindex="0">
-          <a _href="#/project/{{projectHash}}/category/category_{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
+        <paper-item id="menu_item_category" name="{{category.name | encodeUriComponent}}" tabindex="0">
+          <a _href="#/project/{{projectHash}}/category/{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
         </paper-item>
       </template>
-      <paper-item id="menu_item_join_hidden" name="joinn" hidden>
+      <paper-item id="menu_item_join_hidden" name="_join" hidden>
       </paper-item>
     </core-selector>
   </template>

@@ -31,7 +31,7 @@ class PanesCategory extends PolymerElement {
     categories = service.categories;
     if(!categories.isEmpty && (selectedCategory == "" || selectedCategory == null)){
       String newSelectedCategory = encodeUriComponent(categories.first.name);
-      (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/category/category_$newSelectedCategory");
+      (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/category/$newSelectedCategory");
     }
   }
 

@@ -93,7 +93,7 @@
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
       <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" elem="page-input"></app-route>
       <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
-      <app-route path="/project/:projectHash/category/category_:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
+      <app-route path="/project/:projectHash/category/:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
       <app-route path="/project/:projectHash/join" imp="packages/akepot/pages/page_join.html" elem="page-join"></app-route>
       <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
     </app-router>

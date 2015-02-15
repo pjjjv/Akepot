@@ -74,8 +74,12 @@ class CompetencesService extends PolymerElement {
     }
 
     //Only for debugging, reroute loaded in error file to actual error response.
-    if ((response as String).startsWith("404: {")){
-      ajaxGetProjectError(event);
+    try {
+      if ((response as String).startsWith("404: {")){
+        ajaxGetProjectError(event);
+      }
+    } catch (e) {
+      //noop
     }
 
     try {

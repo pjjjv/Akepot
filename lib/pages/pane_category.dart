@@ -5,6 +5,7 @@ import 'package:akepot/subcategory_card.dart';
 import 'dart:html';
 import 'package:core_elements/core_ajax_dart.dart';
 import 'dart:math';
+import 'dart:async';
 import 'dart:convert';
 
 @CustomTag('pane-category')
@@ -47,11 +48,38 @@ class PaneCategory extends PolymerElement {
       palettes.add(new Palette.fromJson(palette));
     }
 
-    for (SubCategoryCard card in shadowRoot.querySelectorAll('#card')){
+    changeCards();
+    //startupForColor();
+  }
+
+  void changeCards(){
+    var a = shadowRoot.querySelectorAll('#card');
+    for (SubCategoryCard card in shadowRoot.querySelector('ordered-columns').shadowRoot.querySelectorAll('#card')){//TODO: improve ordered-columns so this is not needed
       card.palette = palettes[pseudoRandomColor(card.subcategory.name)];
       card.generateBackground();
     }
   }
+
+  /*static const Duration TIMEOUT =  const Duration(milliseconds: 2000);
+
+  void startupForColor () {
+    print(TIMEOUT);
+    new Timer(TIMEOUT, completeStartupForColor);
+  }
+
+  void completeStartupForColor () {
+    Element orderedColumns = shadowRoot.querySelector('ordered-columns');
+    var c = orderedColumns.shadowRoot.querySelectorAll('subcategory-card');//table, tbody, tr, td
+
+
+    var a = shadowRoot.querySelectorAll('subcategory-card');
+    //var aa = b.querySelectorAll('subcategory-card');
+    if(false && shadowRoot.querySelectorAll('#card').isEmpty){
+      startupForColor();
+      return;
+    }
+    changeCards();
+  }*/
 
   int pseudoRandomColor(String text){
     int limit = palettes.length;

@@ -89,7 +89,7 @@
 
     <competences-service id="service" user="{{user}}" signedin="{{signedin}}" categories="{{categories}}"></competences-service>
 
-    <app-router mode="hash" trailingSlash="ignore">
+    <app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
       <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" elem="page-input"></app-route>
       <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>

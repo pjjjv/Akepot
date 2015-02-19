@@ -5,7 +5,6 @@
 <link rel="import" href="../../../packages/paper_elements/paper_autogrow_textarea.html">
 <link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
-<link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 <link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
 <link rel="import" href="../../../packages/core_elements/core_signals.html">
 
@@ -15,7 +14,7 @@
 
     <core-signals on-core-signal-getaddadminpersonresponse="{{showDialog}}"></core-signals>
 
-    <div  vertical layout>
+    <div vertical layout cross-fade-delayed>
     <paper-input label="Project name" floatingLabel autofocus error="Project name is required!" required value="{{project.name}}"></paper-input>
     <paper-input-decorator label="Description" floatingLabel>
       <paper-autogrow-textarea>

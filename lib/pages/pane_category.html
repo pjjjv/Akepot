@@ -17,7 +17,7 @@
     </core-ajax-dart>
 
     <div layout center-justified>
-      <ordered-columns columnWidth="495">
+      <ordered-columns columnWidth="495" cascade>
         <template repeat="{{subcategory in subcategories}}">
           <subcategory-card role="article" id="card" subcategory="{{subcategory}}">
           </subcategory-card>

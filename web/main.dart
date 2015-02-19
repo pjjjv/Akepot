@@ -5,6 +5,8 @@ import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/login_screen.dart';
+import 'package:core_elements/core_style.dart';
+import 'dart:js';
 
 void main() {
   initPolymer().run(() {
@@ -41,6 +43,12 @@ class Content extends Observable {
 void setAkepotTransitionSpeed(int timeInMs){
   /*CoreStyle.g.transitions.duration = timeInMs + 'ms';
   CoreStyle.g.transitions.scaleDelay = CoreStyle.g.transitions.duration;*/
+
+  /*context['CoreStyle']['g']['transitions']['duration'] = timeInMs.toString() + 'ms';
+  context['CoreStyle']['g']['transitions']['scaleDelay'] = timeInMs.toString() + 'ms';
+  context['CoreStyle']['g']['transitions']['xfadeDuration'] = timeInMs.toString() + 'ms';
+  context['CoreStyle']['g']['transitions']['xfadeDelay'] = timeInMs.toString() + 'ms';*/
+
 }
 
 class AppCache {

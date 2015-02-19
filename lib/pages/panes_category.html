@@ -10,7 +10,7 @@
     <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
     <core-signals on-core-signal-getprojectresponsenewuser="{{newUser}}"></core-signals>
 
-    <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cross-fade cross-fade-delayed">
+    <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cascade-transition">
       <template repeat="{{category in categories}}">
         <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
       </template>

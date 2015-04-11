@@ -22,6 +22,7 @@ class MenuProject extends PolymerElement {
   encodeUriComponent(String str) => Uri.encodeComponent(str);
 
   void copyProject(Event e, var detail, Node target){
+    if(service == null) domReady();//TODO: why is service sometimes null?
     categories = service.categories;
   }
 }

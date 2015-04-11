@@ -28,6 +28,7 @@ class PanesCategory extends PolymerElement {
   }
 
   void copyProject(Event e, var detail, Node target){
+    if(service == null) domReady();//TODO: why is service sometimes null?
     categories = service.categories;
     if(!categories.isEmpty && (selectedCategory == "" || selectedCategory == null)){
       String newSelectedCategory = encodeUriComponent(categories.first.name);

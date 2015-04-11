@@ -7,16 +7,10 @@ import 'package:akepot/competences_service.dart';
 /** Not documented yet. */
 class Competence extends Observable {
   /** Not documented yet. */
-  final Text description;
-  /*Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*/
+  final core.String description;
 
   /** Not documented yet. */
-  final core.Map id;
+  final core.int id;
 
   /** Not documented yet. */
   final core.String label;
@@ -24,19 +18,21 @@ class Competence extends Observable {
   /** Not documented yet. */
   final Rating value;
 
-  final core.bool newCompetence;
+  final core.bool notSetYet;
 
-  final core.Map templateId;
+  final core.int competenceTemplateId;
 
-  Competence(this.id, this.label, this.description, this.value, this.newCompetence, this.templateId);
+  final core.int userId;
+
+  Competence(this.id, this.label, this.description, this.value, this.notSetYet, this.competenceTemplateId, this.userId);
 
   toString() => label;
 
   factory Competence.fromJson(core.Map _json, [core.bool noId = false]) {
     core.String label = "Competence";
-    Text description = new Text("-");
+    core.String description = "-";
     Rating value = new Rating(0);
-    core.bool newCompetence = true;
+    core.bool notSetYet = true;
 
     if (!_json.containsKey("id") && noId == false) {
       throw new core.Exception("No id.");
@@ -45,20 +41,25 @@ class Competence extends Observable {
       label = _json["label"];
     }
     if (_json.containsKey("description")) {
-      description = new Text.fromJson(_json["description"]);
+      description = _json["description"];
     }
     if (_json.containsKey("value")) {
       value = new Rating.fromJson(_json["value"]);
     }
-    if (_json.containsKey("newCompetence")) {
-      newCompetence = _json["newCompetence"].toString().toLowerCase() == 'true';
+    if (_json.containsKey("notSetYet")) {
+      notSetYet = _json["notSetYet"].toString().toLowerCase() == 'true';
     }
-    if (!_json.containsKey("templateId") && noId == false) {
-      throw new core.Exception("No templateId.");
+    if (!_json.containsKey("competenceTemplateId") && noId == false) {
+      throw new core.Exception("No competenceTemplateId.");
+    }
+    if (!_json.containsKey("userId") && noId == false) {
+      throw new core.Exception("No userId.");
     }
 
-    Competence competence = new Competence(_json["id"], label, description,
-        value, newCompetence, _json["templateId"]);
+    Competence competence = new Competence((_json["id"]==null ? null : core.int.parse(_json["id"])),
+        label, description, value, notSetYet,
+        (_json["competenceTemplateId"]==null ? null : core.int.parse(_json["competenceTemplateId"])),
+        (_json["userId"]==null ? null : core.int.parse(_json["userId"])));
     value.competence = competence;
     return competence;
   }
@@ -72,14 +73,17 @@ class Competence extends Observable {
       _json["label"] = label;
     }
     if (description != null) {
-      _json["description"] = (description).toJson();
+      _json["description"] = description;
     }
     if (value != null) {
       _json["value"] = (value).toJson();
     }
-    _json["newCompetence"] = newCompetence;
-    if (templateId != null) {
-      _json["templateId"] = templateId;
+    _json["notSetYet"] = notSetYet;
+    if (competenceTemplateId != null) {
+      _json["competenceTemplateId"] = competenceTemplateId;
+    }
+    if (userId != null) {
+      _json["userId"] = userId;
     }
     return _json;
   }
@@ -119,33 +123,6 @@ class Rating extends Observable {
   set rating(core.int rating) {
     _rating = rating;
     service.updateCompetence(competence);
-  }
-}
-
-
-/** Not documented yet. */
-class Text extends Observable {
-  /** Not documented yet. */
-  final core.String value;
-
-  Text(this.value);
-
-  toString() => value;
-
-  factory Text.fromJson(core.Map _json) {
-    core.String value = "-";
-    if (_json.containsKey("value")) {
-      value = _json["value"];
-    }
-    return new Text(value);
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (value != null) {
-      _json["value"] = value;
-    }
-    return _json;
   }
 }
 

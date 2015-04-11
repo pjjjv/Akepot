@@ -55,7 +55,7 @@ class PaneJoin extends PolymerElement {
 
   void joinProject(Event e){
     print ("joinProject");
-    service.newPerson("0", projectHash);
+    service.newPerson("0", projectHash, service.ajaxNewPersonResponse);
     (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
   }
 

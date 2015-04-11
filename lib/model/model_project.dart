@@ -4,16 +4,15 @@ import 'package:polymer/polymer.dart';
 import "dart:core" as core;
 import 'dart:convert';
 import 'package:akepot/model/model_category.dart';
-import 'package:akepot/model/model_competence.dart';
 
 
 /** Not documented yet. */
 class Project extends Observable {
   /** Not documented yet. */
-  @observable Text description = new Text("");
+  @observable core.String description = "";
 
   /** Not documented yet. */
-  core.Map id;
+  core.int id;
 
   /** Not documented yet. */
   @observable core.String hash;
@@ -32,7 +31,12 @@ class Project extends Observable {
   /** Not documented yet. */
   @observable core.String teamsAsJson = "";
 
-  Project(this.id, this.hash, this.name, this.description, this.categories, this.teams);
+  /** Not documented yet. */
+  core.String admin;
+
+  @observable core.String adminAsJson = "";
+
+  Project(this.id, this.hash, this.name, this.description, this.categories, this.teams, this.admin);
 
   Project.empty(this.hash);
 
@@ -41,9 +45,10 @@ class Project extends Observable {
   factory Project.fromJson(core.Map _json) {
     core.String hash = "";
     core.String name = "Project";
-    Text description = new Text("-");
+    core.String description = "-";
     core.List<Category> categories = [];
     core.List<core.String> teams = [];
+    core.String admin = "";
 
     if (!_json.containsKey("id")) {
       throw new core.Exception("No id.");
@@ -55,24 +60,28 @@ class Project extends Observable {
       name = _json["name"];
     }
     if (_json.containsKey("description")) {
-      description = new Text.fromJson(_json["description"]);
+      description = _json["description"];
     }
     if (_json.containsKey("categories")) {
       categories = _json["categories"].map((value) => new Category.fromJson(value)).toList();
     }
     /*if (_json.containsKey("teams")) {
       teams = _json["teams"];
-    }*/
+    }
+    if (_json.containsKey("admin")) {
+      admin = _json["admin"];
+    }
+     */
 
-    Project project = new Project(_json["id"], hash, name, description,
-        categories, teams);
+    Project project = new Project((_json["id"]==null ? null : core.int.parse(_json["id"])),
+        hash, name, description, categories, teams, admin);
     return project;
   }
 
   core.Map toJson() {
     var _json = new core.Map();
     if (description != null) {
-      _json["description"] = (description).toJson();
+      _json["description"] = description;
     }
     if (id != null) {
       _json["id"] = id;
@@ -88,6 +97,9 @@ class Project extends Observable {
     }
     if (teams != null) {
       _json["teams"] = teams;
+    }
+    if (admin != null) {
+      _json["admin"] = admin;
     }
     return _json;
   }

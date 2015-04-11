@@ -9,6 +9,9 @@ import 'package:core_elements/core_ajax_dart.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
+const SERVER = "http://localhost:8888/";
+//const SERVER = "https://1-dot-akepot-competence-matrix.appspot.com/";
+
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
   @published List<Category> categories;
@@ -21,6 +24,7 @@ class CompetencesService extends PolymerElement {
   CoreAjax ajaxNewProject;
   CoreAjax ajaxNewPerson;
   Map _headers;
+  String teamId;
 
 
   CompetencesService.created() : super.created() {
@@ -87,7 +91,7 @@ class CompetencesService extends PolymerElement {
     }
 
     categories = toObservable(response['categories'].map((s){
-      Category category = new Category.fromJson(s);
+      Category category = new Category.fromJson(s, true);//TODO: revert to having an id (no noId=true)
       for (SubCategory subcategory in category.subcategories){
         for (Competence competence in subcategory.competences){
           competence.value.service = this;
@@ -143,12 +147,28 @@ class CompetencesService extends PolymerElement {
     getProject(_hash);
   }
 
+  @reflectable
+  void ajaxFirstNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    var response = event.detail['response'];
+    print("ajaxFirstNewPersonResponse: "+JSON.encode(response).toString());
+
+    try {
+      if (response == null) {
+        return;//TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    addAdminPerson(teamId, _hash);
+  }
+
   void getProject(String thishash){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
     _hash = thishash;
-    ajaxGetProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash/${user.userid}";
+    ajaxGetProject.url = "${SERVER}_ah/api/akepot/v1/project/get/$thishash/${user.userid}";
     if(document.querySelector("#cmdebug") != null){
       ajaxGetProject.url = "data/get_project_response.json";
       //ajaxGetProject.url = "data/get_project_error_new_user_response.json"; //new user
@@ -163,7 +183,7 @@ class CompetencesService extends PolymerElement {
     if(!signedin){
       throw new Exception("Not signed in.");
     }
-    ajaxUpdateCompetence.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/competencevalue/$_hash/${user.userid}";
+    ajaxUpdateCompetence.url = "${SERVER}_ah/api/akepot/v1/competence/update/$_hash";
     if(document.querySelector("#cmdebug") != null){
       ajaxUpdateCompetence.url = "data/update_competence_response.json";
       return;//don't PUT
@@ -179,7 +199,7 @@ class CompetencesService extends PolymerElement {
       throw new Exception("Not signed in.");
     }
     _hash = thishash;
-    ajaxNewProject.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/project/$thishash";
+    ajaxNewProject.url = "${SERVER}_ah/api/akepot/v1/project/new/$thishash";
     if(document.querySelector("#cmdebug") != null){
       ajaxNewProject.method = "GET";
       ajaxNewProject.url = "data/new_project_response.json";
@@ -190,7 +210,7 @@ class CompetencesService extends PolymerElement {
     ajaxNewProject.go();
   }
 
-  void newPerson(String teamId, String thishash){
+  void newPerson(String teamId, String thishash, var callback){
     if(!signedin){
       throw new Exception("Not signed in.");
     }
@@ -203,13 +223,13 @@ class CompetencesService extends PolymerElement {
     map['emailAddress']['email'] = user.email;
     map['token'] = user.userid;
 
-    ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
+    ajaxNewPerson.url = "${SERVER}_ah/api/akepot/v1/user/new/$thishash/$teamId";
     if(document.querySelector("#cmdebug") != null){
       ajaxNewPerson.url = "data/new_person_response.json";
     }
     ajaxNewPerson.body = JSON.encode(map);
     print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
-    ajaxNewPerson.onCoreResponse.first.then(ajaxNewPersonResponse);
+    ajaxNewPerson.onCoreResponse.first.then(callback);
     ajaxNewPerson.go();
   }
 
@@ -226,7 +246,7 @@ class CompetencesService extends PolymerElement {
     map['emailAddress']['email'] = user.email;
     map['token'] = user.userid;
 
-    ajaxNewPerson.url = "https://1-dot-akepot-competence-matrix.appspot.com/_ah/api/akepot/v1/addUser/$thishash/$teamId";
+    ajaxNewPerson.url = "${SERVER}_ah/api/akepot/v1/admin/new/$thishash/$teamId";
     if(document.querySelector("#cmdebug") != null){
       ajaxNewPerson.method = "GET";
       ajaxNewPerson.url = "data/add_admin_person_response.json";
@@ -250,10 +270,10 @@ class CompetencesService extends PolymerElement {
       return;
     }
 
-    String teamId = response['teams'][0]['id']['id'];
+    teamId = response['teams'][0]['id'];
     _hash = response['hash'];
 
-    addAdminPerson(teamId, _hash);
+    newPerson(teamId, _hash, ajaxFirstNewPersonResponse);
   }
 
   @reflectable

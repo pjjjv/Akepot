@@ -20,7 +20,7 @@
           <div fit id="title">{{subcategory.name}}</div>
         </div>
         <template repeat="{{competence in subcategory.competences}}">
-          <single-strength-item id="{{competence.id['id']}}" title="{{competence.label}}" desc="{{competence.description.value}}" number="{{competence.value.rating}}" on-toggleotherdescs="{{closeDesc}}"></single-strength-item>
+          <single-strength-item id="{{competence.id}}" title="{{competence.label}}" desc="{{competence.description}}" number="{{competence.value.rating}}" on-toggleotherdescs="{{closeDesc}}"></single-strength-item>
         </template>
       </div>
       <div class="back">Help is coming...</div>

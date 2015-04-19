@@ -225,6 +225,7 @@ class CompetencesService extends PolymerElement {
 
     ajaxNewPerson.url = "${SERVER}_ah/api/akepot/v1/user/new/$thishash/$teamId";
     if(document.querySelector("#cmdebug") != null){
+      ajaxNewPerson.method = "GET";
       ajaxNewPerson.url = "data/new_person_response.json";
     }
     ajaxNewPerson.body = JSON.encode(map);

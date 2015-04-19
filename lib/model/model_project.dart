@@ -12,9 +12,6 @@ class Project extends Observable {
   @observable core.String description = "";
 
   /** Not documented yet. */
-  core.int id;
-
-  /** Not documented yet. */
   @observable core.String hash;
 
   /** Not documented yet. */
@@ -36,7 +33,7 @@ class Project extends Observable {
 
   @observable core.String adminAsJson = "";
 
-  Project(this.id, this.hash, this.name, this.description, this.categories, this.teams, this.admin);
+  Project(this.hash, this.name, this.description, this.categories, this.teams, this.admin);
 
   Project.empty(this.hash);
 
@@ -50,11 +47,8 @@ class Project extends Observable {
     core.List<core.String> teams = [];
     core.String admin = "";
 
-    if (!_json.containsKey("id")) {
-      throw new core.Exception("No id.");
-    }
-    if (_json.containsKey("hash")) {
-      hash = _json["hash"];
+    if (!_json.containsKey("hash")) {
+      throw new core.Exception("No hash.");
     }
     if (_json.containsKey("name")) {
       name = _json["name"];
@@ -73,8 +67,8 @@ class Project extends Observable {
     }
      */
 
-    Project project = new Project((_json["id"]==null ? null : core.int.parse(_json["id"])),
-        hash, name, description, categories, teams, admin);
+    Project project = new Project((_json["hash"]==null ? null : core.String.parse(_json["hash"])),
+        name, description, categories, teams, admin);
     return project;
   }
 
@@ -82,9 +76,6 @@ class Project extends Observable {
     var _json = new core.Map();
     if (description != null) {
       _json["description"] = description;
-    }
-    if (id != null) {
-      _json["id"] = id;
     }
     if (hash != null) {
       _json["hash"] = hash;

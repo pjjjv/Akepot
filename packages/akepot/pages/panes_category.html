@@ -1,0 +1,21 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/akepot/pages/pane_category.html">
+<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+
+<polymer-element name="panes-category" attributes="projectHash selectedCategory">
+  <template>
+    <link href="panes_category.css" rel="stylesheet">
+
+    <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
+    <core-signals on-core-signal-getprojectresponsenewuser="{{newUser}}"></core-signals>
+
+    <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cascade-transition">
+      <template repeat="{{category in categories}}">
+        <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
+      </template>
+    </core-animated-pages>
+  </template>
+
+  <script type="application/dart" src="panes_category.dart"></script>
+</polymer-element>

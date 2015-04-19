@@ -1,0 +1,75 @@
+
+<!--
+    App Router Test - dart
+    Copyright (c) 2015 pjv
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--<link rel="import" href="../../../packages/polymer/polymer.html">-->
+<link rel="import" href="../../../packages/core_elements/core_scaffold.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_menu.html">
+<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
+<link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
+<link rel="import" href="../../../packages/akepot/menu_admin.html">
+<link rel="import" href="../../../packages/akepot/menu_project.html">
+<link rel="import" href="../../../packages/akepot/menu_home.html">
+<link rel="import" href="../../../packages/akepot/dropdown_menu.html">
+<link rel="import" href="../../../packages/akepot/refresh_spinner.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+
+<polymer-element name="scaffold-layout" attributes="selected menu projectHash">
+  <template>
+    <link href="scaffold_layout.css" rel="stylesheet">
+
+    <core-signals on-core-signal-getuserinforesponse="{{copyUserInfo}}"></core-signals>
+
+    <core-scaffold id="core_scaffold" mode="waterfall-tall">
+      <core-header-panel mode="scroll" id="core_header_panel" navigation flex>
+        <core-toolbar id="panel-head" class="core-header tall">
+          <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
+          <img class="middle profile" _src="{{user.profile}}" hidden?="{{user.profile == null}}">
+          <div class="bottom" layout vertical>
+            <span>{{user.nickname}}</span>
+            <span>{{user.email}}</span>
+          </div>
+        </core-toolbar>
+
+        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
+          <!-- Home -->
+          <menu-home hidden?="{{menu != 'home'}}" selectedSection="{{selected}}"></menu-home>
+          <!-- Project -->
+          <menu-project hidden?="{{menu != 'project'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-project>
+          <!-- Admin -->
+          <menu-admin hidden?="{{menu != 'admin'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-admin>
+        </core-menu>
+      </core-header-panel>
+
+      <div id="title" tool flex>
+        <content select=".title"></content>
+      </div>
+      <div fit main class="content">
+        <content></content>
+      </div>
+
+      <dropdown-menu tool></dropdown-menu>
+      <refresh-spinner></refresh-spinner>
+
+    </core-scaffold>
+  </template>
+
+  <script type="application/dart" src="scaffold_layout.dart"></script>
+</polymer-element>

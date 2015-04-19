@@ -1,8 +1,6 @@
 [
  {
   "name": "t1",
-  "description": {
-   "value": "t1d"
-  }
+  "description": "t1d"
  }
 ]

@@ -1,21 +1,15 @@
 [
  {
   "name": "c1",
-  "description": {
-   "value": "c1d"
-  },
+  "description": "c1d",
   "subCategories": [
    {
     "name": "s1",
-    "description": {
-     "value": "s1d"
-    },
+    "description": "s1d",
     "competences": [
      {
       "label": "l1",
-      "description": {
-       "value": "l1d"
-      }
+      "description": "l1d"
      }
     ]
    }

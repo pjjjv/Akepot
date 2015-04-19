@@ -1,0 +1,11 @@
+<link rel="import" href="../../../packages/akepot/pages/pane_join.html">
+<link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
+
+<polymer-element name="page-join" attributes="projectHash" noscript>
+  <template>
+    <scaffold-layout menu="project" selected="_join" projectHash="{{projectHash}}">
+      <div class="title" cross-fade>Competence Matrix for {{projectHash}}</div>
+      <pane-join projectHash="{{projectHash}}"></pane-join>
+    </scaffold-layout>
+  </template>
+</polymer-element>

@@ -1,0 +1,39 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../packages/core_elements/core_menu_button.html">
+<link rel="import" href="../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../packages/paper_elements/paper_item.html">
+<link rel="import" href="../../packages/paper_elements/paper_dropdown.html">
+<link rel="import" href="../../packages/paper_elements/paper_action_dialog.html">
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+
+<polymer-element name="dropdown-menu">
+  <template>
+    <link href="dropdown_menu.css" rel="stylesheet">
+
+    <core-menu-button class="selected-item" layout horizontal><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+      <core-icon-button icon="more-vert"></core-icon-button>
+      <paper-dropdown class="dropdown" halign="right" valign="top">
+        <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
+          <core-icon icon="info"></core-icon>
+          <span flex>About</span>
+        </paper-item>
+        <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
+          <core-icon icon="close"></core-icon>
+          <span flex>Sign out</span>
+        </paper-item>
+      </paper-dropdown>
+    </core-menu-button>
+
+    <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix"
+      transition="paper-transition-center" backdrop="true">
+      <p>Made with Polymer and Dart in October 2014.</p>
+      <p>Copyright 2014-2015 pjv.</p>
+      <paper-button dismissive tabindex="0" autofocus class="flat-button">Close</paper-button>
+    </paper-action-dialog>
+
+  </template>
+
+  <script type="application/dart" src="dropdown_menu.dart"></script>
+</polymer-element>
+

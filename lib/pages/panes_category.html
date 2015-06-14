@@ -12,7 +12,9 @@
 
     <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cascade-transition">
       <template repeat="{{category in categories}}">
-        <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
+        <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout>
+          <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
+        </section>
       </template>
     </core-animated-pages>
   </template>

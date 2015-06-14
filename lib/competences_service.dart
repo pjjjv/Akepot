@@ -9,8 +9,8 @@ import 'package:core_elements/core_ajax_dart.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
-const SERVER = "http://localhost:8888/";
-//const SERVER = "https://1-dot-akepot-competence-matrix.appspot.com/";
+//const SERVER = "http://localhost:8888/";
+const SERVER = "https://1-dot-akepot-competence-matrix.appspot.com/";
 
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {

@@ -6,6 +6,7 @@ import 'package:paper_elements/paper_button.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
 import 'package:akepot/model/model_category.dart';
+import 'package:akepot/model/model_subcategory.dart';
 import 'dart:async';
 import 'package:paper_elements/paper_action_dialog.dart';
 import 'package:core_elements/core_animated_pages.dart';
@@ -129,6 +130,12 @@ class PaneEdit extends PolymerElement {
     pages.selectNext(false);
     //var event = new JsObject.fromBrowserObject(e);
     //this.fire( "core-signal", detail: { "name": "categorytapped" } );
+  }
+
+  void addSubCategory(Event e, var detail, Node target){
+    categories[category_nr].subcategories.add(new SubCategory.create());
+    subcategory_nr = categories[category_nr].subcategories.length-1;
+    //pages.selectNext(false);
   }
 
 }

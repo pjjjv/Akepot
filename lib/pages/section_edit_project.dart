@@ -34,7 +34,6 @@ class SectionEditProject extends PolymerElement {
   }
 
   void onItemTap(Event e, var detail, Node target){
-    //var event = new JsObject.fromBrowserObject(e);
     this.fire( "core-signal", detail: { "name": "categorytap", "data": target.id } );
   }
 }

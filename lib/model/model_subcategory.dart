@@ -19,6 +19,7 @@ class SubCategory extends Observable {
   final core.String name;
 
   SubCategory(this.id, this.name, this.description, this.competences);
+  SubCategory.create() : id = null, name = "New", description = "", competences = [];
 
   toString() => name;
 

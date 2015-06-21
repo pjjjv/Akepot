@@ -35,6 +35,8 @@ class Project extends Observable {
 
   Project(this.hash, this.name, this.description, this.categories, this.teams, this.admin);
 
+  Project.create(hash) : hash = hash, name = "New Project", description = "", categories = [], teams = [], admin = null;
+
   Project.empty(this.hash);
 
   toString() => name;

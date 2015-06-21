@@ -26,6 +26,8 @@ class Competence extends Observable {
 
   Competence(this.id, this.label, this.description, this.value, this.notSetYet, this.competenceTemplateId, this.userId);
 
+  Competence.create() : id = null, label = "New", description = "", value = new Rating.zero(), notSetYet = true;
+
   toString() => label;
 
   factory Competence.fromJson(core.Map _json, [core.bool noId = false]) {
@@ -100,6 +102,8 @@ class Rating extends Observable {
   CompetencesService service;
 
   Rating(this._rating);
+
+  Rating.zero() : _rating = 0;
 
   toString() => _rating;
 

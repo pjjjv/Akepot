@@ -26,4 +26,9 @@ class SectionEditCategory extends PolymerElement {
     createButton.hidden = false;
     createButton.onClick.listen(createProject);*/
   }
+
+  void onCreateButtonTap(Event e, var detail, Node target){
+    this.fire( "core-signal", detail: { "name": "addsubcategory" } );
+  }
+
 }

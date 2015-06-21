@@ -20,6 +20,7 @@ class Category extends Observable {
   final core.List<SubCategory> subcategories;
 
   Category(this.id, this.name, this.description, this.subcategories);
+  Category.create() : id = null, name = "New", description = "", subcategories = [];
 
   toString() => name;
 

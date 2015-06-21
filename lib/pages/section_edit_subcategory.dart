@@ -1,12 +1,11 @@
 
 import 'package:polymer/polymer.dart';
-import 'package:akepot/model/model_project.dart';
+import 'package:akepot/model/model_subcategory.dart';
 import 'dart:html';
-import 'package:paper_elements/paper_button.dart';
 
 @CustomTag("section-edit-subcategory")
-class SectionEditSubcategory extends PolymerElement {
-  SectionEditSubcategory.created() : super.created() {
+class SectionEditSubCategory extends PolymerElement {
+  SectionEditSubCategory.created() : super.created() {
 
     /*HttpRequest.getString("data/fresh_categories.json")
     .then((String text) => project.categoriesAsJson = text)
@@ -17,13 +16,18 @@ class SectionEditSubcategory extends PolymerElement {
     .catchError((Error error) => print("Error: $error"));*/
   }
 
-  @observable Project project;
-  PaperButton createButton;
+  @published SubCategory subCategory;
+  @published int page;
+  @published int index;
 
   void domReady() {
-    //service = document.querySelector("#service");
-    /*createButton = shadowRoot.querySelector("#create-button");
-    createButton.hidden = false;
-    createButton.onClick.listen(createProject);*/
+  }
+
+  void onItemTap(Event e, var detail, HtmlElement target){
+    this.fire( "core-signal", detail: { "name": "competencetap", "data": target.id } );
+  }
+
+  void onCreateButtonTap(Event e, var detail, Node target){
+    this.fire( "core-signal", detail: { "name": "addcompetence" } );
   }
 }

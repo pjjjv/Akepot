@@ -2,7 +2,6 @@
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_category.dart';
 import 'dart:html';
-import 'package:paper_elements/paper_button.dart';
 
 @CustomTag("section-edit-category")
 class SectionEditCategory extends PolymerElement {
@@ -17,18 +16,18 @@ class SectionEditCategory extends PolymerElement {
     .catchError((Error error) => print("Error: $error"));*/
   }
 
-  @observable Category category;
-  PaperButton createButton;
+  @published Category category;
+  @published int page;
+  @published int index;
 
   void domReady() {
-    //service = document.querySelector("#service");
-    /*createButton = shadowRoot.querySelector("#create-button");
-    createButton.hidden = false;
-    createButton.onClick.listen(createProject);*/
+  }
+
+  void onItemTap(Event e, var detail, HtmlElement target){
+    this.fire( "core-signal", detail: { "name": "subcategorytap", "data": target.id } );
   }
 
   void onCreateButtonTap(Event e, var detail, Node target){
     this.fire( "core-signal", detail: { "name": "addsubcategory" } );
   }
-
 }

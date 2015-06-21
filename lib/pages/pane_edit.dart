@@ -7,6 +7,7 @@ import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_subcategory.dart';
+import 'package:akepot/model/model_competence.dart';
 import 'dart:async';
 import 'package:paper_elements/paper_action_dialog.dart';
 import 'package:core_elements/core_animated_pages.dart';
@@ -125,17 +126,37 @@ class PaneEdit extends PolymerElement {
 
 
 
+  void addCategory(Event e, var detail, Node target){
+    categories.add(new Category.create());
+    //category_nr = categories.length - 1;
+    //pages.selectNext(false);
+  }
+
   void onCategoryTap(Event e, var detail, Node target){
     category_nr = int.parse(detail);
     pages.selectNext(false);
-    //var event = new JsObject.fromBrowserObject(e);
-    //this.fire( "core-signal", detail: { "name": "categorytapped" } );
   }
 
   void addSubCategory(Event e, var detail, Node target){
     categories[category_nr].subcategories.add(new SubCategory.create());
-    subcategory_nr = categories[category_nr].subcategories.length-1;
+    //subcategory_nr = categories[category_nr].subcategories.length - 1;
     //pages.selectNext(false);
+  }
+
+  void onSubCategoryTap(Event e, var detail, Node target){
+    subcategory_nr = int.parse(detail);
+    pages.selectNext(false);
+  }
+
+  void addCompetence(Event e, var detail, Node target){
+    categories[category_nr].subcategories[subcategory_nr].competences.add(new Competence.create());
+    //competence_nr = categories[category_nr].subcategories[subcategory_nr].competences.length - 1;
+    //pages.selectNext(false);
+  }
+
+  void onCompetenceTap(Event e, var detail, Node target){
+    competence_nr = int.parse(detail);
+    pages.selectNext(false);
   }
 
 }

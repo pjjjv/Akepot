@@ -25,34 +25,36 @@
 
     <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
 
-
     <core-signals on-core-signal-categorytap="{{onCategoryTap}}"></core-signals>
+    <core-signals on-core-signal-addcategory="{{addCategory}}"></core-signals>
+    <core-signals on-core-signal-subcategorytap="{{onSubCategoryTap}}"></core-signals>
     <core-signals on-core-signal-addsubcategory="{{addSubCategory}}"></core-signals>
+    <core-signals on-core-signal-competencetap="{{onCompetenceTap}}"></core-signals>
+    <core-signals on-core-signal-addcompetence="{{addCompetence}}"></core-signals>
 
     <div id="outer" layout vertical>
-      <paper-tabs selected="0" selectedindex="0" id="paper_tabs" horizontal center layout>
-        <paper-tab id="paper_tab" inline flex center-center horizontal layout active>Categories</paper-tab>
-        <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>Teams</paper-tab>
+      <paper-tabs selected="0" id="paper_tabs" horizontal center layout>
+        <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
+        <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
       </paper-tabs>
       <core-animated-pages transitions="hero-transition cross-fade" selected="{{page}}" id="pages_edit" flex>
 
         <section-edit-project categories="{{categories}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
-
         <template if="{{ categories.length != 0 }}">
-          <section-edit-category category="{{categories[category_nr]}}"></section-edit-category>
+          <section-edit-category category="{{categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+
+        <template if="{{ categories[category_nr].subcategories.length != 0 }}">
+          <section-edit-subcategory subCategory="{{categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+
+        <template if="{{ categories[category_nr].subcategories[subcategory_nr].competences.length != 0 }}">
+          <section-edit-competence competence="{{categories[category_nr].subcategories[subcategory_nr].competences[competence_nr]}}" page="{{page}}"></section-edit-competence>
+
         </template>
-        <!--<section-edit-subcategory subcategory="{{categories[category_nr].subcategories[subcategory_nr]}}"></section-edit-subcategory>
-        <section-edit-competence competence="{{categories[category_nr].subcategories[subcategory_nr].competences[competence_nr]}}"></section-edit-competence>
--->
+        </template>
+        </template>
       </core-animated-pages>
     </div>
-
-
-
-
-
-
 
 
 

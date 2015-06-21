@@ -26,7 +26,7 @@ class Competence extends Observable {
 
   Competence(this.id, this.label, this.description, this.value, this.notSetYet, this.competenceTemplateId, this.userId);
 
-  Competence.create() : id = null, label = "New", description = "", value = new Rating.zero(), notSetYet = true;
+  Competence.create() : id = null, label = "New", description = "", value = new Rating.zero(), notSetYet = true, competenceTemplateId = 0, userId = 0;
 
   toString() => label;
 

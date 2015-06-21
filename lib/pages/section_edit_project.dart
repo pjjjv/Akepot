@@ -3,8 +3,6 @@ import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 import 'dart:html';
-import 'dart:js';
-import 'package:paper_elements/paper_button.dart';
 
 @CustomTag("section-edit-project")
 class SectionEditProject extends PolymerElement {
@@ -24,16 +22,14 @@ class SectionEditProject extends PolymerElement {
   @published int page;
   @published int index;
 
-  PaperButton createButton;
-
   void domReady() {
-    //service = document.querySelector("#service");
-    /*createButton = shadowRoot.querySelector("#create-button");
-    createButton.hidden = false;
-    createButton.onClick.listen(createProject);*/
   }
 
-  void onItemTap(Event e, var detail, Node target){
+  void onItemTap(Event e, var detail, HtmlElement target){
     this.fire( "core-signal", detail: { "name": "categorytap", "data": target.id } );
+  }
+
+  void onCreateButtonTap(Event e, var detail, Node target){
+    this.fire( "core-signal", detail: { "name": "addcategory" } );
   }
 }

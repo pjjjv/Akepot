@@ -1,18 +1,8 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/core_elements/core_icon.html">
 <link rel="import" href="../../../packages/paper_elements/paper_input.html">
-<link rel="import" href="../../../packages/paper_elements/paper_input_decorator.html">
-<link rel="import" href="../../../packages/paper_elements/paper_autogrow_textarea.html">
-<link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
-<link rel="import" href="../../../packages/paper_elements/paper_button.html">
-<link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
-<link rel="import" href="../../../packages/core_elements/core_signals.html">
-<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
 <link rel="import" href="../../../packages/core_elements/core_icon_button.html">
 <link rel="import" href="../../../packages/core_elements/core_toolbar.html">
 <link rel="import" href="../../../packages/core_elements/core_header_panel.html">
-<link rel="import" href="../../../packages/paper_elements/paper_tabs.html">
-<link rel="import" href="../../../packages/paper_elements/paper_tab.html">
 <link rel="import" href="../../../packages/paper_elements/paper_fab.html">
 <link rel="import" href="../core_card3.html">
 
@@ -20,22 +10,23 @@
   <template>
     <link href="section_edit_project.css" rel="stylesheet">
 
-    <core-header-panel mode="waterfall-tall" id="core_header_panel">
-      <core-toolbar id="core_toolbar" class="animate tall">
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall">
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
             <core-icon-button icon="menu" id="core_icon_button"></core-icon-button>
-            <div id="div">Project: </div>
-            <paper-input label="Project Name" value="project" committedvalue="fddfd" id="paper_input"></paper-input>
+            <div id="label-type">Project: </div>
+            <paper-input label="Project Name" id="input-name"></paper-input>
           </div>
-          <paper-input label="Project Description" value="desc" committedvalue="dfd" id="paper_input2"></paper-input>
+          <paper-input label="Project Description" id="input-desc"></paper-input>
         </div>
+        <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
       </core-toolbar>
-      <section id="section3">
+      <section id="content-section">
 
         <div layout center-justified>
           <template repeat="{{category in categories | enumerate}}">
-            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade?="{{category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
+            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade?="{{(page != 1 && page != 0) || category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
           </template>
         </div>
         <!--<core-card3 id="core_card" horizontal layout center start-justified hero-id="hero" hero>Software Methodologies</core-card3>
@@ -45,7 +36,6 @@
         <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>-->
       </section>
     </core-header-panel>
-    <paper-fab id="create_button" icon="add"></paper-fab>
   </template>
 
   <script type="application/dart" src="section_edit_project.dart"></script>

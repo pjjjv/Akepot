@@ -1,8 +1,7 @@
 
 import 'package:polymer/polymer.dart';
-import 'package:akepot/model/model_project.dart';
+import 'package:akepot/model/model_competence.dart';
 import 'dart:html';
-import 'package:paper_elements/paper_button.dart';
 
 @CustomTag("section-edit-competence")
 class SectionEditCompetence extends PolymerElement {
@@ -17,13 +16,9 @@ class SectionEditCompetence extends PolymerElement {
     .catchError((Error error) => print("Error: $error"));*/
   }
 
-  @observable Project project;
-  PaperButton createButton;
+  @published Competence competence;
+  @published int page;
 
   void domReady() {
-    //service = document.querySelector("#service");
-    /*createButton = shadowRoot.querySelector("#create-button");
-    createButton.hidden = false;
-    createButton.onClick.listen(createProject);*/
   }
 }

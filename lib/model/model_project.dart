@@ -18,12 +18,12 @@ class Project extends Observable {
   @observable core.String name = "New Project";
 
   /** Not documented yet. */
-  core.List<Category> categories;
+  @observable core.List<Category> categories = toObservable([]);
 
   @observable core.String categoriesAsJson = "";
 
   /** Not documented yet. */
-  @observable core.List<core.String> teams;
+  @observable core.List<core.String> teams = toObservable([]);
 
   /** Not documented yet. */
   @observable core.String teamsAsJson = "";
@@ -35,7 +35,7 @@ class Project extends Observable {
 
   Project(this.hash, this.name, this.description, this.categories, this.teams, this.admin);
 
-  Project.create(hash) : hash = hash, name = "New Project", description = "", categories = [], teams = [], admin = null;
+  Project.create(hash) : hash = hash, name = "New Project", description = "", categories = toObservable([]), teams = toObservable([]), admin = null;
 
   Project.empty(this.hash);
 
@@ -45,8 +45,8 @@ class Project extends Observable {
     core.String hash = "";
     core.String name = "Project";
     core.String description = "-";
-    core.List<Category> categories = [];
-    core.List<core.String> teams = [];
+    core.List<Category> categories = toObservable([]);
+    core.List<core.String> teams = toObservable([]);
     core.String admin = "";
 
     if (!_json.containsKey("hash")) {
@@ -59,10 +59,10 @@ class Project extends Observable {
       description = _json["description"];
     }
     if (_json.containsKey("categories")) {
-      categories = _json["categories"].map((value) => new Category.fromJson(value)).toList();
+      categories = toObservable(_json["categories"].map((value) => new Category.fromJson(value)).toList());
     }
     /*if (_json.containsKey("teams")) {
-      teams = _json["teams"];
+      teams = _toObservable(json["teams"]);
     }
     if (_json.containsKey("admin")) {
       admin = _json["admin"];
@@ -102,7 +102,7 @@ class Project extends Observable {
   }
 
   void categoriesFromJson() {
-    categories = JSON.decode(categoriesAsJson.trim().replaceAll("\n", " ")).map((value) => new Category.fromJson(value, true)).toList();
+    categories = toObservable(JSON.decode(categoriesAsJson.trim().replaceAll("\n", " ")).map((value) => new Category.fromJson(value, true)).toList());
   }
 
   void teamsToJson() {
@@ -110,6 +110,6 @@ class Project extends Observable {
   }
 
   void teamsFromJson() {
-    teams = JSON.decode(teamsAsJson.trim().replaceAll("\n", " "));
+    teams = toObservable(JSON.decode(teamsAsJson.trim().replaceAll("\n", " ")));
   }
 }

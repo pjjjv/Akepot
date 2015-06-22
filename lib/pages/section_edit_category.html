@@ -16,9 +16,9 @@
           <div id="div1" layout horizontal center>
             <core-icon-button icon="menu" id="core_icon_button"></core-icon-button>
             <div id="label-type">Category: </div>
-            <paper-input label="Category Name" value="c1" id="input-name"></paper-input>
+            <paper-input label="Category Name" value="{{category.name}}" id="input-name"></paper-input>
           </div>
-          <paper-input label="Category Description" id="input-desc"></paper-input>
+          <paper-input label="Category Description" value="{{category.description}}" id="input-desc"></paper-input>
         </div>
         <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
       </core-toolbar>

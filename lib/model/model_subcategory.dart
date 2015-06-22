@@ -7,26 +7,26 @@ import 'package:akepot/model/model_competence.dart';
 /** Not documented yet. */
 class SubCategory extends Observable {
   /** Not documented yet. */
-  final core.String description;
+  @observable core.String description;
 
   /** Not documented yet. */
-  final core.int id;
+  @observable core.int id;
 
   /** Not documented yet. */
-  final core.List<Competence> competences;
+  @observable core.List<Competence> competences = toObservable([]);
 
   /** Not documented yet. */
-  final core.String name;
+  @observable core.String name;
 
   SubCategory(this.id, this.name, this.description, this.competences);
-  SubCategory.create() : id = null, name = "New", description = "", competences = [];
+  SubCategory.create() : id = null, name = "New", description = "", competences = toObservable([]);
 
   toString() => name;
 
   factory SubCategory.fromJson(core.Map _json, [core.bool noId = false]) {
     core.String name = "SubCategory";
     core.String description = "-";
-    core.List<Competence> competences = [];
+    core.List<Competence> competences = toObservable([]);
 
     if (!_json.containsKey("id") && noId == false) {
       throw new core.Exception("No id.");
@@ -38,7 +38,7 @@ class SubCategory extends Observable {
       description = _json["description"];
     }
     if (_json.containsKey("competences")) {
-      competences = _json["competences"].map((value) => new Competence.fromJson(value, noId)).toList();
+      competences = toObservable(_json["competences"].map((value) => new Competence.fromJson(value, noId)).toList());
     }
 
     SubCategory subCategory = new SubCategory((_json["id"]==null ? null : core.int.parse(_json["id"])),

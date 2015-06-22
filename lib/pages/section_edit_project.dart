@@ -18,7 +18,7 @@ class SectionEditProject extends PolymerElement {
   }
 
   //@observable Project project;
-  @observable List<Category> categories = [];
+  @observable List<Category> categories = toObservable([]);
   @published int page;
   @published int index;
 

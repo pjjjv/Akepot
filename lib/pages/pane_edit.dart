@@ -36,7 +36,7 @@ class PaneEdit extends PolymerElement {
   CoreAnimatedPages pages;
   @published int page = 0;
 
-  @observable List<Category> categories = [];
+  @observable List<Category> categories = toObservable([]);
   @observable int category_nr = 0;
   @observable int subcategory_nr = 0;
   @observable int competence_nr = 0;
@@ -59,7 +59,7 @@ class PaneEdit extends PolymerElement {
 
   void copyProject(Event e, var detail, Node target){
     if(service == null) domReady();//TODO: why is service sometimes null?
-    categories = service.categories;
+    categories = toObservable(service.categories);
   }
 
 
@@ -127,7 +127,7 @@ class PaneEdit extends PolymerElement {
 
 
   void addCategory(Event e, var detail, Node target){
-    categories.add(new Category.create());
+    categories.add(toObservable(new Category.create()));
     //category_nr = categories.length - 1;
     //pages.selectNext(false);
   }
@@ -138,7 +138,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addSubCategory(Event e, var detail, Node target){
-    categories[category_nr].subcategories.add(new SubCategory.create());
+    categories[category_nr].subcategories.add(toObservable(new SubCategory.create()));
     //subcategory_nr = categories[category_nr].subcategories.length - 1;
     //pages.selectNext(false);
   }
@@ -149,7 +149,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addCompetence(Event e, var detail, Node target){
-    categories[category_nr].subcategories[subcategory_nr].competences.add(new Competence.create());
+    categories[category_nr].subcategories[subcategory_nr].competences.add(toObservable(new Competence.create()));
     //competence_nr = categories[category_nr].subcategories[subcategory_nr].competences.length - 1;
     //pages.selectNext(false);
   }

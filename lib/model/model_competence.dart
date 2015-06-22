@@ -7,22 +7,22 @@ import 'package:akepot/competences_service.dart';
 /** Not documented yet. */
 class Competence extends Observable {
   /** Not documented yet. */
-  final core.String description;
+  @observable core.String description;
 
   /** Not documented yet. */
-  final core.int id;
+  @observable core.int id;
 
   /** Not documented yet. */
-  final core.String label;
+  @observable core.String label;
 
   /** Not documented yet. */
-  final Rating value;
+  @observable Rating value;
 
-  final core.bool notSetYet;
+  @observable core.bool notSetYet;
 
-  final core.int competenceTemplateId;
+  @observable core.int competenceTemplateId;
 
-  final core.int userId;
+  @observable core.int userId;
 
   Competence(this.id, this.label, this.description, this.value, this.notSetYet, this.competenceTemplateId, this.userId);
 
@@ -98,8 +98,8 @@ class Rating extends Observable {
   /** Not documented yet. */
   core.int _rating;
 
-  Competence competence;
-  CompetencesService service;
+  @observable Competence competence;
+  @observable CompetencesService service;
 
   Rating(this._rating);
 

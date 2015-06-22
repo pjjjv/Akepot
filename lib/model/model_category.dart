@@ -8,26 +8,26 @@ import 'package:akepot/model/model_subcategory.dart';
 /** Not documented yet. */
 class Category extends Observable {
   /** Not documented yet. */
-  final core.String description;
+  @observable core.String description;
 
   /** Not documented yet. */
-  final core.int id;
+  @observable core.int id;
 
   /** Not documented yet. */
-  final core.String name;
+  @observable core.String name;
 
   /** Not documented yet. */
-  final core.List<SubCategory> subcategories;
+  @observable core.List<SubCategory> subcategories = toObservable([]);
 
   Category(this.id, this.name, this.description, this.subcategories);
-  Category.create() : id = null, name = "New", description = "", subcategories = [];
+  Category.create() : id = null, name = "New", description = "", subcategories = toObservable([]);
 
   toString() => name;
 
   factory Category.fromJson(core.Map _json, [core.bool noId = false]) {
     core.String name = "SubCategory";
     core.String description = "-";
-    core.List<SubCategory> subcategories = [];
+    core.List<SubCategory> subcategories = toObservable([]);
 
     if (!_json.containsKey("id") && noId == false) {
       throw new core.Exception("No id.");
@@ -39,7 +39,7 @@ class Category extends Observable {
       description = _json["description"];
     }
     if (_json.containsKey("subCategories")) {
-      subcategories = _json["subCategories"].map((value) => new SubCategory.fromJson(value, noId)).toList();
+      subcategories = toObservable(_json["subCategories"].map((value) => new SubCategory.fromJson(value, noId)).toList());
     }
 
     Category category = new Category((_json["id"]==null ? null : core.int.parse(_json["id"])),

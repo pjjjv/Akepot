@@ -30,4 +30,8 @@ class SectionEditSubCategory extends PolymerElement {
   void onCreateButtonTap(Event e, var detail, Node target){
     this.fire( "core-signal", detail: { "name": "addcompetence" } );
   }
+
+  void goUp(Event e, var detail, HtmlElement target){
+    this.fire( "core-signal", detail: { "name": "goup" } );
+  }
 }

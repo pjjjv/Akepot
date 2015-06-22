@@ -14,7 +14,7 @@
       <core-toolbar class="animate tall" hero-id="hero-category" hero>
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
-            <core-icon-button icon="menu" id="core_icon_button"></core-icon-button>
+            <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
             <div id="label-type">Category: </div>
             <paper-input label="Category Name" value="{{category.name}}" id="input-name"></paper-input>
           </div>

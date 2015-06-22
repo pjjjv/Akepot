@@ -159,4 +159,8 @@ class PaneEdit extends PolymerElement {
     pages.selectNext(false);
   }
 
+  void goUp(Event e, var detail, HtmlElement target){
+    pages.selectPrevious(false);
+  }
+
 }

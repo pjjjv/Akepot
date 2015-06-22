@@ -21,4 +21,8 @@ class SectionEditCompetence extends PolymerElement {
 
   void domReady() {
   }
+
+  void goUp(Event e, var detail, HtmlElement target){
+    this.fire( "core-signal", detail: { "name": "goup" } );
+  }
 }

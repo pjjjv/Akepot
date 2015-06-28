@@ -11,7 +11,7 @@
     <link href="section_edit_category.css" rel="stylesheet">
 
     <core-header-panel mode="waterfall-tall">
-      <core-toolbar class="animate tall" hero-id="hero-category" hero>
+      <core-toolbar class="animate tall" hero-id="hero-category" hero cross-fade-delayed?="{{(page != 0)}}">
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
             <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
@@ -26,7 +26,7 @@
 
         <div layout center-justified>
           <template repeat="{{subcategory in category.subcategories | enumerate}}">
-            <core-card3 id="{{subcategory.index}}" horizontal layout center start-justified hero-id="hero-subcategory" hero?="{{(page == 2 || page == 1) && subcategory.index == index}}" cross-fade?="{{(page != 2 && page != 1) || subcategory.index != index}}" on-tap="{{onItemTap}}">{{subcategory.value.name}}</core-card3>
+            <core-card3 id="{{subcategory.index}}" horizontal layout center start-justified hero-id="hero-subcategory" hero?="{{(page == 2 || page == 1) && subcategory.index == index}}" cross-fade-delayed?="{{page != 1 || subcategory.index != index}}" on-tap="{{onItemTap}}">{{subcategory.value.name}}</core-card3>
           </template>
         </div>
         <!-- <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Waterfall</core-card3>

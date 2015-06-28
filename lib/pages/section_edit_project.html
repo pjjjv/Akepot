@@ -11,7 +11,7 @@
     <link href="section_edit_project.css" rel="stylesheet">
 
     <core-header-panel mode="waterfall-tall">
-      <core-toolbar class="animate tall">
+      <core-toolbar class="animate tall" cross-fade-delayed>
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
             <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
@@ -26,7 +26,7 @@
 
         <div layout center-justified>
           <template repeat="{{category in categories | enumerate}}">
-            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade?="{{(page != 1 && page != 0) || category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
+            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade-delayed?="{{page != 0 || category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
           </template>
         </div>
         <!--<core-card3 id="core_card" horizontal layout center start-justified hero-id="hero" hero>Software Methodologies</core-card3>

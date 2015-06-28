@@ -41,7 +41,7 @@ class Project extends Observable {
 
   toString() => name;
 
-  factory Project.fromJson(core.Map _json) {
+  factory Project.fromJson(core.Map _json) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch)
     core.String hash = "";
     core.String name = "Project";
     core.String description = "-";

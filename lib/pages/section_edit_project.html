@@ -16,9 +16,9 @@
           <div id="div1" layout horizontal center>
             <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
             <div id="label-type">Project: </div>
-            <paper-input label="Project Name" id="input-name">{{project.name}}</paper-input>
+            <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
           </div>
-          <paper-input label="Project Description" id="input-desc">{{project.description}}</paper-input>
+          <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
         </div>
         <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
       </core-toolbar>

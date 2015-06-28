@@ -33,8 +33,8 @@ class PaneEdit extends PolymerElement {
 
 
     service.dbRef.child("project").onValue.listen((e) {
-      String val = e.snapshot.valAsJson();
-      project = new Project.fromJsonString(val);
+      Map val = e.snapshot.val();
+      project = new Project.fromJson(val, service);
     });
   }
 

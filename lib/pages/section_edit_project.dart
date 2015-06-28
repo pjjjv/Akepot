@@ -8,17 +8,9 @@ import 'dart:html';
 class SectionEditProject extends PolymerElement {
   SectionEditProject.created() : super.created() {
 
-    /*HttpRequest.getString("data/fresh_categories.json")
-    .then((String text) => project.categoriesAsJson = text)
-    .catchError((Error error) => print("Error: $error"));
-
-    HttpRequest.getString("data/fresh_teams.json")
-    .then((String text) => project.teamsAsJson = text)
-    .catchError((Error error) => print("Error: $error"));*/
   }
 
-  //@observable Project project;
-  @observable List<Category> categories = toObservable([]);
+  @observable Project project;
   @published int page;
   @published int index;
 

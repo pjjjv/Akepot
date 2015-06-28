@@ -6,15 +6,16 @@ import 'model/model_subcategory.dart';
 import 'model/model_competence.dart';
 import 'model/model_project.dart';
 import 'package:core_elements/core_ajax_dart.dart';
+import 'package:firebase/firebase.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
 //const SERVER = "http://localhost:8888/";
-const SERVER = "https://1-dot-akepot-competence-matrix.appspot.com/";
+const SERVER = "https://shining-heat-1634.firebaseio.com/";
 
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
-  @published List<Category> categories;
+  @published Project project;
   @published bool signedin = false;
   @published User user = new User();
   String _hash;
@@ -25,18 +26,18 @@ class CompetencesService extends PolymerElement {
   CoreAjax ajaxNewPerson;
   Map _headers;
   String teamId;
-
+  Firebase dbRef;
 
   CompetencesService.created() : super.created() {
-    categories = new List<Category>();
+    dbRef = new Firebase(SERVER);
   }
 
   void domReady(){
     ajaxUserinfo = shadowRoot.querySelector('#ajax-people');
-    ajaxGetProject = shadowRoot.querySelector('#ajaxGetProject');
-    ajaxUpdateCompetence = shadowRoot.querySelector('#ajaxUpdateCompetence');
-    ajaxNewProject = shadowRoot.querySelector('#ajaxNewProject');
-    ajaxNewPerson = shadowRoot.querySelector('#ajaxNewPerson');
+    //ajaxGetProject = shadowRoot.querySelector('#ajaxGetProject');
+    //ajaxUpdateCompetence = shadowRoot.querySelector('#ajaxUpdateCompetence');
+    //ajaxNewProject = shadowRoot.querySelector('#ajaxNewProject');
+    //ajaxNewPerson = shadowRoot.querySelector('#ajaxNewPerson');
   }
 
   @reflectable
@@ -125,10 +126,10 @@ class CompetencesService extends PolymerElement {
     _headers = headers;
     print("headersss: $headers");
     ajaxUserinfo.headers = headers;
-    ajaxGetProject.headers = headers;
-    ajaxUpdateCompetence.headers = headers;
-    ajaxNewProject.headers = headers;
-    ajaxNewPerson.headers = headers;
+    //ajaxGetProject.headers = headers;
+    //ajaxUpdateCompetence.headers = headers;
+    //ajaxNewProject.headers = headers;
+    //ajaxNewPerson.headers = headers;
   }
 
   @reflectable

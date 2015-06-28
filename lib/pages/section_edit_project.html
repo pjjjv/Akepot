@@ -6,7 +6,7 @@
 <link rel="import" href="../../../packages/paper_elements/paper_fab.html">
 <link rel="import" href="../core_card3.html">
 
-<polymer-element name="section-edit-project" attributes="categories page index">
+<polymer-element name="section-edit-project" attributes="project page index">
   <template>
     <link href="section_edit_project.css" rel="stylesheet">
 
@@ -16,16 +16,16 @@
           <div id="div1" layout horizontal center>
             <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
             <div id="label-type">Project: </div>
-            <paper-input label="Project Name" id="input-name"></paper-input>
+            <paper-input label="Project Name" id="input-name">{{project.name}}</paper-input>
           </div>
-          <paper-input label="Project Description" id="input-desc"></paper-input>
+          <paper-input label="Project Description" id="input-desc">{{project.description}}</paper-input>
         </div>
         <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
       </core-toolbar>
       <section id="content-section">
 
         <div layout center-justified>
-          <template repeat="{{category in categories | enumerate}}">
+          <template repeat="{{category in project.categories | enumerate}}">
             <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade-delayed?="{{page != 0 || category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
           </template>
         </div>

@@ -12,6 +12,9 @@ dependencies:
   app_router:
     path: ../app_router_dart
   pushstate_anchor: any
+  json_object: '>=1.0.19 <1.1.0'
+  firebase:
+    path: ../firebase-dart
 transformers:
 - sass:
     compass: true                 # Include compass

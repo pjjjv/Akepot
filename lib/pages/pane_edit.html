@@ -19,7 +19,7 @@
 <link rel="import" href="section_edit_subcategory.html">
 <link rel="import" href="section_edit_competence.html">
 
-<polymer-element name="pane-edit" attributes="projectHash page categories category_nr subcategory_nr competence_nr">
+<polymer-element name="pane-edit" attributes="projectHash page project category_nr subcategory_nr competence_nr">
   <template>
     <link href="pane_edit.css" rel="stylesheet">
 
@@ -40,16 +40,16 @@
       </paper-tabs>
       <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
 
-        <section-edit-project categories="{{categories}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
+        <section-edit-project project="{{project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
-        <template if="{{ categories.length != 0 }}">
-          <section-edit-category category="{{categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+        <template if="{{ project.categories.length != 0 }}">
+          <section-edit-category category="{{project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
 
-        <template if="{{ categories[category_nr].subcategories.length != 0 }}">
-          <section-edit-subcategory subCategory="{{categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+        <template if="{{ project.categories[category_nr].subcategories.length != 0 }}">
+          <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
 
-        <template if="{{ categories[category_nr].subcategories[subcategory_nr].competences.length != 0 }}">
-          <section-edit-competence competence="{{categories[category_nr].subcategories[subcategory_nr].competences[competence_nr]}}" page="{{page}}"></section-edit-competence>
+        <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competences.length != 0 }}">
+          <section-edit-competence competence="{{project.categories[category_nr].subcategories[subcategory_nr].competences[competence_nr]}}" page="{{page}}"></section-edit-competence>
 
         </template>
         </template>

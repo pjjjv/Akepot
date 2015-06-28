@@ -25,11 +25,10 @@ void main() {
 }
 
 class Content extends Observable {
-  @observable List<Category> categories = [];
+  @observable Project project;
   @observable bool signedin;
   @observable User user;
   @observable CompetencesService service;
-  @observable Project project;
 
 
   static const int MIN_SPLASH_TIME = 1000;

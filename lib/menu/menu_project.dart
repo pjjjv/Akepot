@@ -16,13 +16,13 @@ class MenuProject extends PolymerElement {
 
   domReady(){
     service = document.querySelector("#service");
-    copyProject(null, null, null);
+    //copyProject(null, null, null);//TODO: disabled menu
   }
 
   encodeUriComponent(String str) => Uri.encodeComponent(str);
 
   void copyProject(Event e, var detail, Node target){
     if(service == null) domReady();//TODO: why is service sometimes null?
-    categories = service.categories;
+    categories = service.project.categories;
   }
 }

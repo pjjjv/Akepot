@@ -31,11 +31,8 @@ class PaneEdit extends PolymerElement {
     page = 0;
     pages = shadowRoot.querySelector("#pages_edit");
 
-
-    service.dbRef.child("project").onValue.listen((e) {
-      Map val = e.snapshot.val();
-      project = new Project.fromJson(val, service);
-    });
+    project = toObservable(new Project.retrieve(projectHash, service));
+    print(project);
   }
 
   void addCategory(Event e, var detail, Node target){

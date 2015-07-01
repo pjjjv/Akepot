@@ -19,7 +19,7 @@ class Project extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    changeProperty("project", new Map()..putIfAbsent("name", () => name));
+    _changeProperty("project/name", name);
   }
 
   /** Not documented yet. */
@@ -35,19 +35,50 @@ class Project extends Observable {
 
   @observable CompetencesService service;
 
-  changeProperty(String child, var value){
-    service.dbRef.child(child).update(value);
+  _changeProperty(String child, var value){
+    if(service != null) {
+      service.dbRef.child(child).update(value);
+    }
   }
 
-  Project(this.hash, this._name, this.description, this.categories, this.teams, this.admin, this.service);
+  Project.full(this.hash, this._name, this.description, this.categories, this.teams, this.admin);
 
-  Project.create(hash) : hash = hash, name = "New Project", description = "", categories = toObservable([]), teams = toObservable([]), admin = null;
-
-  Project.empty(this.hash);
+  Project.newHash(this.hash);
 
   toString() => name;
 
-  factory Project.fromJson(Map _json, CompetencesService service) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
+  listen(CompetencesService service){
+    this.service = service;
+    service.dbRef.child("project/name").onValue.listen((e) {
+      _name = toObservable(e.snapshot.val());
+    });
+  }
+
+  factory Project.retrieve(String hash, CompetencesService service) {
+    Project project;
+    service.dbRef.child("project").once("value").then((snapshot) {
+      Map val = snapshot.val();
+      project = toObservable(new Project.fromJson(val));
+
+      if(project != null) {
+        project.listen(service);
+        print("listening1");
+      } else {
+        project = toObservable(new Project.newHash(hash));
+        service.dbRef.child("project").update(project.toJson()).then((error) {
+          if(error) {
+            //
+          } else {
+            project.listen(service);
+            print("listening2");
+          }
+        });
+      }
+    });
+    return project;
+  }
+
+  factory Project.fromJson(Map _json) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
     String hash = "";
     String name = "Project";
     String description = "-";
@@ -75,13 +106,13 @@ class Project extends Observable {
     }
      */
 
-    Project project = new Project((_json["hash"]==null ? null : _json["hash"]),
-        name, description, categories, teams, admin, service);
-    return project;
+    Project result = toObservable(new Project.full((_json["hash"]==null ? null : _json["hash"]),
+        name, description, categories, teams, admin));
+    return result;
   }
 
-  Map toJson() {
-    var _json = new Map();
+  Map<String, dynamic> toJson() {
+    var _json = new Map<String, dynamic>();
     if (description != null) {
       _json["description"] = description;
     }
@@ -102,22 +133,4 @@ class Project extends Observable {
     }*/
     return _json;
   }
-
-  void categoriesToJson() {
-    categoriesAsJson = JSON.encode(categories);
-  }
-
-  void categoriesFromJson() {
-    categories = toObservable(JSON.decode(categoriesAsJson.trim().replaceAll("\n", " ")).map((value) => new Category.fromJson(value, true)).toList());
-  }
-
-  void teamsToJson() {
-    teamsAsJson = JSON.encode(teams);
-  }
-
-  void teamsFromJson() {
-    teams = toObservable(JSON.decode(teamsAsJson.trim().replaceAll("\n", " ")));
-  }
-
-
 }

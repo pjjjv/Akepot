@@ -1,73 +1,144 @@
 library akepot.model.model_competence;
 
 import 'package:polymer/polymer.dart';
-import "dart:core" as core;
 import 'package:akepot/competences_service.dart';
+import 'package:firebase/firebase.dart';
 
 /** Not documented yet. */
 class Competence extends Observable {
   /** Not documented yet. */
-  @observable core.String description;
+  String _description = "";
+  String get description => _description;
+  void set description(String value) {
+    this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
+
+    _changeProperty("categories/"+id, new Map()..putIfAbsent("description", () => description));
+  }
 
   /** Not documented yet. */
-  @observable core.int id;
+  @observable String id;
+
+  /** Not documented yet. */ //TODO: label
+  String _label = "";
+  String get label => _label;
+  void set label(String value) {
+    this._label = notifyPropertyChange(const Symbol('label'), this._label, value);
+
+    _changeProperty("categories/"+id, new Map()..putIfAbsent("label", () => label));
+  }
 
   /** Not documented yet. */
-  @observable core.String label;
+  int _rating = 0;
+  int get rating => _rating;
+  void set rating(int value) {
+    this._rating = notifyPropertyChange(const Symbol('rating'), this._rating, value);
 
-  /** Not documented yet. */
-  @observable Rating value;
+    _changeProperty("categories/"+id, new Map()..putIfAbsent("rating", () => rating));
+  }
 
-  @observable core.bool notSetYet;
+  @observable bool notSetYet;
 
-  @observable core.int competenceTemplateId;
+  @observable int competenceTemplateId;
 
-  @observable core.int userId;
+  @observable int userId;
 
-  Competence(this.id, this.label, this.description, this.value, this.notSetYet, this.competenceTemplateId, this.userId);
+  @observable CompetencesService service;
 
-  Competence.create() : id = null, label = "New", description = "", value = new Rating.zero(), notSetYet = true, competenceTemplateId = 0, userId = 0;
+  Competence.full(this.id, this._label, this._description, this._rating, this.notSetYet, this.competenceTemplateId, this.userId);
 
-  toString() => label;
+  Competence.newId(this.id);
 
-  factory Competence.fromJson(core.Map _json, [core.bool noId = false]) {
-    core.String label = "Competence";
-    core.String description = "-";
-    Rating value = new Rating(0);
-    core.bool notSetYet = true;
+  Competence.empty();
 
-    if (!_json.containsKey("id") && noId == false) {
-      throw new core.Exception("No id.");
-    }
-    if (_json.containsKey("label")) {
-      label = _json["label"];
-    }
-    if (_json.containsKey("description")) {
-      description = _json["description"];
-    }
-    if (_json.containsKey("value")) {
-      value = new Rating.fromJson(_json["value"]);
-    }
-    if (_json.containsKey("notSetYet")) {
-      notSetYet = _json["notSetYet"].toString().toLowerCase() == 'true';
-    }
-    if (!_json.containsKey("competenceTemplateId") && noId == false) {
-      throw new core.Exception("No competenceTemplateId.");
-    }
-    if (!_json.containsKey("userId") && noId == false) {
-      throw new core.Exception("No userId.");
-    }
+  factory Competence.retrieve(String id, CompetencesService service) {
+    Competence competence = toObservable(new Competence.newId(id));
+    service.dbRef.child("competenceTemplates/"+id).once("value").then((snapshot) {
+      Map val = snapshot.val();
+      competence.fromJson(val);
 
-    Competence competence = new Competence((_json["id"]==null ? null : core.int.parse(_json["id"])),
-        label, description, value, notSetYet,
-        (_json["competenceTemplateId"]==null ? null : core.int.parse(_json["competenceTemplateId"])),
-        (_json["userId"]==null ? null : core.int.parse(_json["userId"])));
-    value.competence = competence;
+      if(competence != null) {
+        competence._listen(service);
+      } else {
+        //New competence
+        competence = toObservable(new Competence.newRemote(service));
+      }
+    });
     return competence;
   }
 
-  core.Map toJson() {
-    var _json = new core.Map();
+  factory Competence.newRemote(CompetencesService service) {
+    Competence competence = toObservable(new Competence.empty());
+    Firebase pushRef = service.dbRef.child("competenceTemplates").push();
+    competence.id = pushRef.key;
+    pushRef.set(competence.toJson()).then((error) {
+      if(error != null) {
+        //
+      } else {
+        competence._listen(service);
+      }
+    });
+    return competence;
+  }
+
+  toString() => label;
+
+  _listen(CompetencesService service){
+    this.service = service;
+    service.dbRef.child("categories/"+id+"/label").onValue.listen((e) {
+      _label = notifyPropertyChange(const Symbol('label'), this._label, e.snapshot.val());
+    });
+    service.dbRef.child("categories/"+id+"/description").onValue.listen((e) {
+      _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
+    });
+    service.dbRef.child("categories/"+id+"/rating").onValue.listen((e) {
+      _rating = notifyPropertyChange(const Symbol('rating'), this._rating, e.snapshot.val());
+    });
+  }
+
+  _changeProperty(String child, var value){
+    if(service != null) {
+      service.dbRef.child(child).update(value);
+    }
+  }
+
+  fromJson(Map _json, [bool noId = false]) {
+    if (!_json.containsKey("id") && noId == false) {
+      throw new Exception("No id.");
+    }
+    id = _json["id"]==null ? null : _json["id"];
+    if (_json.containsKey("label")) {
+      label = _json["label"];
+    } else {
+      label = "Competence";
+    }
+    if (_json.containsKey("description")) {
+      description = _json["description"];
+    } else {
+      description = "-";
+    }
+    if (_json.containsKey("rating")) {
+      rating = _json["rating"];
+    } else {
+      rating = 0;
+    }
+    if (_json.containsKey("notSetYet")) {
+      notSetYet = _json["notSetYet"].toString().toLowerCase() == 'true';
+    } else {
+      notSetYet = true;
+    }
+    /*if (!_json.containsKey("competenceTemplateId") && noId == false) {
+      throw new Exception("No competenceTemplateId.");
+    }
+    competenceTemplateId = _json["competenceTemplateId"]==null ? null : int.parse(_json["competenceTemplateId"]);
+    if (!_json.containsKey("userId") && noId == false) {
+      throw new Exception("No userId.");
+    }
+    userId = _json["userId"]==null ? null : int.parse(_json["userId"]);
+    */
+  }
+
+  Map toJson() {
+    var _json = new Map();
     if (id != null) {
       _json["id"] = id;
     }
@@ -77,56 +148,17 @@ class Competence extends Observable {
     if (description != null) {
       _json["description"] = description;
     }
-    if (value != null) {
-      _json["value"] = (value).toJson();
+    if (rating != null) {
+      _json["rating"] = rating;
     }
     _json["notSetYet"] = notSetYet;
-    if (competenceTemplateId != null) {
+    /*if (competenceTemplateId != null) {
       _json["competenceTemplateId"] = competenceTemplateId;
     }
     if (userId != null) {
       _json["userId"] = userId;
-    }
+    }*/
     return _json;
   }
 
 }
-
-
-/** Not documented yet. */
-class Rating extends Observable {
-  /** Not documented yet. */
-  core.int _rating;
-
-  @observable Competence competence;
-  @observable CompetencesService service;
-
-  Rating(this._rating);
-
-  Rating.zero() : _rating = 0;
-
-  toString() => _rating;
-
-  factory Rating.fromJson(core.Map _json) {
-    core.int rating = 0;
-    if (_json.containsKey("rating")) {
-      rating = _json["rating"];
-    }
-    return new Rating(rating);
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (_rating != null) {
-      _json["rating"] = _rating;
-    }
-    return _json;
-  }
-
-  core.int get rating             => _rating;
-  set rating(core.int rating) {
-    _rating = rating;
-    service.updateCompetence(competence);
-  }
-}
-

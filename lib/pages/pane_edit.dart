@@ -32,11 +32,10 @@ class PaneEdit extends PolymerElement {
     pages = shadowRoot.querySelector("#pages_edit");
 
     project = toObservable(new Project.retrieve(projectHash, service));
-    print(project);
   }
 
   void addCategory(Event e, var detail, Node target){
-    project.categories.add(toObservable(new Category.create()));
+    project.addCategory();
   }
 
   void onCategoryTap(Event e, var detail, Node target){

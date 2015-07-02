@@ -1,54 +1,115 @@
 library akepot.model.model_category;
 
 import 'package:polymer/polymer.dart';
-import "dart:core" as core;
 import 'package:akepot/model/model_subcategory.dart';
-
+import 'package:akepot/competences_service.dart';
+import 'package:firebase/firebase.dart';
 
 /** Not documented yet. */
 class Category extends Observable {
   /** Not documented yet. */
-  @observable core.String description;
+  String _description = "";
+  String get description => _description;
+  void set description(String value) {
+    this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
+
+    _changeProperty("categories/"+id, new Map()..putIfAbsent("description", () => description));
+  }
 
   /** Not documented yet. */
-  @observable core.int id;
+  @observable String id;
 
   /** Not documented yet. */
-  @observable core.String name;
+  String _name = "";
+  String get name => _name;
+  void set name(String value) {
+    this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
+
+    _changeProperty("categories/"+id, new Map()..putIfAbsent("name", () => name));
+  }
 
   /** Not documented yet. */
-  @observable core.List<SubCategory> subcategories = toObservable([]);
+  @observable List<SubCategory> subcategories = toObservable([]);
+  @observable Map subcategoryIds;
 
-  Category(this.id, this.name, this.description, this.subcategories);
-  Category.create() : id = null, name = "New", description = "", subcategories = toObservable([]);
+  @observable CompetencesService service;
 
-  toString() => name;
+  Category.full(this.id, this._name, this._description, this.subcategories);
 
-  factory Category.fromJson(core.Map _json, [core.bool noId = false]) {
-    core.String name = "SubCategory";
-    core.String description = "-";
-    core.List<SubCategory> subcategories = toObservable([]);
+  Category.newId(this.id);
 
-    if (!_json.containsKey("id") && noId == false) {
-      throw new core.Exception("No id.");
-    }
-    if (_json.containsKey("name")) {
-      name = _json["name"];
-    }
-    if (_json.containsKey("description")) {
-      description = _json["description"];
-    }
-    if (_json.containsKey("subCategories")) {
-      subcategories = toObservable(_json["subCategories"].map((value) => new SubCategory.fromJson(value, noId)).toList());
-    }
+  Category.empty();
 
-    Category category = new Category((_json["id"]==null ? null : core.int.parse(_json["id"])),
-        name, description, subcategories);
+  factory Category.retrieve(String id, CompetencesService service) {
+    Category category = toObservable(new Category.newId(id));
+    service.dbRef.child("categories/"+id).once("value").then((snapshot) {
+      Map val = snapshot.val();
+      category.fromJson(val);
+
+      if(category != null) {
+        category._listen(service);
+      } else {
+        //New category
+        category = toObservable(new Category.newRemote(service));
+      }
+    });
     return category;
   }
 
-  core.Map toJson() {
-    var _json = new core.Map();
+  factory Category.newRemote(CompetencesService service) {
+    Category category = toObservable(new Category.empty());
+    Firebase pushRef = service.dbRef.child("categories").push();
+    category.id = pushRef.key;
+    pushRef.set(category.toJson()).then((error) {
+      if(error != null) {
+        //
+      } else {
+        category._listen(service);
+      }
+    });
+    return category;
+  }
+
+  toString() => name;
+
+  _listen(CompetencesService service){
+    this.service = service;
+    service.dbRef.child("categories/"+id+"/name").onValue.listen((e) {
+      _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
+    });
+    service.dbRef.child("categories/"+id+"/description").onValue.listen((e) {
+      _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
+    });
+  }
+
+  _changeProperty(String child, var value){
+    if(service != null) {
+      service.dbRef.child(child).update(value);
+    }
+  }
+
+  fromJson(Map _json, [bool noId = false]) {
+    if (!_json.containsKey("id") && noId == false) {
+      throw new Exception("No id.");
+    }
+    id = _json["id"]==null ? null : _json["id"];
+    if (_json.containsKey("name")) {
+      name = _json["name"];
+    } else {
+      name = "Category";
+    }
+    if (_json.containsKey("description")) {
+      description = _json["description"];
+    } else {
+      description = "-";
+    }
+    /*if (_json.containsKey("subCategories")) {
+      subcategories = toObservable(_json["subCategories"].map((value) => new SubCategory.fromJson(value, noId)).toList());
+    }*/
+  }
+
+  Map<String, dynamic> toJson() {
+    var _json = new Map<String, dynamic>();
     if (description != null) {
       _json["description"] = description;
     }
@@ -58,9 +119,9 @@ class Category extends Observable {
     if (name != null) {
       _json["name"] = name;
     }
-    if (subcategories != null) {
+    /*if (subcategories != null) {
       _json["subCategories"] = subcategories.map((value) => (value).toJson()).toList();
-    }
+    }*/
     return _json;
   }
 }

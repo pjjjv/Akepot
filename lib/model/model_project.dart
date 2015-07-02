@@ -14,12 +14,12 @@ class Project extends Observable {
   @observable String hash;
 
   /** Not documented yet. */
-  String _name = "New Project";
+  String _name = "";
   String get name => _name;
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("project/name", name);
+    _changeProperty("project", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -50,15 +50,15 @@ class Project extends Observable {
   listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("project/name").onValue.listen((e) {
-      _name = toObservable(e.snapshot.val());
+      _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
   }
 
   factory Project.retrieve(String hash, CompetencesService service) {
-    Project project;
+    Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("project").once("value").then((snapshot) {
       Map val = snapshot.val();
-      project = toObservable(new Project.fromJson(val));
+      project.fromJson(val);
 
       if(project != null) {
         project.listen(service);
@@ -78,22 +78,20 @@ class Project extends Observable {
     return project;
   }
 
-  factory Project.fromJson(Map _json) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
-    String hash = "";
-    String name = "Project";
-    String description = "-";
-    List<Category> categories = toObservable([]);
-    List<String> teams = toObservable([]);
-    String admin = "";
-
+  fromJson(Map _json) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
     if (!_json.containsKey("hash")) {
       throw new Exception("No hash.");
     }
+    hash = toObservable(_json["hash"]==null ? null : _json["hash"]);
     if (_json.containsKey("name")) {
-      name = _json["name"];
+      name = toObservable(_json["name"]);
+    } else {
+      name = toObservable("Project");
     }
     if (_json.containsKey("description")) {
-      description = _json["description"];
+      description = toObservable(_json["description"]);
+    } else {
+      description = toObservable("-");
     }
     if (_json.containsKey("categories")) {
       categories = toObservable(_json["categories"].map((value) => new Category.fromJson(value)).toList());
@@ -105,10 +103,6 @@ class Project extends Observable {
       admin = _json["admin"];
     }
      */
-
-    Project result = toObservable(new Project.full((_json["hash"]==null ? null : _json["hash"]),
-        name, description, categories, teams, admin));
-    return result;
   }
 
   Map<String, dynamic> toJson() {

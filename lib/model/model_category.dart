@@ -70,7 +70,7 @@ class Category extends Observable {
     return category;
   }
 
-  toString() => name;
+  toString() => id + ": " + name;//TODO
 
   _listen(CompetencesService service){
     this.service = service;

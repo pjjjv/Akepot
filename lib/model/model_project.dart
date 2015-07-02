@@ -93,27 +93,20 @@ class Project extends Observable {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
-    categoryIds.listChanges.listen((records) {
-      for (ListChangeRecord record in records) {
-        //Something added to the list
-        if (record.addedCount > 0) {
-          for (var i = 0; i < record.object.length; i++) {
-            if (record.indexChanged(i)) {
-              Map item = JSON.decode(record.object[i]);
-              for (String key in item.keys) {//not a real loop, expect only 1 element
-                categories.insert(i, new Category.retrieve(key, service));
-                break;
-              }
-            }
+    categoryIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't  need to do anything with PropertyChagneRecords.
+        if (record is MapChangeRecord) {
+          print(record);
+          //Something added
+          if (record.isInsert) {
+            Category category = new Category.retrieve(record.key, service);
+            categories.add(category);//TODO
           }
-        }
 
-        //Something removed from the list
-        for (String json in record.removed) {
-          Map item = JSON.decode(json);
-          for (String key in item.keys) {//not a real loop, expect only 1 element
-            categories.removeWhere((category) => category.id == key);
-            break;
+          //Something removed
+          if (record.isRemove) {
+            categories.removeWhere((category) => category.id == record.key);
           }
         }
       }
@@ -121,7 +114,7 @@ class Project extends Observable {
 
     service.dbRef.child("projects/"+hash+"/categoryIds").onValue.listen((e) {
       Map map = e.snapshot.val();
-      categoryIds.addAll(map);//TODO: only if absent?
+      categoryIds.addAll(map);
     });
   }
 

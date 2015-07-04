@@ -24,13 +24,20 @@
     <link href="pane_edit.css" rel="stylesheet">
 
     <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
+    <core-signals on-core-signal-removeproject="{{removeProject}}"></core-signals>
 
     <core-signals on-core-signal-categorytap="{{onCategoryTap}}"></core-signals>
     <core-signals on-core-signal-addcategory="{{addCategory}}"></core-signals>
+    <core-signals on-core-signal-removecategory="{{removeCategory}}"></core-signals>
+
     <core-signals on-core-signal-subcategorytap="{{onSubCategoryTap}}"></core-signals>
     <core-signals on-core-signal-addsubcategory="{{addSubCategory}}"></core-signals>
+    <core-signals on-core-signal-removesubcategory="{{removeSubCategory}}"></core-signals>
+
     <core-signals on-core-signal-competencetap="{{onCompetenceTap}}"></core-signals>
     <core-signals on-core-signal-addcompetence="{{addCompetence}}"></core-signals>
+    <core-signals on-core-signal-removecompetence="{{removeCompetence}}"></core-signals>
+
     <core-signals on-core-signal-goup="{{goUp}}"></core-signals>
 
     <div id="outer" layout vertical>

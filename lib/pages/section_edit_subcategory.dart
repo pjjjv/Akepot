@@ -31,6 +31,11 @@ class SectionEditSubCategory extends PolymerElement {
     this.fire( "core-signal", detail: { "name": "addcompetence" } );
   }
 
+  void onItemDeleteButtonTap(Event e, var detail, HtmlElement target){
+    e.stopPropagation();
+    this.fire( "core-signal", detail: { "name": "removecompetence", "data": target.parent.id } );
+  }
+
   void goUp(Event e, var detail, HtmlElement target){
     this.fire( "core-signal", detail: { "name": "goup" } );
   }

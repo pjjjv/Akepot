@@ -24,4 +24,14 @@ class SectionEditProject extends PolymerElement {
   void onCreateButtonTap(Event e, var detail, Node target){
     this.fire( "core-signal", detail: { "name": "addcategory" } );
   }
+
+  void onItemDeleteButtonTap(Event e, var detail, HtmlElement target){
+    e.stopPropagation();
+    this.fire( "core-signal", detail: { "name": "removecategory", "data": target.parent.id } );
+  }
+
+  void onProjectDeleteButtonTap(Event e, var detail, HtmlElement target){
+    e.stopPropagation();
+    this.fire( "core-signal", detail: { "name": "removeproject", "data": target.id } );
+  }
 }

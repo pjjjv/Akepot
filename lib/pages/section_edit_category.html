@@ -26,7 +26,7 @@
 
         <div layout center-justified>
           <template repeat="{{subcategory in category.subcategories | enumerate}}">
-            <core-card3 id="{{subcategory.index}}" horizontal layout center start-justified hero-id="hero-subcategory" hero?="{{(page == 2 || page == 1) && subcategory.index == index}}" cross-fade-delayed?="{{page != 1 || subcategory.index != index}}" on-tap="{{onItemTap}}">{{subcategory.value.name}}</core-card3>
+            <core-card3 id="{{subcategory.index}}" horizontal layout center start-justified hero-id="hero-subcategory" hero?="{{(page == 2 || page == 1) && subcategory.index == index}}" cross-fade-delayed?="{{page != 1 || subcategory.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{subcategory.value.name}}</core-card3>
           </template>
         </div>
         <!-- <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Waterfall</core-card3>

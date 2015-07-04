@@ -86,6 +86,11 @@ class Project extends Observable {
     service.dbRef.child("projects/"+hash+"/categoryIds").update(new Map()..putIfAbsent(category.id, () => true));
   }
 
+  removeCategory(int index){
+    String categoryId = categories[index].id;
+    service.dbRef.child("projects/"+hash+"/categoryIds/"+categoryId).remove();
+  }
+
   _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/"+hash+"/name").onValue.listen((e) {
@@ -97,7 +102,7 @@ class Project extends Observable {
 
     categoryIds.changes.listen((records) {
       for (ChangeRecord record in records) {
-        //We don't  need to do anything with PropertyChagneRecords.
+        //We don't need to do anything with PropertyChangeRecords.
         if (record is MapChangeRecord) {
           print(record);
           //Something added
@@ -116,7 +121,8 @@ class Project extends Observable {
 
     service.dbRef.child("projects/"+hash+"/categoryIds").onValue.listen((e) {
       Map map = e.snapshot.val();
-      categoryIds.addAll(map);
+      categoryIds.clear();
+      categoryIds.addAll(toObservable(map));
     });
   }
 

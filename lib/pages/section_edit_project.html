@@ -26,7 +26,7 @@
 
         <div layout center-justified>
           <template repeat="{{category in project.categories | enumerate}}">
-            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade-delayed?="{{page != 0 || category.index != index}}" on-tap="{{onItemTap}}">{{category.value.name}}</core-card3>
+            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade-delayed?="{{page != 0 || category.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{category.value.name}}</core-card3>
           </template>
         </div>
         <!--<core-card3 id="core_card" horizontal layout center start-justified hero-id="hero" hero>Software Methodologies</core-card3>

@@ -34,8 +34,17 @@ class PaneEdit extends PolymerElement {
     project = toObservable(new Project.retrieve(projectHash, service));
   }
 
+  void removeProject(Event e, var detail, Node target){
+    //
+  }
+
   void addCategory(Event e, var detail, Node target){
     project.addCategory();
+  }
+
+  void removeCategory(Event e, var detail, Node target){
+    category_nr = int.parse(detail);
+    project.removeCategory(category_nr);
   }
 
   void onCategoryTap(Event e, var detail, Node target){
@@ -47,6 +56,11 @@ class PaneEdit extends PolymerElement {
     project.categories[category_nr].subcategories.add(toObservable(new SubCategory.create()));
   }
 
+  void removeSubCategory(Event e, var detail, Node target){
+    subcategory_nr = int.parse(detail);
+    project.removeSubCategory(subcategory_nr);
+  }
+
   void onSubCategoryTap(Event e, var detail, Node target){
     subcategory_nr = int.parse(detail);
     pages.selectNext(false);
@@ -54,6 +68,11 @@ class PaneEdit extends PolymerElement {
 
   void addCompetence(Event e, var detail, Node target){
     project.categories[category_nr].subcategories[subcategory_nr].competences.add(toObservable(new Competence.create()));
+  }
+
+  void removeCompetence(Event e, var detail, Node target){
+    competence_nr = int.parse(detail);
+    project.removeCompetence(competence_nr);
   }
 
   void onCompetenceTap(Event e, var detail, Node target){

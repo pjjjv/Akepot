@@ -104,7 +104,6 @@ class Project extends Observable {
       for (ChangeRecord record in records) {
         //We don't need to do anything with PropertyChangeRecords.
         if (record is MapChangeRecord) {
-          print(record);
           //Something added
           if (record.isInsert) {
             Category category = new Category.retrieve(record.key, service);
@@ -119,10 +118,13 @@ class Project extends Observable {
       }
     });
 
-    service.dbRef.child("projects/"+hash+"/categoryIds").onValue.listen((e) {
-      Map map = e.snapshot.val();
-      categoryIds.clear();
-      categoryIds.addAll(toObservable(map));
+    service.dbRef.child("projects/"+hash+"/categoryIds").onChildAdded.listen((e) {
+      categoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("projects/"+hash+"/categoryIds").onChildRemoved.listen((e) {
+      print("prevChild: "+e.snapshot.key);
+      categoryIds.remove(e.snapshot.key);
     });
   }
 

@@ -30,7 +30,7 @@ class Category extends Observable {
 
   /** Not documented yet. */
   @observable List<SubCategory> subcategories = toObservable([]);
-  @observable Map subcategoryIds;
+  @observable ObservableMap subCategoryIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
@@ -74,6 +74,16 @@ class Category extends Observable {
 
   toString() => id + ": " + name;//TODO
 
+  addSubCategory(){
+    SubCategory subCategory = new SubCategory.newRemote(service);
+    service.dbRef.child("categories/"+id+"/subCategoryIds").update(new Map()..putIfAbsent(subCategory.id, () => true));
+  }
+
+  removeSubCategory(int index){
+    String subCategoryId = subcategories[index].id;
+    service.dbRef.child("categories/"+id+"/subCategoryIds/"+subCategoryId).remove();
+  }
+
   _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("categories/"+id+"/name").onValue.listen((e) {
@@ -81,6 +91,33 @@ class Category extends Observable {
     });
     service.dbRef.child("categories/"+id+"/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
+    });
+
+    subCategoryIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            SubCategory subCategory = new SubCategory.retrieve(record.key, service);
+            subcategories.add(subCategory);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            subcategories.removeWhere((subCategory) => subCategory.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("categories/"+id+"/subCategoryIds").onChildAdded.listen((e) {
+      subCategoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("categories/"+id+"/subCategoryIds").onChildRemoved.listen((e) {
+      print("prevChild: "+e.snapshot.key);
+      subCategoryIds.remove(e.snapshot.key);
     });
   }
 

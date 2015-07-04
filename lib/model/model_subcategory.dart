@@ -30,7 +30,7 @@ class SubCategory extends Observable {
 
   /** Not documented yet. */
   @observable List<Competence> competences = toObservable([]);
-  @observable Map competenceIds;
+  @observable ObservableMap competenceIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
@@ -74,6 +74,16 @@ class SubCategory extends Observable {
 
   toString() => name;
 
+  addCompetence(){
+    Competence competence = new Competence.newRemote(service);
+    service.dbRef.child("subCategories/"+id+"/competenceIds").update(new Map()..putIfAbsent(competence.id, () => true));
+  }
+
+  removeCompetence(int index){
+    String competenceId = competences[index].id;
+    service.dbRef.child("subCategories/"+id+"/competenceIds/"+competenceId).remove();
+  }
+
   _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("subCategories/"+id+"/name").onValue.listen((e) {
@@ -81,6 +91,33 @@ class SubCategory extends Observable {
     });
     service.dbRef.child("subCategories/"+id+"/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
+    });
+
+    competenceIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            Competence competence = new Competence.retrieve(record.key, service);
+            competences.add(competence);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            competences.removeWhere((competence) => competence.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("subCategories/"+id+"/competenceIds").onChildAdded.listen((e) {
+      competenceIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("subCategories/"+id+"/competenceIds").onChildRemoved.listen((e) {
+      print("prevChild: "+e.snapshot.key);
+      competenceIds.remove(e.snapshot.key);
     });
   }
 

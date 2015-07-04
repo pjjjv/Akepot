@@ -43,8 +43,11 @@ class PaneEdit extends PolymerElement {
   }
 
   void removeCategory(Event e, var detail, Node target){
-    category_nr = int.parse(detail);
-    project.removeCategory(category_nr);
+    int index = int.parse(detail);
+    if(category_nr >= index){
+      category_nr = 0;
+    }
+    project.removeCategory(index);
   }
 
   void onCategoryTap(Event e, var detail, Node target){
@@ -53,12 +56,18 @@ class PaneEdit extends PolymerElement {
   }
 
   void addSubCategory(Event e, var detail, Node target){
-    project.categories[category_nr].subcategories.add(toObservable(new SubCategory.create()));
+    project.categories[category_nr].addSubCategory();
   }
 
   void removeSubCategory(Event e, var detail, Node target){
-    subcategory_nr = int.parse(detail);
-    project.removeSubCategory(subcategory_nr);
+    int index = int.parse(detail);
+    if(subcategory_nr >= index){
+      if(project.categories[category_nr].subcategories.length <= 1){
+        goUp(e, detail, target);
+      }
+      subcategory_nr = 0;
+    }
+    project.categories[subcategory_nr].removeSubCategory(index);
   }
 
   void onSubCategoryTap(Event e, var detail, Node target){
@@ -67,12 +76,18 @@ class PaneEdit extends PolymerElement {
   }
 
   void addCompetence(Event e, var detail, Node target){
-    project.categories[category_nr].subcategories[subcategory_nr].competences.add(toObservable(new Competence.create()));
+    project.categories[category_nr].subcategories[subcategory_nr].addCompetence();
   }
 
   void removeCompetence(Event e, var detail, Node target){
-    competence_nr = int.parse(detail);
-    project.removeCompetence(competence_nr);
+    int index = int.parse(detail);
+    if(competence_nr >= index){
+      if(project.categories[category_nr].subcategories[subcategory_nr].competences.length <= 1){
+        goUp(e, detail, target);
+      }
+      competence_nr = 0;
+    }
+    project.categories[category_nr].subcategories[subcategory_nr].removeCompetence(index);
   }
 
   void onCompetenceTap(Event e, var detail, Node target){

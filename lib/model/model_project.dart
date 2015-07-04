@@ -45,7 +45,9 @@ class Project extends Observable {
 
   Project.newHash(this.hash);
 
-  Project.empty();
+  Project.emptyDefault() {
+    _name = "New Project";
+  }
 
   factory Project.retrieve(String hash, CompetencesService service) {
     Project project = toObservable(new Project.newHash(hash));
@@ -64,7 +66,7 @@ class Project extends Observable {
   }
 
   factory Project.newRemote(CompetencesService service) {
-    Project project = toObservable(new Project.empty());
+    Project project = toObservable(new Project.emptyDefault());
     Firebase pushRef = service.dbRef.child("projects").push();
     project.hash = pushRef.key;
     pushRef.set(project.toJson()).then((error) {
@@ -132,7 +134,7 @@ class Project extends Observable {
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
-      name = "Project";
+      name = "Unknown Project";
     }
     if (_json.containsKey("description")) {
       description = _json["description"];

@@ -38,7 +38,9 @@ class Category extends Observable {
 
   Category.newId(this.id);
 
-  Category.empty();
+  Category.emptyDefault() {
+    _name = "New Category";
+  }
 
   factory Category.retrieve(String id, CompetencesService service) {
     Category category = toObservable(new Category.newId(id));
@@ -57,7 +59,7 @@ class Category extends Observable {
   }
 
   factory Category.newRemote(CompetencesService service) {
-    Category category = toObservable(new Category.empty());
+    Category category = toObservable(new Category.emptyDefault());
     Firebase pushRef = service.dbRef.child("categories").push();
     category.id = pushRef.key;
     pushRef.set(category.toJson()).then((error) {
@@ -96,7 +98,7 @@ class Category extends Observable {
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
-      name = "Category";
+      name = "Unknown Category";
     }
     if (_json.containsKey("description")) {
       description = _json["description"];

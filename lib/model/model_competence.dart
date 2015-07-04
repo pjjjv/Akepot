@@ -48,7 +48,9 @@ class Competence extends Observable {
 
   Competence.newId(this.id);
 
-  Competence.empty();
+  Competence.emptyDefault() {
+    _label = "New Competence";
+  }
 
   factory Competence.retrieve(String id, CompetencesService service) {
     Competence competence = toObservable(new Competence.newId(id));
@@ -67,7 +69,7 @@ class Competence extends Observable {
   }
 
   factory Competence.newRemote(CompetencesService service) {
-    Competence competence = toObservable(new Competence.empty());
+    Competence competence = toObservable(new Competence.emptyDefault());
     Firebase pushRef = service.dbRef.child("competenceTemplates").push();
     competence.id = pushRef.key;
     pushRef.set(competence.toJson()).then((error) {
@@ -109,7 +111,7 @@ class Competence extends Observable {
     if (_json.containsKey("label")) {
       label = _json["label"];
     } else {
-      label = "Competence";
+      label = "Unknown Competence";
     }
     if (_json.containsKey("description")) {
       description = _json["description"];

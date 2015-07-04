@@ -38,7 +38,9 @@ class SubCategory extends Observable {
 
   SubCategory.newId(this.id);
 
-  SubCategory.empty();
+  SubCategory.emptyDefault() {
+    _name = "New Sub-Category";
+  }
 
   factory SubCategory.retrieve(String id, CompetencesService service) {
     SubCategory subCategory = toObservable(new SubCategory.newId(id));
@@ -57,7 +59,7 @@ class SubCategory extends Observable {
   }
 
   factory SubCategory.newRemote(CompetencesService service) {
-    SubCategory subCategory = toObservable(new SubCategory.empty());
+    SubCategory subCategory = toObservable(new SubCategory.emptyDefault());
     Firebase pushRef = service.dbRef.child("subCategories").push();
     subCategory.id = pushRef.key;
     pushRef.set(subCategory.toJson()).then((error) {
@@ -96,7 +98,7 @@ class SubCategory extends Observable {
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
-      name = "Sub-Category";
+      name = "Unknown Sub-Category";
     }
     if (_json.containsKey("description")) {
       description = _json["description"];

@@ -1,3 +1,5 @@
+library competence_service;
+
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'dart:convert';

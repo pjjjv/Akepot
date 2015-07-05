@@ -13,7 +13,7 @@ class SubCategory extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("subCategories/"+id, new Map()..putIfAbsent("description", () => description));
+    _changeProperty("subCategories/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
@@ -25,7 +25,7 @@ class SubCategory extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("subCategories/"+id, new Map()..putIfAbsent("name", () => name));
+    _changeProperty("subCategories/$id", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -44,7 +44,7 @@ class SubCategory extends Observable {
 
   factory SubCategory.retrieve(String id, CompetencesService service) {
     SubCategory subCategory = toObservable(new SubCategory.newId(id));
-    service.dbRef.child("subCategories/"+id).once("value").then((snapshot) {
+    service.dbRef.child("subCategories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       subCategory.fromJson(val);
 
@@ -76,20 +76,20 @@ class SubCategory extends Observable {
 
   addCompetence(){
     Competence competence = new Competence.newRemote(service);
-    service.dbRef.child("subCategories/"+id+"/competenceIds").update(new Map()..putIfAbsent(competence.id, () => true));
+    service.dbRef.child("subCategories/$id/competenceIds").update(new Map()..putIfAbsent(competence.id, () => true));
   }
 
   removeCompetence(int index){
     String competenceId = competences[index].id;
-    service.dbRef.child("subCategories/"+id+"/competenceIds/"+competenceId).remove();
+    service.dbRef.child("subCategories/$id/competenceIds/$competenceId").remove();
   }
 
   _listen(CompetencesService service){
     this.service = service;
-    service.dbRef.child("subCategories/"+id+"/name").onValue.listen((e) {
+    service.dbRef.child("subCategories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("subCategories/"+id+"/description").onValue.listen((e) {
+    service.dbRef.child("subCategories/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
@@ -111,11 +111,11 @@ class SubCategory extends Observable {
       }
     });
 
-    service.dbRef.child("subCategories/"+id+"/competenceIds").onChildAdded.listen((e) {
+    service.dbRef.child("subCategories/$id/competenceIds").onChildAdded.listen((e) {
       competenceIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("subCategories/"+id+"/competenceIds").onChildRemoved.listen((e) {
+    service.dbRef.child("subCategories/$id/competenceIds").onChildRemoved.listen((e) {
       competenceIds.remove(e.snapshot.key);
     });
   }

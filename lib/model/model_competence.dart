@@ -12,7 +12,7 @@ class Competence extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("competenceTemplates/"+id, new Map()..putIfAbsent("description", () => description));
+    _changeProperty("competenceTemplates/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
@@ -24,7 +24,7 @@ class Competence extends Observable {
   void set label(String value) {
     this._label = notifyPropertyChange(const Symbol('label'), this._label, value);
 
-    _changeProperty("competenceTemplates/"+id, new Map()..putIfAbsent("label", () => label));
+    _changeProperty("competenceTemplates/$id", new Map()..putIfAbsent("label", () => label));
   }
 
   /** Not documented yet. */
@@ -33,7 +33,7 @@ class Competence extends Observable {
   void set rating(int value) {
     this._rating = notifyPropertyChange(const Symbol('rating'), this._rating, value);
 
-    _changeProperty("competenceTemplates/"+id, new Map()..putIfAbsent("rating", () => rating));
+    _changeProperty("competenceTemplates/$id", new Map()..putIfAbsent("rating", () => rating));
   }
 
   @observable bool notSetYet;
@@ -54,7 +54,7 @@ class Competence extends Observable {
 
   factory Competence.retrieve(String id, CompetencesService service) {
     Competence competence = toObservable(new Competence.newId(id));
-    service.dbRef.child("competenceTemplates/"+id).once("value").then((snapshot) {
+    service.dbRef.child("competenceTemplates/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       competence.fromJson(val);
 
@@ -86,13 +86,13 @@ class Competence extends Observable {
 
   _listen(CompetencesService service){
     this.service = service;
-    service.dbRef.child("competenceTemplates/"+id+"/label").onValue.listen((e) {
+    service.dbRef.child("competenceTemplates/$id/label").onValue.listen((e) {
       _label = notifyPropertyChange(const Symbol('label'), this._label, e.snapshot.val());
     });
-    service.dbRef.child("competenceTemplates/"+id+"/description").onValue.listen((e) {
+    service.dbRef.child("competenceTemplates/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
-    service.dbRef.child("competenceTemplates/"+id+"/rating").onValue.listen((e) {
+    service.dbRef.child("competenceTemplates/$id/rating").onValue.listen((e) {
       _rating = notifyPropertyChange(const Symbol('rating'), this._rating, e.snapshot.val());
     });
   }

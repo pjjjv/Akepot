@@ -3,9 +3,7 @@ import 'dart:html';
 import 'package:paper_elements/paper_button.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:app_router/app_router.dart';
-//import 'package:akepot/competences_service.dart';
-import 'dart:async';
-import 'dart:typed_data';
+import 'package:akepot/competences_service.dart';
 
 @CustomTag("pane-home")
 class PaneHome extends PolymerElement {
@@ -13,42 +11,18 @@ class PaneHome extends PolymerElement {
 
   PaperButton newButton;
   Project project;
-  String generatedHash = null;
-
-  static const int MIN_SPLASH_TIME = 1000;
-  static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
+  CompetencesService service;
 
   void domReady(){
+    service = document.querySelector("#service");
+
     newButton = shadowRoot.querySelector("#new-button");
     newButton.hidden = false;
     newButton.onClick.listen(newProject);
-    startupForHome();
-    generatedHash = generateId();
   }
 
   void newProject(Event e){
-    (document.querySelector('app-router') as AppRouter).go("/admin/$generatedHash/input");
-  }
-
-  void startupForHome () {
-    print(SPLASH_TIMEOUT);
-    new Timer(SPLASH_TIMEOUT, completeStartupForHome);
-  }
-
-  void completeStartupForHome () {
-    if(generatedHash == null){
-      startupForHome();
-      return;
-    }
-  }
-
-  // String generateId(int length);
-  //   length - must be an even number (default: 20)
-  String generateId([int length = 20]) {
-    Uint8List array = new Uint8List((length / 2).round());
-    window.crypto.getRandomValues(array);
-    String result = array.map((n) => n.toRadixString(16)).join("");
-    print("generateId: $result");
-    return result;
+    Project project = new Project.newRemote(service);
+    (document.querySelector('app-router') as AppRouter).go("/admin/${project.hash}/edit");
   }
 }

@@ -14,7 +14,7 @@ class Project extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("projects/"+hash, new Map()..putIfAbsent("description", () => description));
+    _changeProperty("projects/$hash", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
@@ -26,7 +26,7 @@ class Project extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("projects/"+hash, new Map()..putIfAbsent("name", () => name));
+    _changeProperty("projects/$hash", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -51,7 +51,7 @@ class Project extends Observable {
 
   factory Project.retrieve(String hash, CompetencesService service) {
     Project project = toObservable(new Project.newHash(hash));
-    service.dbRef.child("projects/"+hash).once("value").then((snapshot) {
+    service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();
       project.fromJson(val);
 
@@ -83,20 +83,20 @@ class Project extends Observable {
 
   addCategory(){
     Category category = new Category.newRemote(service);
-    service.dbRef.child("projects/"+hash+"/categoryIds").update(new Map()..putIfAbsent(category.id, () => true));
+    service.dbRef.child("projects/$hash/categoryIds").update(new Map()..putIfAbsent(category.id, () => true));
   }
 
   removeCategory(int index){
     String categoryId = categories[index].id;
-    service.dbRef.child("projects/"+hash+"/categoryIds/"+categoryId).remove();
+    service.dbRef.child("projects/$hash/categoryIds/$categoryId").remove();
   }
 
   _listen(CompetencesService service){
     this.service = service;
-    service.dbRef.child("projects/"+hash+"/name").onValue.listen((e) {
+    service.dbRef.child("projects/$hash/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("projects/"+hash+"/description").onValue.listen((e) {
+    service.dbRef.child("projects/$hash/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
@@ -118,11 +118,11 @@ class Project extends Observable {
       }
     });
 
-    service.dbRef.child("projects/"+hash+"/categoryIds").onChildAdded.listen((e) {
+    service.dbRef.child("projects/$hash/categoryIds").onChildAdded.listen((e) {
       categoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("projects/"+hash+"/categoryIds").onChildRemoved.listen((e) {
+    service.dbRef.child("projects/$hash/categoryIds").onChildRemoved.listen((e) {
       categoryIds.remove(e.snapshot.key);
     });
   }

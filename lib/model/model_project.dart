@@ -123,7 +123,6 @@ class Project extends Observable {
     });
 
     service.dbRef.child("projects/"+hash+"/categoryIds").onChildRemoved.listen((e) {
-      print("prevChild: "+e.snapshot.key);
       categoryIds.remove(e.snapshot.key);
     });
   }

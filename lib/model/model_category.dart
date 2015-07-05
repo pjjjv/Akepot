@@ -116,7 +116,6 @@ class Category extends Observable {
     });
 
     service.dbRef.child("categories/"+id+"/subCategoryIds").onChildRemoved.listen((e) {
-      print("prevChild: "+e.snapshot.key);
       subCategoryIds.remove(e.snapshot.key);
     });
   }

@@ -116,7 +116,6 @@ class SubCategory extends Observable {
     });
 
     service.dbRef.child("subCategories/"+id+"/competenceIds").onChildRemoved.listen((e) {
-      print("prevChild: "+e.snapshot.key);
       competenceIds.remove(e.snapshot.key);
     });
   }

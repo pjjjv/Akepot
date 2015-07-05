@@ -44,7 +44,7 @@ class PaneEdit extends PolymerElement {
 
   void removeCategory(Event e, var detail, Node target){
     int index = int.parse(detail);
-    if(category_nr >= index){
+    if(category_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       category_nr = 0;
     }
     project.removeCategory(index);
@@ -61,13 +61,10 @@ class PaneEdit extends PolymerElement {
 
   void removeSubCategory(Event e, var detail, Node target){
     int index = int.parse(detail);
-    if(subcategory_nr >= index){
-      if(project.categories[category_nr].subcategories.length <= 1){
-        goUp(e, detail, target);
-      }
+    if(subcategory_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       subcategory_nr = 0;
     }
-    project.categories[subcategory_nr].removeSubCategory(index);
+    project.categories[category_nr].removeSubCategory(index);
   }
 
   void onSubCategoryTap(Event e, var detail, Node target){
@@ -81,10 +78,7 @@ class PaneEdit extends PolymerElement {
 
   void removeCompetence(Event e, var detail, Node target){
     int index = int.parse(detail);
-    if(competence_nr >= index){
-      if(project.categories[category_nr].subcategories[subcategory_nr].competences.length <= 1){
-        goUp(e, detail, target);
-      }
+    if(competence_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       competence_nr = 0;
     }
     project.categories[category_nr].subcategories[subcategory_nr].removeCompetence(index);

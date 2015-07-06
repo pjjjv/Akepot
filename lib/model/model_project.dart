@@ -2,6 +2,8 @@ library akepot.model.model_project;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_category.dart';
+import 'package:akepot/model/model_team.dart';
+import 'package:akepot/model/model_person.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 import 'dart:convert';
@@ -34,14 +36,16 @@ class Project extends Observable {
   @observable ObservableMap categoryIds = toObservable(new Map());
 
   /** Not documented yet. */
-  @observable List<String> teams = toObservable([]);
+  @observable List<Team> teams = toObservable([]);
+  @observable ObservableMap teamIds = toObservable(new Map());
 
   /** Not documented yet. */
-  String admin;
+  @observable List<Person> admins = toObservable([]);
+  @observable ObservableMap adminIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
-  Project.full(this.hash, this._name, this._description, this.categories, this.teams, this.admin);
+  Project.full(this.hash, this._name, this._description, this.categories, this.teams, this.admins);
 
   Project.newHash(this.hash);
 
@@ -91,6 +95,31 @@ class Project extends Observable {
     service.dbRef.child("projects/$hash/categoryIds/$categoryId").remove();
   }
 
+  addTeam(){
+    Team team = new Team.newRemote(service);
+    service.dbRef.child("projects/$hash/teamIds").update(new Map()..putIfAbsent(team.id, () => true));
+  }
+
+  removeTeam(int index){
+    String teamId = teams[index].id;
+    service.dbRef.child("projects/$hash/teamIds/teamId").remove();
+  }
+
+  addNewAdmin(){
+    Person admin = new Person.newRemote(service);
+    admin.isAdmin = true;
+    addAdmin(admin);
+  }
+
+  addAdmin(Person admin){
+    service.dbRef.child("projects/$hash/adminIds").update(new Map()..putIfAbsent(admin.id, () => true));
+  }
+
+  removeAdmin(int index){
+    String adminId = admins[index].id;
+    service.dbRef.child("projects/$hash/adminIds/adminId").remove();
+  }
+
   _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$hash/name").onValue.listen((e) {
@@ -125,6 +154,58 @@ class Project extends Observable {
     service.dbRef.child("projects/$hash/categoryIds").onChildRemoved.listen((e) {
       categoryIds.remove(e.snapshot.key);
     });
+
+    teamIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            Team team = new Team.retrieve(record.key, service);
+            teams.add(team);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            teams.removeWhere((team) => team.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("projects/$hash/teamIds").onChildAdded.listen((e) {
+      teamIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("projects/$hash/teamIds").onChildRemoved.listen((e) {
+      teamIds.remove(e.snapshot.key);
+    });
+
+    adminIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            Person admin = new Person.retrieve(record.key, service);
+            admins.add(admin);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            admins.removeWhere((admin) => admin.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("projects/$hash/adminIds").onChildAdded.listen((e) {
+      adminIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("projects/$hash/adminIds").onChildRemoved.listen((e) {
+      adminIds.remove(e.snapshot.key);
+    });
   }
 
   _changeProperty(String child, var value){
@@ -148,16 +229,6 @@ class Project extends Observable {
     } else {
       description = "-";
     }
-    /*if (_json.containsKey("categories")) {
-      categories = toObservable(_json["categories"].map((value) => new Category.fromJson(value)).toList());
-    }
-    if (_json.containsKey("teams")) {
-      teams = _toObservable(json["teams"]);
-    }
-    if (_json.containsKey("admin")) {
-      admin = _json["admin"];
-    }
-     */
   }
 
   Map<String, dynamic> toJson() {
@@ -171,15 +242,6 @@ class Project extends Observable {
     if (name != null) {
       _json["name"] = name;
     }
-    /*if (categories != null) {
-      _json["categories"] = categories.map((value) => (value).toJson()).toList();
-    }
-    if (teams != null) {
-      _json["teams"] = teams;
-    }
-    if (admin != null) {
-      _json["admin"] = admin;
-    }*/
     return _json;
   }
 }

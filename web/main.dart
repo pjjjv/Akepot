@@ -30,7 +30,6 @@ class Content extends Observable {
   @observable User user;
   @observable CompetencesService service;
 
-
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 

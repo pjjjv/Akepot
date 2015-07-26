@@ -58,10 +58,6 @@ class Person extends Observable {
 
   }
 
-  setAdmin(bool value, Project project){
-    project.addAdmin(this);
-  }
-
   /** Not documented yet. */
   @observable List<Competence> competences = toObservable([]);
   @observable ObservableMap competenceIds = toObservable(new Map());
@@ -171,6 +167,10 @@ class Person extends Observable {
     if(service != null) {
       service.dbRef.child(child).update(value);
     }
+  }
+
+  setAdmin(bool value, Project project){
+    project.addAdmin(this);
   }
 
   fromJson(Map _json, [bool noId = false]) {

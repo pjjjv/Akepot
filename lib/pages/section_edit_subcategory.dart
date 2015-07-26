@@ -24,16 +24,16 @@ class SectionEditSubCategory extends PolymerElement {
   }
 
   void onItemTap(Event e, var detail, HtmlElement target){
-    this.fire( "core-signal", detail: { "name": "competencetap", "data": target.id } );
+    this.fire( "core-signal", detail: { "name": "competencetemplatetap", "data": target.id } );
   }
 
   void onCreateButtonTap(Event e, var detail, Node target){
-    this.fire( "core-signal", detail: { "name": "addcompetence" } );
+    this.fire( "core-signal", detail: { "name": "addcompetencetemplate" } );
   }
 
   void onItemDeleteButtonTap(Event e, var detail, HtmlElement target){
     e.stopPropagation();
-    this.fire( "core-signal", detail: { "name": "removecompetence", "data": target.parent.id } );
+    this.fire( "core-signal", detail: { "name": "removecompetencetemplate", "data": target.parent.id } );
   }
 
   void goUp(Event e, var detail, HtmlElement target){

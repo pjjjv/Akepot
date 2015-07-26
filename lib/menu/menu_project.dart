@@ -4,6 +4,7 @@ import 'package:akepot/model/model_category.dart';
 import 'dart:html';
 import 'dart:js';
 import 'package:akepot/competences_service.dart';
+import 'package:akepot/model/model_project.dart';
 
 @CustomTag('menu-project')
 class MenuProject extends PolymerElement {
@@ -16,13 +17,10 @@ class MenuProject extends PolymerElement {
 
   domReady(){
     service = document.querySelector("#service");
-    //copyProject(null, null, null);//TODO: disabled menu
+    // copy project
+    Project project = new Project.retrieve(projectHash, service);
+    categories = project.categories;
   }
 
   encodeUriComponent(String str) => Uri.encodeComponent(str);
-
-  void copyProject(Event e, var detail, Node target){
-    if(service == null) domReady();//TODO: why is service sometimes null?
-    categories = service.project.categories;
-  }
 }

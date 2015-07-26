@@ -20,14 +20,14 @@ class PanesCategory extends PolymerElement {
     service = document.querySelector("#service");
 
     project = new Project.retrieve(projectHash, service);
-    if(project != null){
+    /*if(project != null){
       (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
     }
 
     if(project != null && !project.categories.isEmpty && (selectedCategory == "" || selectedCategory == null)){
       String newSelectedCategory = encodeUriComponent(project.categories.first.name);
       (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/category/$newSelectedCategory");
-    }
+    }*/ //TODO
   }
 
   encodeUriComponent(String str) => Uri.encodeComponent(str);

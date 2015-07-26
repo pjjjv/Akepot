@@ -1,6 +1,6 @@
 
 import 'package:polymer/polymer.dart';
-import 'package:akepot/model/model_competence.dart';
+import 'package:akepot/model/model_competencetemplate.dart';
 import 'dart:html';
 
 @CustomTag("section-edit-competence")
@@ -16,7 +16,7 @@ class SectionEditCompetence extends PolymerElement {
     .catchError((Error error) => print("Error: $error"));*/
   }
 
-  @published Competence competence;
+  @published CompetenceTemplate competenceTemplate;
   @published int page;
 
   void domReady() {

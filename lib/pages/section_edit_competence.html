@@ -6,7 +6,7 @@
 <link rel="import" href="../../../packages/paper_elements/paper_fab.html">
 <link rel="import" href="../core_card3.html">
 
-<polymer-element name="section-edit-competence" attributes="competence page">
+<polymer-element name="section-edit-competence" attributes="competenceTemplate page">
   <template>
     <link href="section_edit_competence.css" rel="stylesheet">
 
@@ -16,9 +16,9 @@
           <div id="div1" layout horizontal center>
             <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
             <div id="label-type">Competence: </div>
-            <paper-input label="Competence Label" value="{{competence.label}}" id="input-name"></paper-input>
+            <paper-input label="Competence Label" value="{{competenceTemplate.label}}" id="input-name"></paper-input>
           </div>
-          <paper-input label="Competence Description" value="{{competence.description}}" id="input-desc"></paper-input>
+          <paper-input label="Competence Description" value="{{competenceTemplate.description}}" id="input-desc"></paper-input>
         </div>
       </core-toolbar>
       <section id="content-section">

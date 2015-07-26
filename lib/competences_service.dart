@@ -18,7 +18,8 @@ const SERVER = "https://shining-heat-1634.firebaseio.com/";
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
   @published Project project;
-  @published bool signedin = false;
+  @published bool signedIn = false;
+  @published bool readyDom = false;
   @published User user = new User();
   String _hash;
   CoreAjax ajaxUserinfo;
@@ -40,6 +41,7 @@ class CompetencesService extends PolymerElement {
     //ajaxUpdateCompetence = shadowRoot.querySelector('#ajaxUpdateCompetence');
     //ajaxNewProject = shadowRoot.querySelector('#ajaxNewProject');
     //ajaxNewPerson = shadowRoot.querySelector('#ajaxNewPerson');
+    readyDom = true;
   }
 
   @reflectable
@@ -297,7 +299,7 @@ class CompetencesService extends PolymerElement {
 //  }
 
   @reflectable
-  void signedIn(CustomEvent event, Map response){//TODO: if signin fails: Exception: Uncaught Error: type 'JsObject' is not a subtype of type 'Map' of 'response'.
+  void signInDone(CustomEvent event, Map response){//TODO: if signin fails: Exception: Uncaught Error: type 'JsObject' is not a subtype of type 'Map' of 'response'.
     if(response==null || response['result']==null){
       throw new Exception("Not authorized and repsonse is null.");
     }
@@ -361,14 +363,14 @@ class CompetencesService extends PolymerElement {
     if (user.userid == "" || user.userid == null) {
       print("userid empty");
     }
-    signedin = true;
+    signedIn = true;
 
     this.fire( "core-signal", detail: { "name": "getuserinforesponse" } );
   }
 
   @reflectable
   void signedOut(CustomEvent event, dynamic detail){
-    signedin=false;
+    signedIn=false;
   }
 }
 

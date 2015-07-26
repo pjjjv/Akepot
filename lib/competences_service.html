@@ -6,7 +6,7 @@
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
 
-<polymer-element name="competences-service" attributes="project signedin user">
+<polymer-element name="competences-service" attributes="project signedIn readyDom user">
   <template>
     <style>
     :host {
@@ -19,7 +19,7 @@
       handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
     </core-ajax-dart>
 
-    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
+    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signInDone}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
 
   </template>
   <script type="application/dart" src="competences_service.dart"></script>

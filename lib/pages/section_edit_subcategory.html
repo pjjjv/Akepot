@@ -25,8 +25,8 @@
       <section id="content-section">
 
         <div layout center-justified>
-          <template repeat="{{competence in subCategory.competences | enumerate}}">
-            <core-card3 id="{{competence.index}}" horizontal layout center start-justified hero-id="hero-competence" hero?="{{(page == 3 || page == 2) && competence.index == index}}" cross-fade-delayed?="{{(page != 3 && page != 2) || competence.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{competence.value.label}}</core-card3>
+          <template repeat="{{competenceTemplate in subCategory.competenceTemplates | enumerate}}">
+            <core-card3 id="{{competenceTemplate.index}}" horizontal layout center start-justified hero-id="hero-competence" hero?="{{(page == 3 || page == 2) && competenceTemplate.index == index}}" cross-fade-delayed?="{{(page != 3 && page != 2) || competenceTemplate.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{competenceTemplate.value.label}}</core-card3>
           </template>
         </div>
         <!-- <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Planning</core-card3>

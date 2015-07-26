@@ -6,7 +6,7 @@ import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_subcategory.dart';
-import 'package:akepot/model/model_competence.dart';
+import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:core_elements/core_animated_pages.dart';
 
 @CustomTag("pane-edit")
@@ -72,19 +72,19 @@ class PaneEdit extends PolymerElement {
     pages.selectNext(false);
   }
 
-  void addCompetence(Event e, var detail, Node target){
-    project.categories[category_nr].subcategories[subcategory_nr].addCompetence();
+  void addCompetenceTemplate(Event e, var detail, Node target){
+    project.categories[category_nr].subcategories[subcategory_nr].addCompetenceTemplate();
   }
 
-  void removeCompetence(Event e, var detail, Node target){
+  void removeCompetenceTemplate(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(competence_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       competence_nr = 0;
     }
-    project.categories[category_nr].subcategories[subcategory_nr].removeCompetence(index);
+    project.categories[category_nr].subcategories[subcategory_nr].removeCompetenceTemplate(index);
   }
 
-  void onCompetenceTap(Event e, var detail, Node target){
+  void onCompetenceTemplateTap(Event e, var detail, Node target){
     competence_nr = int.parse(detail);
     pages.selectNext(false);
   }

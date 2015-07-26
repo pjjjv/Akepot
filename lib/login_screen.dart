@@ -7,12 +7,12 @@ import 'package:google_signin_dart/google_signin_dart.dart';
 @CustomTag('login-screen')
 class LoginScreen extends PolymerElement {
   LoginScreen.created() : super.created();
-  @observable bool signedin = false;
+  @observable bool signedIn = false;
   @observable String accessToken = "";
   @observable String name = "";
 
-  void signedIn(CustomEvent event, dynamic response){
-    signedin = true;
+  void signInDone(CustomEvent event, dynamic response){
+    signedIn = true;
 
     Map headers = {"Content-type": "application/json",
                "Authorization": "${response['result']['token_type']} ${response['result']['access_token']}"};
@@ -21,9 +21,9 @@ class LoginScreen extends PolymerElement {
     peopleAjax.go();
   }
 
-  void signedOut(CustomEvent event, dynamic detail){
+  void signOutDone(CustomEvent event, dynamic detail){
     print("google-signin-aware-signed-out $detail");
-    signedin = false;
+    signedIn = false;
   }
 
   void signOut(){

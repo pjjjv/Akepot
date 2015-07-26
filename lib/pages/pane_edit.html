@@ -34,9 +34,9 @@
     <core-signals on-core-signal-addsubcategory="{{addSubCategory}}"></core-signals>
     <core-signals on-core-signal-removesubcategory="{{removeSubCategory}}"></core-signals>
 
-    <core-signals on-core-signal-competencetap="{{onCompetenceTap}}"></core-signals>
-    <core-signals on-core-signal-addcompetence="{{addCompetence}}"></core-signals>
-    <core-signals on-core-signal-removecompetence="{{removeCompetence}}"></core-signals>
+    <core-signals on-core-signal-competencetemplatetap="{{onCompetenceTemplateTap}}"></core-signals>
+    <core-signals on-core-signal-addcompetencetemplate="{{addCompetenceTemplate}}"></core-signals>
+    <core-signals on-core-signal-removecompetencetemplate="{{removeCompetenceTemplate}}"></core-signals>
 
     <core-signals on-core-signal-goup="{{goUp}}"></core-signals>
 
@@ -55,8 +55,8 @@
         <template if="{{ project.categories[category_nr].subcategories.length > subcategory_nr }}">
           <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
 
-        <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competences.length > competence_nr }}">
-          <section-edit-competence competence="{{project.categories[category_nr].subcategories[subcategory_nr].competences[competence_nr]}}" page="{{page}}"></section-edit-competence>
+        <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
+          <section-edit-competence competenceTemplate="{{project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
 
         </template>
         </template>

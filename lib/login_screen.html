@@ -8,7 +8,7 @@
     <link href="login_screen.css" rel="stylesheet">
     <google-signin  width="wide" height="tall" clientId="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile email"></google-signin>
 
-    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signedIn}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
+    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signInDone}}" on-google-signin-aware-signed-out="{{signOutDone}}"></google-signin-aware>
 
     <core-ajax-dart id="ajax-people"
       url="https://www.googleapis.com/plus/v1/people/me"

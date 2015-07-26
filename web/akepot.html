@@ -86,9 +86,9 @@
 
     <template is="auto-binding-dart" id="content">
     <login-screen id="loginscreen" layout vertical center-center fit
-      class="{{signedin ? '' : 'show'}}"></login-screen>
+      class="{{(signedIn && readyDom) ? '' : 'show'}}"></login-screen>
 
-    <competences-service id="service" user="{{user}}" signedin="{{signedin}}" project="{{project}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedIn="{{signedIn}}" readyDom="{{readyDom}}" project="{{project}}"></competences-service>
 
     <app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>

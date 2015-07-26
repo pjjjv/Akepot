@@ -2,6 +2,7 @@ library akepot.model.model_subcategory;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_competence.dart';
+import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 
@@ -29,12 +30,14 @@ class SubCategory extends Observable {
   }
 
   /** Not documented yet. */
+  @observable List<CompetenceTemplate> competenceTemplates = toObservable([]);
+  @observable ObservableMap competenceTemplateIds = toObservable(new Map());
+
   @observable List<Competence> competences = toObservable([]);
-  @observable ObservableMap competenceIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
-  SubCategory.full(this.id, this._name, this._description, this.competences);
+  SubCategory.full(this.id, this._name, this._description, this.competenceTemplates);
 
   SubCategory.newId(this.id);
 
@@ -74,14 +77,14 @@ class SubCategory extends Observable {
 
   toString() => name;
 
-  addCompetence(){
-    Competence competence = new Competence.newRemote(service);
-    service.dbRef.child("subCategories/$id/competenceIds").update(new Map()..putIfAbsent(competence.id, () => true));
+  addCompetenceTemplate(){
+    CompetenceTemplate competenceTemplate = new CompetenceTemplate.newRemote(service);
+    service.dbRef.child("subCategories/$id/competenceTemplateIds").update(new Map()..putIfAbsent(competenceTemplate.id, () => true));
   }
 
-  removeCompetence(int index){
-    String competenceId = competences[index].id;
-    service.dbRef.child("subCategories/$id/competenceIds/$competenceId").remove();
+  removeCompetenceTemplate(int index){
+    String competenceTemplateId = competenceTemplates[index].id;
+    service.dbRef.child("subCategories/$id/competenceTemplateIds/$competenceTemplateId").remove();
   }
 
   _listen(CompetencesService service){
@@ -93,30 +96,30 @@ class SubCategory extends Observable {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
-    competenceIds.changes.listen((records) {
+    competenceTemplateIds.changes.listen((records) {
       for (ChangeRecord record in records) {
         //We don't need to do anything with PropertyChangeRecords.
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            Competence competence = new Competence.retrieve(record.key, service);
-            competences.add(competence);//TODO
+            CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
+            competenceTemplates.add(competenceTemplate);//TODO
           }
 
           //Something removed
           if (record.isRemove) {
-            competences.removeWhere((competence) => competence.id == record.key);
+            competenceTemplates.removeWhere((competenceTemplate) => competenceTemplate.id == record.key);
           }
         }
       }
     });
 
-    service.dbRef.child("subCategories/$id/competenceIds").onChildAdded.listen((e) {
-      competenceIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    service.dbRef.child("subCategories/$id/competenceTemplateIds").onChildAdded.listen((e) {
+      competenceTemplateIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("subCategories/$id/competenceIds").onChildRemoved.listen((e) {
-      competenceIds.remove(e.snapshot.key);
+    service.dbRef.child("subCategories/$id/competenceTemplateIds").onChildRemoved.listen((e) {
+      competenceTemplateIds.remove(e.snapshot.key);
     });
   }
 

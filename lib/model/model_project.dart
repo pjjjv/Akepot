@@ -57,6 +57,9 @@ class Project extends Observable {
     Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();
+      if(val == null){
+        return;
+      }
       project.fromJson(val);
 
       if(project != null) {

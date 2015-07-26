@@ -26,7 +26,8 @@ void main() {
 
 class Content extends Observable {
   @observable Project project;
-  @observable bool signedin;
+  @observable bool signedIn;
+  @observable bool readyDom;
   @observable User user;
   @observable CompetencesService service;
 

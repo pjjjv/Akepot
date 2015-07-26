@@ -7,7 +7,6 @@ dependencies:
   polymer: ">=0.15.3+2 <0.16.0"
   intl: any
   sass: any
-  google_signin_dart: any
 #  app_router: any
   app_router:
     path: ../app_router_dart

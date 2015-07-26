@@ -2,7 +2,7 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'package:core_elements/core_ajax_dart.dart';
-import 'package:google_signin_dart/google_signin_dart.dart';
+import 'login/login_google.dart';
 
 @CustomTag('login-screen')
 class LoginScreen extends PolymerElement {
@@ -15,20 +15,20 @@ class LoginScreen extends PolymerElement {
     signedIn = true;
 
     Map headers = {"Content-type": "application/json",
-               "Authorization": "${response['result']['token_type']} ${response['result']['access_token']}"};
+               "Authorization": "Bearer ${response['google']['accessToken']}"};
     CoreAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
     peopleAjax.headers = headers;
     peopleAjax.go();
   }
 
   void signOutDone(CustomEvent event, dynamic detail){
-    print("google-signin-aware-signed-out $detail");
+    print("loginsignedout" + detail.toString());
     signedIn = false;
   }
 
-  void signOut(){
-    GoogleSignin button = shadowRoot.querySelector("google-signin");
-    button.signOut();
+  void signOut(Event event){
+    LoginGoogle button = shadowRoot.querySelector("login-google");
+    button.signOut(event);
   }
 
   void parseResponse2(CustomEvent event, Map detail, CoreAjax node) {

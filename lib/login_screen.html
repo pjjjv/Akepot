@@ -1,14 +1,16 @@
 
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="../../packages/google_signin_dart/google_signin_dart.html">
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
+<link rel="import" href="../../packages/core_elements/core_signals.html">
+<link rel="import" href="login/login_google.html">
 
 <polymer-element name="login-screen">
   <template>
     <link href="login_screen.css" rel="stylesheet">
-    <google-signin  width="wide" height="tall" clientId="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile email"></google-signin>
+    <login-google width="wide" height="tall" clientId="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile,email"></login-google>
 
-    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signInDone}}" on-google-signin-aware-signed-out="{{signOutDone}}"></google-signin-aware>
+    <core-signals on-core-signal-loginsuccess="{{signInDone}}"></core-signals>
+    <core-signals on-core-signal-loginsignedout="{{signOutDone}}"></core-signals>
 
     <core-ajax-dart id="ajax-people"
       url="https://www.googleapis.com/plus/v1/people/me"

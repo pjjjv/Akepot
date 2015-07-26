@@ -86,7 +86,7 @@
 
     <template is="auto-binding-dart" id="content">
     <login-screen id="loginscreen" layout vertical center-center fit
-      class="{{(signedIn && readyDom) ? '' : 'show'}}"></login-screen>
+      class="{{(signedIn && readyDom) ? '' : 'show'}}" signedIn="{{signedIn}}"></login-screen>
 
     <competences-service id="service" user="{{user}}" signedIn="{{signedIn}}" readyDom="{{readyDom}}" project="{{project}}"></competences-service>
 

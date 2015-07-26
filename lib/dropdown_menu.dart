@@ -14,6 +14,6 @@ class DropdownMenu extends PolymerElement {
   }
 
   void signOut(Event e) {
-    (document.querySelector("#loginscreen") as LoginScreen).signOut();
+    (document.querySelector("#loginscreen") as LoginScreen).signOut(e);
   }
 }

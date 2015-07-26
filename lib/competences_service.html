@@ -1,10 +1,10 @@
 
 <!-- before the Polymer elements imports -->
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="../../packages/google_signin_dart/google_signin_dart.html">
 
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 <link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
+<link rel="import" href="../../packages/core_elements/core_signals.html">
 
 <polymer-element name="competences-service" attributes="project signedIn readyDom user">
   <template>
@@ -19,7 +19,8 @@
       handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
     </core-ajax-dart>
 
-    <google-signin-aware scopes="profile email" on-google-signin-aware-success="{{signInDone}}" on-google-signin-aware-signed-out="{{signedOut}}"></google-signin-aware>
+    <core-signals on-core-signal-loginsuccess="{{signInDone}}"></core-signals>
+    <core-signals on-core-signal-loginsignedout="{{signOutDone}}"></core-signals>
 
   </template>
   <script type="application/dart" src="competences_service.dart"></script>

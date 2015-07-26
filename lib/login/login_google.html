@@ -1,0 +1,46 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../../packages/core_elements/core_icons.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/paper_elements/paper_ripple.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button_base.html">
+<link rel="import" href="../../../packages/paper_elements/paper_shadow.html">
+<link rel="import" href="google_icons.html">
+
+<polymer-element name="login-google" attributes="raised height width theme signedIn labelSignin labelSignout clientId brand fill scopes">
+
+  <template>
+    <link href="login_google.css" rel="stylesheet">
+
+    <template if="{{raised}}">
+      <paper-shadow id="shadow" fit animated></paper-shadow>
+    </template>
+
+    <div id="button" class="height-{{height}} width-{{width}} theme-{{theme}} signedIn-{{signedIn}}">
+      <paper-ripple id="ripple" fit></paper-ripple>
+
+      <!-- this div is needed to position the ripple behind text content -->
+      <div relative layout horizontal center-center>
+        <template if="{{ !signedIn }}">
+          <div class="button-content signIn" tabindex="0"
+              on-click="{{signIn}}" on-keydown="{{signInKeyPress}}">
+            <span class="icon"><core-icon icon="google:google-plus"></core-icon></span>
+            <span class="buttonText">{{labelSignin}}</span>
+          </div>
+        </template>
+        <template if="{{ signedIn }}">
+          <div class="button-content signOut" tabindex="0"
+              on-click="{{signOut}}" on-keydown="{{signOutKeyPress}}">
+            <span class="icon"><core-icon icon="google:google-plus"></core-icon></span>
+            <span class="buttonText">{{labelSignout}}</span>
+          </div>
+        </template>
+      </div>
+    </div>
+  </template>
+
+  <script type="application/dart" src="login_google.dart"></script>
+</polymer-element>
+

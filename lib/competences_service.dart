@@ -299,14 +299,14 @@ class CompetencesService extends PolymerElement {
 //  }
 
   @reflectable
-  void signInDone(CustomEvent event, Map response){//TODO: if signin fails: Exception: Uncaught Error: type 'JsObject' is not a subtype of type 'Map' of 'response'.
-    if(response==null || response['result']==null){
+  void signInDone(CustomEvent event, Map response){//TODO: if signin fails: Exception
+    if(response==null){
       throw new Exception("Not authorized and repsonse is null.");
     }
     print("signinResult: $response");
 
     headers = {"Content-type": "application/json",
-               "Authorization": "${((response['result'] as Map)['token_type'] as String)} ${((response['result'] as Map)['access_token'] as String)}"};
+               "Authorization": "Bearer ${(response['google']['accessToken'] as String)}"};
 
     getUserinfo();
   }
@@ -369,7 +369,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void signedOut(CustomEvent event, dynamic detail){
+  void signOutDone(CustomEvent event, dynamic detail){
     signedIn=false;
   }
 }

@@ -12,7 +12,7 @@ class PaneJoin extends PolymerElement {
   @published String projectHash = "";
   @observable String selected;
   CompetencesService service;
-  Project project;
+  @observable Project project;
 
   PaperButton joinButton;
 

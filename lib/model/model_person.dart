@@ -86,17 +86,30 @@ class Person extends Observable {
         person._listen(service);
       } else {
         //New person
-        person = toObservable(new Person.newRemote(service));
+        person = toObservable(new Person.newRemote(service, id));
       }
     });
     return person;
   }
 
-  factory Person.newRemote(CompetencesService service) {
+  factory Person.newRemote(CompetencesService service, String uid, {String nickName, String emailAddress, String firstName, String lastName, bool admin: false}) {
     Person person = toObservable(new Person.emptyDefault());
-    Firebase pushRef = service.dbRef.child("persons").push();
-    person.id = pushRef.key;
-    pushRef.set(person.toJson()).then((error) {
+    person.id = uid;
+    if(nickName != null){
+      person.nickName = nickName;
+    }
+    if(emailAddress != null){
+      person.emailAddress = emailAddress;
+    }
+    if(firstName != null){
+      person.firstName = firstName;
+    }
+    if(lastName != null){
+      person.lastName = lastName;
+    }
+    person.isAdmin = admin;
+    Firebase setRef = service.dbRef.child("persons/$uid");
+    setRef.set(person.toJson()).then((error) {
       if(error != null) {
         //
       } else {
@@ -104,6 +117,13 @@ class Person extends Observable {
       }
     });
     return person;
+  }
+
+  static exists(String uid, CompetencesService service, dynamic callback(bool exists)) {
+    service.dbRef.child('/persons/$uid').once("value").then((snapshot) {
+      Map val = snapshot.val();
+      callback(val != null);
+    });
   }
 
   toString() => id + ": " + nickName;//TODO
@@ -170,6 +190,7 @@ class Person extends Observable {
   }
 
   setAdmin(bool value, Project project){
+    this.isAdmin = value;
     project.addAdmin(this);
   }
 

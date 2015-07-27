@@ -3,6 +3,10 @@
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 <link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/core_elements/core_dropdown_menu.html">
+<link rel="import" href="../../../packages/core_elements/core_dropdown.html">
+<link rel="import" href="../../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../../packages/core_elements/core_item.html">
 
 <polymer-element name="pane-join" attributes="projectHash">
   <template>
@@ -15,8 +19,17 @@
         </div>
         <div id="title-box-substitute"></div>
         <div id="text-box">
-          <p>Would you like to join this project?</p><br><br>
-          <p>Team to be added to: (TBD)</p>
+          <p>Would you like to join this project?</p>
+          <p>Team to be added to: </p>
+          <core-dropdown-menu label="Choose a team">
+            <core-dropdown class="dropdown">
+              <core-selector valueattr="id" selected="{{selected}}">
+                <template repeat="{{team in project.teams | enumerate}}">
+                  <core-item id="{{team.index}}" label="{{team.value.name}}"></core-item>
+                </template>
+              </core-selector>
+            </core-dropdown>
+          </core-dropdown-menu>
         </div>
         <div flex></div><!-- active="false" -->
         <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">

@@ -18,13 +18,21 @@
 <link rel="import" href="section_edit_category.html">
 <link rel="import" href="section_edit_subcategory.html">
 <link rel="import" href="section_edit_competence.html">
+<link rel="import" href="section_edit_project2.html">
+<link rel="import" href="section_edit_team.html">
 
-<polymer-element name="pane-edit" attributes="projectHash page project category_nr subcategory_nr competence_nr">
+<polymer-element name="pane-edit" attributes="projectHash">
   <template>
     <link href="pane_edit.css" rel="stylesheet">
 
     <core-signals on-core-signal-getprojectresponse="{{copyProject}}"></core-signals>
     <core-signals on-core-signal-removeproject="{{removeProject}}"></core-signals>
+
+    <core-signals on-core-signal-teamtap="{{onTeamTap}}"></core-signals>
+    <core-signals on-core-signal-addteam="{{addTeam}}"></core-signals>
+    <core-signals on-core-signal-removeteam="{{removeTeam}}"></core-signals>
+
+    <core-signals on-core-signal-removeperson="{{removePerson}}"></core-signals>
 
     <core-signals on-core-signal-categorytap="{{onCategoryTap}}"></core-signals>
     <core-signals on-core-signal-addcategory="{{addCategory}}"></core-signals>
@@ -39,29 +47,42 @@
     <core-signals on-core-signal-removecompetencetemplate="{{removeCompetenceTemplate}}"></core-signals>
 
     <core-signals on-core-signal-goup="{{goUp}}"></core-signals>
+    <core-signals on-core-signal-goup2="{{goUp2}}"></core-signals>
 
     <div id="outer" layout vertical>
-      <paper-tabs selected="0" id="paper_tabs" horizontal center layout>
+      <paper-tabs selected="{{tab}}" id="paper_tabs" horizontal center layout>
         <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
         <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
       </paper-tabs>
-      <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
+      <template if="{{ tab == 0 }}">
+        <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
 
-        <section-edit-project project="{{project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
+          <section-edit-project project="{{project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
-        <template if="{{ project.categories.length > category_nr }}">
-          <section-edit-category category="{{project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+          <template if="{{ project.categories.length > category_nr }}">
+            <section-edit-category category="{{project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
 
-        <template if="{{ project.categories[category_nr].subcategories.length > subcategory_nr }}">
-          <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+          <template if="{{ project.categories[category_nr].subcategories.length > subcategory_nr }}">
+            <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
 
-        <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
-          <section-edit-competence competenceTemplate="{{project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
+          <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
+            <section-edit-competence competenceTemplate="{{project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
 
-        </template>
-        </template>
-        </template>
-      </core-animated-pages>
+          </template>
+          </template>
+          </template>
+        </core-animated-pages>
+      </template>
+      <template if="{{ tab == 1 }}">
+        <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" flex>
+
+          <section-edit-project2 project="{{project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
+
+          <template if="{{ project.teams.length > team_nr }}">
+            <section-edit-team team="{{project.teams[team_nr]}}" page="{{page2}}"></section-edit-team>
+          </template>
+        </core-animated-pages>
+      </template>
     </div>
 
 

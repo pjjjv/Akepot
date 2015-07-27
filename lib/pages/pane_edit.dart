@@ -4,6 +4,7 @@ import 'package:akepot/model/model_project.dart';
 import 'dart:html';
 import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
+import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_subcategory.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
@@ -20,22 +21,49 @@ class PaneEdit extends PolymerElement {
   @published String projectHash = "";
 
   CoreAnimatedPages pages;
-  @published int page = 0;
+  CoreAnimatedPages pages2;
+  @observable int page = 0;
+  @observable int page2 = 0;
+  @observable int tab = 0;
 
   @observable int category_nr = 0;
   @observable int subcategory_nr = 0;
   @observable int competence_nr = 0;
+  @observable int team_nr = 0;
 
   void domReady() {
     service = document.querySelector("#service");
     page = 0;
-    pages = shadowRoot.querySelector("#pages_edit");
+    page2 = 0;
 
     project = toObservable(new Project.retrieve(projectHash, service));
   }
 
   void removeProject(Event e, var detail, Node target){
     //
+  }
+
+  void addTeam(Event e, var detail, Node target){
+    project.addTeam();
+  }
+
+  void removeTeam(Event e, var detail, Node target){
+    int index = int.parse(detail);
+    if(team_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
+      team_nr = 0;
+    }
+    project.removeTeam(index);
+  }
+
+  void onTeamTap(Event e, var detail, Node target){
+    team_nr = int.parse(detail);
+    pages2 = shadowRoot.querySelector("#pages_edit2");
+    pages2.selectNext(false);
+  }
+
+  void removePerson(Event e, var detail, Node target){
+    int index = int.parse(detail);
+    project.teams[team_nr].removePerson(index);
   }
 
   void addCategory(Event e, var detail, Node target){
@@ -52,6 +80,7 @@ class PaneEdit extends PolymerElement {
 
   void onCategoryTap(Event e, var detail, Node target){
     category_nr = int.parse(detail);
+    pages = shadowRoot.querySelector("#pages_edit");
     pages.selectNext(false);
   }
 
@@ -69,6 +98,7 @@ class PaneEdit extends PolymerElement {
 
   void onSubCategoryTap(Event e, var detail, Node target){
     subcategory_nr = int.parse(detail);
+    pages = shadowRoot.querySelector("#pages_edit");
     pages.selectNext(false);
   }
 
@@ -86,11 +116,18 @@ class PaneEdit extends PolymerElement {
 
   void onCompetenceTemplateTap(Event e, var detail, Node target){
     competence_nr = int.parse(detail);
+    pages = shadowRoot.querySelector("#pages_edit");
     pages.selectNext(false);
   }
 
   void goUp(Event e, var detail, HtmlElement target){
+    pages = shadowRoot.querySelector("#pages_edit");
     pages.selectPrevious(false);
+  }
+
+  void goUp2(Event e, var detail, HtmlElement target){
+    pages2 = shadowRoot.querySelector("#pages_edit2");
+    pages2.selectPrevious(false);
   }
 
 }

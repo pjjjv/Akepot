@@ -3,9 +3,6 @@ library competence_service;
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'dart:convert';
-import 'model/model_category.dart';
-import 'model/model_subcategory.dart';
-import 'model/model_competence.dart';
 import 'model/model_project.dart';
 import 'package:core_elements/core_ajax_dart.dart';
 import 'package:firebase/firebase.dart';
@@ -21,14 +18,8 @@ class CompetencesService extends PolymerElement {
   @published bool signedIn = false;
   @published bool readyDom = false;
   @published User user = new User();
-  String _hash;
   CoreAjax ajaxUserinfo;
-  CoreAjax ajaxGetProject;
-  CoreAjax ajaxUpdateCompetence;
-  CoreAjax ajaxNewProject;
-  CoreAjax ajaxNewPerson;
   Map _headers;
-  String teamId;
   Firebase dbRef;
 
   CompetencesService.created() : super.created() {
@@ -308,36 +299,35 @@ class CompetencesService extends PolymerElement {
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer ${(response['google']['accessToken'] as String)}"};
 
+    user = new User();
+    user.uid = response['uid'];
+    if (user.uid == "" || user.uid == null) {
+      print("uid empty");
+    }
+
     getUserinfo();
   }
 
   void getUserinfo(){
-    ajaxUserinfo.onCoreResponse.first.then(parseUserinfoResponse);
     /*if(document.querySelector("#cmdebug") != null){
       ajaxUserinfo.url = "data/userinfo_response.json";
     }*/
     ajaxUserinfo.go();
   }
 
-  void parseUserinfoResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+  void parseUserinfoResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = event.detail['response'];
     print("parseUserinfoResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
-        //print('returned');
         return null;
       }
     } catch (e) {
-      //print('returned');
       return null;
     }
 
-    user = new User();
-
-    //name = ", "+response['nickname'];
     user.email = response['emails'][0]['value'];
-    user.userid = response['id'];
     user.nickname = "";
     if(response['nickname'] != null){
       user.nickname = response['nickname'];
@@ -360,9 +350,6 @@ class CompetencesService extends PolymerElement {
       user.cover = (response['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }
 
-    if (user.userid == "" || user.userid == null) {
-      print("userid empty");
-    }
     signedIn = true;
 
     this.fire( "core-signal", detail: { "name": "getuserinforesponse" } );
@@ -376,7 +363,7 @@ class CompetencesService extends PolymerElement {
 
 class User extends Observable {
   @observable String email = "";
-  @observable String userid = "";
+  @observable String uid = "";
   @observable String nickname = "";
   @observable String firstname = "";
   @observable String lastname = "";

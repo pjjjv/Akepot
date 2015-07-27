@@ -74,14 +74,20 @@ class Team extends Observable {
 
   toString() => id + ": " + name;//TODO
 
-  addPerson(){
-    Person person = new Person.newRemote(service);
-    service.dbRef.child("persons/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
+  Person addPerson(String uid){
+    Person person = new Person.newRemote(service, uid);
+    service.dbRef.child("teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
+    return person;
+  }
+
+  addPersonFull(Person person){
+    service.dbRef.child("teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
+    return person;
   }
 
   removePerson(int index){
     String personId = persons[index].id;
-    service.dbRef.child("persons/$id/personIds/$personId").remove();
+    service.dbRef.child("teams/$id/personIds/$personId").remove();
   }
 
   _listen(CompetencesService service){
@@ -111,11 +117,11 @@ class Team extends Observable {
       }
     });
 
-    service.dbRef.child("persons/$id/personIds").onChildAdded.listen((e) {
+    service.dbRef.child("teams/$id/personIds").onChildAdded.listen((e) {
       personIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("persons/$id/personIds").onChildRemoved.listen((e) {
+    service.dbRef.child("teams/$id/personIds").onChildRemoved.listen((e) {
       personIds.remove(e.snapshot.key);
     });
   }

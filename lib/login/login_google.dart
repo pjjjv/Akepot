@@ -1,7 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html' as html;
 import 'package:akepot/competences_service.dart';
-import 'package:firebase/firebase.dart';
 
 @CustomTag("login-google")
 class LoginGoogle extends PolymerElement {

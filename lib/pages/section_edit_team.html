@@ -1,0 +1,37 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../core_card3.html">
+
+<polymer-element name="section-edit-team" attributes="team page index">
+  <template>
+    <link href="section_edit_team.css" rel="stylesheet">
+
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall" hero-id="hero-team" hero cross-fade-delayed?="{{(page != 0)}}">
+        <div id="div2" layout vertical center center-justified>
+          <div id="div1" layout horizontal center>
+            <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
+            <div id="label-type">Team: </div>
+            <paper-input label="Team Name" value="{{team.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Team Description" value="{{team.description}}" id="input-desc"></paper-input>
+        </div>
+      </core-toolbar>
+      <section id="content-section">
+
+        <div layout center-justified>
+          <template repeat="{{person in team.persons | enumerate}}">
+            <core-card3 id="{{person.index}}" horizontal layout center start-justified cross-fade-delayed?="{{page != 1 || person.index != index}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{person.value.nickName}}, {{person.value.firstName}} {{person.value.lastName}}</core-card3>
+          </template>
+        </div>
+      </section>
+    </core-header-panel>
+  </template>
+
+  <script type="application/dart" src="section_edit_team.dart"></script>
+</polymer-element>
+

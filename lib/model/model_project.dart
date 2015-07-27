@@ -53,7 +53,7 @@ class Project extends Observable {
     _name = "New Project";
   }
 
-  factory Project.retrieve(String hash, CompetencesService service) {
+  factory Project.retrieve(String hash, CompetencesService service, [dynamic callback(Project project)]) {
     Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();
@@ -66,7 +66,11 @@ class Project extends Observable {
         project._listen(service);
       } else {
         //New project
-        project = toObservable(new Project.newRemote(service));
+        //project = toObservable(new Project.newRemote(service));
+      }
+
+      if (callback != null){
+        callback(project);
       }
     });
     return project;
@@ -98,18 +102,19 @@ class Project extends Observable {
     service.dbRef.child("projects/$hash/categoryIds/$categoryId").remove();
   }
 
-  addTeam(){
+  Team addTeam(){
     Team team = new Team.newRemote(service);
     service.dbRef.child("projects/$hash/teamIds").update(new Map()..putIfAbsent(team.id, () => true));
+    return team;
   }
 
   removeTeam(int index){
     String teamId = teams[index].id;
-    service.dbRef.child("projects/$hash/teamIds/teamId").remove();
+    service.dbRef.child("projects/$hash/teamIds/$teamId").remove();
   }
 
-  addNewAdmin(){
-    Person admin = new Person.newRemote(service);
+  addNewAdmin(String uid){
+    Person admin = new Person.newRemote(service, uid);
     admin.isAdmin = true;
     addAdmin(admin);
   }
@@ -120,7 +125,7 @@ class Project extends Observable {
 
   removeAdmin(int index){
     String adminId = admins[index].id;
-    service.dbRef.child("projects/$hash/adminIds/adminId").remove();
+    service.dbRef.child("projects/$hash/adminIds/$adminId").remove();
   }
 
   _listen(CompetencesService service){

@@ -16,7 +16,7 @@
     <core-ajax-dart id="ajax-people"
       url="https://www.googleapis.com/plus/v1/people/me"
       on-core-error="{{ajaxError}}"
-      handleAs="json" method="GET"><!-- on-core-response="{{parseUserinfoResponse}}" -->
+      handleAs="json" method="GET" on-core-response="{{parseUserinfoResponse}}">
     </core-ajax-dart>
 
     <core-signals on-core-signal-loginsuccess="{{signInDone}}"></core-signals>
@@ -24,5 +24,4 @@
 
   </template>
   <script type="application/dart" src="competences_service.dart"></script>
-  <script src="../../packages/browser/dart.js"></script>
 </polymer-element>

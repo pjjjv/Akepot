@@ -352,7 +352,7 @@ class CompetencesService extends PolymerElement {
 
     signedIn = true;
 
-    this.fire( "core-signal", detail: { "name": "getuserinforesponse" } );
+    this.fire( "core-signal", detail: { "name": "signedin" } );
   }
 
   @reflectable

@@ -17,7 +17,7 @@ class PaneEdit extends PolymerElement {
 
   @observable Project project;
 
-  CompetencesService service;
+  @observable CompetencesService service;
   @published String projectHash = "";
 
   CoreAnimatedPages pages;
@@ -36,6 +36,10 @@ class PaneEdit extends PolymerElement {
     page = 0;
     page2 = 0;
 
+    if(service.signedIn) signedIn(null, null, null);
+  }
+
+  void signedIn(Event e, var detail, HtmlElement target){
     project = toObservable(new Project.retrieve(projectHash, service));
   }
 

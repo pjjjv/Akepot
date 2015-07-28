@@ -2,6 +2,7 @@ library akepot.model.model_subcategory;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_competence.dart';
+import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
@@ -104,11 +105,17 @@ class SubCategory extends Observable {
           if (record.isInsert) {
             CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
             competenceTemplates.add(competenceTemplate);//TODO
+
+            //Person's competence
+            competences.add(findOrCreatePersonCompetence(competenceTemplate));
           }
 
           //Something removed
           if (record.isRemove) {
             competenceTemplates.removeWhere((competenceTemplate) => competenceTemplate.id == record.key);
+
+            //Person's competence
+            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
           }
         }
       }
@@ -127,6 +134,20 @@ class SubCategory extends Observable {
     if(service != null) {
       service.dbRef.child(child).update(value);
     }
+  }
+
+  Competence findOrCreatePersonCompetence(CompetenceTemplate competenceTemplate){
+    Competence competence = new Competence.emptyDefault();
+    new Person.retrieve(service.user.uid, service, (Person person) {
+      competence = person.competences.firstWhere(
+          (competence) => competence.competenceTemplateId == competenceTemplate.id,
+          orElse: () => _createCopyPersonCompetence(competenceTemplate, person));
+    });
+    return competence;
+  }
+
+  Competence _createCopyPersonCompetence(CompetenceTemplate competenceTemplate, Person person){
+    return person.addCompetence(competenceTemplate);
   }
 
   fromJson(Map _json, [bool noId = false]) {

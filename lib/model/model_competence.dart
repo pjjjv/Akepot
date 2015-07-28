@@ -30,7 +30,7 @@ class Competence extends Observable {
   }
 
   /** Not documented yet. */
-  @observable int competenceTemplateId;
+  @observable String competenceTemplateId;
 
   /** Not documented yet. */
   @observable String description = "";
@@ -79,6 +79,21 @@ class Competence extends Observable {
     return competence;
   }
 
+  factory Competence.fromTemplate(CompetenceTemplate competenceTemplate, CompetencesService service) {
+    Competence competence = toObservable(new Competence.emptyDefault());
+    Firebase pushRef = service.dbRef.child("competences").push();
+    competence.id = pushRef.key;
+    competence.competenceTemplateId = competenceTemplate.id;
+    pushRef.set(competence.toJson()).then((error) {
+      if(error != null) {
+        //
+      } else {
+        competence._listen(service);
+      }
+    });
+    return competence;
+  }
+
   toString() => rating;
 
   _listen(CompetencesService service){
@@ -92,13 +107,13 @@ class Competence extends Observable {
 
     service.dbRef.child("competenceTemplates/$competenceTemplateId/label").onValue.listen((e) {
       String value = e.snapshot.val();
-      if (value == null) value = "Unknown competence";//TODO
-      label = notifyPropertyChange(const Symbol('label'), this.label, value);
+      if (value == null) value = "Unknown competence";
+      label = value;
     });
     service.dbRef.child("competenceTemplates/$competenceTemplateId/description").onValue.listen((e) {
       String value = e.snapshot.val();
-      if (value == null) value = "-";//TODO
-      description = notifyPropertyChange(const Symbol('description'), this.description, value);
+      if (value == null) value = "-";
+      description = value;
     });
   }
 

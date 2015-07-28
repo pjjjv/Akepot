@@ -10,7 +10,7 @@ import 'package:app_router/app_router.dart';
 class PanesCategory extends PolymerElement {
 
   @observable Project project;
-  CompetencesService service;
+  @observable CompetencesService service;
   @published String projectHash = "";
   @published String selectedCategory = "";
 
@@ -18,7 +18,10 @@ class PanesCategory extends PolymerElement {
 
   domReady(){
     service = document.querySelector("#service");
+    if(service.signedIn) signedIn(null, null, null);
+  }
 
+  void signedIn(Event e, var detail, HtmlElement target){
     project = new Project.retrieve(projectHash, service);
 
     Person.exists(service.user.uid, service, (exists) {

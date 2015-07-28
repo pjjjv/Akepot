@@ -11,7 +11,7 @@ import 'package:paper_elements/paper_button.dart';
 class PaneJoin extends PolymerElement {
   @published String projectHash = "";
   @observable String selected;
-  CompetencesService service;
+  @observable CompetencesService service;
   @observable Project project;
 
   PaperButton joinButton;
@@ -20,7 +20,10 @@ class PaneJoin extends PolymerElement {
 
   domReady(){
     service = document.querySelector("#service");
+    if(service.signedIn) signedIn(null, null, null);
+  }
 
+  void signedIn(Event e, var detail, HtmlElement target){
     project = new Project.retrieve(projectHash, service);
 
     Person.exists(service.user.uid, service, (exists) {

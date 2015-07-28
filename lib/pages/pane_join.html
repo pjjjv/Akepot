@@ -12,30 +12,34 @@
   <template>
     <link href="pane_join.css" rel="stylesheet">
 
+    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+
     <div layout horizontal wrap center-justified cross-fade-delayed>
       <div id="card-join" self-center layout vertical>
         <div fit id="title-box">
           <div id="title">Join this project?</div>
         </div>
         <div id="title-box-substitute"></div>
-        <div id="text-box">
-          <p>Would you like to join this project?</p>
-          <p>Team to be added to: </p>
-          <core-dropdown-menu label="Choose a team">
-            <core-dropdown class="dropdown">
-              <core-selector valueattr="id" selected="{{selected}}">
-                <template repeat="{{team in project.teams | enumerate}}">
-                  <core-item id="{{team.index}}" label="{{team.value.name}}"></core-item>
-                </template>
-              </core-selector>
-            </core-dropdown>
-          </core-dropdown-menu>
-        </div>
-        <div flex></div><!-- active="false" -->
-        <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">
-          <core-icon icon="add" aria-label="add" role="img"></core-icon>
-          Join project
-        </paper-button>
+        <template if="{{service.signedIn}}">
+          <div id="text-box">
+            <p>Would you like to join this project?</p>
+            <p>Team to be added to: </p>
+            <core-dropdown-menu label="Choose a team">
+              <core-dropdown class="dropdown">
+                <core-selector valueattr="id" selected="{{selected}}">
+                  <template repeat="{{team in project.teams | enumerate}}">
+                    <core-item id="{{team.index}}" label="{{team.value.name}}"></core-item>
+                  </template>
+                </core-selector>
+              </core-dropdown>
+            </core-dropdown-menu>
+          </div>
+          <div flex></div><!-- active="false" -->
+          <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">
+            <core-icon icon="add" aria-label="add" role="img"></core-icon>
+            Join project
+          </paper-button>
+        </template>
       </div>
     </div>
   </template>

@@ -7,11 +7,15 @@
   <template>
     <link href="panes_category.css" rel="stylesheet">
 
+    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+
     <core-animated-pages fit main selected="{{selectedCategory}}" transitions="cascade-transition">
-      <template repeat="{{category in project.categories}}">
-        <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout>
-          <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
-        </section>
+      <template if="{{service.signedIn}}">
+        <template repeat="{{category in project.categories}}">
+          <section name="{{category.name}}" id="{{category.name | encodeUriComponent}}" vertical layout>
+            <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
+          </section>
+        </template>
       </template>
     </core-animated-pages>
   </template>

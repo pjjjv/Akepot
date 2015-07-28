@@ -9,17 +9,11 @@ class ScaffoldLayout extends PolymerElement {
   @published String selected;
   @published String menu;
   @published String projectHash;
-  @observable User user = new User();
 
   ScaffoldLayout.created() : super.created();
 
   void domReady(){
     service = document.querySelector("#service");
-    copyUserInfo(null, null, null);
-  }
-
-  void copyUserInfo(Event e, var detail, Node target){
-    user = service.user;
   }
 
 }

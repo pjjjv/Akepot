@@ -35,16 +35,14 @@
   <template>
     <link href="scaffold_layout.css" rel="stylesheet">
 
-    <core-signals on-core-signal-getuserinforesponse="{{copyUserInfo}}"></core-signals>
-
     <core-scaffold id="core_scaffold" mode="waterfall-tall">
       <core-header-panel mode="scroll" id="core_header_panel" navigation flex>
         <core-toolbar id="panel-head" class="core-header tall">
-          <!-- <core-image src="{{user.cover}}" sizing="cover" preload fade></core-image> -->
-          <img class="middle profile" _src="{{user.profile}}" hidden?="{{user.profile == null}}">
+          <!-- <core-image src="{{service.user.cover}}" sizing="cover" preload fade></core-image> -->
+          <img class="middle profile" _src="{{service.user.profile}}" hidden?="{{service.user.profile == null}}">
           <div class="bottom" layout vertical>
-            <span>{{user.nickname}}</span>
-            <span>{{user.email}}</span>
+            <span>{{service.user.nickname}}</span>
+            <span>{{service.user.email}}</span>
           </div>
         </core-toolbar>
 

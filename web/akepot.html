@@ -88,7 +88,7 @@
     <login-screen id="loginscreen" layout vertical center-center fit
       class="{{(signedIn && readyDom) ? '' : 'show'}}" signedIn="{{signedIn}}"></login-screen>
 
-    <competences-service id="service" user="{{user}}" signedIn="{{signedIn}}" readyDom="{{readyDom}}" project="{{project}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedIn="{{signedIn}}" readyDom="{{readyDom}}"></competences-service>
 
     <app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>

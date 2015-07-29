@@ -2,6 +2,7 @@ library akepot.model.model_subcategory;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_competence.dart';
+import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/competences_service.dart';
@@ -105,17 +106,11 @@ class SubCategory extends Observable {
           if (record.isInsert) {
             CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
             competenceTemplates.add(competenceTemplate);//TODO
-
-            //Person's competence
-            competences.add(findOrCreatePersonCompetence(competenceTemplate));
           }
 
           //Something removed
           if (record.isRemove) {
             competenceTemplates.removeWhere((competenceTemplate) => competenceTemplate.id == record.key);
-
-            //Person's competence
-            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
           }
         }
       }
@@ -136,13 +131,36 @@ class SubCategory extends Observable {
     }
   }
 
-  Competence findOrCreatePersonCompetence(CompetenceTemplate competenceTemplate){
-    Competence competence = new Competence.emptyDefault();
-    new Person.retrieve(service.user.uid, service, (Person person) {
-      competence = person.competences.firstWhere(
-          (competence) => competence.competenceTemplateId == competenceTemplate.id,
-          orElse: () => _createCopyPersonCompetence(competenceTemplate, person));
+  listenForCompetences(CompetencesService service, Project project){
+    Person person = project.findPerson(service.user.uid);
+
+    competenceTemplateIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
+
+            //Person's competence
+            competences.add(_findOrCreatePersonCompetence(competenceTemplate, person));
+          }
+
+          //Something removed
+          if (record.isRemove) {
+
+            //Person's competence
+            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
+          }
+        }
+      }
     });
+  }
+
+  Competence _findOrCreatePersonCompetence(CompetenceTemplate competenceTemplate, Person person){
+    Competence competence = person.competences.firstWhere(
+        (competence) => competence.competenceTemplateId == competenceTemplate.id,
+        orElse: () => _createCopyPersonCompetence(competenceTemplate, person));
     return competence;
   }
 

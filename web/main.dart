@@ -1,12 +1,7 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
-import 'package:akepot/model/model_category.dart';
-import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
-import 'package:akepot/login_screen.dart';
-import 'package:core_elements/core_style.dart';
-import 'dart:js';
 
 void main() {
   initPolymer().run(() {
@@ -25,7 +20,6 @@ void main() {
 }
 
 class Content extends Observable {
-  @observable Project project;
   @observable bool signedIn;
   @observable bool readyDom;
   @observable User user;

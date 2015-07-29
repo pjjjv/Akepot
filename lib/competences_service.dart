@@ -14,7 +14,6 @@ const SERVER = "https://shining-heat-1634.firebaseio.com/";
 
 @CustomTag('competences-service')
 class CompetencesService extends PolymerElement {
-  @published Project project;
   @published bool signedIn = false;
   @published bool readyDom = false;
   @published User user = new User();

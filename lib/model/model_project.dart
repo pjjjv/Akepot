@@ -222,6 +222,13 @@ class Project extends Observable {
     }
   }
 
+  Person findPerson(String uid){
+    for (Team team in teams){
+      return team.persons.firstWhere((Person person) => person.id == uid);
+    }
+    return null;
+  }
+
   fromJson(Map _json, [bool noHash = false]) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
     if (!_json.containsKey("hash") && noHash == false) {
       throw new Exception("No hash.");

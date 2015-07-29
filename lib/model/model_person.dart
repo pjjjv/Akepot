@@ -60,16 +60,12 @@ class Person extends Observable {
   }
 
   /** Not documented yet. */
-  @observable List<Competence> competences = toObservable([]);
-  @observable ObservableMap competenceIds = toObservable(new Map());
-
-  /** Not documented yet. */
   @observable List<Role> roles = toObservable([]);//TODO: still add changes and listenres
   @observable ObservableMap roleIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
-  Person.full(this.id, this._nickName, this._emailAddress, this._firstName, this._lastName, this._isAdmin, this.competences, this.roles);
+  Person.full(this.id, this._nickName, this._emailAddress, this._firstName, this._lastName, this._isAdmin, this.roles);
 
   Person.newId(this.id);
 
@@ -161,32 +157,6 @@ class Person extends Observable {
       _isAdmin = notifyPropertyChange(const Symbol('isAdmin'), this._isAdmin, e.snapshot.val());
     });
 
-    competenceIds.changes.listen((records) {
-      for (ChangeRecord record in records) {
-        //We don't need to do anything with PropertyChangeRecords.
-        if (record is MapChangeRecord) {
-          //Something added
-          if (record.isInsert) {
-            Competence competence = new Competence.retrieve(record.key, service);
-            competences.add(competence);//TODO
-          }
-
-          //Something removed
-          if (record.isRemove) {
-            competences.removeWhere((competence) => competence.id == record.key);
-          }
-        }
-      }
-    });
-
-    service.dbRef.child("persons/$id/competenceIds").onChildAdded.listen((e) {
-      competenceIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
-    });
-
-    service.dbRef.child("persons/$id/competenceIds").onChildRemoved.listen((e) {
-      competenceIds.remove(e.snapshot.key);
-    });
-
 //    subCategoryIds.changes.listen((records) {
 //      for (ChangeRecord record in records) {
 //        //We don't need to do anything with PropertyChangeRecords.
@@ -223,11 +193,6 @@ class Person extends Observable {
   setAdmin(bool value, Project project){
     this.isAdmin = value;
     project.addAdmin(this);
-  }
-
-  addCompetence(CompetenceTemplate competenceTemplate){
-    Competence competence = new Competence.fromTemplate(competenceTemplate, service);
-    service.dbRef.child("persons/$id/competenceIds").update(new Map()..putIfAbsent(competence.id, () => true));
   }
 
   fromJson(Map _json, [bool noId = false]) {

@@ -106,11 +106,17 @@ class SubCategory extends Observable {
           if (record.isInsert) {
             CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
             competenceTemplates.add(competenceTemplate);//TODO
+
+            //Person's competence
+            competences.add(new Competence.retrieveMatch(competenceTemplate.id, service.user.uid, service));
           }
 
           //Something removed
           if (record.isRemove) {
             competenceTemplates.removeWhere((competenceTemplate) => competenceTemplate.id == record.key);
+
+            //Person's competence
+            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
           }
         }
       }
@@ -129,43 +135,6 @@ class SubCategory extends Observable {
     if(service != null) {
       service.dbRef.child(child).update(value);
     }
-  }
-
-  listenForCompetences(CompetencesService service, Project project){
-    Person person = project.findPerson(service.user.uid);
-
-    competenceTemplateIds.changes.listen((records) {
-      for (ChangeRecord record in records) {
-        //We don't need to do anything with PropertyChangeRecords.
-        if (record is MapChangeRecord) {
-          //Something added
-          if (record.isInsert) {
-            CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
-
-            //Person's competence
-            competences.add(_findOrCreatePersonCompetence(competenceTemplate, person));
-          }
-
-          //Something removed
-          if (record.isRemove) {
-
-            //Person's competence
-            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
-          }
-        }
-      }
-    });
-  }
-
-  Competence _findOrCreatePersonCompetence(CompetenceTemplate competenceTemplate, Person person){
-    Competence competence = person.competences.firstWhere(
-        (competence) => competence.competenceTemplateId == competenceTemplate.id,
-        orElse: () => _createCopyPersonCompetence(competenceTemplate, person));
-    return competence;
-  }
-
-  Competence _createCopyPersonCompetence(CompetenceTemplate competenceTemplate, Person person){
-    return person.addCompetence(competenceTemplate);
   }
 
   fromJson(Map _json, [bool noId = false]) {

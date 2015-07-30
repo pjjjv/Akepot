@@ -16,11 +16,14 @@ class SubCategory extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("subCategories/$id", new Map()..putIfAbsent("description", () => description));
+    _changeProperty("projects/$projectHash/subCategories/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
   @observable String id;
+
+  /** Not documented yet. */
+  @observable String projectHash;
 
   /** Not documented yet. */
   String _name = "";
@@ -28,7 +31,7 @@ class SubCategory extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("subCategories/$id", new Map()..putIfAbsent("name", () => name));
+    _changeProperty("projects/$projectHash/subCategories/$id", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -39,39 +42,40 @@ class SubCategory extends Observable {
 
   @observable CompetencesService service;
 
-  SubCategory.full(this.id, this._name, this._description, this.competenceTemplates);
+  SubCategory.full(this.id, String this.projectHash, this._name, this._description, this.competenceTemplates);
 
-  SubCategory.newId(this.id);
+  SubCategory.newId(this.id, String this.projectHash);
 
   SubCategory.emptyDefault() {
     _name = "New Sub-Category";
   }
 
-  factory SubCategory.retrieve(String id, CompetencesService service) {
-    SubCategory subCategory = toObservable(new SubCategory.newId(id));
-    service.dbRef.child("subCategories/$id").once("value").then((snapshot) {
+  factory SubCategory.retrieve(String id, String projectHash, CompetencesService service) {
+    SubCategory subCategory = toObservable(new SubCategory.newId(id, projectHash));
+    service.dbRef.child("projects/$projectHash/subCategories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       subCategory.fromJson(val);
 
       if(subCategory != null) {
-        subCategory._listen(service);
+        subCategory._listen(projectHash, service);
       } else {
         //New subCategory
-        subCategory = toObservable(new SubCategory.newRemote(service));
+        subCategory = toObservable(new SubCategory.newRemote(projectHash, service));
       }
     });
     return subCategory;
   }
 
-  factory SubCategory.newRemote(CompetencesService service) {
+  factory SubCategory.newRemote(String projectHash, CompetencesService service) {
     SubCategory subCategory = toObservable(new SubCategory.emptyDefault());
-    Firebase pushRef = service.dbRef.child("subCategories").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/subCategories").push();
     subCategory.id = pushRef.key;
+    subCategory.projectHash = projectHash;
     pushRef.set(subCategory.toJson()).then((error) {
       if(error != null) {
         //
       } else {
-        subCategory._listen(service);
+        subCategory._listen(projectHash, service);
       }
     });
     return subCategory;
@@ -80,21 +84,21 @@ class SubCategory extends Observable {
   toString() => name;
 
   addCompetenceTemplate(){
-    CompetenceTemplate competenceTemplate = new CompetenceTemplate.newRemote(service);
-    service.dbRef.child("subCategories/$id/competenceTemplateIds").update(new Map()..putIfAbsent(competenceTemplate.id, () => true));
+    CompetenceTemplate competenceTemplate = new CompetenceTemplate.newRemote(projectHash, service);
+    service.dbRef.child("projects/$projectHash/subCategories/$id/competenceTemplateIds").update(new Map()..putIfAbsent(competenceTemplate.id, () => true));
   }
 
   removeCompetenceTemplate(int index){
     String competenceTemplateId = competenceTemplates[index].id;
-    service.dbRef.child("subCategories/$id/competenceTemplateIds/$competenceTemplateId").remove();
+    service.dbRef.child("projects/$projectHash/subCategories/$id/competenceTemplateIds/$competenceTemplateId").remove();
   }
 
-  _listen(CompetencesService service){
+  _listen(String projectHash, CompetencesService service){
     this.service = service;
-    service.dbRef.child("subCategories/$id/name").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/subCategories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("subCategories/$id/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/subCategories/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
@@ -104,7 +108,7 @@ class SubCategory extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, service);
+            CompetenceTemplate competenceTemplate = new CompetenceTemplate.retrieve(record.key, projectHash, service);
             competenceTemplates.add(competenceTemplate);//TODO
 
             //Person's competence
@@ -122,11 +126,11 @@ class SubCategory extends Observable {
       }
     });
 
-    service.dbRef.child("subCategories/$id/competenceTemplateIds").onChildAdded.listen((e) {
+    service.dbRef.child("projects/$projectHash/subCategories/$id/competenceTemplateIds").onChildAdded.listen((e) {
       competenceTemplateIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("subCategories/$id/competenceTemplateIds").onChildRemoved.listen((e) {
+    service.dbRef.child("projects/$projectHash/subCategories/$id/competenceTemplateIds").onChildRemoved.listen((e) {
       competenceTemplateIds.remove(e.snapshot.key);
     });
   }
@@ -141,7 +145,11 @@ class SubCategory extends Observable {
     if (!_json.containsKey("id") && noId == false) {
       throw new Exception("No id.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
@@ -164,6 +172,9 @@ class SubCategory extends Observable {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (name != null) {
       _json["name"] = name;

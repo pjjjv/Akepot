@@ -3,7 +3,6 @@ library akepot.model.model_competence;
 import 'package:polymer/polymer.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
-import 'package:akepot/model/model_competencetemplate.dart';
 
 /** Not documented yet. */
 class Competence extends Observable {
@@ -13,6 +12,9 @@ class Competence extends Observable {
 
   /** Person id */
   @observable String uid;
+
+  /** Not documented yet. */
+  @observable String projectHash;
 
   /** Not documented yet. */
   bool _notSetYet = true;
@@ -53,7 +55,7 @@ class Competence extends Observable {
 
   Competence.full(this.id, this.uid, this._notSetYet, this._rating, this.competenceTemplateId);
 
-  Competence.newId(this.id);
+  Competence.newId(this.id, this.uid);
 
   Competence.emptyDefault(){
     label = "Unknown Competence";
@@ -65,7 +67,7 @@ class Competence extends Observable {
       throw new Exception("personId null.");
     }
 
-    Competence competence = toObservable(new Competence.newId(id));
+    Competence competence = toObservable(new Competence.newId(id, personId));
     service.dbRef.child("persons/$personId/competences/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       competence.fromJson(val);
@@ -97,7 +99,7 @@ class Competence extends Observable {
 
         if(competence != null) {
           //Remove the temporary created (and registered one)
-          service.dbRef.child("person/$personId/competences/$oldId").remove();
+          service.dbRef.child("persons/$personId/competences/$oldId").remove();
 
           competence._listen(service);
         } else {
@@ -163,12 +165,12 @@ class Competence extends Observable {
       _rating = notifyPropertyChange(const Symbol('rating'), this._rating, e.snapshot.val());
     });
 
-    service.dbRef.child("competenceTemplates/$competenceTemplateId/label").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/label").onValue.listen((e) {
       String value = e.snapshot.val();
       if (value == null) value = "Unknown competence";
       label = value;
     });
-    service.dbRef.child("competenceTemplates/$competenceTemplateId/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/description").onValue.listen((e) {
       String value = e.snapshot.val();
       if (value == null) value = "-";
       description = value;

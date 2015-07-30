@@ -13,11 +13,14 @@ class Category extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("categories/$id", new Map()..putIfAbsent("description", () => description));
+    _changeProperty("projects/$projectHash/categories/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
   @observable String id;
+
+  /** Not documented yet. */
+  @observable String projectHash;
 
   /** Not documented yet. */
   String _name = "";
@@ -25,7 +28,7 @@ class Category extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("categories/$id", new Map()..putIfAbsent("name", () => name));
+    _changeProperty("projects/$projectHash/categories/$id", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -34,39 +37,40 @@ class Category extends Observable {
 
   @observable CompetencesService service;
 
-  Category.full(this.id, this._name, this._description, this.subcategories);
+  Category.full(this.id, String this.projectHash, this._name, this._description, this.subcategories);
 
-  Category.newId(this.id);
+  Category.newId(this.id, String this.projectHash);
 
   Category.emptyDefault() {
     _name = "New Category";
   }
 
-  factory Category.retrieve(String id, CompetencesService service) {
-    Category category = toObservable(new Category.newId(id));
-    service.dbRef.child("categories/$id").once("value").then((snapshot) {
+  factory Category.retrieve(String id, String projectHash, CompetencesService service) {
+    Category category = toObservable(new Category.newId(id, projectHash));
+    service.dbRef.child("projects/$projectHash/categories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       category.fromJson(val);
 
       if(category != null) {
-        category._listen(service);
+        category._listen(projectHash, service);
       } else {
         //New category
-        category = toObservable(new Category.newRemote(service));
+        category = toObservable(new Category.newRemote(projectHash, service));
       }
     });
     return category;
   }
 
-  factory Category.newRemote(CompetencesService service) {
+  factory Category.newRemote(String projectHash, CompetencesService service) {
     Category category = toObservable(new Category.emptyDefault());
-    Firebase pushRef = service.dbRef.child("categories").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/categories").push();
     category.id = pushRef.key;
+    category.projectHash = projectHash;
     pushRef.set(category.toJson()).then((error) {
       if(error != null) {
         //
       } else {
-        category._listen(service);
+        category._listen(projectHash, service);
       }
     });
     return category;
@@ -75,21 +79,21 @@ class Category extends Observable {
   toString() => id + ": " + name;//TODO
 
   addSubCategory(){
-    SubCategory subCategory = new SubCategory.newRemote(service);
-    service.dbRef.child("categories/$id/subCategoryIds").update(new Map()..putIfAbsent(subCategory.id, () => true));
+    SubCategory subCategory = new SubCategory.newRemote(projectHash, service);
+    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").update(new Map()..putIfAbsent(subCategory.id, () => true));
   }
 
   removeSubCategory(int index){
     String subCategoryId = subcategories[index].id;
-    service.dbRef.child("categories/$id/subCategoryIds/$subCategoryId").remove();
+    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds/$subCategoryId").remove();
   }
 
-  _listen(CompetencesService service){
+  _listen(String projectHash, CompetencesService service){
     this.service = service;
-    service.dbRef.child("categories/$id/name").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/categories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("categories/$id/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/categories/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
@@ -99,7 +103,7 @@ class Category extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            SubCategory subCategory = new SubCategory.retrieve(record.key, service);
+            SubCategory subCategory = new SubCategory.retrieve(record.key, projectHash, service);
             subcategories.add(subCategory);//TODO
           }
 
@@ -111,11 +115,11 @@ class Category extends Observable {
       }
     });
 
-    service.dbRef.child("categories/$id/subCategoryIds").onChildAdded.listen((e) {
+    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildAdded.listen((e) {
       subCategoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("categories/$id/subCategoryIds").onChildRemoved.listen((e) {
+    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildRemoved.listen((e) {
       subCategoryIds.remove(e.snapshot.key);
     });
   }
@@ -130,7 +134,11 @@ class Category extends Observable {
     if (!_json.containsKey("id") && noId == false) {
       throw new Exception("No id.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
@@ -153,6 +161,9 @@ class Category extends Observable {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (name != null) {
       _json["name"] = name;

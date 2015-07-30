@@ -12,11 +12,14 @@ class CompetenceTemplate extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("competenceTemplates/$id", new Map()..putIfAbsent("description", () => description));
+    _changeProperty("projects/$projectHash/competenceTemplates/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
   @observable String id;
+
+  /** Not documented yet. */
+  @observable String projectHash;
 
   /** Not documented yet. */
   String _label = "";
@@ -24,44 +27,45 @@ class CompetenceTemplate extends Observable {
   void set label(String value) {
     this._label = notifyPropertyChange(const Symbol('label'), this._label, value);
 
-    _changeProperty("competenceTemplates/$id", new Map()..putIfAbsent("label", () => label));
+    _changeProperty("projects/$projectHash/competenceTemplates/$id", new Map()..putIfAbsent("label", () => label));
   }
 
   @observable CompetencesService service;
 
-  CompetenceTemplate.full(this.id, this._label, this._description);
+  CompetenceTemplate.full(this.id, String this.projectHash, this._label, this._description);
 
-  CompetenceTemplate.newId(this.id);
+  CompetenceTemplate.newId(this.id, String this.projectHash);
 
   CompetenceTemplate.emptyDefault() {
     _label = "New Competence";
   }
 
-  factory CompetenceTemplate.retrieve(String id, CompetencesService service) {
-    CompetenceTemplate competenceTemplate = toObservable(new CompetenceTemplate.newId(id));
-    service.dbRef.child("competenceTemplates/$id").once("value").then((snapshot) {
+  factory CompetenceTemplate.retrieve(String id, String projectHash, CompetencesService service) {
+    CompetenceTemplate competenceTemplate = toObservable(new CompetenceTemplate.newId(id, projectHash));
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       competenceTemplate.fromJson(val);
 
       if(competenceTemplate != null) {
-        competenceTemplate._listen(service);
+        competenceTemplate._listen(projectHash, service);
       } else {
         //New competence
-        competenceTemplate = toObservable(new CompetenceTemplate.newRemote(service));
+        competenceTemplate = toObservable(new CompetenceTemplate.newRemote(projectHash, service));
       }
     });
     return competenceTemplate;
   }
 
-  factory CompetenceTemplate.newRemote(CompetencesService service) {
+  factory CompetenceTemplate.newRemote(String projectHash, CompetencesService service) {
     CompetenceTemplate competenceTemplate = toObservable(new CompetenceTemplate.emptyDefault());
-    Firebase pushRef = service.dbRef.child("competenceTemplates").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/competenceTemplates").push();
     competenceTemplate.id = pushRef.key;
+    competenceTemplate.projectHash = projectHash;
     pushRef.set(competenceTemplate.toJson()).then((error) {
       if(error != null) {
         //
       } else {
-        competenceTemplate._listen(service);
+        competenceTemplate._listen(projectHash, service);
       }
     });
     return competenceTemplate;
@@ -69,12 +73,12 @@ class CompetenceTemplate extends Observable {
 
   toString() => label;
 
-  _listen(CompetencesService service){
+  _listen(String projectHash, CompetencesService service){
     this.service = service;
-    service.dbRef.child("competenceTemplates/$id/label").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$id/label").onValue.listen((e) {
       _label = notifyPropertyChange(const Symbol('label'), this._label, e.snapshot.val());
     });
-    service.dbRef.child("competenceTemplates/$id/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
   }
@@ -89,7 +93,11 @@ class CompetenceTemplate extends Observable {
     if (!_json.containsKey("id") && noId == false) {
       throw new Exception("No id.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("label")) {
       label = _json["label"];
     } else {
@@ -106,6 +114,9 @@ class CompetenceTemplate extends Observable {
     var _json = new Map();
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (label != null) {
       _json["label"] = label;

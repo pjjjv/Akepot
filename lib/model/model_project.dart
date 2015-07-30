@@ -93,7 +93,7 @@ class Project extends Observable {
   toString() => name;
 
   addCategory(){
-    Category category = new Category.newRemote(service);
+    Category category = new Category.newRemote(hash, service);
     service.dbRef.child("projects/$hash/categoryIds").update(new Map()..putIfAbsent(category.id, () => true));
   }
 
@@ -103,7 +103,7 @@ class Project extends Observable {
   }
 
   Team addTeam(){
-    Team team = new Team.newRemote(service);
+    Team team = new Team.newRemote(hash, service);
     service.dbRef.child("projects/$hash/teamIds").update(new Map()..putIfAbsent(team.id, () => true));
     return team;
   }
@@ -143,7 +143,7 @@ class Project extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            Category category = new Category.retrieve(record.key, service);
+            Category category = new Category.retrieve(record.key, hash, service);
             categories.add(category);//TODO
           }
 
@@ -169,7 +169,7 @@ class Project extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            Team team = new Team.retrieve(record.key, service);
+            Team team = new Team.retrieve(record.key, hash, service);
             teams.add(team);//TODO
           }
 

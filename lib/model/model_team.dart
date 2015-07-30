@@ -13,11 +13,14 @@ class Team extends Observable {
   void set description(String value) {
     this._description = notifyPropertyChange(const Symbol('description'), this._description, value);
 
-    _changeProperty("teams/$id", new Map()..putIfAbsent("description", () => description));
+    _changeProperty("projects/$projectHash/teams/$id", new Map()..putIfAbsent("description", () => description));
   }
 
   /** Not documented yet. */
   @observable String id;
+
+  /** Not documented yet. */
+  @observable String projectHash;
 
   /** Not documented yet. */
   String _name = "";
@@ -25,7 +28,7 @@ class Team extends Observable {
   void set name(String value) {
     this._name = notifyPropertyChange(const Symbol('name'), this._name, value);
 
-    _changeProperty("teams/$id", new Map()..putIfAbsent("name", () => name));
+    _changeProperty("projects/$projectHash/teams/$id", new Map()..putIfAbsent("name", () => name));
   }
 
   /** Not documented yet. */
@@ -34,39 +37,40 @@ class Team extends Observable {
 
   @observable CompetencesService service;
 
-  Team.full(this.id, this._name, this._description, this.persons);
+  Team.full(this.id, String this.projectHash, this._name, this._description, this.persons);
 
-  Team.newId(this.id);
+  Team.newId(this.id, String this.projectHash);
 
   Team.emptyDefault() {
     _name = "New Team";
   }
 
-  factory Team.retrieve(String id, CompetencesService service) {
-    Team team = toObservable(new Team.newId(id));
-    service.dbRef.child("teams/$id").once("value").then((snapshot) {
+  factory Team.retrieve(String id, String projectHash, CompetencesService service) {
+    Team team = toObservable(new Team.newId(id, projectHash));
+    service.dbRef.child("projects/$projectHash/teams/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       team.fromJson(val);
 
       if(team != null) {
-        team._listen(service);
+        team._listen(projectHash, service);
       } else {
         //New team
-        team = toObservable(new Team.newRemote(service));
+        team = toObservable(new Team.newRemote(projectHash, service));
       }
     });
     return team;
   }
 
-  factory Team.newRemote(CompetencesService service) {
+  factory Team.newRemote(String projectHash, CompetencesService service) {
     Team team = toObservable(new Team.emptyDefault());
-    Firebase pushRef = service.dbRef.child("teams").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/teams").push();
     team.id = pushRef.key;
+    team.projectHash = projectHash;
     pushRef.set(team.toJson()).then((error) {
       if(error != null) {
         //
       } else {
-        team._listen(service);
+        team._listen(projectHash, service);
       }
     });
     return team;
@@ -76,26 +80,26 @@ class Team extends Observable {
 
   Person addPerson(String uid){
     Person person = new Person.newRemote(service, uid);
-    service.dbRef.child("teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
+    service.dbRef.child("projects/$projectHash/teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
     return person;
   }
 
   addPersonFull(Person person){
-    service.dbRef.child("teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
+    service.dbRef.child("projects/$projectHash/teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
     return person;
   }
 
   removePerson(int index){
     String personId = persons[index].id;
-    service.dbRef.child("teams/$id/personIds/$personId").remove();
+    service.dbRef.child("projects/$projectHash/teams/$id/personIds/$personId").remove();
   }
 
-  _listen(CompetencesService service){
+  _listen(String projectHash, CompetencesService service){
     this.service = service;
-    service.dbRef.child("teams/$id/name").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/teams/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("teams/$id/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/teams/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
 
@@ -117,11 +121,11 @@ class Team extends Observable {
       }
     });
 
-    service.dbRef.child("teams/$id/personIds").onChildAdded.listen((e) {
+    service.dbRef.child("projects/$projectHash/teams/$id/personIds").onChildAdded.listen((e) {
       personIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("teams/$id/personIds").onChildRemoved.listen((e) {
+    service.dbRef.child("projects/$projectHash/teams/$id/personIds").onChildRemoved.listen((e) {
       personIds.remove(e.snapshot.key);
     });
   }
@@ -136,7 +140,11 @@ class Team extends Observable {
     if (!_json.containsKey("id") && noId == false) {
       throw new Exception("No id.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("name")) {
       name = _json["name"];
     } else {
@@ -159,6 +167,9 @@ class Team extends Observable {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (name != null) {
       _json["name"] = name;

@@ -17,6 +17,10 @@
             <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
             <div id="label-type">Project: </div>
             <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
+            <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
+              <core-icon icon="create" aria-label="create" role="img"></core-icon>
+              Publish project
+            </paper-button>
           </div>
           <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
         </div>
@@ -36,6 +40,15 @@
         <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>-->
       </section>
     </core-header-panel>
+    <paper-action-dialog id="created-dialog" heading="Project published"
+      transition="paper-transition-center" backdrop="true">
+      <p>Write down the following link:<br>
+         {{newlink}}<br></p>
+      <p>This is the permalink to your project. Share it with your project members!</p>
+      <p>Would you like to navigate to it now?</p>
+      <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+      <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
+    </paper-action-dialog>
   </template>
 
   <script type="application/dart" src="section_edit_project.dart"></script>

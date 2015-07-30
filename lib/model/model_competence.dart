@@ -26,7 +26,7 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    _changeProperty("persons/$uid/competences/$id", new Map()..putIfAbsent("notSetYet", () => notSetYet));
+    _changeProperty("projects/$projectHash/persons/$uid/competences/$id", new Map()..putIfAbsent("notSetYet", () => notSetYet));
   }
 
   /** Not documented yet. */
@@ -39,7 +39,7 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    _changeProperty("persons/$uid/competences/$id", new Map()..putIfAbsent("rating", () => rating));
+    _changeProperty("projects/$projectHash/persons/$uid/competences/$id", new Map()..putIfAbsent("rating", () => rating));
   }
 
   /** Not documented yet. */
@@ -53,22 +53,22 @@ class Competence extends Observable {
 
   @observable CompetencesService service;
 
-  Competence.full(this.id, this.uid, this._notSetYet, this._rating, this.competenceTemplateId);
+  Competence.full(this.id, String this.projectHash, this.uid, this._notSetYet, this._rating, this.competenceTemplateId);
 
-  Competence.newId(this.id, this.uid);
+  Competence.newId(this.id, String this.projectHash, this.uid);
 
   Competence.emptyDefault(){
     label = "Unknown Competence";
     description = "-";
   }
 
-  factory Competence.retrieve(String id, String personId, CompetencesService service) {
+  factory Competence.retrieve(String id, String projectHash, String personId, CompetencesService service) {
     if(personId == null){
       throw new Exception("personId null.");
     }
 
-    Competence competence = toObservable(new Competence.newId(id, personId));
-    service.dbRef.child("persons/$personId/competences/$id").once("value").then((snapshot) {
+    Competence competence = toObservable(new Competence.newId(id, projectHash, personId));
+    service.dbRef.child("projects/$projectHash/persons/$personId/competences/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       competence.fromJson(val);
 
@@ -76,19 +76,19 @@ class Competence extends Observable {
         competence._listen(service);
       } else {
         //New competence
-        competence = toObservable(new Competence.newRemote(personId, service));
+        competence = toObservable(new Competence.newRemote(projectHash, personId, service));
       }
     });
     return competence;
   }
 
-  factory Competence.retrieveMatch(String competenceTemplateId, String personId, CompetencesService service){
+  factory Competence.retrieveMatch(String competenceTemplateId, String projectHash, String personId, CompetencesService service){
     if(personId == null){
       throw new Exception("personId null.");
     }
 
-    Competence competence = toObservable(new Competence.fromTemplate(competenceTemplateId, personId, service));
-    service.dbRef.child("persons/$personId/competences").orderByChild("competenceTemplateId").equalTo(competenceTemplateId).limitToFirst(1).once("value").then((snapshot) {
+    Competence competence = toObservable(new Competence.fromTemplate(competenceTemplateId, projectHash, personId, service));
+    service.dbRef.child("projects/$projectHash/persons/$personId/competences").orderByChild("competenceTemplateId").equalTo(competenceTemplateId).limitToFirst(1).once("value").then((snapshot) {
       Map val = snapshot.val();
       if(val == null || val.keys.isEmpty) {
         //New competence copied from template
@@ -99,7 +99,7 @@ class Competence extends Observable {
 
         if(competence != null) {
           //Remove the temporary created (and registered one)
-          service.dbRef.child("persons/$personId/competences/$oldId").remove();
+          service.dbRef.child("projects/$projectHash/persons/$personId/competences/$oldId").remove();
 
           competence._listen(service);
         } else {
@@ -110,14 +110,15 @@ class Competence extends Observable {
     return competence;
   }
 
-  factory Competence.newRemote(String personId, CompetencesService service) {
+  factory Competence.newRemote(String projectHash, String personId, CompetencesService service) {
     if(personId == null){
       throw new Exception("personId null.");
     }
 
     Competence competence = toObservable(new Competence.emptyDefault());
-    Firebase pushRef = service.dbRef.child("persons/$personId/competences").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
     competence.id = pushRef.key;
+    competence.projectHash = projectHash;
     competence.uid = personId;
     pushRef.set(competence.toJson()).then((error) {
       if(error != null) {
@@ -129,14 +130,15 @@ class Competence extends Observable {
     return competence;
   }
 
-  factory Competence.fromTemplate(String competenceTemplateId, String personId, CompetencesService service) {
+  factory Competence.fromTemplate(String competenceTemplateId, String projectHash, String personId, CompetencesService service) {
     if(personId == null){
       throw new Exception("personId null.");
     }
 
     Competence competence = toObservable(new Competence.emptyDefault());
-    Firebase pushRef = service.dbRef.child("persons/$personId/competences").push();
+    Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
     competence.id = pushRef.key;
+    competence.projectHash = projectHash;
     competence.uid = personId;
     competence.competenceTemplateId = competenceTemplateId;
     pushRef.set(competence.toJson()).then((error) {
@@ -158,10 +160,10 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    service.dbRef.child("persons/$uid/competences/$id/notSetYet").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$id/notSetYet").onValue.listen((e) {
       _notSetYet = notifyPropertyChange(const Symbol('notSetYet'), this._notSetYet, e.snapshot.val());
     });
-    service.dbRef.child("persons/$uid/competences/$id/rating").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$id/rating").onValue.listen((e) {
       _rating = notifyPropertyChange(const Symbol('rating'), this._rating, e.snapshot.val());
     });
 
@@ -190,7 +192,11 @@ class Competence extends Observable {
     if (!_json.containsKey("uid") && noId == false) {
       throw new Exception("No uid.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     uid = _json["uid"]==null ? null : _json["uid"];
     if (!_json.containsKey("competenceTemplateId")) {
       throw new Exception("No competenceTemplateId.");
@@ -212,6 +218,9 @@ class Competence extends Observable {
     var _json = new Map();
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (uid != null) {
       _json["uid"] = uid;

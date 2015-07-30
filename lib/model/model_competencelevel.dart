@@ -50,7 +50,7 @@ class CompetenceLevel extends Observable {
       competenceLevel.fromJson(val);
 
       if(competenceLevel != null) {
-        competenceLevel._listen(projectHash, service);
+        competenceLevel._listen(service);
       } else {
         //New competenceLevel
         competenceLevel = toObservable(new CompetenceLevel.newRemote(projectHash, service));
@@ -68,7 +68,7 @@ class CompetenceLevel extends Observable {
       if(error != null) {
         //
       } else {
-        competenceLevel._listen(projectHash, service);
+        competenceLevel._listen(service);
       }
     });
     return competenceLevel;
@@ -76,7 +76,7 @@ class CompetenceLevel extends Observable {
 
   toString() => level;
 
-  _listen(String projectHash, CompetencesService service){
+  _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$projectHash/competenceLevels/$id/level").onValue.listen((e) {
       _level = notifyPropertyChange(const Symbol('level'), this._level, e.snapshot.val());

@@ -14,12 +14,15 @@ class Person extends Observable {
   @observable String id;
 
   /** Not documented yet. */
+  @observable String projectHash;
+
+  /** Not documented yet. */
   String _nickName = "";
   String get nickName => _nickName;
   void set nickName(String value) {
     this._nickName = notifyPropertyChange(const Symbol('nickName'), this._nickName, value);
 
-    _changeProperty("persons/$id", new Map()..putIfAbsent("nickName", () => nickName));
+    _changeProperty("projects/$projectHash/persons/$id", new Map()..putIfAbsent("nickName", () => nickName));
   }
 
   /** Not documented yet. */
@@ -28,7 +31,7 @@ class Person extends Observable {
   void set emailAddress(String value) {
     this._emailAddress = notifyPropertyChange(const Symbol('emailAdress'), this._emailAddress, value);
 
-    _changeProperty("persons/$id", new Map()..putIfAbsent("emailAddress", () => emailAddress));
+    _changeProperty("projects/$projectHash/persons/$id", new Map()..putIfAbsent("emailAddress", () => emailAddress));
   }
 
   /** Not documented yet. */
@@ -37,7 +40,7 @@ class Person extends Observable {
   void set firstName(String value) {
     this._firstName = notifyPropertyChange(const Symbol('firstName'), this._firstName, value);
 
-    _changeProperty("persons/$id", new Map()..putIfAbsent("firstName", () => firstName));
+    _changeProperty("projects/$projectHash/persons/$id", new Map()..putIfAbsent("firstName", () => firstName));
   }
 
   /** Not documented yet. */
@@ -46,7 +49,7 @@ class Person extends Observable {
   void set lastName(String value) {
     this._lastName = notifyPropertyChange(const Symbol('lastName'), this._lastName, value);
 
-    _changeProperty("persons/$id", new Map()..putIfAbsent("lastName", () => lastName));
+    _changeProperty("projects/$projectHash/persons/$id", new Map()..putIfAbsent("lastName", () => lastName));
   }
 
   /** Not documented yet. */
@@ -55,7 +58,7 @@ class Person extends Observable {
   void set isAdmin(bool value) {
     this._isAdmin = notifyPropertyChange(const Symbol('isAdmin'), this._isAdmin, value);
 
-    _changeProperty("persons/$id", new Map()..putIfAbsent("isAdmin", () => isAdmin));
+    _changeProperty("projects/$projectHash/persons/$id", new Map()..putIfAbsent("isAdmin", () => isAdmin));
 
   }
 
@@ -65,17 +68,17 @@ class Person extends Observable {
 
   @observable CompetencesService service;
 
-  Person.full(this.id, this._nickName, this._emailAddress, this._firstName, this._lastName, this._isAdmin, this.roles);
+  Person.full(this.id, String this.projectHash, this._nickName, this._emailAddress, this._firstName, this._lastName, this._isAdmin, this.roles);
 
-  Person.newId(this.id);
+  Person.newId(this.id, String this.projectHash);
 
   Person.emptyDefault() {
     _nickName = "New Person";
   }
 
-  factory Person.retrieve(String id, CompetencesService service, [dynamic callback(Person person)]) {
-    Person person = toObservable(new Person.newId(id));
-    service.dbRef.child("persons/$id").once("value").then((snapshot) {
+  factory Person.retrieve(String id, String projectHash, CompetencesService service, [dynamic callback(Person person)]) {
+    Person person = toObservable(new Person.newId(id, projectHash));
+    service.dbRef.child("projects/$projectHash/persons/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       person.fromJson(val);
 
@@ -83,7 +86,7 @@ class Person extends Observable {
         person._listen(service);
       } else {
         //New person
-        person = toObservable(new Person.newRemote(service, id));
+        person = toObservable(new Person.newRemote(service, id, projectHash));
       }
 
       if(callback != null){
@@ -93,9 +96,10 @@ class Person extends Observable {
     return person;
   }
 
-  factory Person.newRemote(CompetencesService service, String uid, {String nickName, String emailAddress, String firstName, String lastName, bool admin: false}) {
+  factory Person.newRemote(CompetencesService service, String uid, String projectHash, {String nickName, String emailAddress, String firstName, String lastName, bool admin: false}) {
     Person person = toObservable(new Person.emptyDefault());
     person.id = uid;
+    person.projectHash = projectHash;
     if(nickName != null){
       person.nickName = nickName;
     }
@@ -109,7 +113,7 @@ class Person extends Observable {
       person.lastName = lastName;
     }
     person.isAdmin = admin;
-    Firebase setRef = service.dbRef.child("persons/$uid");
+    Firebase setRef = service.dbRef.child("projects/$projectHash/persons/$uid");
     setRef.set(person.toJson()).then((error) {
       if(error != null) {
         //
@@ -120,8 +124,8 @@ class Person extends Observable {
     return person;
   }
 
-  static exists(String uid, CompetencesService service, dynamic callback(bool exists)) {
-    service.dbRef.child('/persons/$uid').once("value").then((snapshot) {
+  static exists(String uid, String projectHash, CompetencesService service, dynamic callback(bool exists)) {
+    service.dbRef.child('projects/$projectHash/persons/$uid').once("value").then((snapshot) {
       Map val = snapshot.val();
       callback(val != null);
     });
@@ -141,19 +145,19 @@ class Person extends Observable {
 
   _listen(CompetencesService service){
     this.service = service;
-    service.dbRef.child("persons/$id/nickName").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/nickName").onValue.listen((e) {
       _nickName = notifyPropertyChange(const Symbol('nickName'), this._nickName, e.snapshot.val());
     });
-    service.dbRef.child("persons/$id/emailAddress").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/emailAddress").onValue.listen((e) {
       _emailAddress = notifyPropertyChange(const Symbol('emailAddress'), this._emailAddress, e.snapshot.val());
     });
-    service.dbRef.child("persons/$id/firstName").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/firstName").onValue.listen((e) {
       _firstName = notifyPropertyChange(const Symbol('firstName'), this._firstName, e.snapshot.val());
     });
-    service.dbRef.child("persons/$id/lastName").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/lastName").onValue.listen((e) {
       _lastName = notifyPropertyChange(const Symbol('lastName'), this._lastName, e.snapshot.val());
     });
-    service.dbRef.child("persons/$id/isAdmin").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/isAdmin").onValue.listen((e) {
       _isAdmin = notifyPropertyChange(const Symbol('isAdmin'), this._isAdmin, e.snapshot.val());
     });
 
@@ -199,7 +203,11 @@ class Person extends Observable {
     if (!_json.containsKey("id") && noId == false) {
       throw new Exception("No id.");
     }
+    if (!_json.containsKey("projectHash") && noId == false) {
+      throw new Exception("No projectHash.");
+    }
     id = _json["id"]==null ? null : _json["id"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("nickName")) {
       nickName = _json["nickName"];
     } else {
@@ -234,6 +242,9 @@ class Person extends Observable {
     var _json = new Map<String, dynamic>();
     if (id != null) {
       _json["id"] = id;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (nickName != null) {
       _json["nickName"] = nickName;

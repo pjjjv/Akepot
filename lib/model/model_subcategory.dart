@@ -57,7 +57,7 @@ class SubCategory extends Observable {
       subCategory.fromJson(val);
 
       if(subCategory != null) {
-        subCategory._listen(projectHash, service);
+        subCategory._listen(service);
       } else {
         //New subCategory
         subCategory = toObservable(new SubCategory.newRemote(projectHash, service));
@@ -75,7 +75,7 @@ class SubCategory extends Observable {
       if(error != null) {
         //
       } else {
-        subCategory._listen(projectHash, service);
+        subCategory._listen(service);
       }
     });
     return subCategory;
@@ -93,7 +93,7 @@ class SubCategory extends Observable {
     service.dbRef.child("projects/$projectHash/subCategories/$id/competenceTemplateIds/$competenceTemplateId").remove();
   }
 
-  _listen(String projectHash, CompetencesService service){
+  _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$projectHash/subCategories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
@@ -112,7 +112,7 @@ class SubCategory extends Observable {
             competenceTemplates.add(competenceTemplate);//TODO
 
             //Person's competence
-            competences.add(new Competence.retrieveMatch(competenceTemplate.id, service.user.uid, service));
+            competences.add(new Competence.retrieveMatch(competenceTemplate.id, projectHash, service.user.uid, service));
           }
 
           //Something removed

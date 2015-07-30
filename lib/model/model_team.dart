@@ -52,7 +52,7 @@ class Team extends Observable {
       team.fromJson(val);
 
       if(team != null) {
-        team._listen(projectHash, service);
+        team._listen(service);
       } else {
         //New team
         team = toObservable(new Team.newRemote(projectHash, service));
@@ -70,7 +70,7 @@ class Team extends Observable {
       if(error != null) {
         //
       } else {
-        team._listen(projectHash, service);
+        team._listen(service);
       }
     });
     return team;
@@ -79,7 +79,7 @@ class Team extends Observable {
   toString() => id + ": " + name;//TODO
 
   Person addPerson(String uid){
-    Person person = new Person.newRemote(service, uid);
+    Person person = new Person.newRemote(service, uid, projectHash);
     service.dbRef.child("projects/$projectHash/teams/$id/personIds").update(new Map()..putIfAbsent(person.id, () => true));
     return person;
   }
@@ -94,7 +94,7 @@ class Team extends Observable {
     service.dbRef.child("projects/$projectHash/teams/$id/personIds/$personId").remove();
   }
 
-  _listen(String projectHash, CompetencesService service){
+  _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$projectHash/teams/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
@@ -109,7 +109,7 @@ class Team extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            Person person = new Person.retrieve(record.key, service);
+            Person person = new Person.retrieve(record.key, projectHash, service);
             persons.add(person);//TODO
           }
 

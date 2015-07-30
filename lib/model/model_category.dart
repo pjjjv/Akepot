@@ -52,7 +52,7 @@ class Category extends Observable {
       category.fromJson(val);
 
       if(category != null) {
-        category._listen(projectHash, service);
+        category._listen(service);
       } else {
         //New category
         category = toObservable(new Category.newRemote(projectHash, service));
@@ -70,7 +70,7 @@ class Category extends Observable {
       if(error != null) {
         //
       } else {
-        category._listen(projectHash, service);
+        category._listen(service);
       }
     });
     return category;
@@ -88,7 +88,7 @@ class Category extends Observable {
     service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds/$subCategoryId").remove();
   }
 
-  _listen(String projectHash, CompetencesService service){
+  _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$projectHash/categories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());

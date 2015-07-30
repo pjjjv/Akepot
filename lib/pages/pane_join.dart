@@ -26,7 +26,7 @@ class PaneJoin extends PolymerElement {
   void signedIn(Event e, var detail, HtmlElement target){
     project = new Project.retrieve(projectHash, service);
 
-    Person.exists(service.user.uid, service, (exists) {
+    Person.exists(service.user.uid, projectHash, service, (exists) {
       if (exists){
         (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
       } else {
@@ -48,7 +48,7 @@ class PaneJoin extends PolymerElement {
       return;
     }
 
-    Person person = new Person.newRemote(service, service.user.uid, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname);
+    Person person = new Person.newRemote(service, service.user.uid, projectHash, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname);
     project.teams.elementAt(int.parse(selected)).addPersonFull(person);
     //person.roles
 

@@ -24,7 +24,7 @@ class PanesCategory extends PolymerElement {
   void signedIn(Event e, var detail, HtmlElement target){
     project = new Project.retrieve(projectHash, service);
 
-    Person.exists(service.user.uid, service, (exists) {
+    Person.exists(service.user.uid, projectHash, service, (exists) {
       if (!exists){
         (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
       }

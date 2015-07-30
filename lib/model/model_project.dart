@@ -80,6 +80,7 @@ class Project extends Observable {
     Project project = toObservable(new Project.emptyDefault());
     Firebase pushRef = service.dbRef.child("projects").push();
     project.hash = pushRef.key;
+    project.service = service;
     pushRef.set(project.toJson()).then((error) {
       if(error != null) {
         //
@@ -114,7 +115,7 @@ class Project extends Observable {
   }
 
   addNewAdmin(String uid){
-    Person admin = new Person.newRemote(service, uid);
+    Person admin = new Person.newRemote(service, uid, hash);
     admin.isAdmin = true;
     addAdmin(admin);
   }
@@ -195,7 +196,7 @@ class Project extends Observable {
         if (record is MapChangeRecord) {
           //Something added
           if (record.isInsert) {
-            Person admin = new Person.retrieve(record.key, service);
+            Person admin = new Person.retrieve(record.key, hash, service);
             admins.add(admin);//TODO
           }
 

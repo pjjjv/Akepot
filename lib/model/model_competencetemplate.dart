@@ -47,7 +47,7 @@ class CompetenceTemplate extends Observable {
       competenceTemplate.fromJson(val);
 
       if(competenceTemplate != null) {
-        competenceTemplate._listen(projectHash, service);
+        competenceTemplate._listen(service);
       } else {
         //New competence
         competenceTemplate = toObservable(new CompetenceTemplate.newRemote(projectHash, service));
@@ -65,7 +65,7 @@ class CompetenceTemplate extends Observable {
       if(error != null) {
         //
       } else {
-        competenceTemplate._listen(projectHash, service);
+        competenceTemplate._listen(service);
       }
     });
     return competenceTemplate;
@@ -73,7 +73,7 @@ class CompetenceTemplate extends Observable {
 
   toString() => label;
 
-  _listen(String projectHash, CompetencesService service){
+  _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$projectHash/competenceTemplates/$id/label").onValue.listen((e) {
       _label = notifyPropertyChange(const Symbol('label'), this._label, e.snapshot.val());

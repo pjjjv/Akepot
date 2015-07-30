@@ -1,0 +1,38 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../core_card3.html">
+
+<polymer-element name="section-edit-project2" attributes="project page index">
+  <template>
+    <link href="section_edit_project2.css" rel="stylesheet">
+
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall" cross-fade-delayed>
+        <div id="div2" layout vertical center center-justified>
+          <div id="div1" layout horizontal center>
+            <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
+            <div id="label-type">Project: </div>
+            <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
+      </core-toolbar>
+      <section id="content-section">
+
+        <div layout center-justified>
+          <template repeat="{{team in project.teams | enumerate}}">
+            <core-card3 id="{{team.index}}" horizontal layout center start-justified hero-id="hero-team" hero?="{{(page == 1 || page == 0) && team.index == index}}" cross-fade-delayed?="{{page != 0 || team.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{team.value.name}}</core-card3>
+          </template>
+        </div>
+      </section>
+    </core-header-panel>
+  </template>
+
+  <script type="application/dart" src="section_edit_project2.dart"></script>
+</polymer-element>
+

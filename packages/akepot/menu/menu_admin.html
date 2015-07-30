@@ -1,0 +1,30 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../../packages/paper_elements/paper_item.html">
+<link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
+
+<polymer-element name="menu-admin" attributes="selectedSection projectHash">
+  <template>
+    <link href="menu_admin.css" rel="stylesheet">
+
+    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name"><!-- on-core-activate="{{navigate}}"  -->
+      <paper-item id="menu_item_home" name="home" tabindex="0">
+        <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
+      </paper-item>
+      <div class="separator">Admin functions</div>
+      <!--<paper-item noink id="menu_item_input" name="input" tabindex="0">
+        <a _href="#/admin/{{projectHash}}/input"><core-icon icon="file-upload"></core-icon><span flex>Input</span></a>
+      </paper-item>
+      <paper-item noink id="menu_item_output" name="output" tabindex="0">
+        <a _href="#/admin/{{projectHash}}/output"><core-icon icon="file-download"></core-icon><span flex>Output</span></a>
+      </paper-item>-->
+      <paper-item noink id="menu_item_edit" name="edit" tabindex="0">
+        <a _href="#/admin/{{projectHash}}/edit"><core-icon icon="file-upload"></core-icon><span flex>Edit</span></a>
+      </paper-item>
+    </core-selector>
+  </template>
+
+  <script type="application/dart" src="menu_admin.dart"></script>
+</polymer-element>
+

@@ -1,0 +1,43 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../core_card3.html">
+
+<polymer-element name="section-edit-subcategory" attributes="subCategory page index">
+  <template>
+    <link href="section_edit_subcategory.css" rel="stylesheet">
+
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall" hero-id="hero-subcategory" hero cross-fade-delayed?="{{(page != 1)}}">
+        <div id="div2" layout vertical center center-justified>
+          <div id="div1" layout horizontal center>
+            <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
+            <div id="label-type">Sub-category: </div>
+            <paper-input label="Sub-category Name" value="{{subCategory.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Sub-category Description" value="{{subCategory.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
+      </core-toolbar>
+      <section id="content-section">
+
+        <div layout center-justified>
+          <template repeat="{{competenceTemplate in subCategory.competenceTemplates | enumerate}}">
+            <core-card3 id="{{competenceTemplate.index}}" horizontal layout center start-justified hero-id="hero-competence" hero?="{{(page == 3 || page == 2) && competenceTemplate.index == index}}" cross-fade-delayed?="{{(page != 3 && page != 2) || competenceTemplate.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{competenceTemplate.value.label}}</core-card3>
+          </template>
+        </div>
+        <!-- <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Planning</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Pigs</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade hero-id="hero3" hero>Stakeholders</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3> -->
+      </section>
+    </core-header-panel>
+  </template>
+
+  <script type="application/dart" src="section_edit_subcategory.dart"></script>
+</polymer-element>
+

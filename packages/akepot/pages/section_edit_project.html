@@ -1,0 +1,56 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../core_card3.html">
+
+<polymer-element name="section-edit-project" attributes="project page index">
+  <template>
+    <link href="section_edit_project.css" rel="stylesheet">
+
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall" cross-fade-delayed>
+        <div id="div2" layout vertical center center-justified>
+          <div id="div1" layout horizontal center>
+            <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
+            <div id="label-type">Project: </div>
+            <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
+            <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
+              <core-icon icon="create" aria-label="create" role="img"></core-icon>
+              Publish project
+            </paper-button>
+          </div>
+          <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
+      </core-toolbar>
+      <section id="content-section">
+
+        <div layout center-justified>
+          <template repeat="{{category in project.categories | enumerate}}">
+            <core-card3 id="{{category.index}}" horizontal layout center start-justified hero-id="hero-category" hero?="{{(page == 1 || page == 0) && category.index == index}}" cross-fade-delayed?="{{page != 0 || category.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{category.value.name}}</core-card3>
+          </template>
+        </div>
+        <!--<core-card3 id="core_card" horizontal layout center start-justified hero-id="hero" hero>Software Methodologies</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Html</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>
+        <core-card3 id="core_card" horizontal layout center start-justified cross-fade>Things</core-card3>-->
+      </section>
+    </core-header-panel>
+    <paper-action-dialog id="created-dialog" heading="Project published"
+      transition="paper-transition-center" backdrop="true">
+      <p>Write down the following link:<br>
+         {{newlink}}<br></p>
+      <p>This is the permalink to your project. Share it with your project members!</p>
+      <p>Would you like to navigate to it now?</p>
+      <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+      <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
+    </paper-action-dialog>
+  </template>
+
+  <script type="application/dart" src="section_edit_project.dart"></script>
+</polymer-element>
+

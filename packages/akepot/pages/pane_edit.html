@@ -1,0 +1,109 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input_decorator.html">
+<link rel="import" href="../../../packages/paper_elements/paper_autogrow_textarea.html">
+<link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_tabs.html">
+<link rel="import" href="../../../packages/paper_elements/paper_tab.html">
+<link rel="import" href="../core_card3.html">
+<link rel="import" href="section_edit_project.html">
+<link rel="import" href="section_edit_category.html">
+<link rel="import" href="section_edit_subcategory.html">
+<link rel="import" href="section_edit_competence.html">
+<link rel="import" href="section_edit_project2.html">
+<link rel="import" href="section_edit_team.html">
+
+<polymer-element name="pane-edit" attributes="projectHash">
+  <template>
+    <link href="pane_edit.css" rel="stylesheet">
+
+    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+    <core-signals on-core-signal-removeproject="{{removeProject}}"></core-signals>
+
+    <core-signals on-core-signal-teamtap="{{onTeamTap}}"></core-signals>
+    <core-signals on-core-signal-addteam="{{addTeam}}"></core-signals>
+    <core-signals on-core-signal-removeteam="{{removeTeam}}"></core-signals>
+
+    <core-signals on-core-signal-removeperson="{{removePerson}}"></core-signals>
+
+    <core-signals on-core-signal-categorytap="{{onCategoryTap}}"></core-signals>
+    <core-signals on-core-signal-addcategory="{{addCategory}}"></core-signals>
+    <core-signals on-core-signal-removecategory="{{removeCategory}}"></core-signals>
+
+    <core-signals on-core-signal-subcategorytap="{{onSubCategoryTap}}"></core-signals>
+    <core-signals on-core-signal-addsubcategory="{{addSubCategory}}"></core-signals>
+    <core-signals on-core-signal-removesubcategory="{{removeSubCategory}}"></core-signals>
+
+    <core-signals on-core-signal-competencetemplatetap="{{onCompetenceTemplateTap}}"></core-signals>
+    <core-signals on-core-signal-addcompetencetemplate="{{addCompetenceTemplate}}"></core-signals>
+    <core-signals on-core-signal-removecompetencetemplate="{{removeCompetenceTemplate}}"></core-signals>
+
+    <core-signals on-core-signal-goup="{{goUp}}"></core-signals>
+    <core-signals on-core-signal-goup2="{{goUp2}}"></core-signals>
+
+    <div id="outer" layout vertical>
+      <template if="{{service.signedIn}}">
+        <paper-tabs selected="{{tab}}" id="paper_tabs" horizontal center layout>
+          <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
+          <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
+        </paper-tabs>
+        <template if="{{ tab == 0 }}">
+          <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
+
+            <section-edit-project project="{{project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
+
+            <template if="{{ project.categories.length > category_nr }}">
+              <section-edit-category category="{{project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+
+            <template if="{{ project.categories[category_nr].subcategories.length > subcategory_nr }}">
+              <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+
+            <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
+              <section-edit-competence competenceTemplate="{{project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
+
+            </template>
+            </template>
+            </template>
+          </core-animated-pages>
+        </template>
+        <template if="{{ tab == 1 }}">
+          <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" flex>
+
+            <section-edit-project2 project="{{project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
+
+            <template if="{{ project.teams.length > team_nr }}">
+              <section-edit-team team="{{project.teams[team_nr]}}" page="{{page2}}"></section-edit-team>
+            </template>
+          </core-animated-pages>
+        </template>
+      </template>
+    </div>
+
+
+
+<!--     <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
+      <core-icon icon="create" aria-label="create" role="img"></core-icon>
+      Create project
+    </paper-button>
+    <paper-action-dialog id="created-dialog" heading="New project created"
+      transition="paper-transition-center" backdrop="true">
+      <p>Write down the following link:<br>
+         {{newlink}}<br></p>
+      <p>This is the permalink to your project. Share it with your project members!</p>
+      <p>Would you like to navigate to it now?</p>
+      <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+      <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
+    </paper-action-dialog> -->
+  </template>
+
+  <script type="application/dart" src="pane_edit.dart"></script>
+</polymer-element>
+

@@ -5,7 +5,7 @@ import 'dart:html';
 
 @CustomTag('scaffold-layout')
 class ScaffoldLayout extends PolymerElement {
-  CompetencesService service;
+  @observable CompetencesService service;
   @published String selected;
   @published String menu;
   @published String projectHash;

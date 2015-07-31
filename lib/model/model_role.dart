@@ -65,6 +65,7 @@ class Role extends Observable {
     Role role = toObservable(new Role.emptyDefault());
     Firebase pushRef = service.dbRef.child("projects/$projectHash/roles").push();
     role.id = pushRef.key;
+    role.projectHash = projectHash;
     pushRef.set(role.toJson()).then((error) {
       if(error != null) {
         //

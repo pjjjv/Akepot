@@ -20,6 +20,8 @@
 <link rel="import" href="section_edit_competence.html">
 <link rel="import" href="section_edit_project2.html">
 <link rel="import" href="section_edit_team.html">
+<link rel="import" href="section_edit_project3.html">
+<link rel="import" href="section_edit_role.html">
 
 <polymer-element name="pane-edit" attributes="projectHash">
   <template>
@@ -27,6 +29,10 @@
 
     <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
     <core-signals on-core-signal-removeproject="{{removeProject}}"></core-signals>
+
+    <core-signals on-core-signal-roletap="{{onRoleTap}}"></core-signals>
+    <core-signals on-core-signal-addrole="{{addRole}}"></core-signals>
+    <core-signals on-core-signal-removerole="{{removeRole}}"></core-signals>
 
     <core-signals on-core-signal-teamtap="{{onTeamTap}}"></core-signals>
     <core-signals on-core-signal-addteam="{{addTeam}}"></core-signals>
@@ -48,12 +54,14 @@
 
     <core-signals on-core-signal-goup="{{goUp}}"></core-signals>
     <core-signals on-core-signal-goup2="{{goUp2}}"></core-signals>
+    <core-signals on-core-signal-goup3="{{goUp3}}"></core-signals>
 
     <div id="outer" layout vertical>
       <template if="{{service.signedIn}}">
         <paper-tabs selected="{{tab}}" id="paper_tabs" horizontal center layout>
           <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
           <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
+          <paper-tab id="tab-roles" inline flex center-center horizontal layout active>Roles</paper-tab>
         </paper-tabs>
         <template if="{{ tab == 0 }}">
           <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>

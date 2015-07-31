@@ -22,14 +22,17 @@ class PaneEdit extends PolymerElement {
 
   CoreAnimatedPages pages;
   CoreAnimatedPages pages2;
+  CoreAnimatedPages pages3;
   @observable int page = 0;
   @observable int page2 = 0;
+  @observable int page3 = 0;
   @observable int tab = 0;
 
   @observable int category_nr = 0;
   @observable int subcategory_nr = 0;
   @observable int competence_nr = 0;
   @observable int team_nr = 0;
+  @observable int role_nr = 0;
 
   void domReady() {
     service = document.querySelector("#service");
@@ -45,6 +48,24 @@ class PaneEdit extends PolymerElement {
 
   void removeProject(Event e, var detail, Node target){
     //
+  }
+
+  void addRole(Event e, var detail, Node target){
+    project.addRole();
+  }
+
+  void removeRole(Event e, var detail, Node target){
+    int index = int.parse(detail);
+    if(role_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
+      role_nr = 0;
+    }
+    project.removeRole(index);
+  }
+
+  void onRoleTap(Event e, var detail, Node target){
+    role_nr = int.parse(detail);
+    pages3 = shadowRoot.querySelector("#pages_edit3");
+    pages3.selectNext(false);
   }
 
   void addTeam(Event e, var detail, Node target){
@@ -132,6 +153,11 @@ class PaneEdit extends PolymerElement {
   void goUp2(Event e, var detail, HtmlElement target){
     pages2 = shadowRoot.querySelector("#pages_edit2");
     pages2.selectPrevious(false);
+  }
+
+  void goUp3(Event e, var detail, HtmlElement target){
+    pages3 = shadowRoot.querySelector("#pages_edit3");
+    pages3.selectPrevious(false);
   }
 
 }

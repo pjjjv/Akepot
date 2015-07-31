@@ -1,0 +1,31 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../core_card3.html">
+
+<polymer-element name="section-edit-role" attributes="role page">
+  <template>
+    <link href="section_edit_role.css" rel="stylesheet">
+
+    <core-header-panel mode="waterfall-tall">
+      <core-toolbar class="animate tall" hero-id="hero-role" hero>
+        <div id="div2" layout vertical center center-justified>
+          <div id="div1" layout horizontal center>
+            <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
+            <div id="label-type">Role: </div>
+            <paper-input label="Role Name" value="{{role.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Role Description" value="{{role.description}}" id="input-desc"></paper-input>
+        </div>
+      </core-toolbar>
+      <section id="content-section">
+      </section>
+    </core-header-panel>
+  </template>
+
+  <script type="application/dart" src="section_edit_role.dart"></script>
+</polymer-element>
+

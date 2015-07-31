@@ -1,1 +1,14 @@
-:host{background:rgba(255,255,255,0.9);z-index:6;visibility:hidden;transition:all 300ms ease-in-out;opacity:0;will-change:transform;transform:scale(0);margin:0}:host(.show:host){visibility:visible;opacity:1;transform:scale(1)}
+:host {
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 6;
+  visibility: hidden;
+  transition: all 300ms ease-in-out;
+  opacity: 0;
+  will-change: transform;
+  transform: scale(0);
+  margin: 0; }
+
+:host(.show:host) {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1); }

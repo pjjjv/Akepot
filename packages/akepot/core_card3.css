@@ -1,10 +1,1 @@
-:host {
-  display: inline-block;
-  min-width: 64px;
-  min-height: 64px;
-  margin: 64px 32px;
-  padding: 20px 16px;
-  background-color: rgba(255, 255, 255, 0.02);
-  border-radius: 2px;
-  box-shadow: rgba(0, 0, 0, 0.09804) 0px 2px 4px, rgba(0, 0, 0, 0.09804) 0px 0px 3px;
-  overflow: hidden; }
+:host{display:inline-block;min-width:64px;min-height:64px;margin:64px 32px;padding:20px 16px;background-color:rgba(255,255,255,0.02);border-radius:2px;box-shadow:rgba(0,0,0,0.09804) 0 2px 4px,rgba(0,0,0,0.09804) 0 0 3px;overflow:hidden}

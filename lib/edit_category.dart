@@ -7,7 +7,7 @@ import 'package:akepot/model/model_competence.dart';
 class EditCategory extends PolymerElement {
   EditCategory.created() : super.created() {
     if (form) {
-      category = new Category({}, "", new Text(""), []);
+      //category = new Category({}, "", new Text(""), []);//TODO: temporarily commented out
     }
   }
 

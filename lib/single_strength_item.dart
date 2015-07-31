@@ -1,3 +1,4 @@
+library single_strength_item;
 
 import 'package:polymer/polymer.dart';
 import 'dart:html';

@@ -2,16 +2,17 @@ name: akepot
 description: A competence matrix
 dependencies:
   browser: any
-  core_elements: ">=0.6.0+1 <0.7.0"
-  paper_elements: ">=0.6.0+3 <0.7.0"
-  polymer: ">=0.15.3+2 <0.16.0"
+  core_elements: ">=0.7.1+2 <0.8.0"
+  paper_elements: ">=0.7.1+1 <0.8.0"
+  polymer: ">=0.16.3+1 <0.16.3+2"
   intl: any
   sass: any
 #  app_router: any
   app_router:
     path: ../app_router_dart
-  pushstate_anchor: any
-  json_object: '>=1.0.19 <1.1.0'
+  pushstate_anchor:
+    path: ../pushstate_anchor_dart
+#  json_object: '>=1.0.19 <1.1.0'
   firebase:
     path: ../firebase-dart
 transformers:

@@ -3,19 +3,20 @@ import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/competences_service.dart';
 
-void main() {
-  initPolymer().run(() {
-    Content contentModel;
+main() => initPolymer();
 
-    Polymer.onReady.then((_) {
-      var content = document.querySelector('#content');
-      contentModel = new Content();
-      templateBind(content).model = contentModel;
+@initMethod
+realMain() {
+  Content contentModel;
 
-      setAkepotTransitionSpeed(350);
+  Polymer.onReady.then((_) {
+    var content = document.querySelector('#content');
+    contentModel = new Content();
+    templateBind(content).model = contentModel;
 
-      new AppCache(window.applicationCache);
-    });
+    setAkepotTransitionSpeed(350);
+
+    new AppCache(window.applicationCache);
   });
 }
 

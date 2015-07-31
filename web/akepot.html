@@ -62,7 +62,6 @@
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/akepot/pages/page_home.html">
-    <link rel="import" href="packages/akepot/pages/pane_input.html">
     <link rel="import" href="packages/akepot/pages/pane_edit.html">
     <link rel="import" href="packages/akepot/pages/pane_join.html">
     <link rel="import" href="packages/akepot/pages/panes_category.html">
@@ -92,7 +91,6 @@
 
     <app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
       <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
-      <app-route path="/admin/:projectHash/input" imp="packages/akepot/pages/page_input.html" elem="page-input"></app-route>
       <app-route path="/admin/:projectHash/edit" imp="packages/akepot/pages/page_edit.html" elem="page-edit"></app-route>
       <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
       <app-route path="/project/:projectHash/category/:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>

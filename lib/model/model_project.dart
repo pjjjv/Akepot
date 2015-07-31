@@ -4,6 +4,7 @@ import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_person.dart';
+import 'package:akepot/model/model_role.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 import 'dart:convert';
@@ -40,12 +41,16 @@ class Project extends Observable {
   @observable ObservableMap teamIds = toObservable(new Map());
 
   /** Not documented yet. */
+  @observable List<Role> roles = toObservable([]);
+  @observable ObservableMap roleIds = toObservable(new Map());
+
+  /** Not documented yet. */
   @observable List<Person> admins = toObservable([]);
   @observable ObservableMap adminIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
-  Project.full(this.hash, this._name, this._description, this.categories, this.teams, this.admins);
+  Project.full(this.hash, this._name, this._description, this.categories, this.teams, this.roles, this.admins);
 
   Project.newHash(this.hash);
 
@@ -129,6 +134,16 @@ class Project extends Observable {
     service.dbRef.child("projects/$hash/adminIds/$adminId").remove();
   }
 
+  addRole(){
+    Role role = new Role.newRemote(hash, service);
+    service.dbRef.child("projects/$hash/roleIds").update(new Map()..putIfAbsent(role.id, () => true));
+  }
+
+  removeRole(int index){
+    String roleId = roles[index].id;
+    service.dbRef.child("projects/$hash/roleIds/$roleId").remove();
+  }
+
   _listen(CompetencesService service){
     this.service = service;
     service.dbRef.child("projects/$hash/name").onValue.listen((e) {
@@ -188,6 +203,32 @@ class Project extends Observable {
 
     service.dbRef.child("projects/$hash/teamIds").onChildRemoved.listen((e) {
       teamIds.remove(e.snapshot.key);
+    });
+
+    roleIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            Role role = new Role.retrieve(record.key, hash, service);
+            roles.add(role);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            roles.removeWhere((role) => role.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("projects/$hash/roleIds").onChildAdded.listen((e) {
+      roleIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("projects/$hash/roleIds").onChildRemoved.listen((e) {
+      roleIds.remove(e.snapshot.key);
     });
 
     adminIds.changes.listen((records) {

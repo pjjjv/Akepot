@@ -1,0 +1,112 @@
+Loading source assets...
+Loading sass, initialize/build/loader_replacer, initialize, observe, polymer/src/build/mirrors_remover, code_transformers/src/delete_file, smoke/src/default_transformer and web_components transformers...
+Loading polymer transformers...
+[Error from Sass on akepot|lib/strength_button_slider.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/dropdown_menu.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/login_screen.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/core_card3.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/subcategory_card.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/layouts/scaffold_layout.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_team.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/panes_category.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_project2.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_category.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/pane_join.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_competence.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_subcategory.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/pane_home.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/section_edit_project.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/menu/menu_admin.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/menu/menu_home.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/pane_category.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/menu/menu_project.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/pages/pane_edit.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/strength_button.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/core_card2.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/single_strength_item.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/edit_category.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+[Error from Sass on akepot|lib/refresh_spinner.scss]:
+could not resolve import 'Instance of '_SassImport'' (tried [akepot|web/theme.scss, akepot|web/theme.sass, akepot|web/_theme.scss, akepot|web/_theme.sass])
+null
+Building akepot...
+Build error:
+Transform ScriptCompactor on akepot|web/akepot.html threw error: Class 'TypeIdentifier' has no instance getter 'lastName'.
+
+NoSuchMethodError: method not found: 'lastName'
+Receiver: Instance of 'TypeIdentifier'
+Arguments: []
+dart:core-patch/object_patch.dart 42                    Object._noSuchMethod
+dart:core-patch/object_patch.dart 45                    Object.noSuchMethod
+package:smoke/codegen/generator.dart 158:43             SmokeCodeGenerator.writeTopLevelDeclarations
+package:polymer/src/build/script_compactor.dart 473:40  _emitFiles
+dart:async/zone.dart 1155                               _RootZone.runUnary
+dart:async/future_impl.dart 484                         _Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 567                         _Future._propagateToListeners
+dart:async/future_impl.dart 550                         _Future._propagateToListeners.handleWhenCompleteCallback.<fn>
+dart:async/zone.dart 1155                               _RootZone.runUnary
+dart:async/future_impl.dart 484                         _Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 567                         _Future._propagateToListeners
+dart:async/future_impl.dart 358                         _Future._completeWithValue
+dart:async/future_impl.dart 412                         _Future._asyncComplete.<fn>
+dart:async/schedule_microtask.dart 41                   _asyncRunCallbackLoop
+dart:async/schedule_microtask.dart 48                   _asyncRunCallback
+dart:isolate-patch/isolate_patch.dart 96                _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 143               _RawReceivePortImpl._handleMessage
+
+dart:core                                               Object.noSuchMethod
+package:smoke/codegen/generator.dart 158:43             SmokeCodeGenerator.writeTopLevelDeclarations
+package:polymer/src/build/script_compactor.dart 473:40  _emitFiles
+dart:isolate                                            _RawReceivePortImpl._handleMessage
+[Info from Dart2JS]:
+Compiling akepot|web/main.dart...
+[Info from Dart2JS]:
+Took 0:00:17.687954 to compile akepot|web/main.dart.
+Built 1026 files to "build".

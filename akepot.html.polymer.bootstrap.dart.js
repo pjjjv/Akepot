@@ -2370,7 +2370,7 @@ Y1:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.d,b))
 y=J.rk(this.f)
 x="projects/"+H.d(this.b)+"/categories/"+H.d(this.a)+"/subCategoryIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gK3",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gK3",2,0,6,111],
 yY:function(a){var z,y,x
 this.f=F.Wi(this,C.D7,this.f,a)
 z=J.YE(a)
@@ -2572,30 +2572,30 @@ z.q(0,"notSetYet",this.c)
 y=this.e
 if(y!=null)z.q(0,"competenceTemplateId",y)
 return z},
-static:{fU:function(a,b,c,d){var z,y,x
+static:{fU:function(a,b,c,d){var z,y,x,w
 if(c==null)throw H.b(P.FM("personId null."))
-z=F.nK(a,b,c,d)
-y=R.tB(z)
-z=J.rk(d)
-x="projects/"+H.d(b)+"/persons/"+H.d(c)+"/competences"
-x=z.Q.V7("child",[x]).V7("orderByChild",["competenceTemplateId"])
-new V.cf(x.V7("equalTo",[a]).V7("limitToFirst",[1]),null,null,null,null,null).ni("value").Z(new F.ZH(b,c,d,y))
-return y},nK:function(a,b,c,d){var z,y,x
-if(c==null)throw H.b(P.FM("personId null."))
+if(b==null)throw H.b(P.FM("projectHash null."))
 z=new F.DD(null,null,null,!0,0,null,"","",null,null,null)
-z.r=F.Wi(z,C.aK,"","Unknown Competence")
-z.f=F.Wi(z,C.LS,z.f,"-")
-y=R.tB(z)
+if(z.gnz(z)&&!0){y=new T.LR(z,C.aK,"","Unknown Competence")
+y.$builtinTypeInfo=[null]
+z.SZ(z,y)}z.r="Unknown Competence"
+y=z.f
+if(z.gnz(z)&&!J.M5(y,"-")){y=new T.LR(z,C.LS,y,"-")
+y.$builtinTypeInfo=[null]
+z.SZ(z,y)}z.f="-"
+x=R.tB(z)
+J.uj(x,b)
+x.sSl(c)
+x.sIJ(a)
+w="emptyDefaultCompetence: "+P.Gy(x.Lt())
+z=$.oK
+if(z==null)H.qw(w)
+else z.$1(w)
 z=J.rk(d)
-x="projects/"+H.d(b)+"/persons/"+H.d(c)+"/competences"
-x=z.Q.V7("child",[x]).V7("push",V.NT([null]))
-z=J.YE(y)
-z.sjO(y,x.nQ("key"))
-z.spx(y,b)
-y.sSl(c)
-y.sIJ(a)
-new V.vD(null,null,x,null,null,null,null,null).eK(y.Lt()).Z(new F.wu(d,y))
-return y}}},
+y="projects/"+H.d(b)+"/persons/"+H.d(c)+"/competences"
+y=z.Q.V7("child",[y]).V7("orderByChild",["competenceTemplateId"])
+new V.cf(y.V7("equalTo",[a]).V7("limitToFirst",[1]),null,null,null,null,null).ni("value").Z(new F.ZH(b,c,d,x))
+return x}}},
 Ip:{
 "^":"r:0;Q",
 $0:function(){return this.Q.c}},
@@ -2604,19 +2604,21 @@ NS:{
 $0:function(){return this.Q.d}},
 ZH:{
 "^":"r:2;Q,a,b,c",
-$1:[function(a){var z,y,x,w,v,u,t
+$1:[function(a){var z,y,x,w,v
 z=a.mw()
-if(z==null||J.tx(J.N9(z))===!0);else{y=J.YE(z)
-x=y.p(z,J.bP(y.gvc(z)))
-y=this.c
-w=J.eS(y)
-y.DV(x)
-if(y!=null){v=this.b
-u=J.rk(v)
-t="projects/"+H.d(this.Q)+"/persons/"+H.d(this.a)+"/competences/"+H.d(w)
-new V.vD(null,null,u.Q.V7("child",[t]),null,null,null,null,null).wg(0)
-y.JE(v)}}},null,null,2,0,null,112,"call"]},
-wu:{
+y=z==null||J.tx(J.N9(z))===!0
+x=this.c
+if(y){y=this.b
+w=J.rk(y)
+v="projects/"+H.d(this.Q)+"/persons/"+H.d(this.a)+"/competences"
+v=w.Q.V7("child",[v]).V7("push",V.NT([null]))
+J.to(x,v.nQ("key"))
+new V.vD(null,null,v,null,null,null,null,null).eK(x.Lt()).Z(new F.wh(y,x))
+P.mp("Competence pushed new: "+P.Gy(x.Lt()))}else{y=J.YE(z)
+x.DV(y.p(z,J.bP(y.gvc(z))))
+P.mp("Competence taken over: "+P.Gy(x.Lt()))
+if(x!=null)x.JE(this.b)}},null,null,2,0,null,112,"call"]},
+wh:{
 "^":"r:2;Q,a",
 $1:[function(a){if(a!=null);else this.a.JE(this.Q)},null,null,2,0,null,113,"call"]},
 D4:{
@@ -3085,7 +3087,7 @@ V2:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.c,b))
 y=J.rk(this.ch)
 x="projects/"+H.d(this.a)+"/categoryIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gmu",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gmu",2,0,6,111],
 HM:[function(a){var z,y,x
 z=F.fE(this.a,this.ch)
 y=J.rk(this.ch)
@@ -3099,7 +3101,7 @@ ae:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.e,b))
 y=J.rk(this.ch)
 x="projects/"+H.d(this.a)+"/teamIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gEw",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gEw",2,0,6,111],
 fM:function(a){var z,y
 z=J.rk(this.ch)
 y="projects/"+H.d(this.a)+"/adminIds"
@@ -3119,7 +3121,7 @@ nw:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.r,b))
 y=J.rk(this.ch)
 x="projects/"+H.d(this.a)+"/roleIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gbz",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gbz",2,0,6,111],
 R9:function(a){var z,y,x
 this.ch=F.Wi(this,C.D7,this.ch,a)
 z=J.YE(a)
@@ -3510,7 +3512,7 @@ qI:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.d,b))
 y=J.rk(this.r)
 x="projects/"+H.d(this.b)+"/subCategories/"+H.d(this.a)+"/competenceTemplateIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gma",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gma",2,0,6,111],
 Oi:function(a){var z,y,x
 this.r=F.Wi(this,C.D7,this.r,a)
 z=J.YE(a)
@@ -3672,7 +3674,7 @@ Ev:[function(a,b){var z,y,x
 z=J.eS(J.Tf(this.d,b))
 y=J.rk(this.f)
 x="projects/"+H.d(this.b)+"/teams/"+H.d(this.a)+"/personIds/"+H.d(z)
-new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).wg(0)},"$1","gpy",2,0,6,111],
+new V.vD(null,null,y.Q.V7("child",[x]),null,null,null,null,null).zB(0)},"$1","gpy",2,0,6,111],
 Mw:function(a){var z,y,x
 this.f=F.Wi(this,C.D7,this.f,a)
 z=J.YE(a)
@@ -4023,7 +4025,7 @@ e48:{
 $1:[function(a){return J.oq(a)},null,null,2,0,null,124,"call"]},
 e49:{
 "^":"r:2;",
-$1:[function(a){return J.wp(a)},null,null,2,0,null,124,"call"]},
+$1:[function(a){return J.Kl(a)},null,null,2,0,null,124,"call"]},
 e50:{
 "^":"r:2;",
 $1:[function(a){return J.MT(a)},null,null,2,0,null,124,"call"]},
@@ -4651,7 +4653,7 @@ else return!1
 return H.Vq("$pattern",!1,!0,!1).test(H.Yx(b))},
 Ek:{
 "^":"ir;V3:kX%,FW:RZ%,P7:ij%,ot:TQ%,Hu:ca%,vf:Jc%,hW:cw%,bU:bN%,mT,Jr,IL,TO,S8,ZG,cy$,db$,Q$,a$,b$,c$,d$,e$,f$,r$,x$,y$,z$,ch$,cx$",
-z3:function(a){this.Gs(a)
+z3:function(a){this.wg(a)
 if(!J.M5(a.kX,"manual"))this.eQ(a)},
 I9:function(a){a.ZG=this.gKM(a).Q.p(0,"ajax")},
 eQ:function(a){var z,y,x,w
@@ -5319,7 +5321,7 @@ U2:{
 TU:{
 "^":"m6;dx$",
 static:{ALs:function(a){a.toString
-C.wh.LX(a)
+C.D2.LX(a)
 return a}}},
 C15:{
 "^":"qE+iH2;"},
@@ -9933,7 +9935,7 @@ bG:function(a,b){var z,y,x
 z=this.Q
 if(b){z=J.ne(z)
 y=z.ev(z,new W.Tb(a))}else{z=J.ne(z)
-y=z.ev(z,a)}for(z=H.J(new H.kF(J.Nx(y.Q),y.a),[H.Kp(y,0)]),x=z.Q;z.D();)J.Mp(x.gk())},
+y=z.ev(z,a)}for(z=H.J(new H.kF(J.Nx(y.Q),y.a),[H.Kp(y,0)]),x=z.Q;z.D();)J.wp(x.gk())},
 YW:function(a,b,c,d,e){throw H.b(P.SY(null))},
 vg:function(a,b,c,d){return this.YW(a,b,c,d,0)},
 Rz:function(a,b){var z
@@ -10024,7 +10026,7 @@ $.xo.body.appendChild(w)}if("createContextualFragment" in window.Range.prototype
 v=$.Ho.createContextualFragment(b)}else{w.innerHTML=b
 v=$.xo.createDocumentFragment()
 for(;z=w.firstChild,z!=null;)v.appendChild(z)}z=$.xo.body
-if(w==null?z!=null:w!==z)J.Mp(w)
+if(w==null?z!=null:w!==z)J.wp(w)
 c.Jt(v)
 document.adoptNode(v)
 return v},function(a,b,c){return this.r6(a,b,c,null)},"AH",null,null,"gkf",2,5,null,136,136],
@@ -10320,7 +10322,7 @@ $ascX:function(){return[W.KV]}},
 KV:{
 "^":"D0;q6:firstChild=,uD:nextSibling=,M0:ownerDocument=,eT:parentElement=,KV:parentNode=,a4:textContent%",
 gyT:function(a){return new W.OB(a)},
-wg:function(a){var z=a.parentNode
+zB:function(a){var z=a.parentNode
 if(z!=null)z.removeChild(a)},
 Tk:function(a,b){var z,y
 try{z=a.parentNode
@@ -10609,7 +10611,7 @@ sN:function(a,b){a.width=b},
 gx:function(a){return a.x},
 gy:function(a){return a.y},
 "%":"DOMRect"},
-NfA:{
+nK:{
 "^":"qE;",
 $isD0:1,
 $isGv:1,
@@ -10930,13 +10932,13 @@ y=z.gQg(a)
 if(!this.Q.i0(a)){window
 x="Removing disallowed element <"+H.d(z.gns(a))+">"
 if(typeof console!="undefined")console.warn(x)
-z.wg(a)
+z.zB(a)
 break}x=y.Q
 w=x.getAttribute("is")
 if(w!=null)if(!this.Q.Eb(a,"is",w)){window
 x="Removing disallowed type extension <"+H.d(z.gns(a))+" is=\""+w+"\">"
 if(typeof console!="undefined")console.warn(x)
-z.wg(a)
+z.zB(a)
 break}v=C.Nm.br(y.gvc(y))
 for(u=y.gvc(y).length-1;u>=0;--u){if(u>=v.length)return H.e(v,u)
 t=v[u]
@@ -10947,7 +10949,7 @@ x.getAttribute(t)
 x.removeAttribute(t)}}if(!!z.$isyY)this.Jt(a.content)
 break
 case 8:case 11:case 3:case 4:break
-default:J.Mp(a)}}},
+default:J.wp(a)}}},
 fm:{
 "^":"r:42;Q",
 $1:function(a){var z,y
@@ -11801,7 +11803,7 @@ return z.Q},
 eC:function(a,b){var z=H.J(new P.Zf(H.J(new P.vs(0,$.X3,null),[null])),[null])
 this.Q.V7("update",[T.SP(b),new V.eA(this,z)])
 return z.Q},
-wg:function(a){var z=H.J(new P.Zf(H.J(new P.vs(0,$.X3,null),[null])),[null])
+zB:function(a){var z=H.J(new P.Zf(H.J(new P.vs(0,$.X3,null),[null])),[null])
 this.Q.V7("remove",[new V.aZ(this,z)])
 return z.Q},
 ci:function(a,b,c){if(b!=null)a.pm(b)
@@ -12085,7 +12087,7 @@ if(!J.t(b).$iscv)return!1
 for(z=0;z<this.gd3().length;++z){y=this.gd3()
 if(z>=y.length)return H.e(y,z)
 x=y[z]
-if(x===b){J.Mp(x)
+if(x===b){J.wp(x)
 return!0}}return!1},
 gv:function(a){return this.gd3().length},
 p:function(a,b){var z=this.gd3()
@@ -12098,7 +12100,7 @@ hT:{
 $1:function(a){return!!J.t(a).$iscv}},
 tg:{
 "^":"r:2;",
-$1:function(a){return J.Mp(a)}}}],["","",,B,{
+$1:function(a){return J.wp(a)}}}],["","",,B,{
 "^":"",
 rK:function(a){var z,y,x
 if(a.a===a.b){z=H.J(new P.vs(0,$.X3,null),[null])
@@ -14101,10 +14103,10 @@ J.MX(this.Q).aN(0,new A.CKk(this))},
 W3:function(a){J.MX(this.Q).aN(0,new A.Pf(a))},
 fk:function(){var z=this.Bg("link[rel=stylesheet]")
 this.z=z
-for(z=H.J(new J.m1(z,z.length,0,null),[H.Kp(z,0)]);z.D();)J.Mp(z.c)},
+for(z=H.J(new J.m1(z,z.length,0,null),[H.Kp(z,0)]);z.D();)J.wp(z.c)},
 f6:function(){var z=this.Bg("style[polymer-scope]")
 this.ch=z
-for(z=H.J(new J.m1(z,z.length,0,null),[H.Kp(z,0)]);z.D();)J.Mp(z.c)},
+for(z=H.J(new J.m1(z,z.length,0,null),[H.Kp(z,0)]);z.D();)J.wp(z.c)},
 OL:function(){var z,y,x,w,v,u,t
 z=this.z
 z.toString
@@ -14327,7 +14329,7 @@ this.gQg(a).Rz(0,"unresolved")
 $.q3().To(new A.yG(a))
 this.I9(a)},
 I9:function(a){},
-z3:["Gs",function(a){}],
+z3:["wg",function(a){}],
 ig:function(a){if(a.Q$==null)throw H.b(P.s("polymerCreated was not called for custom element "+H.d(this.gRT(a))+", this should normally be done in the .created() if Polymer is used as a mixin."))
 this.oW(a)
 if(!a.x$){a.x$=!0
@@ -17185,7 +17187,7 @@ w.gKV(x).insertBefore(t,x)
 t.toString
 new W.i7(t).FV(0,w.gQg(x))
 w.gQg(x).V1(0)
-w.wg(x)
+w.zB(x)
 v=!!J.t(t).$isvy?t:M.Ky(t)
 v.sCS(!0)
 z=!!J.t(v.gKB()).$isyY}else{v=this
@@ -17707,6 +17709,7 @@ J.KD=function(a){return J.YE(a).gcp(a)}
 J.KJ=function(a){return J.YE(a).grB(a)}
 J.Kf=function(a,b){return J.YE(a).WO(a,b)}
 J.Kh=function(a){return J.YE(a).gEP(a)}
+J.Kl=function(a){return J.YE(a).gkW(a)}
 J.Kv=function(a,b){return J.YE(a).jx(a,b)}
 J.Kz=function(a){return J.YE(a).gph(a)}
 J.M5=function(a,b){if(a==null)return b==null
@@ -17720,7 +17723,6 @@ J.MT=function(a){return J.YE(a).guc(a)}
 J.MX=function(a){return J.YE(a).gQg(a)}
 J.Mb=function(a){return J.YE(a).guv(a)}
 J.Mo=function(a,b){return J.YE(a).smC(a,b)}
-J.Mp=function(a){return J.w1(a).wg(a)}
 J.Mv=function(a){return J.YE(a).gwm(a)}
 J.Mz=function(a){return J.wg(a).hc(a)}
 J.N2=function(a){return J.YE(a).jY(a)}
@@ -17985,7 +17987,7 @@ J.wT=function(a,b){return J.w1(a).h(a,b)}
 J.wl=function(a,b){return J.YE(a).Ch(a,b)}
 J.wls=function(a){return J.YE(a).gcM(a)}
 J.wm=function(a){return J.YE(a).gZC(a)}
-J.wp=function(a){return J.YE(a).gkW(a)}
+J.wp=function(a){return J.w1(a).zB(a)}
 J.wq=function(a){return J.YE(a).gK3(a)}
 J.x4=function(a,b){if(typeof a=="number"&&typeof b=="number")return a/b
 return J.vd(a).S(a,b)}
@@ -18039,7 +18041,7 @@ C.RJ=D.na.prototype
 C.Hy=D.qG.prototype
 C.rE=O.Fq.prototype
 C.Zn=S.T4.prototype
-C.wh=D.TU.prototype
+C.D2=D.TU.prototype
 C.CT=U.N5.prototype
 C.BR=X.wH.prototype
 C.Zs=T.Cr.prototype

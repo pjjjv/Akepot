@@ -45,15 +45,19 @@ class Category extends Observable {
     _name = "New Category";
   }
 
-  factory Category.retrieve(String id, String projectHash, CompetencesService service) {
+  factory Category.retrieve(String id, String projectHash, CompetencesService service, [bool onlyName = false]) {
     Category category = toObservable(new Category.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/categories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
       category.fromJson(val);
 
       if(category != null) {
-        category._listen(service);
+        category._listen(service, onlyName);
       } else {
+        if (onlyName) {
+          category = toObservable(new Category.newId(id, projectHash));
+          return;
+        }
         //New category
         category = toObservable(new Category.newRemote(projectHash, service));
       }
@@ -88,40 +92,43 @@ class Category extends Observable {
     service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds/$subCategoryId").remove();
   }
 
-  _listen(CompetencesService service){
+  _listen(CompetencesService service, [bool onlyName = false]){
     this.service = service;
     service.dbRef.child("projects/$projectHash/categories/$id/name").onValue.listen((e) {
       _name = notifyPropertyChange(const Symbol('name'), this._name, e.snapshot.val());
     });
-    service.dbRef.child("projects/$projectHash/categories/$id/description").onValue.listen((e) {
-      _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
-    });
 
-    subCategoryIds.changes.listen((records) {
-      for (ChangeRecord record in records) {
-        //We don't need to do anything with PropertyChangeRecords.
-        if (record is MapChangeRecord) {
-          //Something added
-          if (record.isInsert) {
-            SubCategory subCategory = new SubCategory.retrieve(record.key, projectHash, service);
-            subcategories.add(subCategory);//TODO
-          }
+    if (!onlyName){
+      service.dbRef.child("projects/$projectHash/categories/$id/description").onValue.listen((e) {
+        _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
+      });
 
-          //Something removed
-          if (record.isRemove) {
-            subcategories.removeWhere((subCategory) => subCategory.id == record.key);
+      subCategoryIds.changes.listen((records) {
+        for (ChangeRecord record in records) {
+          //We don't need to do anything with PropertyChangeRecords.
+          if (record is MapChangeRecord) {
+            //Something added
+            if (record.isInsert) {
+              SubCategory subCategory = new SubCategory.retrieve(record.key, projectHash, service);
+              subcategories.add(subCategory);//TODO
+            }
+
+            //Something removed
+            if (record.isRemove) {
+              subcategories.removeWhere((subCategory) => subCategory.id == record.key);
+            }
           }
         }
-      }
-    });
+      });
 
-    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildAdded.listen((e) {
-      subCategoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
-    });
+      service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildAdded.listen((e) {
+        subCategoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+      });
 
-    service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildRemoved.listen((e) {
-      subCategoryIds.remove(e.snapshot.key);
-    });
+      service.dbRef.child("projects/$projectHash/categories/$id/subCategoryIds").onChildRemoved.listen((e) {
+        subCategoryIds.remove(e.snapshot.key);
+      });
+    }
   }
 
   _changeProperty(String child, var value){

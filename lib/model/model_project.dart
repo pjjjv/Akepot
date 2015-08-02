@@ -271,6 +271,60 @@ class Project extends Observable {
     return null;
   }
 
+  static String getName(String hash, CompetencesService service, dynamic callback(String name)) {
+    service.dbRef.child("projects/$hash/name").onValue.listen((e) {
+      if (e.snapshot.val() != null && e.snapshot.val() != ""){
+        callback(e.snapshot.val());
+      } else {
+        callback(hash);
+      }
+    });
+    return hash;
+  }
+
+  static void getCategoryNames(String hash, CompetencesService service, dynamic callback(List<Category> categories)) {
+    Project project = toObservable(new Project.newHash(hash));
+    service.dbRef.child("projects/$hash").once("value").then((snapshot) {
+      Map val = snapshot.val();
+      if(val == null){
+        return;
+      }
+      project.fromJson(val);
+
+      if(project != null) {
+        project.categoryIds.changes.listen((records) {
+          for (ChangeRecord record in records) {
+            //We don't need to do anything with PropertyChangeRecords.
+            if (record is MapChangeRecord) {
+              //Something added
+              if (record.isInsert) {
+                Category category = new Category.retrieve(record.key, hash, service, true);
+                project.categories.add(category);//TODO
+              }
+
+              //Something removed
+              if (record.isRemove) {
+                project. categories.removeWhere((category) => category.id == record.key);
+              }
+            }
+          }
+        });
+
+        service.dbRef.child("projects/$hash/categoryIds").onChildAdded.listen((e) {
+          project.categoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+        });
+
+        service.dbRef.child("projects/$hash/categoryIds").onChildRemoved.listen((e) {
+          project.categoryIds.remove(e.snapshot.key);
+        });
+
+        callback(project.categories);
+      } else {
+        callback([]);
+      }
+    });
+  }
+
   fromJson(Map _json, [bool noHash = false]) {//TODO: use JsonObject: https://www.dartlang.org/articles/json-web-service/#introducing-jsonobject, or even better Dartson (see test-arrays-binding Firebase branch), when they work with polymer
     if (!_json.containsKey("hash") && noHash == false) {
       throw new Exception("No hash.");

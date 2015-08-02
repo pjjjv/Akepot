@@ -30,6 +30,7 @@
 <link rel="import" href="../../../packages/akepot/dropdown_menu.html">
 <link rel="import" href="../../../packages/akepot/refresh_spinner.html">
 <link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/akepot/menu/title_page.html">
 
 <polymer-element name="scaffold-layout" attributes="selected menu projectHash">
   <template>
@@ -56,6 +57,7 @@
         </core-menu>
       </core-header-panel>
 
+      <title-page hidden="true" tool projectHash="{{projectHash}}"></title-page><!-- bug: if this is not "preloaded" here than the title-page in e.g. page-category will not initPolymer (load; call domReady). -->
       <div id="title" tool flex>
         <content select=".title"></content>
       </div>

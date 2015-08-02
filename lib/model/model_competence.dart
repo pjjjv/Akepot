@@ -86,24 +86,53 @@ class Competence extends Observable {
     if(personId == null){
       throw new Exception("personId null.");
     }
+    if(projectHash == null){
+      throw new Exception("projectHash null.");
+    }
 
-    Competence competence = toObservable(new Competence.fromTemplate(competenceTemplateId, projectHash, personId, service));
+
+    Competence competence = toObservable(new Competence.emptyDefault());
+    competence.projectHash = projectHash;
+    competence.uid = personId;
+    competence.competenceTemplateId = competenceTemplateId;
+
+    print("emptyDefaultCompetence: "+competence.toJson().toString());
+
     service.dbRef.child("projects/$projectHash/persons/$personId/competences").orderByChild("competenceTemplateId").equalTo(competenceTemplateId).limitToFirst(1).once("value").then((snapshot) {
       Map val = snapshot.val();
       if(val == null || val.keys.isEmpty) {
         //New competence copied from template
+        Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
+        competence.id = pushRef.key;
+        competence.projectHash = projectHash;
+        competence.uid = personId;
+        competence.competenceTemplateId = competenceTemplateId;
+        pushRef.set(competence.toJson()).then((error) {
+          if(error != null) {
+            //
+          } else {
+            competence._listen(service);
+          }
+        });
+        print("Competence pushed new: "+competence.toJson().toString());
       } else {
         Map deeper = val[val.keys.first];
-        String oldId = competence.id;
         competence.fromJson(deeper);
+        print("Competence taken over: "+competence.toJson().toString());
 
         if(competence != null) {
-          //Remove the temporary created (and registered one)
-          service.dbRef.child("projects/$projectHash/persons/$personId/competences/$oldId").remove();
-
           competence._listen(service);
         } else {
           //New competence copied from template
+          /*Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
+          competence.id = pushRef.key;
+          pushRef.set(competence.toJson()).then((error) {
+            if(error != null) {
+              //
+            } else {
+              competence._listen(service);
+            }
+          });*/
         }
       }
     });

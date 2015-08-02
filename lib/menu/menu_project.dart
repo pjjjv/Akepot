@@ -9,7 +9,7 @@ import 'package:akepot/model/model_project.dart';
 class MenuProject extends PolymerElement {
   MenuProject.created() : super.created();
 
-  @published List<Category> categories;
+  @published List<Category> categories = [];
   @published String selectedSection;
   @published String projectHash;
   @observable CompetencesService service;
@@ -20,8 +20,9 @@ class MenuProject extends PolymerElement {
   }
 
   void signedIn(Event e, var detail, HtmlElement target){
-    Project project = new Project.retrieve(projectHash, service);//TODO: must not retrieve project twice in parallel, because will create Competence for a user twice.
-    categories = project.categories;
+    Project.getCategoryNames(projectHash, service, (categories) {
+      this.categories = categories;
+    });
   }
 
   encodeUriComponent(String str) => Uri.encodeComponent(str);

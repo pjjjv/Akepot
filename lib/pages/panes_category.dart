@@ -16,7 +16,7 @@ class PanesCategory extends PolymerElement {
 
   PanesCategory.created() : super.created();
 
-  domReady(){
+  void domReady(){
     service = document.querySelector("#service");
     if(service.signedIn) signedIn(null, null, null);
   }

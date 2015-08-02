@@ -3,12 +3,14 @@
 <link rel="import" href="../../../packages/core_elements/core_selector.html">
 <link rel="import" href="../../../packages/paper_elements/paper_item.html">
 <link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
+<link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
 
 <polymer-element name="menu-admin" attributes="selectedSection projectHash">
   <template>
     <link href="menu_admin.css" rel="stylesheet">
 
-    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name"><!-- on-core-activate="{{navigate}}"  -->
+    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" excludedLocalNames="div"><!-- on-core-activate="{{navigate}}"  -->
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
@@ -19,10 +21,23 @@
       <paper-item noink id="menu_item_output" name="output" tabindex="0">
         <a _href="#/admin/{{projectHash}}/output"><core-icon icon="file-download"></core-icon><span flex>Output</span></a>
       </paper-item>-->
+      <div><paper-item noink hidden id="menu_button_create" name="create" tabindex="0" class="special">
+        <core-icon icon="create" aria-label="create" role="img"></core-icon><span flex>Done + Publish</span>
+      </paper-item></div>
       <paper-item noink id="menu_item_edit" name="edit" tabindex="0">
         <a _href="#/admin/{{projectHash}}/edit"><core-icon icon="file-upload"></core-icon><span flex>Edit</span></a>
       </paper-item>
     </core-selector>
+
+    <paper-action-dialog id="created-dialog" heading="Project published"
+      transition="paper-transition-center" backdrop="true">
+      <p>Write down the following link:<br>
+         {{newlink}}<br></p>
+      <p>This is the permalink to your project. Share it with your project members!</p>
+      <p>Would you like to navigate to it now?</p>
+      <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+      <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
+    </paper-action-dialog>
   </template>
 
   <script type="application/dart" src="menu_admin.dart"></script>

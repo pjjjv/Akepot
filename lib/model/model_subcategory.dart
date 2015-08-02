@@ -2,8 +2,6 @@ library akepot.model.model_subcategory;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_competence.dart';
-import 'package:akepot/model/model_project.dart';
-import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
@@ -112,7 +110,7 @@ class SubCategory extends Observable {
             competenceTemplates.add(competenceTemplate);//TODO
 
             //Person's competence
-            competences.add(new Competence.retrieveMatch(competenceTemplate.id, projectHash, service.user.uid, service));
+            competences.add(new Competence.retrieveMatch(projectHash, service.user.uid, competenceTemplate.id, service));
           }
 
           //Something removed

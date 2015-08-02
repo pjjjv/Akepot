@@ -2,8 +2,6 @@ library akepot.model.model_person;
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_role.dart';
-import 'package:akepot/model/model_competence.dart';
-import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';

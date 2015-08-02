@@ -8,7 +8,7 @@ import 'package:firebase/firebase.dart';
 class Competence extends Observable {
 
   /** Not documented yet. */
-  @observable String id;
+  @observable String tid;
 
   /** Person id */
   @observable String uid;
@@ -26,7 +26,7 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    _changeProperty("projects/$projectHash/persons/$uid/competences/$id", new Map()..putIfAbsent("notSetYet", () => notSetYet));
+    _changeProperty("projects/$projectHash/persons/$uid/competences/$tid", new Map()..putIfAbsent("notSetYet", () => notSetYet));
   }
 
   /** Not documented yet. */
@@ -39,11 +39,8 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    _changeProperty("projects/$projectHash/persons/$uid/competences/$id", new Map()..putIfAbsent("rating", () => rating));
+    _changeProperty("projects/$projectHash/persons/$uid/competences/$tid", new Map()..putIfAbsent("rating", () => rating));
   }
-
-  /** Not documented yet. */
-  @observable String competenceTemplateId;
 
   /** Not documented yet. */
   @observable String description = "";
@@ -53,36 +50,16 @@ class Competence extends Observable {
 
   @observable CompetencesService service;
 
-  Competence.full(this.id, String this.projectHash, this.uid, this._notSetYet, this._rating, this.competenceTemplateId);
+  Competence.full(String this.projectHash, this.uid, this.tid, this._notSetYet, this._rating);
 
-  Competence.newId(this.id, String this.projectHash, this.uid);
+  Competence.newId(String this.projectHash, this.uid, this.tid);
 
   Competence.emptyDefault(){
     label = "Unknown Competence";
     description = "-";
   }
 
-  factory Competence.retrieve(String id, String projectHash, String personId, CompetencesService service) {
-    if(personId == null){
-      throw new Exception("personId null.");
-    }
-
-    Competence competence = toObservable(new Competence.newId(id, projectHash, personId));
-    service.dbRef.child("projects/$projectHash/persons/$personId/competences/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
-      competence.fromJson(val);
-
-      if(competence != null) {
-        competence._listen(service);
-      } else {
-        //New competence
-        competence = toObservable(new Competence.newRemote(projectHash, personId, service));
-      }
-    });
-    return competence;
-  }
-
-  factory Competence.retrieveMatch(String competenceTemplateId, String projectHash, String personId, CompetencesService service){
+  factory Competence.retrieveMatch(String projectHash, String personId, String competenceTemplateId, CompetencesService service) {
     if(personId == null){
       throw new Exception("personId null.");
     }
@@ -90,87 +67,36 @@ class Competence extends Observable {
       throw new Exception("projectHash null.");
     }
 
+    Competence competence = toObservable(new Competence.newId(projectHash, personId, competenceTemplateId));
+    print("newIdCompetence: "+competence.toJson().toString());
 
-    Competence competence = toObservable(new Competence.emptyDefault());
-    competence.projectHash = projectHash;
-    competence.uid = personId;
-    competence.competenceTemplateId = competenceTemplateId;
-
-    print("emptyDefaultCompetence: "+competence.toJson().toString());
-
-    service.dbRef.child("projects/$projectHash/persons/$personId/competences").orderByChild("competenceTemplateId").equalTo(competenceTemplateId).limitToFirst(1).once("value").then((snapshot) {
+    service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId").once("value").then((snapshot) {
       Map val = snapshot.val();
-      if(val == null || val.keys.isEmpty) {
-        //New competence copied from template
-        Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
-        competence.id = pushRef.key;
-        competence.projectHash = projectHash;
-        competence.uid = personId;
-        competence.competenceTemplateId = competenceTemplateId;
-        pushRef.set(competence.toJson()).then((error) {
-          if(error != null) {
-            //
-          } else {
-            competence._listen(service);
-          }
-        });
-        print("Competence pushed new: "+competence.toJson().toString());
-      } else {
-        Map deeper = val[val.keys.first];
-        competence.fromJson(deeper);
+
+      if(val != null) {
+        competence.fromJson(val);
         print("Competence taken over: "+competence.toJson().toString());
-
-        if(competence != null) {
-          competence._listen(service);
-        } else {
-          //New competence copied from template
-          /*Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
-          competence.id = pushRef.key;
-          pushRef.set(competence.toJson()).then((error) {
-            if(error != null) {
-              //
-            } else {
-              competence._listen(service);
-            }
-          });*/
-        }
-      }
-    });
-    return competence;
-  }
-
-  factory Competence.newRemote(String projectHash, String personId, CompetencesService service) {
-    if(personId == null){
-      throw new Exception("personId null.");
-    }
-
-    Competence competence = toObservable(new Competence.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
-    competence.id = pushRef.key;
-    competence.projectHash = projectHash;
-    competence.uid = personId;
-    pushRef.set(competence.toJson()).then((error) {
-      if(error != null) {
-        //
-      } else {
         competence._listen(service);
+      } else {
+        //New competence copied from template
+        competence = toObservable(new Competence.newRemoteFromTemplate(projectHash, personId, competenceTemplateId, service));
+        print("Competence updated new: "+competence.toJson().toString());
       }
     });
     return competence;
   }
 
-  factory Competence.fromTemplate(String competenceTemplateId, String projectHash, String personId, CompetencesService service) {
+  factory Competence.newRemoteFromTemplate(String projectHash, String personId, String competenceTemplateId, CompetencesService service) {
     if(personId == null){
       throw new Exception("personId null.");
     }
 
     Competence competence = toObservable(new Competence.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/persons/$personId/competences").push();
-    competence.id = pushRef.key;
+    Firebase ref = service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId");
     competence.projectHash = projectHash;
     competence.uid = personId;
-    competence.competenceTemplateId = competenceTemplateId;
-    pushRef.set(competence.toJson()).then((error) {
+    competence.tid = competenceTemplateId;
+    ref.update(competence.toJson()).then((error) {
       if(error != null) {
         //
       } else {
@@ -189,19 +115,19 @@ class Competence extends Observable {
       throw new Exception("uid null.");
     }
 
-    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$id/notSetYet").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$tid/notSetYet").onValue.listen((e) {
       _notSetYet = notifyPropertyChange(const Symbol('notSetYet'), this._notSetYet, e.snapshot.val());
     });
-    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$id/rating").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$uid/competences/$tid/rating").onValue.listen((e) {
       _rating = notifyPropertyChange(const Symbol('rating'), this._rating, e.snapshot.val());
     });
 
-    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/label").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$tid/label").onValue.listen((e) {
       String value = e.snapshot.val();
       if (value == null) value = "Unknown competence";
       label = value;
     });
-    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$tid/description").onValue.listen((e) {
       String value = e.snapshot.val();
       if (value == null) value = "-";
       description = value;
@@ -215,8 +141,8 @@ class Competence extends Observable {
   }
 
   fromJson(Map _json, [bool noId = false]) {
-    if (!_json.containsKey("id") && noId == false) {
-      throw new Exception("No id.");
+    if (!_json.containsKey("tid") && noId == false) {
+      throw new Exception("No tid.");
     }
     if (!_json.containsKey("uid") && noId == false) {
       throw new Exception("No uid.");
@@ -224,13 +150,9 @@ class Competence extends Observable {
     if (!_json.containsKey("projectHash") && noId == false) {
       throw new Exception("No projectHash.");
     }
-    id = _json["id"]==null ? null : _json["id"];
+    tid = _json["tid"]==null ? null : _json["tid"];
     projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     uid = _json["uid"]==null ? null : _json["uid"];
-    if (!_json.containsKey("competenceTemplateId")) {
-      throw new Exception("No competenceTemplateId.");
-    }
-    competenceTemplateId = _json["competenceTemplateId"];
     if (_json.containsKey("rating")) {
       rating = _json["rating"];
     } else {
@@ -245,8 +167,8 @@ class Competence extends Observable {
 
   Map toJson() {
     var _json = new Map();
-    if (id != null) {
-      _json["id"] = id;
+    if (tid != null) {
+      _json["tid"] = tid;
     }
     if (projectHash != null) {
       _json["projectHash"] = projectHash;
@@ -258,9 +180,6 @@ class Competence extends Observable {
       _json["rating"] = rating;
     }
     _json["notSetYet"] = notSetYet;
-    if (competenceTemplateId != null) {
-      _json["competenceTemplateId"] = competenceTemplateId;
-    }
     return _json;
   }
 

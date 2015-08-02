@@ -72,7 +72,7 @@ class LoginGoogle extends PolymerElement {
   }
 
   void signIn(html.Event e){
-    service.dbRef.authWithOAuthPopup("google", scope: scopes).then((authData) {
+    service.dbRef.authWithOAuthPopup("google", remember: "default", scope: scopes).then((authData) {
       print("Authenticated successfully with payload:" + authData.toString());
 
       // Trigger the loginsuccess event

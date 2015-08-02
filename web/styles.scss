@@ -54,6 +54,13 @@ html /deep/ paper-item.core-selected {
    color: $accent-color;
   }
 }
+html /deep/ paper-item.special {
+  background-color: $accent-color;
+  color: $white;
+  core-icon, a core-icon {
+   color: $white;
+  }
+}
 html /deep/ paper-item::shadow .button-content {
   height: inherit;
   padding: (1.5 * $component-grid) (2 * $component-grid);

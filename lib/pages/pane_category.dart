@@ -26,7 +26,7 @@ class PaneCategory extends PolymerElement {
 
   @reflectable
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
-    print(event.detail);
+    if (DEBUG) print(event.detail);
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette
@@ -34,7 +34,7 @@ class PaneCategory extends PolymerElement {
   @reflectable
   void ajaxColourSchemesResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
     var response = event.detail['response'];
-    print("ajaxColourSchemesResponse: "+JSON.encode(response).toString());
+    if (DEBUG) print("ajaxColourSchemesResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {
@@ -63,7 +63,7 @@ class PaneCategory extends PolymerElement {
   /*static const Duration TIMEOUT =  const Duration(milliseconds: 2000);
 
   void startupForColor () {
-    print(TIMEOUT);
+    if (DEBUG) print(TIMEOUT);
     new Timer(TIMEOUT, completeStartupForColor);
   }
 

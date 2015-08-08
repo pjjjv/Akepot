@@ -4,6 +4,8 @@ import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'dart:convert';
 import 'model/model_project.dart';
+import 'package:akepot/model/model_category.dart';
+import 'package:akepot/model/model_project.dart';
 import 'package:core_elements/core_ajax_dart.dart';
 import 'package:firebase/firebase.dart';
 
@@ -20,6 +22,8 @@ class CompetencesService extends PolymerElement {
   CoreAjax ajaxUserinfo;
   Map _headers;
   Firebase dbRef;
+  @observable List<Category> categories = [];//For names only
+  @observable Project project;
 
   CompetencesService.created() : super.created() {
     dbRef = new Firebase(SERVER);
@@ -36,7 +40,7 @@ class CompetencesService extends PolymerElement {
 
   @reflectable
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
-    print(event.detail);
+    if (DEBUG) print(event.detail);
   }
 //
 //  @reflectable
@@ -45,20 +49,20 @@ class CompetencesService extends PolymerElement {
 //    var response = event.detail['response'];
 //
 //    if (response == "404: Not Found"){
-//      print("API broken?"); //TODO
+//      if (DEBUG) print("API broken?"); //TODO
 //    }
 //    if ((response as String).startsWith("404: {")){//(response[404]['error']['code'] == 404 && response[404]['error']['message'] == "userPerson not found"){
 //      this.fire( "core-signal", detail: { "name": "getprojectresponsenewuser" } );
 //    }
 //    if ((response as String).startsWith("503: {")){//(response[503]['error']['code'] == 503){
-//      print("project does not exist?"); //TODO
+//      if (DEBUG) print("project does not exist?"); //TODO
 //    }
 //  }
 //
 //  @reflectable
 //  List<Category> ajaxGetProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxGetProjectResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxGetProjectResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -104,7 +108,7 @@ class CompetencesService extends PolymerElement {
 //  @reflectable
 //  void ajaxUpdateCompetenceResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxUpdateCompetenceResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxUpdateCompetenceResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -118,7 +122,7 @@ class CompetencesService extends PolymerElement {
   Map get headers             => _headers;
   set headers(Map headers) {
     _headers = headers;
-    print("headersss: $headers");
+    if (DEBUG) print("headers: $headers");
     ajaxUserinfo.headers = headers;
     //ajaxGetProject.headers = headers;
     //ajaxUpdateCompetence.headers = headers;
@@ -129,7 +133,7 @@ class CompetencesService extends PolymerElement {
 //  @reflectable
 //  void ajaxNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxNewPersonResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxNewPersonResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -145,7 +149,7 @@ class CompetencesService extends PolymerElement {
 //  @reflectable
 //  void ajaxFirstNewPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxFirstNewPersonResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxFirstNewPersonResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -168,7 +172,7 @@ class CompetencesService extends PolymerElement {
 //      ajaxGetProject.url = "data/get_project_response.json";
 //      //ajaxGetProject.url = "data/get_project_error_new_user_response.json"; //new user
 //    }
-//    print("url: ${ajaxGetProject.url}");
+//    if (DEBUG) print("url: ${ajaxGetProject.url}");
 //    ajaxGetProject.onCoreResponse.first.then(ajaxGetProjectResponse);
 //    ajaxGetProject.onCoreError.first.then(ajaxGetProjectError);
 //    ajaxGetProject.go();//TODO: can be disabled to exclude expensive rest queries
@@ -184,7 +188,7 @@ class CompetencesService extends PolymerElement {
 //      return;//don't PUT
 //    }
 //    ajaxUpdateCompetence.body = JSON.encode(competence.toJson());
-//    print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
+//    if (DEBUG) print("url: ${ajaxUpdateCompetence.url}, body: ${ajaxUpdateCompetence.body}");
 //    ajaxUpdateCompetence.onCoreResponse.first.then(ajaxUpdateCompetenceResponse);
 //    ajaxUpdateCompetence.go();
 //  }
@@ -200,7 +204,7 @@ class CompetencesService extends PolymerElement {
 //      ajaxNewProject.url = "data/new_project_response.json";
 //    }
 //    ajaxNewProject.body = JSON.encode(project.toJson());
-//    print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
+//    if (DEBUG) print("url: ${ajaxNewProject.url}, body: ${ajaxNewProject.body}");
 //    ajaxNewProject.onCoreResponse.first.then(ajaxNewProjectResponse);
 //    ajaxNewProject.go();
 //  }
@@ -224,7 +228,7 @@ class CompetencesService extends PolymerElement {
 //      ajaxNewPerson.url = "data/new_person_response.json";
 //    }
 //    ajaxNewPerson.body = JSON.encode(map);
-//    print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
+//    if (DEBUG) print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
 //    ajaxNewPerson.onCoreResponse.first.then(callback);
 //    ajaxNewPerson.go();
 //  }
@@ -248,7 +252,7 @@ class CompetencesService extends PolymerElement {
 //      ajaxNewPerson.url = "data/add_admin_person_response.json";
 //    }
 //    ajaxNewPerson.body = JSON.encode(map);
-//    print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
+//    if (DEBUG) print("url: ${ajaxNewPerson.url}, body: ${ajaxNewPerson.body}");
 //    ajaxNewPerson.onCoreResponse.first.then(ajaxAddAdminPersonResponse);
 //    ajaxNewPerson.go();
 //  }
@@ -256,7 +260,7 @@ class CompetencesService extends PolymerElement {
 //  @reflectable
 //  void ajaxNewProjectResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxNewProjectResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxNewProjectResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -275,7 +279,7 @@ class CompetencesService extends PolymerElement {
 //  @reflectable
 //  void ajaxAddAdminPersonResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
 //    var response = event.detail['response'];
-//    print("ajaxAddAdminPersonResponse: "+JSON.encode(response).toString());
+//    if (DEBUG) print("ajaxAddAdminPersonResponse: "+JSON.encode(response).toString());
 //
 //    try {
 //      if (response == null) {
@@ -293,7 +297,7 @@ class CompetencesService extends PolymerElement {
     if(response==null){
       throw new Exception("Not authorized and repsonse is null.");
     }
-    print("signinResult: $response");
+    if (DEBUG) print("signinResult: $response");
 
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer ${(response['google']['accessToken'] as String)}"};
@@ -301,7 +305,7 @@ class CompetencesService extends PolymerElement {
     user = new User();
     user.uid = response['uid'];
     if (user.uid == "" || user.uid == null) {
-      print("uid empty");
+      if (DEBUG) print("uid empty");
     }
 
     getUserinfo();
@@ -316,7 +320,7 @@ class CompetencesService extends PolymerElement {
 
   void parseUserinfoResponse(CustomEvent event, Map detail, CoreAjax node) {
     var response = event.detail['response'];
-    print("parseUserinfoResponse: "+JSON.encode(response).toString());
+    if (DEBUG) print("parseUserinfoResponse: "+JSON.encode(response).toString());
 
     try {
       if (response == null) {

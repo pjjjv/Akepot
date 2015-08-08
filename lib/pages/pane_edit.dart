@@ -3,19 +3,12 @@ import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_project.dart';
 import 'dart:html';
 import 'package:akepot/competences_service.dart';
-import 'package:app_router/app_router.dart';
-import 'package:akepot/model/model_team.dart';
-import 'package:akepot/model/model_category.dart';
-import 'package:akepot/model/model_subcategory.dart';
-import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:core_elements/core_animated_pages.dart';
 
 @CustomTag("pane-edit")
 class PaneEdit extends PolymerElement {
   PaneEdit.created() : super.created() {
   }
-
-  @observable Project project;
 
   @observable CompetencesService service;
   @published String projectHash = "";
@@ -43,7 +36,12 @@ class PaneEdit extends PolymerElement {
   }
 
   void signedIn(Event e, var detail, HtmlElement target){
-    project = toObservable(new Project.retrieve(projectHash, service));
+
+    if(service.project != null && service.project.hash == projectHash){
+      return;
+    }
+
+    service.project = toObservable(new Project.retrieve(projectHash, service));
   }
 
   void removeProject(Event e, var detail, Node target){
@@ -51,7 +49,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addRole(Event e, var detail, Node target){
-    project.addRole();
+    service.project.addRole();
   }
 
   void removeRole(Event e, var detail, Node target){
@@ -59,7 +57,7 @@ class PaneEdit extends PolymerElement {
     if(role_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       role_nr = 0;
     }
-    project.removeRole(index);
+    service.project.removeRole(index);
   }
 
   void onRoleTap(Event e, var detail, Node target){
@@ -69,7 +67,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addTeam(Event e, var detail, Node target){
-    project.addTeam();
+    service.project.addTeam();
   }
 
   void removeTeam(Event e, var detail, Node target){
@@ -77,7 +75,7 @@ class PaneEdit extends PolymerElement {
     if(team_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       team_nr = 0;
     }
-    project.removeTeam(index);
+    service.project.removeTeam(index);
   }
 
   void onTeamTap(Event e, var detail, Node target){
@@ -88,11 +86,11 @@ class PaneEdit extends PolymerElement {
 
   void removePerson(Event e, var detail, Node target){
     int index = int.parse(detail);
-    project.teams[team_nr].removePerson(index);
+    service.project.teams[team_nr].removePerson(index);
   }
 
   void addCategory(Event e, var detail, Node target){
-    project.addCategory();
+    service.project.addCategory();
   }
 
   void removeCategory(Event e, var detail, Node target){
@@ -100,7 +98,7 @@ class PaneEdit extends PolymerElement {
     if(category_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       category_nr = 0;
     }
-    project.removeCategory(index);
+    service.project.removeCategory(index);
   }
 
   void onCategoryTap(Event e, var detail, Node target){
@@ -110,7 +108,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addSubCategory(Event e, var detail, Node target){
-    project.categories[category_nr].addSubCategory();
+    service.project.categories[category_nr].addSubCategory();
   }
 
   void removeSubCategory(Event e, var detail, Node target){
@@ -118,7 +116,7 @@ class PaneEdit extends PolymerElement {
     if(subcategory_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       subcategory_nr = 0;
     }
-    project.categories[category_nr].removeSubCategory(index);
+    service.project.categories[category_nr].removeSubCategory(index);
   }
 
   void onSubCategoryTap(Event e, var detail, Node target){
@@ -128,7 +126,7 @@ class PaneEdit extends PolymerElement {
   }
 
   void addCompetenceTemplate(Event e, var detail, Node target){
-    project.categories[category_nr].subcategories[subcategory_nr].addCompetenceTemplate();
+    service.project.categories[category_nr].subcategories[subcategory_nr].addCompetenceTemplate();
   }
 
   void removeCompetenceTemplate(Event e, var detail, Node target){
@@ -136,7 +134,7 @@ class PaneEdit extends PolymerElement {
     if(competence_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
       competence_nr = 0;
     }
-    project.categories[category_nr].subcategories[subcategory_nr].removeCompetenceTemplate(index);
+    service.project.categories[category_nr].subcategories[subcategory_nr].removeCompetenceTemplate(index);
   }
 
   void onCompetenceTemplateTap(Event e, var detail, Node target){

@@ -22,7 +22,7 @@ class LoginScreen extends PolymerElement {
   }
 
   void signOutDone(CustomEvent event, dynamic detail){
-    print("loginsignedout" + detail.toString());
+    if (DEBUG) print("loginsignedout" + detail.toString());
     signedIn = false;
   }
 
@@ -33,15 +33,15 @@ class LoginScreen extends PolymerElement {
 
   void parseResponse2(CustomEvent event, Map detail, CoreAjax node) {
     var response = detail['response'];
-    //print(response);
+    //if (DEBUG) print(response);
 
     try {
       if (response == null) {
-        //print('returned');
+        //if (DEBUG) print('returned');
         return null;
       }
     } catch (e) {
-      //print('returned');
+      //if (DEBUG) print('returned');
       return null;
     }
 
@@ -55,6 +55,6 @@ class LoginScreen extends PolymerElement {
   }
 
   void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
-    print(detail);
+    if (DEBUG) print(detail);
   }
 }

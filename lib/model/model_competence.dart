@@ -68,19 +68,16 @@ class Competence extends Observable {
     }
 
     Competence competence = toObservable(new Competence.newId(projectHash, personId, competenceTemplateId));
-    print("newIdCompetence: "+competence.toJson().toString());
 
     service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId").once("value").then((snapshot) {
       Map val = snapshot.val();
 
       if(val != null) {
         competence.fromJson(val);
-        print("Competence taken over: "+competence.toJson().toString());
         competence._listen(service);
       } else {
         //New competence copied from template
         competence = toObservable(new Competence.newRemoteFromTemplate(projectHash, personId, competenceTemplateId, service));
-        print("Competence updated new: "+competence.toJson().toString());
       }
     });
     return competence;

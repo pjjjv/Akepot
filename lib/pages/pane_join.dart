@@ -12,7 +12,6 @@ class PaneJoin extends PolymerElement {
   @published String projectHash = "";
   @observable String selected;
   @observable CompetencesService service;
-  @observable Project project;
 
   PaperButton joinButton;
 
@@ -24,7 +23,6 @@ class PaneJoin extends PolymerElement {
   }
 
   void signedIn(Event e, var detail, HtmlElement target){
-    project = new Project.retrieve(projectHash, service);
 
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (exists){
@@ -33,6 +31,12 @@ class PaneJoin extends PolymerElement {
         newUser();
       }
     });
+
+    if(service.project != null && service.project.hash == projectHash){
+      return;
+    }
+
+    service.project = new Project.retrieve(projectHash, service);
   }
 
   void newUser(){
@@ -42,14 +46,12 @@ class PaneJoin extends PolymerElement {
   }
 
   void joinProject(Event e){
-    print ("joinProject");
-
     if(selected == null || selected == ""){
       return;
     }
 
     Person person = new Person.newRemote(service, service.user.uid, projectHash, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname);
-    project.teams.elementAt(int.parse(selected)).addPersonFull(person);
+    service.project.teams.elementAt(int.parse(selected)).addPersonFull(person);
     //person.roles
 
     (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");

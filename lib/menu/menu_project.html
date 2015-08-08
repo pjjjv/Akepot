@@ -1,6 +1,6 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../../packages/core_elements/core_menu.html">
 <link rel="import" href="../../../packages/paper_elements/paper_item.html">
 <link rel="import" href="../../../packages/core_elements/core_signals.html">
 <link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
@@ -10,22 +10,21 @@
     <link href="menu_project.css" rel="stylesheet">
 
     <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
-
-    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+    <core-menu flex id="panel-list" class="content" selected="{{selectedSection}}" valueattr="name" excludedLocalNames="div" theme="core-light-theme">
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
       <div class="separator">All categories</div>
       <template if="{{service.signedIn}}">
-        <template repeat="{{category in categories}}">
-          <paper-item id="menu_item_category" name="{{category.name | encodeUriComponent}}" tabindex="0">
+        <template repeat="{{category in service.categories}}">
+          <paper-item id="menu_item_category_{{category.name}}" name="{{category.name | encodeUriComponent}}" tabindex="0">
             <a _href="#/project/{{projectHash}}/category/{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
           </paper-item>
         </template>
       </template>
       <paper-item id="menu_item_join_hidden" name="_join" hidden>
       </paper-item>
-    </core-selector>
+    </core-menu>
   </template>
 
   <script type="application/dart" src="menu_project.dart"></script>

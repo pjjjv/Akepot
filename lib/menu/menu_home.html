@@ -1,6 +1,6 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../../packages/core_elements/core_menu.html">
 <link rel="import" href="../../../packages/paper_elements/paper_item.html">
 <link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
 
@@ -8,12 +8,12 @@
   <template>
     <link href="menu_home.css" rel="stylesheet">
 
-    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name">
+    <core-menu flex id="panel-list" class="content" selected="{{selectedSection}}" valueattr="name" excludedLocalNames="div" theme="core-light-theme">
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
       <div class="separator empty"></div>
-    </core-selector>
+    </core-menu>
   </template>
 
   <script type="application/dart" src="menu_home.dart"></script>

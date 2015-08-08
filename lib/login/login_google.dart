@@ -73,7 +73,7 @@ class LoginGoogle extends PolymerElement {
 
   void signIn(html.Event e){
     service.dbRef.authWithOAuthPopup("google", remember: "default", scope: scopes).then((authData) {
-      print("Authenticated successfully with payload:" + authData.toString());
+      if (DEBUG) print("Authenticated successfully with payload:" + authData.toString());
 
       // Trigger the loginsuccess event
       this.fire( "core-signal", detail: { "name": "loginsuccess", "data": authData } );
@@ -81,7 +81,7 @@ class LoginGoogle extends PolymerElement {
       signedIn = true;
     },
     onError:(error) {
-      print("Login Failed!" + error.toString());
+      if (DEBUG) print("Login Failed!" + error.toString());
 
       if (error == "user_signed_out") {
         // Fire event to indicate user signed out
@@ -104,7 +104,7 @@ class LoginGoogle extends PolymerElement {
   }
 
   void signOut(html.Event e){
-    print("Sign out");
+    if (DEBUG) print("Sign out");
     this.fire( "core-signal", detail: { "name": "loginsignoutattempted" } );
     service.dbRef.unauth();
     this.fire( "core-signal", detail: { "name": "loginsignedout" } );

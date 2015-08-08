@@ -3,6 +3,8 @@ import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/competences_service.dart';
 
+const DEBUG = true;
+
 main() => initPolymer();
 
 @initMethod
@@ -71,13 +73,13 @@ class AppCache {
 
   void onCachedEvent(Event e) {
     window.alert("Finished downloading into cache. This web app can now be used offline.");
-    print('Cache event: ${e}');
+    if (DEBUG) print('Cache event: ${e}');
   }
 
   void onCacheError(Event e) {
     // For the sake of this sample alert the reader that an error has occurred.
     // Of course we would *never* do it this way in real life.
     window.alert("Oh no! A cache error occurred: ${e}");
-    print('Cache error: ${e}');
+    if (DEBUG) print('Cache error: ${e}');
   }
 }

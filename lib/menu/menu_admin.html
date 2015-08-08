@@ -1,6 +1,6 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../../packages/core_elements/core_menu.html">
 <link rel="import" href="../../../packages/paper_elements/paper_item.html">
 <link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
 <link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
@@ -10,7 +10,7 @@
   <template>
     <link href="menu_admin.css" rel="stylesheet">
 
-    <core-selector flex id="panel-list2" class="content" selected="{{selectedSection}}" valueattr="name" excludedLocalNames="div"><!-- on-core-activate="{{navigate}}"  -->
+    <core-menu flex id="panel-list" class="content" selected="{{selectedSection}}" valueattr="name" excludedLocalNames="div" theme="core-light-theme">
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
@@ -21,13 +21,14 @@
       <paper-item noink id="menu_item_output" name="output" tabindex="0">
         <a _href="#/admin/{{projectHash}}/output"><core-icon icon="file-download"></core-icon><span flex>Output</span></a>
       </paper-item>-->
-      <div><paper-item noink hidden id="menu_button_create" name="create" tabindex="0" class="special">
-        <core-icon icon="create" aria-label="create" role="img"></core-icon><span flex>Done + Publish</span>
+      <div><paper-item hidden id="menu_button_create" name="create" tabindex="0" class="special">
+        <core-icon icon="create" aria-label="create" role="img"></core-icon><span flex>PUBLISH</span>
       </paper-item></div>
-      <paper-item noink id="menu_item_edit" name="edit" tabindex="0">
+      <div class="separator empty"></div>
+      <paper-item id="menu_item_edit" name="edit" tabindex="0">
         <a _href="#/admin/{{projectHash}}/edit"><core-icon icon="file-upload"></core-icon><span flex>Edit</span></a>
       </paper-item>
-    </core-selector>
+    </core-menu>
 
     <paper-action-dialog id="created-dialog" heading="Project published"
       transition="paper-transition-center" backdrop="true">

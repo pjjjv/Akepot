@@ -66,16 +66,16 @@
         <template if="{{ tab == 0 }}">
           <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
 
-            <section-edit-project project="{{project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
+            <section-edit-project project="{{service.project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
-            <template if="{{ project.categories.length > category_nr }}">
-              <section-edit-category category="{{project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+            <template if="{{ service.project.categories.length > category_nr }}">
+              <section-edit-category category="{{service.project.categories[category_nr]}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
 
-            <template if="{{ project.categories[category_nr].subcategories.length > subcategory_nr }}">
-              <section-edit-subcategory subCategory="{{project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+            <template if="{{ service.project.categories[category_nr].subcategories.length > subcategory_nr }}">
+              <section-edit-subcategory subCategory="{{service.project.categories[category_nr].subcategories[subcategory_nr]}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
 
-            <template if="{{ project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
-              <section-edit-competence competenceTemplate="{{project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
+            <template if="{{ service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr }}">
+              <section-edit-competence competenceTemplate="{{service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr]}}" page="{{page}}"></section-edit-competence>
 
             </template>
             </template>
@@ -85,20 +85,20 @@
         <template if="{{ tab == 1 }}">
           <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" flex>
 
-            <section-edit-project2 project="{{project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
+            <section-edit-project2 project="{{service.project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
 
-            <template if="{{ project.teams.length > team_nr }}">
-              <section-edit-team team="{{project.teams[team_nr]}}" page="{{page2}}"></section-edit-team>
+            <template if="{{ service.project.teams.length > team_nr }}">
+              <section-edit-team team="{{service.project.teams[team_nr]}}" page="{{page2}}"></section-edit-team>
             </template>
           </core-animated-pages>
         </template>
         <template if="{{ tab == 2 }}">
           <core-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page3}}" id="pages_edit3" flex>
 
-            <section-edit-project3 project="{{project}}" page="{{page3}}" index="{{role_nr}}"></section-edit-project3>
+            <section-edit-project3 project="{{service.project}}" page="{{page3}}" index="{{role_nr}}"></section-edit-project3>
 
-            <template if="{{ project.roles.length > role_nr }}">
-              <section-edit-role role="{{project.roles[role_nr]}}" page="{{page3}}"></section-edit-role>
+            <template if="{{ service.project.roles.length > role_nr }}">
+              <section-edit-role role="{{service.project.roles[role_nr]}}" page="{{page3}}"></section-edit-role>
             </template>
           </core-animated-pages>
         </template>

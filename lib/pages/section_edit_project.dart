@@ -9,7 +9,7 @@ class SectionEditProject extends PolymerElement {
 
   }
 
-  @observable Project project;
+  @published Project project;
   @published int page;
   @published int index;
 

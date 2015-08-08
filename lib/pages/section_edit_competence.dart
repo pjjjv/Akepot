@@ -9,11 +9,11 @@ class SectionEditCompetence extends PolymerElement {
 
     /*HttpRequest.getString("data/fresh_categories.json")
     .then((String text) => project.categoriesAsJson = text)
-    .catchError((Error error) => print("Error: $error"));
+    .catchError((Error error) => if (DEBUG) print("Error: $error"));
 
     HttpRequest.getString("data/fresh_teams.json")
     .then((String text) => project.teamsAsJson = text)
-    .catchError((Error error) => print("Error: $error"));*/
+    .catchError((Error error) => if (DEBUG) print("Error: $error"));*/
   }
 
   @published CompetenceTemplate competenceTemplate;

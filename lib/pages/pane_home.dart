@@ -12,7 +12,6 @@ class PaneHome extends PolymerElement {
   PaneHome.created() : super.created();
 
   PaperButton newButton;
-  Project project;
   CompetencesService service;
 
   void domReady(){
@@ -24,21 +23,21 @@ class PaneHome extends PolymerElement {
   }
 
   void newProject(Event e){
-    Project project = new Project.newRemote(service);
+    service.project = new Project.newRemote(service);
 
-    Person.exists(service.user.uid, project.hash, service, (exists) {
+    Person.exists(service.user.uid, service.project.hash, service, (exists) {
       if (exists){
-        (document.querySelector('app-router') as AppRouter).go("/project/${project.hash}");//TODO
+        (document.querySelector('app-router') as AppRouter).go("/project/${service.project.hash}");//TODO
       } else {
-        Team team = project.addTeam();
+        Team team = service.project.addTeam();
         team.service = service;
 
-        Person person = new Person.newRemote(service, service.user.uid, project.hash, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname, admin: true);
-        person.setAdmin(true, project);
+        Person person = new Person.newRemote(service, service.user.uid, service.project.hash, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname, admin: true);
+        person.setAdmin(true, service.project);
         team.addPersonFull(person);
       }
     });
 
-    (document.querySelector('app-router') as AppRouter).go("/admin/${project.hash}/edit");
+    (document.querySelector('app-router') as AppRouter).go("/admin/${service.project.hash}/edit");
   }
 }

@@ -27,7 +27,7 @@
             <core-dropdown-menu label="Choose a team">
               <core-dropdown class="dropdown">
                 <core-selector valueattr="id" selected="{{selected}}">
-                  <template repeat="{{team in project.teams | enumerate}}">
+                  <template repeat="{{team in service.project.teams | enumerate}}">
                     <core-item id="{{team.index}}" label="{{team.value.name}}"></core-item>
                   </template>
                 </core-selector>

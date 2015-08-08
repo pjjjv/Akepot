@@ -20,7 +20,6 @@ class SubCategoryCard extends PolymerElement {
 
   void closeDesc(Event e) {
     for(SingleStrengthItem item in shadowRoot.querySelectorAll('single-strength-item')){
-      print("toggleOtherDescs");
       item.closeDesc();
     }
   }

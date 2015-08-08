@@ -45,7 +45,7 @@ class Category extends Observable {
     _name = "New Category";
   }
 
-  factory Category.retrieve(String id, String projectHash, CompetencesService service, [bool onlyName = false]) {
+  factory Category.retrieve(String id, String projectHash, CompetencesService service, [bool onlyName = false, dynamic callback(Category category)]) {
     Category category = toObservable(new Category.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/categories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
@@ -60,6 +60,10 @@ class Category extends Observable {
         }
         //New category
         category = toObservable(new Category.newRemote(projectHash, service));
+      }
+
+      if (callback != null){
+        callback(category);
       }
     });
     return category;

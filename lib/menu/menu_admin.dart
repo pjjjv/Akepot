@@ -22,7 +22,7 @@ class MenuAdmin extends PolymerElement {
 
   void showDialog(Event e){
     newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/${projectHash}";
-    print("New project link would be: $newlink");
+    if (DEBUG) print("New project link would be: $newlink");
 
     PaperActionDialog dialog = shadowRoot.querySelector('#created-dialog');
 

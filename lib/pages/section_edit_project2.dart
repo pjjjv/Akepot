@@ -1,7 +1,6 @@
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_project.dart';
-import 'package:akepot/model/model_team.dart';
 import 'dart:html';
 
 @CustomTag("section-edit-project2")

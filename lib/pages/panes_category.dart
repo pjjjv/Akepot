@@ -12,7 +12,7 @@ class PanesCategory extends PolymerElement {
 
   @observable CompetencesService service;
   @published String projectHash = "";
-  @published String selectedCategory;
+  @published var selectedCategory;
 
   PanesCategory.created() : super.created();
 
@@ -27,20 +27,6 @@ class PanesCategory extends PolymerElement {
         (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
       }
     });
-
-    if(selectedCategory == "" || selectedCategory == null){
-      service.dbRef.child("projects/$projectHash/categoryIds").once("value").then((snapshot) {
-            Map val = snapshot.val();
-            if(val == null || val.keys.isEmpty){
-              return;
-            }
-
-            new Category.retrieve(val.keys.first, projectHash, service, true, (Category category) {
-              String newSelectedCategory = encodeUriComponent(category.name);
-              (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/category/$newSelectedCategory");
-            });
-      });
-    }
 
     if(service.project != null && service.project.hash == projectHash){
       return;

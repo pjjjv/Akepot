@@ -5,6 +5,7 @@ import 'package:paper_elements/paper_item.dart';
 import 'package:paper_elements/paper_button.dart';
 import 'package:app_router/app_router.dart';
 import 'package:paper_elements/paper_action_dialog.dart';
+import 'package:akepot/competences_service.dart';
 
 @CustomTag('menu-admin')
 class MenuAdmin extends PolymerElement {

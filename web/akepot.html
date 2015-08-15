@@ -42,8 +42,6 @@
     <link rel="import" href="packages/paper_elements/paper_toast.html">
     <link rel="import" href="packages/paper_elements/paper_item.html">
     <link rel="import" href="packages/paper_elements/paper_input.html">
-    <link rel="import" href="packages/paper_elements/paper_input_decorator.html">
-    <link rel="import" href="packages/paper_elements/paper_autogrow_textarea.html">
     <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_spinner.html">
     <link rel="import" href="packages/paper_elements/paper_dropdown.html">
@@ -53,7 +51,6 @@
     <link rel="import" href="packages/app_router/app_route.html">
     <link rel="import" href="packages/akepot/login_screen.html">
     <link rel="import" href="packages/akepot/core_card2.html">
-    <link rel="import" href="packages/akepot/edit_category.html">
     <link rel="import" href="packages/akepot/competences_service.html">
 
     <!-- pre-load the most used elements -->
@@ -97,27 +94,6 @@
       <app-route path="/project/:projectHash/join" imp="packages/akepot/pages/page_join.html" elem="page-join"></app-route>
       <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
     </app-router>
-
-      <!--<core-animated-pages fit main selected="{{selectedSection}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition" flex="" auto="" notap="" class="">
-        <template if="{{ projectRoute['projectHash'] == null && adminRoute['projectHash'] == null }}">
-          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
-          <section name="home"><pane-home project="{{project}}" generatedHash="{{generatedHash}}"></pane-home></section>
-        </template>
-        <template if="{{ adminRoute['projectHash'] != null }}">
-          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
-          <section name="input"><pane-input project="{{project}}" projectHash="{{projectHash}}" adminRoute="{{adminRoute}}" service="{{service}}" newlink="{{newlink}}"></pane-input></section>
-          <section name="output"></section>
-          <section name="edit"><edit-category category="{{project.categories[0]}}" form></edit-category></section>
-        </template>
-        <template if="{{ projectRoute['projectHash'] != null }}">
-          <section name="splash"><span fit class="splash wide" cross-fade></span></section>
-          <section name="join" vertical layout><pane-join></pane-join></section>
-          <template repeat="{{category in categories}}">
-            <section name="{{category.name}}" id="{{category.name}}" vertical layout><pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category></section>
-          </template>
-        </template>
-      </core-animated-pages>-->
-
 
       <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
         <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>

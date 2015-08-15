@@ -3,8 +3,6 @@ import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/competences_service.dart';
 
-const DEBUG = true;
-
 main() => initPolymer();
 
 @initMethod

@@ -5,7 +5,7 @@ import 'package:akepot/subcategory_card.dart';
 import 'dart:html';
 import 'package:core_elements/core_ajax_dart.dart';
 import 'dart:math';
-import 'dart:async';
+import 'package:akepot/competences_service.dart';
 import 'dart:convert';
 
 @CustomTag('pane-category')

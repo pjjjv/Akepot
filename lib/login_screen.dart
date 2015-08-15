@@ -3,6 +3,7 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'package:core_elements/core_ajax_dart.dart';
 import 'login/login_google.dart';
+import 'package:akepot/competences_service.dart';
 
 @CustomTag('login-screen')
 class LoginScreen extends PolymerElement {

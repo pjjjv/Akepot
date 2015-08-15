@@ -3,7 +3,6 @@ library akepot.model.model_competencelevel;
 import 'package:polymer/polymer.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
-import 'package:akepot/model/model_competencetemplate.dart';
 
 /** Not documented yet. */
 class CompetenceLevel extends Observable {

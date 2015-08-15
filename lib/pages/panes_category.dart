@@ -3,7 +3,6 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
-import 'package:akepot/model/model_category.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
 
@@ -12,9 +11,14 @@ class PanesCategory extends PolymerElement {
 
   @observable CompetencesService service;
   @published String projectHash = "";
-  @published var selectedCategory;
+  @published var selected;
+  @observable var selectedCategory;
 
   PanesCategory.created() : super.created();
+
+  void selectedChanged(String name, var value, var listValue){
+    selectedCategory = "$value";
+  }
 
   void domReady(){
     service = document.querySelector("#service");
@@ -30,6 +34,10 @@ class PanesCategory extends PolymerElement {
 
     if(service.project != null && service.project.hash == projectHash){
       return;
+    } else {
+      if(selected != "" && selected != null && selected != 0){
+        (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
+      }
     }
 
     service.project = new Project.retrieve(projectHash, service);

@@ -9,9 +9,14 @@ import 'package:akepot/model/model_category.dart';
 class MenuProject extends PolymerElement {
   MenuProject.created() : super.created();
 
-  @published String selectedSection;
+  @published String selected;
+  @observable String selectedSection;
   @published String projectHash;
   @observable CompetencesService service;
+
+  void selectedChanged(String name, var oldValue, var newValue){
+    selectedSection = "$oldValue";
+  }
 
   domReady(){
     service = document.querySelector("#service");
@@ -22,6 +27,7 @@ class MenuProject extends PolymerElement {
     if(service.categories.isNotEmpty) return;
     Project.getCategoryNames(projectHash, service, (List<Category> categories) {
       service.categories = categories;
+      selectedSection = "$selected";
     });
   }
 

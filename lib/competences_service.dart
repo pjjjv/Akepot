@@ -24,7 +24,7 @@ class CompetencesService extends PolymerElement {
   Map _headers;
   Firebase dbRef;
   @observable List<Category> categories = [];//For names only
-  @observable Project project = new Project.emptyDefault();
+  @observable Project project;
 
   CompetencesService.created() : super.created() {
     dbRef = new Firebase(SERVER);

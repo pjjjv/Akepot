@@ -11,14 +11,9 @@ class PanesCategory extends PolymerElement {
 
   @observable CompetencesService service;
   @published String projectHash = "";
-  @published var selected;
-  @observable var selectedCategory;
+  @published String selectedCategory = "";//Bugfix: needs to be assigned "", to prevent it from being 0.
 
   PanesCategory.created() : super.created();
-
-  void selectedChanged(String name, var value, var listValue){
-    selectedCategory = "$value";
-  }
 
   void domReady(){
     service = document.querySelector("#service");
@@ -35,7 +30,9 @@ class PanesCategory extends PolymerElement {
     if(service.project != null && service.project.hash == projectHash){
       return;
     } else {
-      if(selected != "" && selected != null && selected != 0){
+      if(selectedCategory != "" && selectedCategory != null){
+        //If we come in through a direct category link, then go back to main project page (no category).
+        //Bugfix: We do this to avoid a bug, where core-selector (extended by core-animated-pages) is unable to deal with changing content. We would have to set selected again after everything is loaded from firebase, but we don't know when that is.
         (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
       }
     }

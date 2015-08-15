@@ -11,7 +11,7 @@
     <core-animated-pages fit main selected="{{selectedCategory}}" valueattr="label" transitions="cascade-transition">
       <template if="{{service.signedIn}}">
         <template repeat="{{category in service.project.categories}}">
-          <section name="{{category.name}}" label="{{category.name | encodeUriComponent}}" vertical layout>
+          <section name="{{category.name}}" label="{{category.name}}" vertical layout>
             <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
           </section>
         </template>

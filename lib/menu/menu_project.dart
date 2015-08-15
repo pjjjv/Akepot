@@ -30,6 +30,4 @@ class MenuProject extends PolymerElement {
       selectedSection = "$selected";
     });
   }
-
-  encodeUriComponent(String str) => Uri.encodeComponent(str);
 }

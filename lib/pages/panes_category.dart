@@ -42,6 +42,4 @@ class PanesCategory extends PolymerElement {
 
     service.project = new Project.retrieve(projectHash, service);
   }
-
-  encodeUriComponent(String str) => Uri.encodeComponent(str);
 }

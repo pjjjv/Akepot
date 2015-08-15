@@ -24,4 +24,6 @@ class MenuProject extends PolymerElement {
       service.categories = categories;
     });
   }
+
+  encodeUriComponent(String str) => Uri.encodeComponent(str);
 }

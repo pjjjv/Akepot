@@ -9,12 +9,13 @@ class TitlePage extends PolymerElement {
 
   @observable CompetencesService service;
   @published String projectHash = "";
-  @observable String name = "";
+  @observable String projectName = "";
 
   void domReady(){
     service = document.querySelector("#service");
-    name = Project.getName(projectHash, service, (name) {
-      this.name = name;
+    projectName = projectHash;
+    Project.getName(projectHash, service, (projectName) {
+      this.projectName = projectName;
     });
   }
 }

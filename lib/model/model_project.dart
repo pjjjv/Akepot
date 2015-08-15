@@ -272,13 +272,13 @@ class Project extends Observable {
 
   static String getName(String hash, CompetencesService service, dynamic callback(String name)) {
     service.dbRef.child("projects/$hash/name").onValue.listen((e) {
+      if(DEBUG) print("title = project name = "+e.snapshot.val());
       if (e.snapshot.val() != null && e.snapshot.val() != ""){
-        callback(e.snapshot.val());
+        callback("${e.snapshot.val()}");
       } else {
         callback(hash);
       }
     });
-    return hash;
   }
 
   static void getCategoryNames(String hash, CompetencesService service, dynamic callback(List<Category> categories)) {

@@ -18,7 +18,7 @@
       <template if="{{service.signedIn}}">
         <template repeat="{{category in service.categories}}">
           <paper-item id="menu_item_category_{{category.name}}" name="{{category.name}}" tabindex="0">
-            <a _href="#/project/{{projectHash}}/category/{{category.name}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
+            <a _href="#/project/{{projectHash}}/category/{{category.name | encodeUriComponent}}"><core-icon icon="assignment-ind"></core-icon><span flex>{{category.name}}</span></a>
           </paper-item>
         </template>
       </template>

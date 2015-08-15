@@ -1,21 +1,42 @@
 
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_subcategory.dart';
-import 'package:akepot/pages/pane_category.dart';
 import 'package:akepot/single_strength_item.dart';
 import 'package:core_elements/core_image.dart';
 import 'dart:html';
 import 'dart:js';
+import 'dart:math';
+import 'dart:async';
+import 'package:akepot/competences_service.dart';
 
 @CustomTag('subcategory-card')
 class SubCategoryCard extends PolymerElement {
   SubCategoryCard.created() : super.created();
 
+  CompetencesService service;
   @published SubCategory subcategory;
   @published Palette palette;
 
   void domReady() {
+    service = document.querySelector("#service");
+    if(service.palettes!=null) palettesLoaded(null, null, null);
+  }
+
+  void palettesLoaded(Event e, var detail, HtmlElement target){
+    Timer.run(() => changeCards());
+  }
+
+  void changeCards(){
+    if(palette!=null) return;
+    palette = service.palettes[pseudoRandomColor(subcategory.name)];
     generateBackground();
+  }
+
+  int pseudoRandomColor(String text){
+    int limit = service.palettes.length;
+    Random generator = new Random(text.hashCode);
+    int random = generator.nextInt(limit);
+    return random;
   }
 
   void closeDesc(Event e) {

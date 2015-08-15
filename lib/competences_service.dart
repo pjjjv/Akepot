@@ -25,6 +25,8 @@ class CompetencesService extends PolymerElement {
   Firebase dbRef;
   @observable List<Category> categories = [];//For names only
   @observable Project project;
+  CoreAjax ajaxColourSchemes;
+  @observable List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
     dbRef = new Firebase(SERVER);
@@ -32,6 +34,10 @@ class CompetencesService extends PolymerElement {
 
   void domReady(){
     ajaxUserinfo = shadowRoot.querySelector('#ajax-people');
+    ajaxColourSchemes = shadowRoot.querySelector('#ajax-colour-schemes');
+    if(document.querySelector("#cmdebug") != null){
+      ajaxColourSchemes.url = "data/colour_schemes_response.json";
+    }
     readyDom = true;
   }
 
@@ -115,6 +121,29 @@ class CompetencesService extends PolymerElement {
   void signOutDone(CustomEvent event, dynamic detail){
     signedIn=false;
   }
+
+// Retrieves colour palettes using the Colourlovers API, creating a new Palette
+// for each
+  @reflectable
+  void ajaxColourSchemesResponse(CustomEvent event/*, Map detail, CoreAjax node*/) {
+    var response = event.detail['response'];
+    if (DEBUG) print("ajaxColourSchemesResponse: "+JSON.encode(response).toString());
+
+    try {
+      if (response == null) {
+        return;//TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    palettes = [];
+    for (Map palette in (response as List)) {
+      palettes.add(new Palette.fromJson(palette));
+    }
+
+    this.fire( "core-signal", detail: { "name": "palettesloaded" } );
+  }
 }
 
 class User extends Observable {
@@ -125,4 +154,30 @@ class User extends Observable {
   @observable String lastname = "";
   @observable var profile;
   @observable var cover;
+}
+
+// Class representing a single colour palette made up of multiple colours
+// Colours are simply hex strings
+class Palette extends Observable {
+  final String name;
+  final List<String> colors;
+
+  Palette(this.name, this.colors);
+
+  toString() => name;
+
+  factory Palette.fromJson(Map _json) {
+    String name = "Palette";
+    List<String> colors = [];
+
+    if (_json.containsKey("title")) {
+      name = _json["title"];
+    }
+    if (_json.containsKey("colors")) {
+      colors = _json["colors"].map((color) => "#"+color).toList();
+    }
+
+    Palette palette = new Palette(name, colors);
+    return palette;
+  }
 }

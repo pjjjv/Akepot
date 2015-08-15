@@ -4,11 +4,15 @@
 <link rel="import" href="../../packages/core_elements/core_icons.html">
 <link rel="import" href="single_strength_item.html">
 <link rel="import" href="core_card2.html">
+<link rel="import" href="../../packages/core_elements/core_signals.html">
 <link rel="import" href="../../packages/akepot/components/trianglify/trianglify.html">
 
 <polymer-element name="subcategory-card" attributes="subcategory palette">
   <template>
     <link href="subcategory_card.css" rel="stylesheet">
+
+    <core-signals on-core-signal-palettesloaded="{{palettesLoaded}}"></core-signals>
+
     <core-card2 id="card" self-center layout vertical>
       <div class="front">
         <paper-fab mini id="help-button" class="flip-button floating-action-button" icon="help" tabindex="0"></paper-fab>

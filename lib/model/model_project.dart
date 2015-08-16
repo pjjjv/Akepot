@@ -270,9 +270,9 @@ class Project extends Observable {
     return null;
   }
 
-  static String getName(String hash, CompetencesService service, dynamic callback(String name)) {
+  static void getName(String hash, CompetencesService service, dynamic callback(String name)) {
+    if(hash==null || hash=="") return;
     service.dbRef.child("projects/$hash/name").onValue.listen((e) {
-      if(DEBUG) print("title = project name = "+e.snapshot.val());
       if (e.snapshot.val() != null && e.snapshot.val() != ""){
         callback("${e.snapshot.val()}");
       } else {
@@ -282,6 +282,7 @@ class Project extends Observable {
   }
 
   static void getCategoryNames(String hash, CompetencesService service, dynamic callback(List<Category> categories)) {
+    if(hash==null || hash=="") return;
     Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();

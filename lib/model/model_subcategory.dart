@@ -118,7 +118,7 @@ class SubCategory extends Observable {
             competenceTemplates.removeWhere((competenceTemplate) => competenceTemplate.id == record.key);
 
             //Person's competence
-            competences.removeWhere((competence) => competence.competenceTemplateId == record.key);
+            competences.removeWhere((competence) => competence.tid == record.key);
           }
         }
       }

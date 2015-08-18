@@ -11,6 +11,7 @@ import 'package:paper_elements/paper_button.dart';
 class PaneJoin extends PolymerElement {
   @published String projectHash = "";
   @observable String selected;
+  @observable List<String> multiselected;
   @observable CompetencesService service;
 
   PaperButton joinButton;
@@ -49,8 +50,14 @@ class PaneJoin extends PolymerElement {
     if(selected == null || selected == ""){
       return;
     }
+    if(multiselected == null || multiselected.isEmpty){
+      return;
+    }
 
     Person person = new Person.newRemote(service, service.user.uid, projectHash, nickName: service.user.nickname, emailAddress: service.user.email, firstName: service.user.firstname, lastName: service.user.lastname);
+    for(String roleId in multiselected){
+      person.assignRole(roleId);
+    }
     service.project.teams.elementAt(int.parse(selected)).addPersonFull(person);
     //person.roles
 

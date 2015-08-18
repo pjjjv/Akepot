@@ -1,0 +1,13 @@
+<link rel="import" href="../../../packages/akepot/pages/pane_report.html">
+<link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/akepot/menu/title_page.html">
+
+<polymer-element name="page-report" attributes="projectHash" noscript>
+  <template>
+    <scaffold-layout menu="admin" selected="report" projectHash="{{projectHash}}">
+      <title-page class="title" projectHash="{{projectHash}}" cross-fade>Competence Matrix: Admin: Report </title-page>
+      <pane-report projectHash="{{projectHash}}"></pane-report>
+    </scaffold-layout>
+  </template>
+</polymer-element>

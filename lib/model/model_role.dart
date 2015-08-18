@@ -35,6 +35,9 @@ class Role extends Observable {
   @observable List<CompetenceLevel> competenceLevels = toObservable([]);
   @observable ObservableMap competenceLevelIds = toObservable(new Map());
 
+  /* For report only */
+  @observable List<CompetenceLevel> allCompetenceLevels = toObservable([]);
+
   @observable CompetencesService service;
 
   Role.full(this.id, String this.projectHash, this._name, this._description, this.competenceLevels);

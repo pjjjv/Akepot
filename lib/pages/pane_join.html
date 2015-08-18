@@ -33,6 +33,14 @@
                 </core-selector>
               </core-dropdown>
             </core-dropdown-menu>
+            <p>Select your roles: </p>
+            <core-selector valueattr="id" selected="{{multiselected}}" multi>
+              <template repeat="{{role in service.project.roles}}">
+                <paper-item id="{{role.id}}" tabindex="0">
+                  <core-icon icon="assignment-ind"></core-icon><span flex>{{role.name}}</span>
+                </paper-item>
+              </template>
+            </core-selector>
           </div>
           <div flex></div><!-- active="false" -->
           <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">

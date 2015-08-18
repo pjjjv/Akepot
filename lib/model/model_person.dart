@@ -3,6 +3,7 @@ library akepot.model.model_person;
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/model/model_project.dart';
+import 'package:akepot/model/model_competence.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 
@@ -63,6 +64,9 @@ class Person extends Observable {
   /** Not documented yet. */
   @observable List<Role> roles = toObservable([]);//TODO: still add changes and listenres
   @observable ObservableMap roleIds = toObservable(new Map());
+
+  /* For report only */
+  @observable List<Competence> allCompetences = toObservable([]);
 
   @observable CompetencesService service;
 
@@ -131,15 +135,14 @@ class Person extends Observable {
 
   toString() => id + ": " + nickName;//TODO
 
-//  addSubCategory(){
-//    SubCategory subCategory = new SubCategory.newRemote(service);
-//    service.dbRef.child("categories/$id/subCategoryIds").update(new Map()..putIfAbsent(subCategory.id, () => true));
-//  }
-//
-//  removeSubCategory(int index){
-//    String subCategoryId = subcategories[index].id;
-//    service.dbRef.child("categories/$id/subCategoryIds/$subCategoryId").remove();
-//  }
+  assignRole(String roleId){
+    service.dbRef.child("projects/$projectHash/persons/$id/roleIds").update(new Map()..putIfAbsent(roleId, () => true));
+  }
+
+  unassignRole(int index){
+    String roleId = roles[index].id;
+    service.dbRef.child("projects/$projectHash/persons/$id/roleIds/$roleId").remove();
+  }
 
   _listen(CompetencesService service){
     this.service = service;
@@ -159,31 +162,31 @@ class Person extends Observable {
       _isAdmin = notifyPropertyChange(const Symbol('isAdmin'), this._isAdmin, e.snapshot.val());
     });
 
-//    subCategoryIds.changes.listen((records) {
-//      for (ChangeRecord record in records) {
-//        //We don't need to do anything with PropertyChangeRecords.
-//        if (record is MapChangeRecord) {
-//          //Something added
-//          if (record.isInsert) {
-//            SubCategory subCategory = new SubCategory.retrieve(record.key, service);
-//            subcategories.add(subCategory);//TODO
-//          }
-//
-//          //Something removed
-//          if (record.isRemove) {
-//            subcategories.removeWhere((subCategory) => subCategory.id == record.key);
-//          }
-//        }
-//      }
-//    });
-//
-//    service.dbRef.child("categories/$id/subCategoryIds").onChildAdded.listen((e) {
-//      subCategoryIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
-//    });
-//
-//    service.dbRef.child("categories/$id/subCategoryIds").onChildRemoved.listen((e) {
-//      subCategoryIds.remove(e.snapshot.key);
-//    });
+    roleIds.changes.listen((records) {
+      for (ChangeRecord record in records) {
+        //We don't need to do anything with PropertyChangeRecords.
+        if (record is MapChangeRecord) {
+          //Something added
+          if (record.isInsert) {
+            Role role = new Role.retrieve(record.key, projectHash, service);
+            roles.add(role);//TODO
+          }
+
+          //Something removed
+          if (record.isRemove) {
+            roles.removeWhere((role) => role.id == record.key);
+          }
+        }
+      }
+    });
+
+    service.dbRef.child("projects/$projectHash/roles/$id/roleIds").onChildAdded.listen((e) {
+      roleIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+    });
+
+    service.dbRef.child("projects/$projectHash/roles/$id/roleIds").onChildRemoved.listen((e) {
+      roleIds.remove(e.snapshot.key);
+    });
   }
 
   _changeProperty(String child, var value){

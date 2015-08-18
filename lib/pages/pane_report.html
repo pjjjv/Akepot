@@ -1,0 +1,53 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/aha_table/aha_table.html">
+
+<polymer-element name="pane-report" attributes="projectHash">
+  <template>
+    <link href="pane_report.css" rel="stylesheet">
+
+    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+
+    <div id="outer" layout vertical>
+      <template if="{{locallySignedIn}}">
+        <aha-table id="myTable"
+          dataRows="{{tableData}}">
+
+          <template repeat="{{role in service.project.roles}}">
+            <aha-column name="{{role.id}}" label="{{role.name}}" type="string" editable default="0"></aha-column>
+          </template>
+
+          <template repeat="{{team in service.project.teams}}">
+            <span>Team: {{team.name}}</span>
+            <template repeat="{{person in team.persons}}">
+              <aha-column name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
+            </template>
+          </template>
+
+        </aha-table>
+         <!--<aha-table id="myTable"
+            dataRows="{{tableData}}"
+            selectable
+            copyable
+            removable
+            movable
+            searchable
+            pagesize="20"
+            pagesizetitle="Page Size:"
+            summarytitle="Viewing"
+            condensed
+            bordered
+            striped>
+            <aha-column name="first" editable searchable type="boolean"></aha-column>
+            <aha-column name="second" editable searchable type="choice" options="{{secondOptions}}" sortable></aha-column>
+            <aha-column name="third" editable searchable type="text" searchplaceholder="some placeholder" sortable></aha-column>
+            </aha-table>-->
+
+            <template repeat="{{row in tableData}}"><p>{{row[1]}}</p></template>
+     </template>
+    </div>
+  </template>
+
+  <script type="application/dart" src="pane_report.dart"></script>
+</polymer-element>
+

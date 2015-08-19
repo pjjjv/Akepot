@@ -67,6 +67,9 @@ class Person extends Observable {
 
   /* For report only */
   @observable List<Competence> allCompetences = toObservable([]);
+  /** Not documented yet. */
+  String get name => nickName;
+  void set name(String value) { }
 
   @observable CompetencesService service;
 

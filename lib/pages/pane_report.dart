@@ -25,6 +25,12 @@ class PaneReport extends PolymerElement {
   //@observable ObservableList<ObservableMap> tableData = toObservable([]);
 
 @observable var tableData = toObservable([
+{'-JvifXdJX_Al15x9lyNi': 0, 'google:102684786665393580591': 1, 'google:109869587768934442857': 3, 'google:113809236251975744790': 2},
+{'-JvifXdJX_Al15x9lyNi': 0, 'google:102684786665393580591': 2, 'google:109869587768934442857': 2, 'google:113809236251975744790': 1}
+]);
+
+
+@observable var tableData2 = toObservable([
 {'first': true, 'second': 'opt1', 'third': 'one'},
 {'first': false, 'second': 'opt2', 'third': 'two'},
 {'first': true, 'second': 'opt1', 'third': 'three'},
@@ -50,12 +56,13 @@ class PaneReport extends PolymerElement {
 
     service.project = toObservable(new Project.retrieve(projectHash, service));
 
-    //const twenty = const Duration(seconds:5);
-    //new Timer(twenty, fillTable);
+    const twenty = const Duration(seconds:5);
+    new Timer(twenty, fillTable);
   }
 
   @observable List<Person> persons;
   @observable List<Role> roles;
+  @observable List rolespersons;
 
   void fillTable(){
 
@@ -64,6 +71,14 @@ class PaneReport extends PolymerElement {
       persons.addAll(team.persons);
     }
     roles = toObservable(service.project.roles);
+
+    rolespersons = toObservable([]);
+    rolespersons.addAll(persons);
+    rolespersons.addAll(roles);
+
+
+    locallySignedIn = true; //TODO !!!!
+    return; //TODO !!!!
 
     /*for (Role role in persons){
       for (Category category in service.project.categories){

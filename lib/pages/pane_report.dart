@@ -121,7 +121,7 @@ class PaneReport extends PolymerElement {
       ObservableMap map = toObservable({});
       map.putIfAbsent("comp", () => persons[0].allCompetences[c].label);
       for(Role role in roles){
-        map.putIfAbsent(role.id, () => 0);
+        map.putIfAbsent(role.id, () => 2);
       }
       for(Person person in persons){
         map.putIfAbsent(person.id, () => person.allCompetences[c].rating);
@@ -133,4 +133,8 @@ class PaneReport extends PolymerElement {
     locallySignedIn = true;
   }
 
+
+  thresholdFromRow(Map values) {
+    return values[roles[0].id];
+  }
 }

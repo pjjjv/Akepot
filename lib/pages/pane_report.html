@@ -14,7 +14,8 @@
           dataRows="{{tableData}}"
           condensed
           striped
-          pagesize="{{nr_rows}}">
+          pagesize="{{nr_rows}}"
+          thresholdFromRow="{{thresholdFromRow}}">
 
           <aha-column class="column" name="comp" label="Competence" type="string" default="Unknown competence"></aha-column>
           <template class="" repeat="{{role in roles}}">

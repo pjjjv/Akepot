@@ -13,15 +13,12 @@
         <aha-table id="myTable"
           dataRows="{{tableData}}">
 
-          <template repeat="{{role in service.project.roles}}">
+          <template repeat="{{role in roles}}">
             <aha-column name="{{role.id}}" label="{{role.name}}" type="string" editable default="0"></aha-column>
           </template>
 
-          <template repeat="{{team in service.project.teams}}">
-            <span>Team: {{team.name}}</span>
-            <template repeat="{{person in team.persons}}">
-              <aha-column name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
-            </template>
+          <template repeat="{{person in persons}}">
+            <aha-column name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
           </template>
 
         </aha-table>

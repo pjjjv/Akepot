@@ -10,7 +10,7 @@
 
     <div id="outer" layout vertical>
       <template if="{{locallySignedIn}}">
-        <aha-table id="myTable"
+        <!--<aha-table id="myTable"
           dataRows="{{tableData}}">
 
           <template repeat="{{role in roles}}">
@@ -21,7 +21,8 @@
             <aha-column name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
           </template>
 
-        </aha-table>
+        </aha-table>-->
+     </template>
          <aha-table id="myTable"
             dataRows="{{tableData}}"
             condensed
@@ -31,7 +32,6 @@
             <aha-column name="second" editable type="string"></aha-column>
             <aha-column name="third" type="string"></aha-column>
             </aha-table>
-     </template>
     </div>
   </template>
 

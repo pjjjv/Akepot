@@ -13,13 +13,15 @@
         <aha-table id="myTable"
           dataRows="{{tableData}}"
           condensed
-          striped>
+          striped
+          pagesize="{{nr_rows}}">
 
-          <template repeat="{{role in roles}}">
-            <aha-column name="{{role.id}}" label="{{role.name}}" type="string" editable default="0"></aha-column>
+          <aha-column class="column" name="comp" label="Competence" type="string" default="Unknown competence"></aha-column>
+          <template class="" repeat="{{role in roles}}">
+            <aha-column class="column" name="{{role.id}}" label="{{role.name}}" type="string" editable default="0"></aha-column>
           </template>
-          <template repeat="{{person in persons}}">
-            <aha-column name="{{person.id}}" label="{{person.nickName}}" type="strength" default="0"></aha-column>
+          <template class="" repeat="{{person in persons}}">
+            <aha-column class="column" name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
           </template>
 <!--<aha-column name="-JvifXdJX_Al15x9lyNi" label="Role" type="string" editable default="0"></aha-column>
 <aha-column name="google:102684786665393580591" label="p1" type="strength" editable default="0"></aha-column>

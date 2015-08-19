@@ -22,12 +22,7 @@ class PaneReport extends PolymerElement {
   @published String projectHash = "";
   @observable bool locallySignedIn = false;
 
-  //@observable ObservableList<ObservableMap> tableData = toObservable([]);
-
-@observable var tableData = toObservable([
-{'-JvifXdJX_Al15x9lyNi': 0, 'google:102684786665393580591': 1, 'google:109869587768934442857': 3, 'google:113809236251975744790': 2},
-{'-JvifXdJX_Al15x9lyNi': 0, 'google:102684786665393580591': 2, 'google:109869587768934442857': 2, 'google:113809236251975744790': 1}
-]);
+  @observable ObservableList<ObservableMap> tableData = toObservable([]);
 
 
 @observable var tableData2 = toObservable([
@@ -63,6 +58,7 @@ class PaneReport extends PolymerElement {
   @observable List<Person> persons;
   @observable List<Role> roles;
   @observable List rolespersons;
+  @observable int nr_rows = 0;
 
   void fillTable(){
 
@@ -76,9 +72,6 @@ class PaneReport extends PolymerElement {
     rolespersons.addAll(persons);
     rolespersons.addAll(roles);
 
-
-    locallySignedIn = true; //TODO !!!!
-    return; //TODO !!!!
 
     /*for (Role role in persons){
       for (Category category in service.project.categories){
@@ -111,6 +104,7 @@ class PaneReport extends PolymerElement {
           for(CompetenceTemplate competenceTemplate in subCategory.competenceTemplates){
             //Person's competence
             person.allCompetences.add(new Competence.retrieveMatch(projectHash, person.id, competenceTemplate.id, service));
+            nr_rows++;
           }
         }
       }
@@ -125,6 +119,7 @@ class PaneReport extends PolymerElement {
 
     for(var c = 0; c < persons[0].allCompetences.length; c++) {
       ObservableMap map = toObservable({});
+      map.putIfAbsent("comp", () => persons[0].allCompetences[c].label);
       for(Role role in roles){
         map.putIfAbsent(role.id, () => 0);
       }

@@ -24,8 +24,6 @@ class PaneReport extends PolymerElement {
 
   //@observable ObservableList<ObservableMap> tableData = toObservable([]);
 
-
-@observable ObservableList secondOptions = toObservable(['opt1', 'opt2']);
 @observable var tableData = toObservable([
 {'first': true, 'second': 'opt1', 'third': 'one'},
 {'first': false, 'second': 'opt2', 'third': 'two'},

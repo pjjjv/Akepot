@@ -22,7 +22,21 @@ class PaneReport extends PolymerElement {
   @published String projectHash = "";
   @observable bool locallySignedIn = false;
 
-  @observable ObservableList<ObservableMap> tableData = toObservable([]);
+  //@observable ObservableList<ObservableMap> tableData = toObservable([]);
+
+
+@observable ObservableList secondOptions = toObservable(['opt1', 'opt2']);
+@observable var tableData = toObservable([
+{'first': true, 'second': 'opt1', 'third': 'one'},
+{'first': false, 'second': 'opt2', 'third': 'two'},
+{'first': true, 'second': 'opt1', 'third': 'three'},
+{'first': true, 'second': 'opt1', 'third': 'four'},
+{'first': false, 'second': 'opt2', 'third': 'five'},
+{'first': true, 'second': 'opt1', 'third': 'six'},
+{'first': true, 'second': 'opt1', 'third': 'seven'},
+{'first': false, 'second': 'opt2', 'third': 'eight'},
+{'first': true, 'second': 'opt1', 'third': 'nine'}
+]);
 
   void domReady() {
     service = document.querySelector("#service");
@@ -38,8 +52,8 @@ class PaneReport extends PolymerElement {
 
     service.project = toObservable(new Project.retrieve(projectHash, service));
 
-    const twenty = const Duration(seconds:5);
-    new Timer(twenty, fillTable);
+    //const twenty = const Duration(seconds:5);
+    //new Timer(twenty, fillTable);
   }
 
   @observable List<Person> persons;

@@ -13,6 +13,84 @@ import 'dart:html';
 import 'dart:async';
 import 'package:akepot/competences_service.dart';
 
+
+class Header extends Observable {
+  @observable String label = "";
+  @observable Person person;
+  @observable Role role;
+}
+
+class Row extends Observable {
+  @observable String label = "";
+  @observable ObservableList<Item> items = toObservable([]);
+  @observable CompetenceTemplate template;
+
+  List<Item> get levelItems {
+    List<Item> results = toObservable([]);
+    for(Item item in items.where((Item item) => item.level != null)){
+      results.add(item);
+    }
+    return results;
+  }
+
+  List<Item> get competenceItems {
+    List<Item> results = toObservable([]);
+    for(Item item in items.where((Item item) => item.competence != null)){
+      results.add(item);
+    }
+    return results;
+  }
+
+  asInt(String str) => int.parse(str);
+}
+
+class Item extends Observable {
+  @observable Competence competence;
+  @observable CompetenceLevel level;
+  @observable String type;
+
+  @observable String get value {
+    if(competence != null){
+      return competence.rating.toString();
+    } else if (level != null){
+      return level.level.toString();
+    }
+    return 0.toString();
+  }
+  @observable void set value(String value) {
+    if(competence != null){
+      try{
+        competence.rating = int.parse(value);
+      } on FormatException catch(e) {
+
+      }
+    } else if (level != null){
+      try{
+        level.level = int.parse(value);
+      } on FormatException catch(e) {
+
+      }
+    }
+  }
+
+  @observable List<CompetenceLevel> thresholdLevels;
+  @observable int threshold = 0;
+
+  void calculateThreshold([String roleId, int newLevel]){
+    int minimum = 0;
+    for (CompetenceLevel competence in thresholdLevels){
+      int level = competence.level;
+      if(roleId!=null && roleId == competence.rid){
+        level = newLevel;
+      }
+      if(level>minimum){
+        minimum=level;
+      }
+    }
+    threshold = minimum;
+  }
+}
+
 @CustomTag("pane-report")
 class PaneReport extends PolymerElement {
   PaneReport.created() : super.created() {
@@ -22,20 +100,9 @@ class PaneReport extends PolymerElement {
   @published String projectHash = "";
   @observable bool locallySignedIn = false;
 
-  @observable ObservableList<ObservableMap> tableData = toObservable([]);
+  @observable ObservableList<Header> headers = toObservable([]);
+  @observable ObservableList<Row> rows = toObservable([]);
 
-
-@observable var tableData2 = toObservable([
-{'first': true, 'second': 'opt1', 'third': 'one'},
-{'first': false, 'second': 'opt2', 'third': 'two'},
-{'first': true, 'second': 'opt1', 'third': 'three'},
-{'first': true, 'second': 'opt1', 'third': 'four'},
-{'first': false, 'second': 'opt2', 'third': 'five'},
-{'first': true, 'second': 'opt1', 'third': 'six'},
-{'first': true, 'second': 'opt1', 'third': 'seven'},
-{'first': false, 'second': 'opt2', 'third': 'eight'},
-{'first': true, 'second': 'opt1', 'third': 'nine'}
-]);
 
   void domReady() {
     service = document.querySelector("#service");
@@ -55,57 +122,63 @@ class PaneReport extends PolymerElement {
     new Timer(twenty, fillTable);
   }
 
-  @observable List<Person> persons;
-  @observable List<Role> roles;
-  @observable List rolespersons;
-  @observable int nr_rows = 0;
-
   void fillTable(){
 
-    persons = toObservable([]);
-    for (Team team in service.project.teams){
-      persons.addAll(team.persons);
+    //Column Headers
+    headers = toObservable([]);
+    for (Role role in service.project.roles){
+      Header header = new Header();
+      header.role = role;
+      header.label = role.name;
+      headers.add(header);
     }
-    roles = toObservable(service.project.roles);
+    for (Team team in service.project.teams){
+      for (Person person in team.persons){
+        Header header = new Header();
+        header.person = person;
+        header.label = person.nickName;
+        headers.add(header);
+      }
+    }
 
-    rolespersons = toObservable([]);
-    rolespersons.addAll(persons);
-    rolespersons.addAll(roles);
 
-
-    /*for (Role role in persons){
-      for (Category category in service.project.categories){
-        for (SubCategory subCategory in category.subcategories){
-          subCategory.competenceTemplateIds.changes.listen((records) {
-            for (ChangeRecord record in records) {
-              //We don't need to do anything with PropertyChangeRecords.
-              if (record is MapChangeRecord) {
-                //Something added
-                if (record.isInsert) {
-                  //Role's competence level
-                  competenceLevels.add(new CompetenceLevel.retrieveMatch(projectHash, service.user.uid, record.key, service));
-                }
-
-                //Something removed
-                if (record.isRemove) {
-                  //Role's competence level
-                  competenceLevels.removeWhere((competenceLevel) => competenceLevel.tid == record.key);
-                }
-              }
-            }
-          });
+    //Row Headers
+    rows = toObservable([]);
+    for (Category category in service.project.categories){
+      for (SubCategory subCategory in category.subcategories){
+        for(CompetenceTemplate competenceTemplate in subCategory.competenceTemplates){
+          Row row = new Row();
+          row.template = competenceTemplate;
+          row.label = competenceTemplate.label;
+          rows.add(row);
         }
       }
-    }*/
+    }
 
-    for (Person person in persons){
-      for (Category category in service.project.categories){
-        for (SubCategory subCategory in category.subcategories){
-          for(CompetenceTemplate competenceTemplate in subCategory.competenceTemplates){
-            //Person's competence
-            person.allCompetences.add(new Competence.retrieveMatch(projectHash, person.id, competenceTemplate.id, service));
-            nr_rows++;
+
+
+    //Contents
+    for(Row row in rows){
+      for(Header header in headers){
+        if(header.role != null){
+          Item item = new Item();
+          item.type = 'edit';
+          item.level = new CompetenceLevel.retrieveMatch(projectHash, header.role.id, row.template.id, service);
+          row.items.add(item);
+        } else if (header.person != null){
+          Item item = new Item();
+          item.type = 'strength';
+          item.competence = new Competence.retrieveMatch(projectHash, header.person.id, row.template.id, service);
+          item.thresholdLevels = toObservable([]);
+
+          for(int i = 0; i<headers.length; i++){
+            Header roleHeader = headers[i];
+            if(roleHeader.role==null) continue;
+            if(header.person.roleIds.containsKey(roleHeader.role.id)){
+              item.thresholdLevels.add(row.items[i].level);
+            }
           }
+          row.items.add(item);
         }
       }
     }
@@ -117,24 +190,18 @@ class PaneReport extends PolymerElement {
 
   void fillTable2(){
 
-    for(var c = 0; c < persons[0].allCompetences.length; c++) {
-      ObservableMap map = toObservable({});
-      map.putIfAbsent("comp", () => persons[0].allCompetences[c].label);
-      for(Role role in roles){
-        map.putIfAbsent(role.id, () => 2);
+    //Contents
+    for(Row row in rows){
+      for(Item item in row.competenceItems){
+        for(Item levelItem in row.levelItems){
+          levelItem.level.addLevelChangeListener(service, (e) {
+            item.calculateThreshold(levelItem.level.rid, e.snapshot.val());
+          });
+        }
+        item.calculateThreshold();
       }
-      for(Person person in persons){
-        map.putIfAbsent(person.id, () => person.allCompetences[c].rating);
-      }
-      tableData.add(map);
     }
 
-    print("tableData"+tableData.toString());
     locallySignedIn = true;
-  }
-
-
-  thresholdFromRow(Map values) {
-    return values[roles[0].id];
   }
 }

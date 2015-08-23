@@ -3,7 +3,6 @@ library akepot.model.model_person;
 import 'package:polymer/polymer.dart';
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/model/model_project.dart';
-import 'package:akepot/model/model_competence.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 
@@ -62,11 +61,10 @@ class Person extends Observable {
   }
 
   /** Not documented yet. */
-  @observable List<Role> roles = toObservable([]);//TODO: still add changes and listenres
+  @observable List<Role> roles = toObservable([]);
   @observable ObservableMap roleIds = toObservable(new Map());
 
   /* For report only */
-  @observable List<Competence> allCompetences = toObservable([]);
   /** Not documented yet. */
   String get name => nickName;
   void set name(String value) { }
@@ -85,7 +83,11 @@ class Person extends Observable {
     Person person = toObservable(new Person.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/persons/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
-      person.fromJson(val);
+      if(val != null){
+        person.fromJson(val);
+      } else {
+        person = null;
+      }
 
       if(person != null) {
         person._listen(service);
@@ -126,6 +128,7 @@ class Person extends Observable {
         person._listen(service);
       }
     });
+    person.service = service;
     return person;
   }
 
@@ -183,11 +186,11 @@ class Person extends Observable {
       }
     });
 
-    service.dbRef.child("projects/$projectHash/roles/$id/roleIds").onChildAdded.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/roleIds").onChildAdded.listen((e) {
       roleIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
     });
 
-    service.dbRef.child("projects/$projectHash/roles/$id/roleIds").onChildRemoved.listen((e) {
+    service.dbRef.child("projects/$projectHash/persons/$id/roleIds").onChildRemoved.listen((e) {
       roleIds.remove(e.snapshot.key);
     });
   }

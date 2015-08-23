@@ -1,20 +1,30 @@
 @import '../web/theme';
+$redA800: #C62828;
 
 .button {
-  background: $accent-color;
   @include text-button();
-  color: $text-white-primary;
   min-width: (5 * $component-grid);
   min-height: (5 * $component-grid);
+  background: $light-grey;
+  color: $text-black-secondary;
 }
 
 :host {
   margin: (1 * $component-grid);
 }
 
-:host([notselected]) {
+:host([selected]) {
   .button {
-    background: $light-grey !important;
-    color: $text-black-secondary !important;
+    background: $accent-color;
+    color: $text-white-primary;
   }
+}
+
+.button[above] {
+  background: $tealA400;
+  color: $text-white-primary;
+}
+.button[below] {
+  background: $redA800;
+  color: $text-white-primary;
 }

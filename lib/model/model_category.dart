@@ -49,7 +49,11 @@ class Category extends Observable {
     Category category = toObservable(new Category.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/categories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
-      category.fromJson(val);
+      if(val != null){
+        category.fromJson(val);
+      } else {
+        category = null;
+      }
 
       if(category != null) {
         category._listen(service, onlyName);

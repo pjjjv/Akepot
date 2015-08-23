@@ -148,8 +148,8 @@ class Competence extends Observable {
       throw new Exception("No projectHash.");
     }
     tid = _json["tid"]==null ? null : _json["tid"];
-    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     uid = _json["uid"]==null ? null : _json["uid"];
+    projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
     if (_json.containsKey("rating")) {
       rating = _json["rating"];
     } else {
@@ -167,11 +167,11 @@ class Competence extends Observable {
     if (tid != null) {
       _json["tid"] = tid;
     }
-    if (projectHash != null) {
-      _json["projectHash"] = projectHash;
-    }
     if (uid != null) {
       _json["uid"] = uid;
+    }
+    if (projectHash != null) {
+      _json["projectHash"] = projectHash;
     }
     if (rating != null) {
       _json["rating"] = rating;

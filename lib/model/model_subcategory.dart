@@ -52,9 +52,9 @@ class SubCategory extends Observable {
     SubCategory subCategory = toObservable(new SubCategory.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/subCategories/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
-      subCategory.fromJson(val);
 
-      if(subCategory != null) {
+      if(val != null) {
+        subCategory.fromJson(val);
         subCategory._listen(service);
       } else {
         //New subCategory

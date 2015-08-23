@@ -15,8 +15,6 @@ dependencies:
 #  json_object: '>=1.0.19 <1.1.0'
   firebase:
     path: ../firebase-dart
-  aha_table:
-    path: ../aha_table_dart
 transformers:
 - sass:
     compass: true                 # Include compass

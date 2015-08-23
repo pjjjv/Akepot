@@ -2,14 +2,22 @@
 <link rel="import" href="../../packages/paper_elements/paper_button.html">
 <link rel="import" href="../../packages/polymer/polymer.html">
 
-<polymer-element name="strength-button" attributes="number selected">
+<polymer-element name="strength-button" attributes="number selected limited threshold">
   <template>
     <link href="strength_button.css" rel="stylesheet">
     <template if="{{selected}}">
       <paper-button raised class="button">{{number}}</paper-button>
     </template>
     <template if="{{!selected}}">
-      <paper-button class="button">{{number}}</paper-button>
+      <template if="{{limited && number < threshold}}">
+        <paper-button below class="button">{{number}}</paper-button>
+      </template>
+      <template if="{{limited && number >= threshold}}">
+        <paper-button above class="button">{{number}}</paper-button>
+      </template>
+      <template if="{{!limited}}">
+        <paper-button class="button">{{number}}</paper-button>
+      </template>
     </template>
 
   </template>

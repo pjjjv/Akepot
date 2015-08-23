@@ -32,15 +32,12 @@ class Role extends Observable {
   }
 
   /** Not documented yet. */
-  @observable List<CompetenceLevel> competenceLevels = toObservable([]);
-  @observable ObservableMap competenceLevelIds = toObservable(new Map());
-
-  /* For report only */
-  @observable List<CompetenceLevel> allCompetenceLevels = toObservable([]);
+//  @observable List<CompetenceLevel> competenceLevels = toObservable([]);
+//  @observable ObservableMap competenceLevelIds = toObservable(new Map());
 
   @observable CompetencesService service;
 
-  Role.full(this.id, String this.projectHash, this._name, this._description, this.competenceLevels);
+  Role.full(this.id, String this.projectHash, this._name, this._description);
 
   Role.newId(this.id, String this.projectHash);
 
@@ -52,9 +49,9 @@ class Role extends Observable {
     Role role = toObservable(new Role.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/roles/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
-      role.fromJson(val);
 
-      if(role != null) {
+      if(val != null) {
+        role.fromJson(val);
         role._listen(service);
       } else {
         //New role
@@ -89,32 +86,32 @@ class Role extends Observable {
     service.dbRef.child("projects/$projectHash/roles/$id/description").onValue.listen((e) {
       _description = notifyPropertyChange(const Symbol('description'), this._description, e.snapshot.val());
     });
-
-    competenceLevelIds.changes.listen((records) {
-      for (ChangeRecord record in records) {
-        //We don't need to do anything with PropertyChangeRecords.
-        if (record is MapChangeRecord) {
-          //Something added
-          if (record.isInsert) {
-            CompetenceLevel competenceLevel = new CompetenceLevel.retrieve(record.key, projectHash, service);
-            competenceLevels.add(competenceLevel);//TODO));
-          }
-
-          //Something removed
-          if (record.isRemove) {
-            competenceLevels.removeWhere((competenceLevel) => competenceLevel.id == record.key);
-          }
-        }
-      }
-    });
-
-    service.dbRef.child("projects/$projectHash/roles/$id/competenceLevelIds").onChildAdded.listen((e) {
-      competenceLevelIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
-    });
-
-    service.dbRef.child("projects/$projectHash/roles/$id/competenceLevelIds").onChildRemoved.listen((e) {
-      competenceLevelIds.remove(e.snapshot.key);
-    });
+//
+//    competenceLevelIds.changes.listen((records) {
+//      for (ChangeRecord record in records) {
+//        //We don't need to do anything with PropertyChangeRecords.
+//        if (record is MapChangeRecord) {
+//          //Something added
+//          if (record.isInsert) {
+//            CompetenceLevel competenceLevel = new CompetenceLevel.retrieve(record.key, projectHash, service);
+//            competenceLevels.add(competenceLevel);//TODO));
+//          }
+//
+//          //Something removed
+//          if (record.isRemove) {
+//            competenceLevels.removeWhere((competenceLevel) => competenceLevel.id == record.key);
+//          }
+//        }
+//      }
+//    });
+//
+//    service.dbRef.child("projects/$projectHash/roles/$id/competenceLevelIds").onChildAdded.listen((e) {
+//      competenceLevelIds.addAll(new Map()..putIfAbsent(e.snapshot.key, () => e.snapshot.val()));
+//    });
+//
+//    service.dbRef.child("projects/$projectHash/roles/$id/competenceLevelIds").onChildRemoved.listen((e) {
+//      competenceLevelIds.remove(e.snapshot.key);
+//    });
   }
 
   _changeProperty(String child, var value){

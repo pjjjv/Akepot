@@ -1,6 +1,7 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/core_elements/core_signals.html">
-<link rel="import" href="../../../packages/aha_table/aha_table.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/akepot/strength_button.html">
 
 <polymer-element name="pane-report" attributes="projectHash">
   <template>
@@ -10,34 +11,43 @@
 
     <div id="outer" layout vertical>
       <template if="{{locallySignedIn}}">
-        <aha-table id="myTable"
-          dataRows="{{tableData}}"
-          condensed
-          striped
-          pagesize="{{nr_rows}}"
-          thresholdFromRow="{{thresholdFromRow}}">
 
-          <aha-column class="column" name="comp" label="Competence" type="string" default="Unknown competence"></aha-column>
-          <template class="" repeat="{{role in roles}}">
-            <aha-column class="column" name="{{role.id}}" label="{{role.name}}" type="string" editable default="0"></aha-column>
-          </template>
-          <template class="" repeat="{{person in persons}}">
-            <aha-column class="column" name="{{person.id}}" label="{{person.nickName}}" type="strength" editable default="0"></aha-column>
-          </template>
-<!--<aha-column name="-JvifXdJX_Al15x9lyNi" label="Role" type="string" editable default="0"></aha-column>
-<aha-column name="google:102684786665393580591" label="p1" type="strength" editable default="0"></aha-column>
-<aha-column name="google:109869587768934442857" label="pp2" type="strength" editable default="0"></aha-column>
-<aha-column name="google:113809236251975744790" label="ppp3" type="strength" editable default="0"></aha-column>-->
-        </aha-table>
+        <table id="aha_table_main">
+          <thead>
+            <tr>
+              <th>
+              </th>
+              <th template
+                repeat="{{ headers }}">
+                <span
+                  class="column-head">{{ label }}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr template
+              repeat="{{ rows }}">
+              <td layout horizontal>
+                <span
+                  class="row-head">{{ label }}</span>
+              </td>
+              <td template
+                repeat="{{ item in items }}"
+                class="aha-td">
+                <template if="{{ 'edit' == item.type }}">
+                  <paper-input value="{{item.value}}" class="{{ 'edit' == item.type ? '' : 'hide'}}"></paper-input>
+                </template>
+                <template if="{{ 'strength' == item.type }}">
+                  <strength-button
+                    number="{{ item.value | asInt }}"
+                    threshold="{{ item.threshold }}" limited ></strength-button>
+                </template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
      </template>
-         <!--<aha-table id="myTable"
-            dataRows="{{tableData}}"
-            condensed
-            striped>
-            <aha-column name="first" type="boolean"></aha-column>
-            <aha-column name="second" editable type="string"></aha-column>
-            <aha-column name="third" type="string"></aha-column>
-            </aha-table>-->
     </div>
   </template>
 

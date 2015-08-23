@@ -49,9 +49,9 @@ class Team extends Observable {
     Team team = toObservable(new Team.newId(id, projectHash));
     service.dbRef.child("projects/$projectHash/teams/$id").once("value").then((snapshot) {
       Map val = snapshot.val();
-      team.fromJson(val);
 
-      if(team != null) {
+      if(val != null) {
+        team.fromJson(val);
         team._listen(service);
       } else {
         //New team

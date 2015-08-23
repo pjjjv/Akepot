@@ -8,22 +8,22 @@ import 'package:firebase/firebase.dart';
 class CompetenceLevel extends Observable {
 
   /** Not documented yet. */
-  @observable String id;
+  @observable String tid;
+
+  /** Not documented yet. */
+  @observable String rid;
 
   /** Not documented yet. */
   @observable String projectHash;
 
   /** Not documented yet. */
   int _level = 0;
-  int get level => _level;
-  void set level(int value) {
+  @observable int get level => _level;
+  @observable void set level(int value) {
     this._level = notifyPropertyChange(const Symbol('level'), this._level, value);
 
-    _changeProperty("projects/$projectHash/competenceLevels/$id", new Map()..putIfAbsent("level", () => level));
+    _changeProperty("projects/$projectHash/roles/$rid/competences/$tid", new Map()..putIfAbsent("level", () => level));
   }
-
-  /** Not documented yet. */
-  @observable int competenceTemplateId;
 
   /** Not documented yet. */
   @observable String description = "";
@@ -33,37 +33,50 @@ class CompetenceLevel extends Observable {
 
   @observable CompetencesService service;
 
-  CompetenceLevel.full(this.id, String this.projectHash, this._level, this.competenceTemplateId);
+  CompetenceLevel.full(String this.projectHash, this.rid, this.tid, this._level);
 
-  CompetenceLevel.newId(this.id, String this.projectHash);
+  CompetenceLevel.newId(String this.projectHash, this.rid, this.tid);
 
   CompetenceLevel.emptyDefault(){
     label = "Unknown Competence";
     description = "-";
   }
 
-  factory CompetenceLevel.retrieve(String id, String projectHash, CompetencesService service) {
-    CompetenceLevel competenceLevel = toObservable(new CompetenceLevel.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/competenceLevels/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
-      competenceLevel.fromJson(val);
+  factory CompetenceLevel.retrieveMatch(String projectHash, String roleId, String competenceTemplateId, CompetencesService service) {
+    if(roleId == null){
+      throw new Exception("roleId null.");
+    }
+    if(projectHash == null){
+      throw new Exception("projectHash null.");
+    }
 
-      if(competenceLevel != null) {
+    CompetenceLevel competenceLevel = toObservable(new CompetenceLevel.newId(projectHash, roleId, competenceTemplateId));
+
+    service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId").once("value").then((snapshot) {
+      Map val = snapshot.val();
+
+      if(val != null) {
+        competenceLevel.fromJson(val);
         competenceLevel._listen(service);
       } else {
-        //New competenceLevel
-        competenceLevel = toObservable(new CompetenceLevel.newRemote(projectHash, service));
+        //New competence level copied from template
+        competenceLevel = toObservable(new CompetenceLevel.newRemoteFromTemplate(projectHash, roleId, competenceTemplateId, service));
       }
     });
     return competenceLevel;
   }
 
-  factory CompetenceLevel.newRemote(String projectHash, CompetencesService service) {
+  factory CompetenceLevel.newRemoteFromTemplate(String projectHash, String roleId, String competenceTemplateId, CompetencesService service) {
+    if(roleId == null){
+      throw new Exception("roleId null.");
+    }
+
     CompetenceLevel competenceLevel = toObservable(new CompetenceLevel.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/competenceLevels").push();
-    competenceLevel.id = pushRef.key;
+    Firebase ref = service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId");
     competenceLevel.projectHash = projectHash;
-    pushRef.set(competenceLevel.toJson()).then((error) {
+    competenceLevel.rid = roleId;
+    competenceLevel.tid = competenceTemplateId;
+    ref.update(competenceLevel.toJson()).then((error) {
       if(error != null) {
         //
       } else {
@@ -75,21 +88,30 @@ class CompetenceLevel extends Observable {
 
   toString() => level;
 
+  addLevelChangeListener(CompetencesService service, dynamic listener){
+    service.dbRef.child("projects/$projectHash/roles/$rid/competences/$tid/level").onValue.listen(listener);
+  }
+
   _listen(CompetencesService service){
     this.service = service;
-    service.dbRef.child("projects/$projectHash/competenceLevels/$id/level").onValue.listen((e) {
+
+    if(rid == null){
+      throw new Exception("rid null.");
+    }
+
+    service.dbRef.child("projects/$projectHash/roles/$rid/competences/$tid/level").onValue.listen((e) {
       _level = notifyPropertyChange(const Symbol('level'), this._level, e.snapshot.val());
     });
 
-    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/label").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$tid/label").onValue.listen((e) {
       String value = e.snapshot.val();
-      if (value == null) value = "Unknown competenceLevel";//TODO
-      label = notifyPropertyChange(const Symbol('label'), this.label, value);
+      if (value == null) value = "Unknown competence";
+      label = value;
     });
-    service.dbRef.child("projects/$projectHash/competenceTemplates/$competenceTemplateId/description").onValue.listen((e) {
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$tid/description").onValue.listen((e) {
       String value = e.snapshot.val();
-      if (value == null) value = "-";//TODO
-      description = notifyPropertyChange(const Symbol('description'), this.description, value);
+      if (value == null) value = "-";
+      description = value;
     });
   }
 
@@ -100,18 +122,18 @@ class CompetenceLevel extends Observable {
   }
 
   fromJson(Map _json, [bool noId = false]) {
-    if (!_json.containsKey("id") && noId == false) {
-      throw new Exception("No id.");
+    if (!_json.containsKey("tid") && noId == false) {
+      throw new Exception("No tid.");
+    }
+    if (!_json.containsKey("rid") && noId == false) {
+      throw new Exception("No rid.");
     }
     if (!_json.containsKey("projectHash") && noId == false) {
       throw new Exception("No projectHash.");
     }
-    id = _json["id"]==null ? null : _json["id"];
+    tid = _json["tid"]==null ? null : _json["tid"];
+    rid = _json["rid"]==null ? null : _json["rid"];
     projectHash = _json["projectHash"]==null ? null : _json["projectHash"];
-    if (!_json.containsKey("competenceTemplateId")) {
-      throw new Exception("No competenceTemplateId.");
-    }
-    competenceTemplateId = _json["competenceTemplateId"];
     if (_json.containsKey("level")) {
       level = _json["level"];
     } else {
@@ -121,17 +143,17 @@ class CompetenceLevel extends Observable {
 
   Map toJson() {
     var _json = new Map();
-    if (id != null) {
-      _json["id"] = id;
+    if (tid != null) {
+      _json["tid"] = tid;
+    }
+    if (rid != null) {
+      _json["rid"] = rid;
     }
     if (projectHash != null) {
       _json["projectHash"] = projectHash;
     }
     if (level != null) {
       _json["level"] = level;
-    }
-    if (competenceTemplateId != null) {
-      _json["competenceTemplateId"] = competenceTemplateId;
     }
     return _json;
   }

@@ -48,9 +48,8 @@ core-toolbar.tall paper-fab {
 }
 
 #content-section {
-  height: 1000px;
-  background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
 }
+
 #input-name {
   position: relative;
   padding: 10px;
@@ -82,7 +81,7 @@ core-toolbar.tall paper-fab {
 
 core-card3 {
   position: relative;
-  width: 100%;
+  //width: 100%;
   height: 50px;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;

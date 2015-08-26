@@ -12,6 +12,7 @@ class MenuProject extends PolymerElement {
   @published String selectedSection;
   @published String projectHash;
   @observable CompetencesService service;
+  @observable bool isAdmin = false;
 
   domReady(){
     service = document.querySelector("#service");
@@ -22,6 +23,9 @@ class MenuProject extends PolymerElement {
     if(service.categories.isNotEmpty) return;
     Project.getCategoryNames(projectHash, service, (List<Category> categories) {
       service.categories = categories;
+    });
+    Project.isAdmin(projectHash, service.user.uid, service, (bool isAdmin){
+      this.isAdmin = isAdmin;
     });
   }
 

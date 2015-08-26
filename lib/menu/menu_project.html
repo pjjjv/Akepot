@@ -14,6 +14,13 @@
       <paper-item id="menu_item_home" name="home" tabindex="0">
         <a href="#/"><core-icon icon="home"></core-icon><span flex>Home</span></a>
       </paper-item>
+      <template if="{{isAdmin}}">
+        <div class="separator empty"></div>
+        <paper-item id="menu_item_admin" name="admin" tabindex="0">
+          <a _href="#/admin/{{projectHash}}/edit"><core-icon icon="account-child"></core-icon><span flex>To admin</span></a>
+        </paper-item>
+        <div class="separator empty"></div>
+      </template>
       <div class="separator">All categories</div>
       <template if="{{service.signedIn}}">
         <template repeat="{{category in service.categories}}">

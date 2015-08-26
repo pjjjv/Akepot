@@ -5,7 +5,7 @@
   margin-top: 20px;
 }
 
-$card-width2: 300px;
+$card-width2: 500px;
 $card-height2: $card-width2 * 8 / 7;
 $title-height2: 64px;
 $image-height2: $card-height2 - $card-width2 - $title-height2;
@@ -14,7 +14,7 @@ $image-height2: $card-height2 - $card-width2 - $title-height2;
   margin: 100px 32px;
   width: $card-width2;
   min-height: $image-height2 + $title-height2 + $image-height2;
-  height: $card-height2;
+  //height: $card-height2;
 
   padding: 20px 16px;
   border-radius: 4px;

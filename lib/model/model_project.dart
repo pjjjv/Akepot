@@ -270,6 +270,17 @@ class Project extends Observable {
     return null;
   }
 
+  static void isAdmin(String hash, String uid, CompetencesService service, dynamic callback(bool isAdmin)) {
+    if(hash==null || hash=="") return;
+    service.dbRef.child("projects/$hash/adminIds/$uid").onValue.listen((e) {
+      if (e.snapshot.val() != null && e.snapshot.val() != ""){
+        callback(e.snapshot.val());
+      } else {
+        callback(false);
+      }
+    });
+  }
+
   static void getName(String hash, CompetencesService service, dynamic callback(String name)) {
     if(hash==null || hash=="") return;
     service.dbRef.child("projects/$hash/name").onValue.listen((e) {

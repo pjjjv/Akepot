@@ -1,0 +1,56 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/akepot/strength_button.html">
+
+<polymer-element name="pane-report" attributes="projectHash">
+  <template>
+    <link href="pane_report.css" rel="stylesheet">
+
+    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+
+    <div id="outer" layout vertical>
+      <template if="{{locallySignedIn}}">
+
+        <table id="aha_table_main">
+          <thead>
+            <tr>
+              <th>
+              </th>
+              <th template
+                repeat="{{ headers }}">
+                <span
+                  class="column-head">{{ label }}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr template
+              repeat="{{ rows }}">
+              <td layout horizontal>
+                <span
+                  class="row-head">{{ label }}</span>
+              </td>
+              <td template
+                repeat="{{ item in items }}"
+                class="aha-td">
+                <template if="{{ 'edit' == item.type }}">
+                  <paper-input id="paper-input" value="{{item.value}}" class="{{ 'edit' == item.type ? '' : 'hide'}}"></paper-input>
+                </template>
+                <template if="{{ 'strength' == item.type }}">
+                  <strength-button
+                    number="{{ item.value | asInt }}"
+                    threshold="{{ item.threshold }}" limited ></strength-button>
+                </template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+     </template>
+    </div>
+  </template>
+
+  <script type="application/dart" src="pane_report.dart"></script>
+</polymer-element>
+

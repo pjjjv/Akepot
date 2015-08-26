@@ -1,10 +1,9 @@
 CACHE MANIFEST
-# 2015-08-02 15:43:14
+# 2015-08-27 00:01:02
 
 CACHE:
 favicon.ico
 index.html
-
 main.dart.js
 akepot.web_components.bootstrap.dart.js
 icons/icon-196.png
@@ -15,7 +14,6 @@ images/splash.svg
 images/beach.jpg
 images/ilias.jpg
 akepot.bootstrap.dart.js
-akepot.html
 packages/core_elements/editor_icons_nodart.html
 packages/core_elements/core_selector.html
 packages/core_elements/core_layout_grid.html
@@ -889,7 +887,6 @@ packages/akepot/components/trianglify/trianglify-min.js
 packages/akepot/components/trianglify/d3.v3.min.js
 packages/akepot/components/ordered-columns/ordered-columns.html
 packages/akepot/components/ordered-columns/bower.json
-packages/akepot/edit_category.css
 packages/akepot/login/google_icons.html
 packages/akepot/login/login_google.css
 packages/akepot/login/login_google.html
@@ -919,6 +916,7 @@ packages/akepot/pages/section_edit_category.html
 packages/akepot/pages/pane_category.html
 packages/akepot/pages/panes_category.html
 packages/akepot/pages/section_edit_project.html
+packages/akepot/pages/page_report.html
 packages/akepot/pages/section_edit_category.css
 packages/akepot/pages/panes_category.css
 packages/akepot/pages/pane_join.html
@@ -930,6 +928,7 @@ packages/akepot/pages/pane_home.css
 packages/akepot/pages/section_edit_competence.html
 packages/akepot/pages/section_edit_project.css
 packages/akepot/pages/section_edit_subcategory.html
+packages/akepot/pages/pane_report.html
 packages/akepot/pages/page_join.html
 packages/akepot/pages/pane_join.css
 packages/akepot/pages/section_edit_competence.css
@@ -939,6 +938,7 @@ packages/akepot/pages/page_category.html
 packages/akepot/pages/section_edit_role.css
 packages/akepot/pages/section_edit_team.css
 packages/akepot/pages/pane_edit.html
+packages/akepot/pages/pane_report.css
 packages/akepot/pages/section_edit_subcategory.css
 packages/akepot/menu/menu_project.html
 packages/akepot/menu/menu_admin.html
@@ -952,7 +952,6 @@ packages/akepot/refresh_spinner.html
 packages/akepot/login_screen.css
 packages/akepot/subcategory_card.css
 packages/akepot/core_card2.css
-packages/akepot/edit_category.html
 packages/template_binding/js/node_bind.js
 packages/template_binding/js/microtask.js
 packages/template_binding/js/observe.js

@@ -2210,8 +2210,10 @@ return this.b},
 $isOd:1}}],["","",,Q,{
 "^":"",
 vt:{
-"^":"Xf;kX,RZ,ij,TQ,ca,Jc,Q$,a$,Q$,a$,b$,c$,d$,e$,f$,r$,x$,y$,z$,ch$,cx$,cy$,db$",
+"^":"Xf;kX,RZ,ij,TQ,ca,Jc,cw,bN,mT,Jr,Q$,a$,Q$,a$,b$,c$,d$,e$,f$,r$,x$,y$,z$,ch$,cx$,cy$,db$",
 z3:function(a){a.TQ=(a.shadowRoot||a.webkitShadowRoot).querySelector("#ajax-people")
+a.mT=(a.shadowRoot||a.webkitShadowRoot).querySelector("#ajax-colour-schemes")
+if(document.querySelector("#cmdebug")!=null)J.nS(a.mT,"data/colour_schemes_response.json")
 a.RZ=this.ct(a,C.Qs,a.RZ,!0)},
 Fd:function(a){a.Jc=new V.Rt(null,null,P.uw(J.Tf($.LX(),"Firebase"),["https://shining-heat-1634.firebaseio.com/"]),null,null,null,null,null)},
 static:{pl:function(a){var z,y
@@ -2221,6 +2223,7 @@ y=H.J(new V.br(P.Py(null,null,null,y,null),null,null),[y,null])
 a.kX=!1
 a.RZ=!1
 a.ij=new Q.pe("","","","","",null,null,null,null)
+a.cw=[]
 a.d$=[]
 a.x$=!1
 a.z$=!1
@@ -2240,6 +2243,7 @@ pe:{
 "^":"",
 Ur:{
 "^":"Im;kX,RZ,ij,TQ,ca,Jc,cw,bN,mT,Jr,IL,TO,S8,ZG,Y0,j4,kZ,Q$,a$,Q$,a$,b$,c$,d$,e$,f$,r$,x$,y$,z$,ch$,cx$,cy$,db$",
+sO3:function(a,b){a.TQ=this.ct(a,C.Fh,a.TQ,b)},
 gkc:function(a){return a.mT},
 i0:function(a){a.ij.Ny("CoreAjax.created")
 a.kX=document.createElement("core-xhr-dart",null)},
@@ -5622,7 +5626,7 @@ $isqE:1,
 $iscv:1,
 $isKV:1,
 $isa:1,
-"%":"HTMLAppletElement|HTMLBRElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLLabelElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMenuItemElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPictureElement|HTMLPreElement|HTMLQuoteElement|HTMLScriptElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTitleElement|HTMLUListElement|HTMLUnknownElement|PluginPlaceholderElement;HTMLElement;jp|TR|ir|Xf|vt|Im|Ur|IG"},
+"%":"HTMLAppletElement|HTMLBRElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLLabelElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMenuItemElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPictureElement|HTMLPreElement|HTMLQuoteElement|HTMLScriptElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTitleElement|HTMLUListElement|HTMLUnknownElement|PluginPlaceholderElement;HTMLElement;Tt|TR|ir|Xf|vt|Im|Ur|IG"},
 SV:{
 "^":"Gv;",
 $iszM:1,
@@ -6271,97 +6275,97 @@ $isGv:1,
 $isa:1,
 "%":"SVGAltGlyphElement"},
 ui:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGSetElement"},
 jw:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEBlendElement"},
 lv:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEColorMatrixElement"},
 pf:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEComponentTransferElement"},
 NV:{
-"^":"Qm;xS:operator=,yG:result=",
+"^":"d5;xS:operator=,yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFECompositeElement"},
 W1:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEConvolveMatrixElement"},
 ee:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEDiffuseLightingElement"},
 wf:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEDisplacementMapElement"},
 Ti:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEFloodElement"},
 tk:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEGaussianBlurElement"},
 US:{
-"^":"Qm;yG:result=,LU:href=",
+"^":"d5;yG:result=,LU:href=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEImageElement"},
 oB:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEMergeElement"},
 yu:{
-"^":"Qm;xS:operator=,yG:result=",
+"^":"d5;xS:operator=,yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEMorphologyElement"},
 MI:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFEOffsetElement"},
 bM:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFESpecularLightingElement"},
 Qy:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFETileElement"},
 ju:{
-"^":"Qm;yG:result=",
+"^":"d5;yG:result=",
 $isGv:1,
 $isa:1,
 "%":"SVGFETurbulenceElement"},
 OE:{
-"^":"Qm;LU:href=",
+"^":"d5;LU:href=",
 $isGv:1,
 $isa:1,
 "%":"SVGFilterElement"},
 Du:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGCircleElement|SVGClipPathElement|SVGDefsElement|SVGEllipseElement|SVGForeignObjectElement|SVGGElement|SVGGeometryElement|SVGLineElement|SVGPathElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSwitchElement;SVGGraphicsElement"},
@@ -6371,26 +6375,26 @@ $isGv:1,
 $isa:1,
 "%":"SVGImageElement"},
 uz:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGMarkerElement"},
 Yd:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGMaskElement"},
 Ac:{
-"^":"Qm;LU:href=",
+"^":"d5;LU:href=",
 $isGv:1,
 $isa:1,
 "%":"SVGPatternElement"},
 hi:{
-"^":"Qm;LU:href=",
+"^":"d5;LU:href=",
 $isGv:1,
 $isa:1,
 "%":"SVGScriptElement"},
-Qm:{
+d5:{
 "^":"cv;",
 $isD0:1,
 $isGv:1,
@@ -6404,7 +6408,7 @@ $isGv:1,
 $isa:1,
 "%":"SVGSVGElement"},
 aS:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGSymbolElement"},
@@ -6425,32 +6429,32 @@ $isGv:1,
 $isa:1,
 "%":"SVGUseElement"},
 ZD:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGViewElement"},
 wD:{
-"^":"Qm;LU:href=",
+"^":"d5;LU:href=",
 $isGv:1,
 $isa:1,
 "%":"SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement"},
 We:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGCursorElement"},
 tw:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGFEDropShadowElement"},
 Pi:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGGlyphRefElement"},
 zu:{
-"^":"Qm;",
+"^":"d5;",
 $isGv:1,
 $isa:1,
 "%":"SVGMPathElement"}}],["","",,P,{
@@ -7839,7 +7843,7 @@ y=J.Tf($.LX(),"WebComponents")
 x=y==null||J.Tf(y,"flags")==null?P.A(null,null):J.Tf(J.Tf(y,"flags"),"log")
 z.a=x
 if(x==null)z.a=P.A(null,null)
-w=[$.yk(),$.BY(),$.P5(),$.ZH(),$.ve(),$.xP()]
+w=[$.yk(),$.BY(),$.P5(),$.ZH(),$.ve(),$.pa()]
 v=N.Jx("polymer")
 if(!C.Nm.Vr(w,new A.j0(z))){v.sOR(C.oO)
 return}H.J(new H.U5(w,new A.MZ(z)),[H.Kp(w,0)]).aN(0,new A.mq())
@@ -8054,13 +8058,13 @@ a.db$=P.A(null,null)
 C.GB.LX(a)
 C.GB.XI(a)
 return a}}},
-jp:{
+Tt:{
 "^":"qE+zs;Cp:y$=",
 $iszs:1,
 $isTU:1,
 $iswn:1},
 TR:{
-"^":"jp+nE;",
+"^":"Tt+nE;",
 $iswn:1},
 zs:{
 "^":"a;Cp:y$=",
@@ -8097,7 +8101,7 @@ a.x$=!0
 this.bT(a)
 this.z2(a,a.b$)
 this.gQg(a).Rz(0,"unresolved")
-$.xP().To(new A.yG(a))},
+$.pa().To(new A.yG(a))},
 z3:function(a){},
 ig:function(a){if(a.b$==null)throw H.b(P.s("polymerCreated was not called for custom element "+H.d(this.gRT(a))+", this should normally be done in the .created() if Polymer is used as a mixin."))
 this.oW(a)
@@ -10597,6 +10601,7 @@ J.mT=function(a,b,c,d){return J.RE(a).ea(a,b,c,d)}
 J.n0=function(a,b){return J.RE(a).Rf(a,b)}
 J.nC=function(a,b){return J.RE(a).sCd(a,b)}
 J.nJ=function(a){return J.RE(a).ga4(a)}
+J.nS=function(a,b){return J.RE(a).sO3(a,b)}
 J.nX=function(a){return J.RE(a).gjb(a)}
 J.nq=function(a){return J.RE(a).gFL(a)}
 J.ok=function(a,b){return J.RE(a).RR(a,b)}
@@ -10849,6 +10854,7 @@ C.Qs=new H.GD("readyDom")
 C.L9=new H.GD("registerCallback")
 C.B0=new H.GD("style")
 C.Gs=new H.GD("title")
+C.Fh=new H.GD("url")
 C.ls=new H.GD("value")
 C.Mn=H.K('qA')
 C.Vh=H.K('Pz')
@@ -10989,7 +10995,7 @@ I.$lazy($,"_eventsLog","HK","BY",function(){return N.Jx("polymer.events")})
 I.$lazy($,"_unbindLog","fV","P5",function(){return N.Jx("polymer.unbind")})
 I.$lazy($,"_bindLog","Q6","ZH",function(){return N.Jx("polymer.bind")})
 I.$lazy($,"_watchLog","p5","ve",function(){return N.Jx("polymer.watch")})
-I.$lazy($,"_readyLog","nS","xP",function(){return N.Jx("polymer.ready")})
+I.$lazy($,"_readyLog","jp","pa",function(){return N.Jx("polymer.ready")})
 I.$lazy($,"_polymerElementProto","LW","JD",function(){return new A.W6().$0()})
 I.$lazy($,"_BINARY_OPERATORS","tB","pn",function(){return P.B(["+",new K.MdQ(),"-",new K.YJG(),"*",new K.DOe(),"/",new K.lPa(),"%",new K.Ufa(),"==",new K.Raa(),"!=",new K.w4(),"===",new K.w7(),"!==",new K.w9(),">",new K.w10(),">=",new K.w11(),"<",new K.w12(),"<=",new K.w13(),"||",new K.w14(),"&&",new K.w15(),"|",new K.w16()],null,null)})
 I.$lazy($,"_UNARY_OPERATORS","pr","mN",function(){return P.B(["+",new K.wJY(),"-",new K.zOQ(),"!",new K.W6o()],null,null)})

@@ -1,21 +1,11 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../subcategory_card.html">
-<link rel="import" href="../../../packages/core_elements/core_ajax_dart.html">
 <link rel="import" href="../../../packages/paper_elements/paper_fab.html">
 <link rel="import" href="../../../packages/akepot/components/ordered-columns/ordered-columns.html">
 
 <polymer-element name="pane-category" attributes="subcategories">
   <template>
     <link href="pane_category.css" rel="stylesheet">
-
-    <core-ajax-dart id="ajax-colour-schemes"
-      url="https://jsonp.nodejitsu.com/"
-      on-core-error="{{ajaxError}}"
-      on-core-response="{{ajaxColourSchemesResponse}}"
-      handleAs="json" method="GET"
-      params='{ "url" : "http://www.colourlovers.com/api/palettes/top?format=json" }'
-      body="{'numResults': 100}" auto>
-    </core-ajax-dart><!-- proxied through Nodejitsu JSONProxy because colourlovers does not support CORS. -->
 
     <div layout center-justified>
       <ordered-columns columnWidth="495" cascade>

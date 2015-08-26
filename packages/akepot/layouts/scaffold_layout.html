@@ -21,7 +21,6 @@
 <link rel="import" href="../../../packages/core_elements/core_scaffold.html">
 <link rel="import" href="../../../packages/core_elements/core_header_panel.html">
 <link rel="import" href="../../../packages/core_elements/core_toolbar.html">
-<link rel="import" href="../../../packages/core_elements/core_menu.html">
 <link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
 <link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
 <link rel="import" href="../../../packages/akepot/menu/menu_admin.html">
@@ -47,14 +46,12 @@
           </div>
         </core-toolbar>
 
-        <core-menu flex id="panel-list" class="content" theme="core-light-theme" selectedAttribute="">
-          <!-- Home -->
-          <menu-home hidden?="{{menu != 'home'}}" selectedSection="{{selected}}"></menu-home>
-          <!-- Project -->
-          <menu-project hidden?="{{menu != 'project'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-project>
-          <!-- Admin -->
-          <menu-admin hidden?="{{menu != 'admin'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-admin>
-        </core-menu>
+        <!-- Home -->
+        <menu-home hidden?="{{menu != 'home'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-home>
+        <!-- Project -->
+        <menu-project hidden?="{{menu != 'project'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-project>
+        <!-- Admin -->
+        <menu-admin hidden?="{{menu != 'admin'}}" selectedSection="{{selected}}" projectHash="{{projectHash}}"></menu-admin>
       </core-header-panel>
 
       <title-page hidden="true" tool projectHash="{{projectHash}}"></title-page><!-- bug: if this is not "preloaded" here than the title-page in e.g. page-category will not initPolymer (load; call domReady). -->

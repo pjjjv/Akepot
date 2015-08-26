@@ -22,6 +22,15 @@
     <core-signals on-core-signal-loginsuccess="{{signInDone}}"></core-signals>
     <core-signals on-core-signal-loginsignedout="{{signOutDone}}"></core-signals>
 
+    <core-ajax-dart id="ajax-colour-schemes"
+      url="https://jsonp.nodejitsu.com/"
+      on-core-error="{{ajaxError}}"
+      on-core-response="{{ajaxColourSchemesResponse}}"
+      handleAs="json" method="GET"
+      params='{ "url" : "http://www.colourlovers.com/api/palettes/top?format=json" }'
+      body="{'numResults': 100}" auto>
+    </core-ajax-dart><!-- proxied through Nodejitsu JSONProxy because colourlovers does not support CORS. -->
+
   </template>
   <script type="application/dart" src="competences_service.dart"></script>
 </polymer-element>

@@ -35,7 +35,7 @@
                 repeat="{{ item in items }}"
                 class="aha-td">
                 <template if="{{ 'edit' == item.type }}">
-                  <paper-input value="{{item.value}}" class="{{ 'edit' == item.type ? '' : 'hide'}}"></paper-input>
+                  <paper-input id="paper-input" value="{{item.value}}" class="{{ 'edit' == item.type ? '' : 'hide'}}"></paper-input>
                 </template>
                 <template if="{{ 'strength' == item.type }}">
                   <strength-button

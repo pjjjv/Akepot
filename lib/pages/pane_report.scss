@@ -66,15 +66,14 @@
 #outer {
   height: 100%;
 }
-#paper_input {
-  position: relative;
-  padding: 10px;
-}
 #paper_input2 {
   position: relative;
   padding: 10px;
   left: 100px;
   width: 100%;
+}
+#paper-input {
+  width: 5em;
 }
 #div {
   display: block;

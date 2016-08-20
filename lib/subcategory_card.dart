@@ -1,21 +1,24 @@
+@HtmlImport('subbcategory_card.html')
+library akepot.lib.subbcategory_card;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_subcategory.dart';
 import 'package:akepot/single_strength_item.dart';
-import 'package:core_elements/core_image.dart';
+import 'package:polymer_elements/iron_image.dart';
 import 'dart:html';
 import 'dart:js';
 import 'dart:math';
 import 'dart:async';
 import 'package:akepot/competences_service.dart';
 
-@CustomTag('subcategory-card')
+@PolymerRegister('subcategory-card')
 class SubCategoryCard extends PolymerElement {
   SubCategoryCard.created() : super.created();
 
   CompetencesService service;
-  @published SubCategory subcategory;
-  @published Palette palette;
+  @property SubCategory subcategory;
+  @property Palette palette;
 
   void domReady() {
     service = document.querySelector("#service");
@@ -49,7 +52,7 @@ class SubCategoryCard extends PolymerElement {
     if(palette == null){
       return;
     }
-    CoreImage image = shadowRoot.querySelector('#header');
+    IronImage image = shadowRoot.querySelector('#header');
     if(image.getClientRects().length == 0){
       return;
     }

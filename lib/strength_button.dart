@@ -1,11 +1,14 @@
+@HtmlImport('strength_button.html')
+library akepot.lib.strength_button;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 
-@CustomTag('strength-button')
+@PolymerRegister('strength-button')
 class StrengthButton extends PolymerElement {
   StrengthButton.created() : super.created();
-  @published int number = 0;
-  @published bool selected = false;
-  @published int threshold = 0;
-  @published bool limited = false;
+  @property int number = 0;
+  @property bool selected = false;
+  @property int threshold = 0;
+  @property bool limited = false;
 }

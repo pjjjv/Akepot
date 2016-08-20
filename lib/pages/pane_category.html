@@ -1,15 +1,27 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../subcategory_card.html">
-<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_fab.html">
 <link rel="import" href="../../../packages/akepot/components/ordered-columns/ordered-columns.html">
+<link rel="import" href="../../../packages/iron-flex-layout/iron-flex-layout.html">
 
-<polymer-element name="pane-category" attributes="subcategories">
+<dom-module id="pane-category">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][center-justified] {
+      @apply(--layout-center-justified);
+    }
+  </style>
+  <link rel="import" type="css" href="pane_category.css">
   <template>
-    <link href="pane_category.css" rel="stylesheet">
 
     <div layout center-justified>
-      <ordered-columns columnWidth="495" cascade>
-        <template repeat="{{subcategory in subcategories}}">
+      <ordered-columns columnwidth="495" cascade>
+        <template is="dom-repeat" items="{{subcategories}}" as="subcategory">
           <subcategory-card role="article" id="card" subcategory="{{subcategory}}">
           </subcategory-card>
         </template>
@@ -17,5 +29,4 @@
     </div>
   </template>
 
-  <script type="application/dart" src="pane_category.dart"></script>
-</polymer-element>
+</dom-module>

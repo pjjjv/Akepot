@@ -1,18 +1,49 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_icon.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_button.html">
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
-<link rel="import" href="../../../packages/core_elements/core_signals.html">
-<link rel="import" href="../../../packages/core_elements/core_dropdown_menu.html">
-<link rel="import" href="../../../packages/core_elements/core_dropdown.html">
-<link rel="import" href="../../../packages/core_elements/core_selector.html">
-<link rel="import" href="../../../packages/core_elements/core_item.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_signals.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_dropdown_menu.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_dropdown.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_selector.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_item.html">
+<link rel="import" href="../../../packages/polymer_elements/iron-flex-layout.html">
 
-<polymer-element name="pane-join" attributes="projectHash">
+<dom-module id="pane-join">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+    [layout][wrap] {
+      @apply(--layout-wrap);
+    }
+    [layout][center-justified] {
+      @apply(--layout-center-justified);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [self-center] {
+      @apply(--layout-self-center);
+    }
+    [fit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  </style>
+  <link rel="import" type="css" href="pane_join.css">
   <template>
-    <link href="pane_join.css" rel="stylesheet">
 
-    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
 
     <div layout horizontal wrap center-justified cross-fade-delayed>
       <div id="card-join" self-center layout vertical>
@@ -20,31 +51,31 @@
           <div id="title">Join this project?</div>
         </div>
         <div id="title-box-substitute"></div>
-        <template if="{{service.signedIn}}">
+        <template is="dom-if" if="{{service.signedIn}}">
           <div id="text-box">
             <p>Would you like to join this project?</p>
             <p>Team to be added to: </p>
-            <core-dropdown-menu label="Choose a team">
-              <core-dropdown class="dropdown">
-                <core-selector valueattr="id" selected="{{selected}}">
-                  <template repeat="{{team in service.project.teams | enumerate}}">
-                    <core-item id="{{team.index}}" label="{{team.value.name}}"></core-item>
+            <paper-dropdown-menu label="Choose a team">
+              <iron-dropdown class="dropdown">
+                <iron-selector attr-for-selected="id" selected="{{selected}}">
+                  <template is="dom-repeat" items="{{enumerate(service.project.teams)}}" as="team">
+                    <paper-item id="{{team.index}}" undefined="{{team.value.name}}"></paper-item>
                   </template>
-                </core-selector>
-              </core-dropdown>
-            </core-dropdown-menu>
+                </iron-selector>
+              </iron-dropdown>
+            </paper-dropdown-menu>
             <p>Select your roles: </p>
-            <core-selector valueattr="id" selected="{{multiselected}}" multi>
-              <template repeat="{{role in service.project.roles}}">
+            <iron-selector attr-for-selected="id" selected="{{multiselected}}" multi="">
+              <template is="dom-repeat" items="{{service.project.roles}}" as="role">
                 <paper-item id="{{role.id}}" tabindex="0">
-                  <core-icon icon="assignment-ind"></core-icon><span flex>{{role.name}}</span>
+                  <iron-icon icon="assignment-ind"></iron-icon><span flex="">{{role.name}}</span>
                 </paper-item>
               </template>
-            </core-selector>
+            </iron-selector>
           </div>
-          <div flex></div><!-- active="false" -->
+          <div flex=""></div><!-- active="false" -->
           <paper-button self-center id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">
-            <core-icon icon="add" aria-label="add" role="img"></core-icon>
+            <iron-icon icon="add" aria-label="add" role="img"></iron-icon>
             Join project
           </paper-button>
         </template>
@@ -52,6 +83,5 @@
     </div>
   </template>
 
-  <script type="application/dart" src="pane_join.dart"></script>
-</polymer-element>
+</dom-module>
 

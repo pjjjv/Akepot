@@ -1,9 +1,12 @@
+@HtmlImport('section_edit_role.html')
+library akepot.lib.pages.section_edit_role;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_role.dart';
 import 'dart:html';
 
-@CustomTag("section-edit-role")
+@PolymerRegister("section-edit-role")
 class SectionEditRole extends PolymerElement {
   SectionEditRole.created() : super.created() {
 
@@ -16,13 +19,13 @@ class SectionEditRole extends PolymerElement {
     .catchError((Error error) => if (DEBUG) print("Error: $error"));*/
   }
 
-  @published Role role;
-  @published int page;
+  @property Role role;
+  @property int page;
 
   void domReady() {
   }
 
   void goUp(Event e, var detail, HtmlElement target){
-    this.fire( "core-signal", detail: { "name": "goup3" } );
+    this.fire( "iron-signal", detail: { "name": "goup3" } );
   }
 }

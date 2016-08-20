@@ -1,9 +1,12 @@
+@HtmlImport('section_edit_competence.html')
+library akepot.lib.pages.section_edit_competence;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
 import 'dart:html';
 
-@CustomTag("section-edit-competence")
+@PolymerRegister("section-edit-competence")
 class SectionEditCompetence extends PolymerElement {
   SectionEditCompetence.created() : super.created() {
 
@@ -16,13 +19,13 @@ class SectionEditCompetence extends PolymerElement {
     .catchError((Error error) => if (DEBUG) print("Error: $error"));*/
   }
 
-  @published CompetenceTemplate competenceTemplate;
-  @published int page;
+  @property CompetenceTemplate competenceTemplate;
+  @property int page;
 
   void domReady() {
   }
 
   void goUp(Event e, var detail, HtmlElement target){
-    this.fire( "core-signal", detail: { "name": "goup" } );
+    this.fire( "iron-signal", detail: { "name": "goup" } );
   }
 }

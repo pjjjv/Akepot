@@ -1,8 +1,11 @@
+@HtmlImport('core_card2.html')
+library akepot.lib.core_card2;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 
-@CustomTag('core-card2')
+@PolymerRegister('core-card2')
 class CoreCard2 extends PolymerElement {
   bool flipped = false;
   CoreCard2.created() : super.created();

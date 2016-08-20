@@ -8,46 +8,46 @@ core-scaffold::shadow [main] {
   background-color: white;
 }
 
-core-toolbar {
+paper-toolbar {
   @include text-title();
   color: $text-white;
 }
-core-toolbar.tall {
+paper-toolbar.tall {
   background-color: $dark-color;
   height: (8 * $component-grid);
 }
-core-toolbar:not(.tall) {
+paper-toolbar:not(.tall) {
   background-color: $dark-color;
 }
 core-scaffold::shadow {
-  core-toolbar {
-    @extend core-toolbar;
+  paper-toolbar {
+    @extend paper-toolbar;
   }
-  core-toolbar.tall {
-    @extend core-toolbar.tall;
+  paper-toolbar.tall {
+    @extend paper-toolbar.tall;
   }
-  core-toolbar:not(.tall) {
-    @extend core-toolbar:not(.tall);
+  paper-toolbar:not(.tall) {
+    @extend paper-toolbar:not(.tall);
   }
 }
 core-scaffold {
-  core-header-panel{
+  paper-header-panel{
     box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);
     color: $text-black-secondary;
 
     //Left top toolbar
-    core-toolbar{
+    paper-toolbar{
       @include text-subhead();
       color: $text-white;
       padding: (2 * $component-grid) 0 (2 * $component-grid) (3 * $component-grid);
 
-      core-image{
+      iron-image{
         width: (50 * $component-grid);
         height: (50 * $component-grid);
         background-color: rgba(0,0,0,0);
       }
     }
-    core-toolbar.tall {
+    paper-toolbar.tall {
       height: (24 * $component-grid);
     }
 
@@ -94,13 +94,13 @@ core-scaffold {
     }
 
     //Drawer menu
-    core-selector, core-menu {
+    iron-selector, paper-menu {
       overflow: auto;
     }
-    core-menu {
+    paper-menu {
       margin: (1 * $component-grid) 0 0 0;
     }
-    core-menu /deep/ .separator {
+    paper-menu /deep/ .separator {
       @include text-body2();
       min-width: (8 * $component-grid);
       min-height: (2 * $component-grid);
@@ -108,7 +108,7 @@ core-scaffold {
       padding-top: (2 * $component-grid) - 0.1rem;
       border-top: 1px solid $light-grey;
     }
-    core-menu /deep/ .separator .empty {
+    paper-menu /deep/ .separator .empty {
       min-height: (1 * $component-grid);
       padding: 0;
       border-top: 0;

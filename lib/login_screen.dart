@@ -1,23 +1,26 @@
+@HtmlImport('login_screen.html')
+library akepot.lib.login_screen;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
-import 'package:core_elements/core_ajax_dart.dart';
+import 'package:polymer_elements/iron_ajax.dart';
 import 'login/login_google.dart';
 import 'package:akepot/competences_service.dart';
 
-@CustomTag('login-screen')
+@PolymerRegister('login-screen')
 class LoginScreen extends PolymerElement {
   LoginScreen.created() : super.created();
-  @observable bool signedIn = false;
-  @observable String accessToken = "";
-  @observable String name = "";
+  bool signedIn = false;
+  String accessToken = "";
+  String name = "";
 
   void signInDone(CustomEvent event, dynamic response){
     signedIn = true;
 
     Map headers = {"Content-type": "application/json",
                "Authorization": "Bearer ${response['google']['accessToken']}"};
-    CoreAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
+    IronAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
     peopleAjax.headers = headers;
     peopleAjax.go();
   }

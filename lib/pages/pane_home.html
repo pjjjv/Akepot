@@ -1,10 +1,44 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_icon.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_button.html">
+<link rel="import" href="../../../packages/polymer_elements/iron-flex-layout.html">
 
-<polymer-element name="pane-home">
+<dom-module id="pane-home">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+    [layout][wrap] {
+      @apply(--layout-wrap);
+    }
+    [layout][center-justified] {
+      @apply(--layout-center-justified);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [self-center] {
+      @apply(--layout-self-center);
+    }
+    [fit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+  <link rel="import" type="css" href="pane_home.css">
   <template>
-    <link href="pane_home.css" rel="stylesheet">
 
     <div layout horizontal wrap center-justified cross-fade-delayed>
       <div id="card-link" self-center layout vertical>
@@ -27,13 +61,12 @@
         </div>
         <div flex></div>
         <paper-button hidden self-center id="new-button" raised class="colored custom raised-button" autofocus tabindex="0">
-          <core-icon icon="create" aria-label="create" role="img"></core-icon>
+          <iron-icon icon="create" aria-label="create" role="img"></iron-icon>
           Create project
         </paper-button>
       </div>
     </div>
   </template>
 
-  <script type="application/dart" src="pane_home.dart"></script>
-</polymer-element>
+</dom-module>
 

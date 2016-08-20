@@ -1,17 +1,20 @@
+@HtmlImport('panes_category.html')
+library akepot.lib.pages.panes_category;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
 
-@CustomTag('panes-category')
+@PolymerRegister('panes-category')
 class PanesCategory extends PolymerElement {
 
-  @observable CompetencesService service;
-  @published String projectHash = "";
-  @published String selectedCategory = "";//Bugfix: needs to be assigned "", to prevent it from being 0.
+  CompetencesService service;
+  @property String projectHash = "";
+  @property String selectedCategory = "";//Bugfix: needs to be assigned "", to prevent it from being 0.
 
   PanesCategory.created() : super.created();
 

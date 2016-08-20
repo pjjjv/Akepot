@@ -2,11 +2,20 @@
 <link rel="import" href="../../../packages/akepot/layouts/scaffold_layout.html">
 <link rel="import" href="../../../packages/akepot/menu/title_page.html">
 
-<polymer-element name="page-category" attributes="projectHash selectedCategory" noscript>
+<dom-module id="page-category">
   <template>
-    <scaffold-layout menu="project" selected="{{selectedCategory}}" projectHash="{{projectHash}}">
-      <title-page class="title" projectHash="{{projectHash}}" cross-fade>Competence Matrix for </title-page>
-      <panes-category projectHash="{{projectHash}}" selectedCategory="{{selectedCategory}}"></panes-category>
+    <scaffold-layout menu="project" selected="{{selectedCategory}}" projecthash="{{projectHash}}">
+      <title-page class="title" projecthash="{{projectHash}}" cross-fade="">Competence Matrix for </title-page>
+      <panes-category projecthash="{{projectHash}}" selectedcategory="{{selectedCategory}}"></panes-category>
     </scaffold-layout>
   </template>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'page-category',
+      properties: {
+        projectHash: { notify: true },
+        selectedCategory: { notify: true }
+      }
+    });
+  </script>
+</dom-module>

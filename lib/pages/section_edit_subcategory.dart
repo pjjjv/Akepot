@@ -1,9 +1,12 @@
+@HtmlImport('section_edit_subcategory.html')
+library akepot.lib.pages.section_edit_subcategory;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_subcategory.dart';
 import 'dart:html';
 
-@CustomTag("section-edit-subcategory")
+@PolymerRegister("section-edit-subcategory")
 class SectionEditSubCategory extends PolymerElement {
   SectionEditSubCategory.created() : super.created() {
 
@@ -16,27 +19,27 @@ class SectionEditSubCategory extends PolymerElement {
     .catchError((Error error) => if (DEBUG) print("Error: $error"));*/
   }
 
-  @published SubCategory subCategory;
-  @published int page;
-  @published int index;
+  @property SubCategory subCategory;
+  @property int page;
+  @property int index;
 
   void domReady() {
   }
 
   void onItemTap(Event e, var detail, HtmlElement target){
-    this.fire( "core-signal", detail: { "name": "competencetemplatetap", "data": target.id } );
+    this.fire( "iron-signal", detail: { "name": "competencetemplatetap", "data": target.id } );
   }
 
   void onCreateButtonTap(Event e, var detail, Node target){
-    this.fire( "core-signal", detail: { "name": "addcompetencetemplate" } );
+    this.fire( "iron-signal", detail: { "name": "addcompetencetemplate" } );
   }
 
   void onItemDeleteButtonTap(Event e, var detail, HtmlElement target){
     e.stopPropagation();
-    this.fire( "core-signal", detail: { "name": "removecompetencetemplate", "data": target.parent.id } );
+    this.fire( "iron-signal", detail: { "name": "removecompetencetemplate", "data": target.parent.id } );
   }
 
   void goUp(Event e, var detail, HtmlElement target){
-    this.fire( "core-signal", detail: { "name": "goup" } );
+    this.fire( "iron-signal", detail: { "name": "goup" } );
   }
 }

@@ -1,5 +1,8 @@
+@HtmlImport('pane_report.html')
+library akepot.lib.pages.pane_report;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_person.dart';
@@ -12,7 +15,7 @@ import 'package:akepot/model/model_subcategory.dart';
 import 'dart:html';
 import 'dart:async';
 import 'package:akepot/competences_service.dart';
-
+import 'package:observe/observe.dart';
 
 class Header extends Observable {
   @observable String label = "";
@@ -91,13 +94,13 @@ class Item extends Observable {
   }
 }
 
-@CustomTag("pane-report")
+@PolymerRegister("pane-report")
 class PaneReport extends PolymerElement {
   PaneReport.created() : super.created() {
   }
 
   @observable CompetencesService service;
-  @published String projectHash = "";
+  @property String projectHash = "";
   @observable bool locallySignedIn = false;
 
   @observable ObservableList<Header> headers = toObservable([]);

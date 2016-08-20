@@ -1,8 +1,12 @@
+@HtmlImport('login_google.html')
+library akepot.lib.login.login_google;
+
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html' as html;
 import 'package:akepot/competences_service.dart';
 
-@CustomTag("login-google")
+@PolymerRegister("login-google")
 class LoginGoogle extends PolymerElement {
   LoginGoogle.created() : super.created();
 
@@ -40,17 +44,17 @@ class LoginGoogle extends PolymerElement {
   static const String WIDTH_STANDARD = 'standard';
   static const String WIDTH_WIDE = 'wide';
 
-  @published bool raised = false;
-  @published String height = HEIGHT_STANDARD;
-  @published String width = WIDTH_STANDARD;
-  @published String theme = THEME_DARK;
-  @published bool signedIn = false;
-  @published String labelSignin = '';
-  @published String labelSignout = 'Sign out';
-  @published String clientId = '';
-  @published String brand = 'google';
-  @published bool fill = true;
-  @published String scopes = '';
+  @property bool raised = false;
+  @property String height = HEIGHT_STANDARD;
+  @property String width = WIDTH_STANDARD;
+  @property String theme = THEME_DARK;
+  @property bool signedIn = false;
+  @property String labelSignin = '';
+  @property String labelSignout = 'Sign out';
+  @property String clientId = '';
+  @property String brand = 'google';
+  @property bool fill = true;
+  @property String scopes = '';
 
   CompetencesService service;
 
@@ -76,7 +80,7 @@ class LoginGoogle extends PolymerElement {
       if (DEBUG) print("Authenticated successfully with payload:" + authData.toString());
 
       // Trigger the loginsuccess event
-      this.fire( "core-signal", detail: { "name": "loginsuccess", "data": authData } );
+      this.fire( "iron-signal", detail: { "name": "loginsuccess", "data": authData } );
 
       signedIn = true;
     },
@@ -85,10 +89,10 @@ class LoginGoogle extends PolymerElement {
 
       if (error == "user_signed_out") {
         // Fire event to indicate user signed out
-        this.fire( "core-signal", detail: { "name": "loginsignedout", "data": error } );
+        this.fire( "iron-signal", detail: { "name": "loginsignedout", "data": error } );
       } else {
         // Fire event to indicate sign-in was not successful
-        this.fire( "core-signal", detail: { "name": "loginsigninfailure", "data": error } );
+        this.fire( "iron-signal", detail: { "name": "loginsigninfailure", "data": error } );
       }
 
       // No access token could be retrieved, show the button to start the authorization flow.
@@ -105,9 +109,9 @@ class LoginGoogle extends PolymerElement {
 
   void signOut(html.Event e){
     if (DEBUG) print("Sign out");
-    this.fire( "core-signal", detail: { "name": "loginsignoutattempted" } );
+    this.fire( "iron-signal", detail: { "name": "loginsignoutattempted" } );
     service.dbRef.unauth();
-    this.fire( "core-signal", detail: { "name": "loginsignedout" } );
+    this.fire( "iron-signal", detail: { "name": "loginsignedout" } );
     signedIn = false;
   }
 

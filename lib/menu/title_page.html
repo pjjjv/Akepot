@@ -1,9 +1,8 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 
-<polymer-element name="title-page" attributes="projectHash">
+<dom-module id="title-page">
   <template>
-    <content></content>{{projectName}}
+    <content></content><span>{{projectName}}</span>
   </template>
 
-  <script type="application/dart" src="title_page.dart"></script>
-</polymer-element>
+</dom-module>

@@ -1,31 +1,35 @@
+@HtmlImport('pane_edit.html')
+library akepot.lib.pages.pane_edit;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_project.dart';
 import 'dart:html';
+import 'package:observe/observe.dart';
 import 'package:akepot/competences_service.dart';
-import 'package:core_elements/core_animated_pages.dart';
+import 'package:polymer_elements/neon_animated_pages.dart';
 
-@CustomTag("pane-edit")
+@PolymerRegister("pane-edit")
 class PaneEdit extends PolymerElement {
   PaneEdit.created() : super.created() {
   }
 
-  @observable CompetencesService service;
-  @published String projectHash = "";
+  CompetencesService service;
+  @property String projectHash = "";
 
-  CoreAnimatedPages pages;
-  CoreAnimatedPages pages2;
-  CoreAnimatedPages pages3;
-  @observable int page = 0;
-  @observable int page2 = 0;
-  @observable int page3 = 0;
-  @observable int tab = 0;
+  NeonAnimatedPages pages;
+  NeonAnimatedPages pages2;
+  NeonAnimatedPages pages3;
+  int page = 0;
+  int page2 = 0;
+  int page3 = 0;
+  int tab = 0;
 
-  @observable int category_nr = 0;
-  @observable int subcategory_nr = 0;
-  @observable int competence_nr = 0;
-  @observable int team_nr = 0;
-  @observable int role_nr = 0;
+  int category_nr = 0;
+  int subcategory_nr = 0;
+  int competence_nr = 0;
+  int team_nr = 0;
+  int role_nr = 0;
 
   void domReady() {
     service = document.querySelector("#service");

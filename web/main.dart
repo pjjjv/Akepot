@@ -21,10 +21,10 @@ realMain() {
 }
 
 class Content extends Observable {
-  @observable bool signedIn;
-  @observable bool readyDom;
-  @observable User user;
-  @observable CompetencesService service;
+  @Property(observer: bool signedIn;
+  @Property(observer: bool readyDom;
+  @Property(observer: User user;
+  @Property(observer: CompetencesService service;
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);

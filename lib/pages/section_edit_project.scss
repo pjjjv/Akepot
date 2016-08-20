@@ -10,13 +10,13 @@
   color: rgba(0, 0, 0, 0.870588);
 }
 
-core-header-panel {
+paper-header-panel {
   height: 100%;
   position: relative;
   width: 100%;
 }
 
-core-toolbar {
+paper-toolbar {
   color: rgb(255, 255, 255);
   font-size: 1.2rem;
   font-weight: 400;
@@ -29,10 +29,10 @@ paper-fab {
   right: 24px;
   z-index: 1;
 }
-core-toolbar paper-fab {
+paper-toolbar paper-fab {
   top: calc(64px - 28px);
 }
-core-toolbar.tall paper-fab {
+paper-toolbar.tall paper-fab {
   top: calc(192px - 28px);
 }
 :host(:not([animate])) paper-fab {

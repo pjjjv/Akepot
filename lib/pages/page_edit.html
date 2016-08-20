@@ -3,11 +3,17 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/akepot/menu/title_page.html">
 
-<polymer-element name="page-edit" attributes="projectHash" noscript>
+<dom-module id="page-edit">
   <template>
-    <scaffold-layout menu="admin" selected="edit" projectHash="{{projectHash}}">
-      <title-page class="title" projectHash="{{projectHash}}" cross-fade>Competence Matrix: Admin: Edit </title-page>
-      <pane-edit projectHash="{{projectHash}}"></pane-edit>
+    <scaffold-layout menu="admin" selected="edit" projecthash="{{projectHash}}">
+      <title-page class="title" projecthash="{{projectHash}}" cross-fade="">Competence Matrix: Admin: Edit </title-page>
+      <pane-edit projecthash="{{projectHash}}"></pane-edit>
     </scaffold-layout>
   </template>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'page-edit',
+      properties: { projectHash: { notify: true } }
+    });
+  </script>
+</dom-module>

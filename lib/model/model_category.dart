@@ -1,9 +1,11 @@
 library akepot.model.model_category;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_subcategory.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
+import 'package:observe/observe.dart';
 
 /** Not documented yet. */
 class Category extends Observable {

@@ -1,21 +1,28 @@
-.pub
+# Files and directories created by pub
+.packages
+.pub/
+build/
+packages
+pubspec.lock # (Remove this pattern if you wish to check in your lock file)
+
 .buildlog
 pubspec.yaml~
 .gitignore~
 */.sass-cache
 .sass-cache
 
-# Don¡¯t commit the following directories created by pub.
-build/
-packages/
-
-# Or the files created by dart2js.
+# Files created by dart2js
 *.dart.js
-*.dart.precompiled.js
-*.js_
+*.part.js
 *.js.deps
 *.js.map
+*.info.json
 
-# Include when developing application packages.
-pubspec.lock
-/.project
+# Directory created by dartdoc
+doc/api/
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws

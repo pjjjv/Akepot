@@ -1,26 +1,30 @@
-name: akepot
+name: 'akepot'
+version: 0.0.1
 description: A competence matrix
+author: pjv <ezelspinguin@gmail.com>
+homepage: https://competencematrix.com
+
+environment:
+  sdk: '>=1.18.0 <2.0.0'
+
 dependencies:
-  browser: any
-  core_elements: ">=0.7.1+2 <0.8.0"
-  paper_elements: ">=0.7.1+1 <0.8.0"
-  polymer: ">=0.16.3+3 <0.17.0"
+  browser: ^0.10.0
+  observe: any
+  polymer_elements: ^1.0.0-rc.9
+  polymer: ^1.0.0-rc.18
+  web_components: ^0.12.3
   intl: any
   sass: any
-#  app_router: any
-  app_router:
-    path: ../app_router_dart
-  pushstate_anchor:
-    path: ../pushstate_anchor_dart
-#  json_object: '>=1.0.19 <1.1.0'
-  firebase:
-    path: ../firebase-dart
 transformers:
 - sass:
     compass: true                 # Include compass
 - polymer:
-    entry_points:
-    - web/akepot.html
+    entry_points: web/index.html
+- $dart2js:
+    minify: true
+    commandLineOptions:
+    - --trust-type-annotations
+    - --trust-primitives
 #- $dart2js:
 #    checked: false
 #    minify: true

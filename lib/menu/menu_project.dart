@@ -1,18 +1,21 @@
+@HtmlImport('menu_project.html')
+library akepot.lib.menu.menu_project;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 
-@CustomTag('menu-project')
+@PolymerRegister('menu-project')
 class MenuProject extends PolymerElement {
   MenuProject.created() : super.created();
 
-  @published String selectedSection;
-  @published String projectHash;
-  @observable CompetencesService service;
-  @observable bool isAdmin = false;
+  @property String selectedSection;
+  @property String projectHash;
+  CompetencesService service;
+  bool isAdmin = false;
 
   domReady(){
     service = document.querySelector("#service");

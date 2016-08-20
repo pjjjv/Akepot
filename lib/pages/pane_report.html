@@ -1,46 +1,53 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/core_elements/core_signals.html">
-<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_signals.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_input.html">
 <link rel="import" href="../../../packages/akepot/strength_button.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_flex_layout.html">
 
-<polymer-element name="pane-report" attributes="projectHash">
+<dom-module id="pane-report">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+  </style>
+  <link rel="import" type="css" href="pane_report.css">
   <template>
-    <link href="pane_report.css" rel="stylesheet">
 
-    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
 
     <div id="outer" layout vertical>
-      <template if="{{locallySignedIn}}">
+      <template is="dom-if" if="{{locallySignedIn}}">
 
         <table id="aha_table_main">
           <thead>
             <tr>
               <th>
               </th>
-              <th template
-                repeat="{{ headers }}">
-                <span
-                  class="column-head">{{ label }}</span>
+              <th template repeat="{{ headers }}">
+                <span class="column-head">{{ label }}</span>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr template
-              repeat="{{ rows }}">
-              <td layout horizontal>
-                <span
-                  class="row-head">{{ label }}</span>
+            <tr template repeat="{{ rows }}">
+              <td layout horizontal="">
+                <span class="row-head">{{ label }}</span>
               </td>
-              <td template
-                repeat="{{ item in items }}"
-                class="aha-td">
-                <template if="{{ 'edit' == item.type }}">
-                  <paper-input id="paper-input" value="{{item.value}}" class="{{ 'edit' == item.type ? '' : 'hide'}}"></paper-input>
+              <td template="" repeat="{{_computeRepeat(item, items)}}" class="aha-td">
+                <template is="dom-if" if="{{_computeIf(item)}}">
+                  <paper-input id="paper-input" value="{{item.value}}" class$="{{_computeClass(item)}}"></paper-input>
                 </template>
-                <template if="{{ 'strength' == item.type }}">
-                  <strength-button
-                    number="{{ item.value | asInt }}"
-                    threshold="{{ item.threshold }}" limited ></strength-button>
+                <template is="dom-if" if="{{_computeIf(item)}}">
+                  <strength-button number="{{asInt ( item.value)}}" threshold="{{ item.threshold }}" limited></strength-button>
                 </template>
               </td>
             </tr>
@@ -51,6 +58,5 @@
     </div>
   </template>
 
-  <script type="application/dart" src="pane_report.dart"></script>
-</polymer-element>
+</dom-module>
 

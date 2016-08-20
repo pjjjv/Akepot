@@ -1,15 +1,19 @@
+@HtmlImport('title_page.html')
+library akepot.lib.menu.title_page;
+
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
 
-@CustomTag('title-page')
+@PolymerRegister('title-page')
 class TitlePage extends PolymerElement {
   TitlePage.created() : super.created();
 
-  @observable CompetencesService service;
-  @published String projectHash = "";
-  @observable String projectName = "";
+  CompetencesService service;
+  @property String projectHash = "";
+  String projectName = "";
 
   void domReady(){
     service = document.querySelector("#service");

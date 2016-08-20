@@ -1,31 +1,51 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/paper_elements/paper_input.html">
-<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
-<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
-<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
-<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_input.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_icon_button.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_toolbar.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_header_panel.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_fab.html">
 <link rel="import" href="../core_card3.html">
 
-<polymer-element name="section-edit-competence" attributes="competenceTemplate page">
+  <link rel="import" href="../../../packages/polymer_elements/iron_flex_layout.html">
+<dom-module id="section-edit-competence">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [layout][center] {
+      @apply(--layout-center);
+    }
+    [layout][center-justified] {
+      @apply(--layout-center-justified);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+  </style>
+  <link rel="import" type="css" href="section_edit_competence.css">
   <template>
-    <link href="section_edit_competence.css" rel="stylesheet">
 
-    <core-header-panel mode="waterfall-tall">
-      <core-toolbar class="animate tall" hero-id="hero-competence" hero>
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" hero-id="hero-competence" hero>
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
-            <core-icon-button id="core_icon_button" icon="arrow-back" on-tap="{{goUp}}" hero cross-fade-delayed></core-icon-button>
+            <paper-icon-button id="paper_icon_button" icon="arrow-back" on-tap="goUp" hero="" cross-fade-delayed></paper-icon-button>
             <div id="label-type">Competence: </div>
             <paper-input label="Competence Label" value="{{competenceTemplate.label}}" id="input-name"></paper-input>
           </div>
           <paper-input label="Competence Description" value="{{competenceTemplate.description}}" id="input-desc"></paper-input>
         </div>
-      </core-toolbar>
+      </paper-toolbar>
       <section id="content-section">
       </section>
-    </core-header-panel>
+    </paper-header-panel>
   </template>
 
-  <script type="application/dart" src="section_edit_competence.dart"></script>
-</polymer-element>
+</dom-module>
 

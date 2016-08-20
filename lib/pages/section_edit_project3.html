@@ -1,38 +1,61 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
-<link rel="import" href="../../../packages/paper_elements/paper_input.html">
-<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
-<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
-<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
-<link rel="import" href="../../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_input.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_icon_button.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_toolbar.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_header_panel.html">
+<link rel="import" href="../../../packages/polymer_elements/paper_fab.html">
 <link rel="import" href="../core_card3.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_flex_layout.html">
 
-<polymer-element name="section-edit-project3" attributes="project page index">
+<dom-module id="section-edit-project3">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [layout][center] {
+      @apply(--layout-center);
+    }
+    [layout][center-justified] {
+      @apply(--layout-center-justified);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+    [layout][start-justified] {
+      @apply(--layout-start-justified);
+    }
+  </style>
+  <link rel="import" type="css" href="section_edit_project3.css">
   <template>
-    <link href="section_edit_project3.css" rel="stylesheet">
 
-    <core-header-panel mode="waterfall-tall">
-      <core-toolbar class="animate tall" cross-fade-delayed>
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" cross-fade-delayed>
         <div id="div2" layout vertical center center-justified>
           <div id="div1" layout horizontal center>
-            <core-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></core-icon-button>
+            <paper-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></paper-icon-button>
             <div id="label-type">Project: </div>
             <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
           </div>
           <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
         </div>
-        <paper-fab id="create-button" icon="add" on-tap="{{onCreateButtonTap}}"></paper-fab>
-      </core-toolbar>
+        <paper-fab id="create-button" icon="add" on-tap="onCreateButtonTap"></paper-fab>
+      </paper-toolbar>
       <section id="content-section">
 
         <div layout center-justified>
-          <template repeat="{{role in project.roles | enumerate}}">
-            <core-card3 id="{{role.index}}" horizontal layout center start-justified hero-id="hero-role" hero?="{{(page == 1 || page == 0) && role.index == index}}" cross-fade-delayed?="{{page != 0 || role.index != index}}" on-tap="{{onItemTap}}"><core-icon-button id="delete-button" title="Delete" icon="delete" on-tap="{{onItemDeleteButtonTap}}"></core-icon-button>{{role.value.name}}</core-card3>
+          <template is="dom-repeat" items="{{enumerate(project.roles)}}" as="role">
+            <core-card3 id="{{role.index}}" horizontal="" layout="" center="" start-justified="" hero-id="hero-role" on-tap="onItemTap" hero$="{{_computeHero(index, page, role)}}" cross-fade-delayed$="{{_computeCross-fade-delayed(index, page, role)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{role.value.name}}</core-card3>
           </template>
         </div>
       </section>
-    </core-header-panel>
+    </paper-header-panel>
   </template>
 
-  <script type="application/dart" src="section_edit_project3.dart"></script>
-</polymer-element>
+</dom-module>
 

@@ -1,10 +1,12 @@
 library akepot.model.model_subcategory;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_competence.dart';
 import 'package:akepot/model/model_competencetemplate.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
+import 'package:observe/observe.dart';
 
 /** Not documented yet. */
 class SubCategory extends Observable {

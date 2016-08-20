@@ -1,14 +1,17 @@
+@HtmlImport('scaffold_layout.html')
+library akepot.lib.layouts.scaffold_layout;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/competences_service.dart';
 import 'dart:html';
 
-@CustomTag('scaffold-layout')
+@PolymerRegister('scaffold-layout')
 class ScaffoldLayout extends PolymerElement {
-  @observable CompetencesService service;
-  @published String selected;
-  @published String menu;
-  @published String projectHash;
+  CompetencesService service;
+  @property String selected;
+  @property String menu;
+  @property String projectHash;
 
   ScaffoldLayout.created() : super.created();
 

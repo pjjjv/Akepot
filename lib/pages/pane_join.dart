@@ -1,18 +1,21 @@
+@HtmlImport('pane_join.html')
+library akepot.lib.pages.pane_join;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:app_router/app_router.dart';
-import 'package:paper_elements/paper_button.dart';
+import 'package:polymer_elements/paper_button.dart';
 
-@CustomTag("pane-join")
+@PolymerRegister("pane-join")
 class PaneJoin extends PolymerElement {
-  @published String projectHash = "";
-  @observable String selected;
-  @observable List<String> multiselected;
-  @observable CompetencesService service;
+  @property String projectHash = "";
+  String selected;
+  List<String> multiselected;
+  CompetencesService service;
 
   PaperButton joinButton;
 

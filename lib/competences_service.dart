@@ -1,12 +1,14 @@
-library competence_service;
+@HtmlImport('competences_service.html')
+library akepot.lib.competences_service;
 
-import 'dart:html';
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
+import 'dart:html';
 import 'dart:convert';
 import 'model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
-import 'package:core_elements/core_ajax_dart.dart';
+import 'package:polymer_elements/iron_ajax.dart';
 import 'package:firebase/firebase.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
@@ -15,18 +17,18 @@ typedef void ResponseHandler(response, HttpRequest req);
 const SERVER = "https://shining-heat-1634.firebaseio.com/";
 const DEBUG = true;
 
-@CustomTag('competences-service')
+@PolymerRegister('competences-service')
 class CompetencesService extends PolymerElement {
-  @published bool signedIn = false;
-  @published bool readyDom = false;
-  @published User user = new User();
-  CoreAjax ajaxUserinfo;
+  @property bool signedIn = false;
+  @property bool readyDom = false;
+  @property User user = new User();
+  IronAjax ajaxUserinfo;
   Map _headers;
   Firebase dbRef;
-  @observable List<Category> categories = [];//For names only
-  @observable Project project;
-  CoreAjax ajaxColourSchemes;
-  @observable List<Palette> palettes;
+  List<Category> categories = [];//For names only
+  Project project;
+  IronAjax ajaxColourSchemes;
+  List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
     dbRef = new Firebase(SERVER);
@@ -42,7 +44,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
+  void ajaxError(CustomEvent event, Map detail, IronAjax node) {
     if (DEBUG) print(event.detail);
   }
 
@@ -77,7 +79,7 @@ class CompetencesService extends PolymerElement {
     ajaxUserinfo.go();
   }
 
-  void parseUserinfoResponse(CustomEvent event, Map detail, CoreAjax node) {
+  void parseUserinfoResponse(CustomEvent event, Map detail, IronAjax node) {
     var response = event.detail['response'];
     if (DEBUG) print("parseUserinfoResponse: "+JSON.encode(response).toString());
 
@@ -146,19 +148,19 @@ class CompetencesService extends PolymerElement {
   }
 }
 
-class User extends Observable {
-  @observable String email = "";
-  @observable String uid = "";
-  @observable String nickname = "";
-  @observable String firstname = "";
-  @observable String lastname = "";
-  @observable var profile;
-  @observable var cover;
+class User {
+  String email = "";
+  String uid = "";
+  String nickname = "";
+  String firstname = "";
+  String lastname = "";
+  var profile;
+  var cover;
 }
 
 // Class representing a single colour palette made up of multiple colours
 // Colours are simply hex strings
-class Palette extends Observable {
+class Palette {
   final String name;
   final List<String> colors;
 

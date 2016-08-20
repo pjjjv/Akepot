@@ -1,33 +1,55 @@
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="../../packages/core_elements/core_image.html">
-<link rel="import" href="../../packages/paper_elements/paper_fab.html">
-<link rel="import" href="../../packages/core_elements/core_icons.html">
+<link rel="import" href="../../packages/polymer_elements/iron_image.html">
+<link rel="import" href="../../packages/polymer_elements/paper_fab.html">
+<link rel="import" href="../../packages/polymer_elements/iron_icons.html">
 <link rel="import" href="single_strength_item.html">
 <link rel="import" href="core_card2.html">
-<link rel="import" href="../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../packages/polymer_elements/iron_signals.html">
 <link rel="import" href="../../packages/akepot/components/trianglify/trianglify.html">
+<link rel="import" href="../../packages/polymer_elements/iron-flex-layout.html">
 
-<polymer-element name="subcategory-card" attributes="subcategory palette">
+<dom-module id="subcategory-card">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [self-center] {
+      @apply(--layout-self-center);
+    }
+    [fit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  </style>
+  <link rel="import" type="css" href="subcategory_card.css">
   <template>
-    <link href="subcategory_card.css" rel="stylesheet">
 
-    <core-signals on-core-signal-palettesloaded="{{palettesLoaded}}"></core-signals>
+    <iron-signals on-iron-signal-palettesloaded="palettesLoaded"></iron-signals>
 
     <core-card2 id="card" self-center layout vertical>
       <div class="front">
         <paper-fab mini id="help-button" class="flip-button floating-action-button" icon="help" tabindex="0"></paper-fab>
         <div id="image-box">
-          <core-image fit sizing="cover" id="header" preload fade></core-image>
+          <iron-image fit sizing="cover" id="header" preload fade></iron-image>
         </div>
         <div id="title-box">
           <div fit id="title">{{subcategory.name}}</div>
         </div>
-        <template repeat="{{competence in subcategory.competences}}">
-          <single-strength-item id="{{competence.tid}}" title="{{competence.label}}" desc="{{competence.description}}" number="{{competence.rating}}" on-toggleotherdescs="{{closeDesc}}"></single-strength-item>
+        <template is="dom-repeat" items="{{subcategory.competences}}" as="competence">
+          <single-strength-item id="{{competence.tid}}" title="{{competence.label}}" desc="{{competence.description}}" number="{{competence.rating}}" on-toggleotherdescs="closeDesc"></single-strength-item>
         </template>
       </div>
       <div class="back">Help is coming...</div>
     </core-card2>
   </template>
-  <script type="application/dart" src="subcategory_card.dart"></script>
-</polymer-element>
+
+</dom-module>

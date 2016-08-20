@@ -1,13 +1,17 @@
+@HtmlImport('pane_home.html')
+library akepot.lib.pages.pane_home;
+
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
-import 'package:paper_elements/paper_button.dart';
+import 'package:polymer_elements/paper_button.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_team.dart';
 import 'package:app_router/app_router.dart';
 import 'package:akepot/competences_service.dart';
 
-@CustomTag("pane-home")
+@PolymerRegister("pane-home")
 class PaneHome extends PolymerElement {
   PaneHome.created() : super.created();
 

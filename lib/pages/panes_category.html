@@ -1,23 +1,41 @@
 <link rel="import" href="../../../packages/polymer/polymer.html">
 <link rel="import" href="../../../packages/akepot/pages/pane_category.html">
-<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
-<link rel="import" href="../../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../../packages/polymer_elements/neon_animated_pages.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_signals.html">
+<link rel="import" href="../../../packages/polymer_elements/iron_flex_layout.html">
 
-<polymer-element name="panes-category" attributes="projectHash selectedCategory">
+<dom-module id="panes-category">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [fit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+  </style>
+  <link rel="import" type="css" href="panes_category.css">
   <template>
-    <link href="panes_category.css" rel="stylesheet">
 
-    <core-signals on-core-signal-signedin="{{signedIn}}"></core-signals>
-    <core-animated-pages fit main selected="{{selectedCategory}}" valueattr="label" transitions="cascade-transition">
-      <template if="{{service.signedIn}}">
-        <template repeat="{{category in service.project.categories}}">
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
+    <neon-animated-pages fit main selected="{{selectedCategory}}" valueattr="label" transitions="cascade-transition">
+      <template is="dom-if" if="{{service.signedIn}}">
+        <template is="dom-repeat" items="{{service.project.categories}}" as="category">
           <section name="{{category.name}}" label="{{category.name}}" vertical layout>
             <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
           </section>
         </template>
       </template>
-    </core-animated-pages>
+    </neon-animated-pages>
   </template>
 
-  <script type="application/dart" src="panes_category.dart"></script>
-</polymer-element>
+</dom-module>

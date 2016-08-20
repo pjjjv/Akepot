@@ -1,19 +1,21 @@
-
 <link rel="import" href="../../packages/polymer/polymer.html">
 <link rel="import" href="strength_button.html">
 
-<polymer-element name="strength-button-slider" attributes="selected max">
+<dom-module id="strength-button-slider">
+  <link rel="import" type="css" href="strength_button_slider.css">
   <template>
-    <link href="strength_button_slider.css" rel="stylesheet">
-    <template repeat="{{number in (max | toArray)}}">
-      <template if="{{number != selected}}">
-        <strength-button id="button{{number}}" number="{{number}}" notselected on-tap="{{select}}"></strength-button>
+    <!--
+        TODO(polyup): convert bindings inside this dom-repeat instance below
+        from {{foo}} to {{item.foo}}
+     -->
+    <template is="dom-repeat" items="{{number in (max | toArrayTODO)}}">
+      <template is="dom-if" if="{{_computeIf(number, selected)}}">
+        <strength-button id="{{_computeId(number)}}" number="{{number}}" notselected="" on-tap="{{_computeId(number)}}"></strength-button>
       </template>
-      <template if="{{number == selected}}">
-        <strength-button id="button{{number}}" number="{{number}}" selected on-tap="{{select}}"></strength-button>
+      <template is="dom-if" if="{{_computeIf(number, selected)}}">
+        <strength-button id="{{_computeId(number)}}" number="{{number}}" selected="" on-tap="select"></strength-button>
       </template>
     </template>
   </template>
 
-  <script type="application/dart" src="strength_button_slider.dart"></script>
-</polymer-element>
+</dom-module>

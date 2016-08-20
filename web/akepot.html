@@ -20,33 +20,33 @@
 
     <title>Competence Matrix</title>
     <link rel="stylesheet" href="styles.css">
-    <link href='//fonts.googleapis.com/css?family=RobotoDraft:400,300,500' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=RobotoDraft:400,300,500" rel="stylesheet" type="text/css">
     <!--<link href='//fonts.googleapis.com/css?family=Roboto:400italic,300italic,500italic' rel='stylesheet' type='text/css'>-->
 
     <!--<script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>-->
 
     <link rel="import" href="packages/polymer/polymer.html">
-    <link rel="import" href="packages/core_elements/core_menu_button.html">
-    <link rel="import" href="packages/core_elements/core_item.html">
-    <link rel="import" href="packages/core_elements/core_icon_button.html">
-    <link rel="import" href="packages/core_elements/core_submenu.html">
-    <link rel="import" href="packages/core_elements/core_field.html">
-    <link rel="import" href="packages/core_elements/core_icon.html">
-    <link rel="import" href="packages/core_elements/core_input.html">
-    <link rel="import" href="packages/core_elements/core_icons.html">
-    <link rel="import" href="packages/core_elements/core_icon_button.html">
-    <link rel="import" href="packages/core_elements/core_animated_pages.html">
-    <link rel="import" href="packages/core_elements/core_image.html">
-    <link rel="import" href="packages/paper_elements/paper_button.html">
-    <link rel="import" href="packages/paper_elements/paper_toast.html">
-    <link rel="import" href="packages/paper_elements/paper_item.html">
-    <link rel="import" href="packages/paper_elements/paper_input.html">
-    <link rel="import" href="packages/paper_elements/paper_dialog.html">
-    <link rel="import" href="packages/paper_elements/paper_spinner.html">
-    <link rel="import" href="packages/paper_elements/paper_dropdown.html">
-    <link rel="import" href="packages/paper_elements/paper_action_dialog.html">
-    <link rel="import" href="packages/paper_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
+    <link rel="import" href="packages/polymer_elements/core_menu_button.html">
+    <link rel="import" href="packages/polymer_elements/core_item.html">
+    <link rel="import" href="packages/polymer_elements/core_icon_button.html">
+    <link rel="import" href="packages/polymer_elements/core_submenu.html">
+    <link rel="import" href="packages/polymer_elements/core_field.html">
+    <link rel="import" href="packages/polymer_elements/core_icon.html">
+    <link rel="import" href="packages/polymer_elements/core_input.html">
+    <link rel="import" href="packages/polymer_elements/iron_icons.html">
+    <link rel="import" href="packages/polymer_elements/core_icon_button.html">
+    <link rel="import" href="packages/polymer_elements/core_animated_pages.html">
+    <link rel="import" href="packages/polymer_elements/core_image.html">
+    <link rel="import" href="packages/polymer_elements/paper_button.html">
+    <link rel="import" href="packages/polymer_elements/paper_toast.html">
+    <link rel="import" href="packages/polymer_elements/paper_item.html">
+    <link rel="import" href="packages/polymer_elements/paper_input.html">
+    <link rel="import" href="packages/polymer_elements/paper_dialog.html">
+    <link rel="import" href="packages/polymer_elements/paper_spinner.html">
+    <link rel="import" href="packages/polymer_elements/paper_dropdown.html">
+    <link rel="import" href="packages/polymer_elements/paper_action_dialog.html">
+    <link rel="import" href="packages/polymer_elements/paper_dialog_transition.html"><!-- https://github.com/Polymer/paper-dialog/issues/32 -->
     <link rel="import" href="packages/app_router/app_router.html">
     <link rel="import" href="packages/app_router/app_route.html">
     <link rel="import" href="packages/akepot/login_screen.html">
@@ -55,9 +55,9 @@
 
     <!-- pre-load the most used elements -->
     <link rel="import" href="packages/akepot/layouts/scaffold_layout.html">
-    <link rel="import" href="packages/core_elements/core_scaffold.html">
-    <link rel="import" href="packages/core_elements/core_header_panel.html">
-    <link rel="import" href="packages/core_elements/core_toolbar.html">
+    <link rel="import" href="packages/polymer_elements/core_scaffold.html">
+    <link rel="import" href="packages/polymer_elements/core_header_panel.html">
+    <link rel="import" href="packages/polymer_elements/core_toolbar.html">
     <link rel="import" href="packages/akepot/pages/page_home.html">
     <link rel="import" href="packages/akepot/pages/pane_edit.html">
     <link rel="import" href="packages/akepot/pages/pane_report.html">
@@ -65,40 +65,57 @@
     <link rel="import" href="packages/akepot/pages/panes_category.html">
 
     <script>
-    var _prum = [['id', '54a6a6c7abe53d46185cc65d'],
-                 ['mark', 'firstbyte', (new Date()).getTime()]];
-    (function() {
-        var s = document.getElementsByTagName('script')[0]
-          , p = document.createElement('script');
+      var _prum = [
+        [
+          'id',
+          '54a6a6c7abe53d46185cc65d'
+        ],
+        [
+          'mark',
+          'firstbyte',
+          new Date().getTime()
+        ]
+      ];
+      (function () {
+        var s = document.getElementsByTagName('script')[0], p = document.createElement('script');
         p.async = 'async';
         p.src = '//rum-static.pingdom.net/prum.min.js';
-        s.parentNode.insertBefore(p, s);
-    })();
+        Polymer.dom(Polymer.dom(s).parentNode).insertBefore(p, s);
+      }());
     </script>
     <meta name="blitz" content="mu-945e2684-1e7d011f-6be36044-cab4553c">
-  </head>
+    <style is="custom-style">
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [fullbleed] {
+      margin: 0;
+      height:100vh;
+    }
+  </style>
+  <link rel="import" href="packages/iron-flex-layout/iron-flex-layout.html">
+</head>
 
-  <body unresolved fullbleed touch-action="auto">
+  <body unresolved="" fullbleed="" touch-action="auto">
   <!--<div id="cmdebug" hidden></div>-->
 
     <template is="auto-binding-dart" id="content">
-    <login-screen id="loginscreen" layout vertical center-center fit
-      class="{{(signedIn && readyDom) ? '' : 'show'}}" signedIn="{{signedIn}}"></login-screen>
+    <login-screen id="loginscreen" layout="" vertical="" center-center="" fit="" class="{{(signedIn && readyDom) ? '' : 'show'}}" signedin="{{signedIn}}"></login-screen>
 
-    <competences-service id="service" user="{{user}}" signedIn="{{signedIn}}" readyDom="{{readyDom}}"></competences-service>
+    <competences-service id="service" user="{{user}}" signedin="{{signedIn}}" readydom="{{readyDom}}"></competences-service>
 
-    <app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
-      <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
+    <app-router mode="hash" trailingslash="ignore" core_animated_pages="" transitions="cross-fade cross-fade-delayed cascade-transition">
+      <app-route path="/" imp="packages/akepot/pages/page_home.html" template=""></app-route>
       <app-route path="/admin/:projectHash/edit" imp="packages/akepot/pages/page_edit.html" elem="page-edit"></app-route>
       <app-route path="/admin/:projectHash/report" imp="packages/akepot/pages/page_report.html" elem="page-report"></app-route>
       <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
       <app-route path="/project/:projectHash/category/:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
       <app-route path="/project/:projectHash/join" imp="packages/akepot/pages/page_join.html" elem="page-join"></app-route>
-      <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
+      <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template=""></app-route>
     </app-router>
 
       <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
-        <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>
+        <paper-button dismissive="" tabindex="0" autofocus="" class="flat-button">Retry</paper-button>
       </paper-toast>
 
     </template>

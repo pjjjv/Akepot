@@ -1,39 +1,52 @@
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="../../packages/core_elements/core_icon.html">
-<link rel="import" href="../../packages/core_elements/core_menu_button.html">
-<link rel="import" href="../../packages/core_elements/core_icon_button.html">
-<link rel="import" href="../../packages/paper_elements/paper_item.html">
-<link rel="import" href="../../packages/paper_elements/paper_dropdown.html">
-<link rel="import" href="../../packages/paper_elements/paper_action_dialog.html">
-<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/polymer_elements/iron_icon.html">
+<link rel="import" href="../../packages/polymer_elements/iron_menu_button.html">
+<link rel="import" href="../../packages/polymer_elements/iron_icon_button.html">
+<link rel="import" href="../../packages/polymer_elements/paper_item.html">
+<link rel="import" href="../../packages/polymer_elements/paper_dropdown.html">
+<link rel="import" href="../../packages/polymer_elements/paper_dialog.html">
+<link rel="import" href="../../packages/polymer_elements/paper_button.html">
 
-<polymer-element name="dropdown-menu">
+  <link rel="import" href="../../packages/iron-flex-layout/iron-flex-layout.html">
+<dom-module id="dropdown-menu">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+  </style>
+  <link rel="import" type="css" href="dropdown_menu.css">
   <template>
-    <link href="dropdown_menu.css" rel="stylesheet">
 
-    <core-menu-button class="selected-item" layout horizontal><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
-      <core-icon-button icon="more-vert"></core-icon-button>
-      <paper-dropdown class="dropdown" halign="right" valign="top">
-        <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="{{about}}">
-          <core-icon icon="info"></core-icon>
-          <span flex>About</span>
+    <paper-menu-button class="selected-item" layout="" horizontal=""><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+      <paper-icon-button icon="more-vert"></paper-icon-button>
+      <iron-dropdown class="dropdown" horizontal-align="right" vertical-align="top">
+        <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="about">
+          <iron-icon icon="info"></iron-icon>
+          <span flex="">About</span>
         </paper-item>
-        <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="{{signOut}}">
-          <core-icon icon="close"></core-icon>
-          <span flex>Sign out</span>
+        <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="signOut">
+          <iron-icon icon="close"></iron-icon>
+          <span flex="">Sign out</span>
         </paper-item>
-      </paper-dropdown>
-    </core-menu-button>
+      </iron-dropdown>
+    </paper-menu-button>
 
-    <paper-action-dialog id="about-dialog" heading="About CompetenceMatrix"
-      transition="paper-transition-center" backdrop="true">
+    <paper-dialog id="about-dialog">
+      <h2>About CompetenceMatrix</h2>
       <p>Made with Polymer, Dart and Firebase in October 2014.</p>
       <p>Copyright 2014-2015 pjv.</p>
-      <paper-button dismissive tabindex="0" autofocus class="flat-button">Close</paper-button>
-    </paper-action-dialog>
+      <div class="buttons">
+        <paper-button dialog-dismiss tabindex="0" autofocus class="flat-button">Close</paper-button>
+      </div>
+    </paper-dialog>
 
   </template>
 
-  <script type="application/dart" src="dropdown_menu.dart"></script>
-</polymer-element>
+</dom-module>
 

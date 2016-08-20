@@ -1,23 +1,18 @@
-
 <link rel="import" href="../../packages/polymer/polymer.html">
-<link rel="import" href="../../packages/core_elements/core_ajax_dart.html">
-<link rel="import" href="../../packages/core_elements/core_signals.html">
+<link rel="import" href="../../packages/polymer_elements/iron_ajax.html">
+<link rel="import" href="../../packages/polymer_elements/iron_signals.html">
 <link rel="import" href="login/login_google.html">
 
-<polymer-element name="login-screen">
+<dom-module id="login-screen">
+  <link rel="import" type="css" href="login_screen.css">
   <template>
-    <link href="login_screen.css" rel="stylesheet">
-    <login-google width="wide" height="tall" clientId="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile,email"></login-google>
+    <login-google width="wide" height="tall" clientid="71435708886-1ts7p5j09egjmbpugiqo9dhn21lj8e6g.apps.googleusercontent.com" scopes="profile,email"></login-google>
 
-    <core-signals on-core-signal-loginsuccess="{{signInDone}}"></core-signals>
-    <core-signals on-core-signal-loginsignedout="{{signOutDone}}"></core-signals>
+    <iron-signals on-iron-signal-loginsuccess="signInDone"></iron-signals>
+    <iron-signals on-iron-signal-loginsignedout="signOutDone"></iron-signals>
 
-    <core-ajax-dart id="ajax-people"
-      url="https://www.googleapis.com/plus/v1/people/me"
-      on-core-response="{{parseResponse2}}" on-core-error="{{ajaxError}}"
-      handleAs="json">
-    </core-ajax-dart>
+    <iron-ajax id="ajax-people" url="https://www.googleapis.com/plus/v1/people/me" on-response="parseResponse2" on-error="ajaxError" handle-as="json">
+    </iron-ajax>
   </template>
 
-  <script type="application/dart" src="login_screen.dart"></script>
-</polymer-element>
+</dom-module>

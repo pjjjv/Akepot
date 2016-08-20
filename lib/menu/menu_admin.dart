@@ -1,19 +1,22 @@
+@HtmlImport('menu_admin.html')
+library akepot.lib.menu.menu_admin;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
-import 'package:paper_elements/paper_item.dart';
-import 'package:paper_elements/paper_button.dart';
+import 'package:polymer_elements/paper_item.dart';
+import 'package:polymer_elements/paper_button.dart';
 import 'package:app_router/app_router.dart';
-import 'package:paper_elements/paper_action_dialog.dart';
+import 'package:polymer_elements/paper_dialog.dart';
 import 'package:akepot/competences_service.dart';
 
-@CustomTag('menu-admin')
+@PolymerRegister('menu-admin')
 class MenuAdmin extends PolymerElement {
   MenuAdmin.created() : super.created();
 
-  @published String selectedSection;
-  @published String projectHash;
-  @observable String newlink;
+  @property String selectedSection;
+  @property String projectHash;
+  String newlink;
 
   void domReady() {
     PaperItem createButton = shadowRoot.querySelector("#menu_button_create");
@@ -25,7 +28,7 @@ class MenuAdmin extends PolymerElement {
     newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/${projectHash}";
     if (DEBUG) print("New project link would be: $newlink");
 
-    PaperActionDialog dialog = shadowRoot.querySelector('#created-dialog');
+    PaperDialog dialog = shadowRoot.querySelector('#created-dialog');
 
     PaperButton goButton = shadowRoot.querySelector('#go-button');
     goButton.onClick.first.then(onGoButtonClick);

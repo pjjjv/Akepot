@@ -1,20 +1,22 @@
-library single_strength_item;
+@HtmlImport('single_strength_item.html')
+library akepot.lib.single_strength_item;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'dart:html';
-import 'package:core_elements/core_collapse.dart';
+import 'package:polymer_elements/iron_collapse.dart';
 
-@CustomTag('single-strength-item')
+@PolymerRegister('single-strength-item')
 class SingleStrengthItem extends PolymerElement {
   SingleStrengthItem.created() : super.created();
 
-  @published String title = "Software impact analysis";
-  @published String desc = "Document that describes software impact analysis.";
-  @published int number = 1;
-  CoreCollapse cc;
+  @property String title = "Software impact analysis";
+  @property String desc = "Document that describes software impact analysis.";
+  @property int number = 1;
+  IronCollapse cc;
 
   void domReady() {
-    cc = shadowRoot.querySelector("core-collapse");
+    cc = shadowRoot.querySelector("iron-collapse");
   }
 
   void toggle(Event e) {

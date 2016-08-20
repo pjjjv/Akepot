@@ -1,12 +1,14 @@
 library akepot.model.model_project;
 
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
+import 'package:observe/observe.dart';
 
 /** Not documented yet. */
 class Project extends Observable {

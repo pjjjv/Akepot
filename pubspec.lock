@@ -79,6 +79,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.9+1"
+  firebase:
+    description:
+      path: "../firebase-dart"
+      relative: true
+    source: path
+    version: "0.5.1"
   func:
     description:
       name: func

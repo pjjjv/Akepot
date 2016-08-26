@@ -17,6 +17,8 @@ dependencies:
   #reflectable: ^1.0.0
   intl: any
   sass: any
+  firebase:
+    path: ../firebase-dart
 transformers:
 - sass:
     compass: false                 # Include compass

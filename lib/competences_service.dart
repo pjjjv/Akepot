@@ -9,6 +9,7 @@ import 'model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:polymer_elements/iron_ajax.dart';
+//import 'package:polymer_elements/firebase_app.dart';
 import 'package:firebase/firebase.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
@@ -31,10 +32,10 @@ class CompetencesService extends PolymerElement {
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    //OLD: dbRef = new Firebase(SERVER);
+    dbRef = new Firebase(SERVER);
 
     // Initialize Firebase
-    var config = {
+    /*var config = {
       apiKey: "AIzaSyByIYqE6-sqzM-Gt_xXWv9MDigJ7krVKm8",
       authDomain: "shining-heat-1634.firebaseapp.com",
       databaseURL: "https://shining-heat-1634.firebaseio.com",
@@ -43,7 +44,10 @@ class CompetencesService extends PolymerElement {
 
     firebase.initializeApp(config);
 
-    var rootRef = firebase.database().ref();
+    var rootRef = firebase.database().ref();*/
+
+    /*FirebaseApp firebaseApp = shadowRoot.querySelector('firebase-app');
+    dbRef = firebaseApp.app(0).database().ref;*/
   }
 
   void domReady(){

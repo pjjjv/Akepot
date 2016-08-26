@@ -1,5 +1,5 @@
-@HtmlImport('core_card3.html')
-library akepot.lib.core_card3;
+@HtmlImport('dropdown_menu.html')
+library akepot.lib.dropdown_menu;
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
@@ -8,7 +8,7 @@ import 'package:akepot/competences_service.dart';
 import 'package:akepot/login_screen.dart';
 import 'package:polymer_elements/paper_dialog.dart';
 
-@CustomTag('dropdown-menu')
+@PolymerRegister('dropdown-menu')
 class DropdownMenu extends PolymerElement {
   DropdownMenu.created() : super.created();
 

@@ -1,7 +1,5 @@
 library akepot.model.model_competence;
 
-import 'package:polymer/polymer.dart';
-import 'package:web_components/web_components.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:firebase/firebase.dart';
 import 'package:observe/observe.dart';

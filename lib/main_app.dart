@@ -3,8 +3,6 @@
 @HtmlImport('main_app.html')
 library akepot.lib.main_app;
 
-import 'dart:html';
-
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';

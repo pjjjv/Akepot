@@ -54,7 +54,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.0"
+    version: "1.9.1"
   convert:
     description:
       name: convert
@@ -78,7 +78,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.9"
+    version: "0.2.9+1"
   func:
     description:
       name: func
@@ -114,7 +114,7 @@ packages:
       name: isolate
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.3"
   logging:
     description:
       name: logging
@@ -217,6 +217,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  template_binding:
+    description:
+      name: template_binding
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0+4"
   typed_data:
     description:
       name: typed_data

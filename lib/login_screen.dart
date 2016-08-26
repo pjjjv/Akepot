@@ -35,7 +35,7 @@ class LoginScreen extends PolymerElement {
     button.signOut(event);
   }
 
-  void parseResponse2(CustomEvent event, Map detail, CoreAjax node) {
+  void parseResponse2(CustomEvent event, Map detail, IronAjax node) {
     var response = detail['response'];
     //if (DEBUG) print(response);
 
@@ -58,7 +58,7 @@ class LoginScreen extends PolymerElement {
     //userid = response['id'];
   }
 
-  void ajaxError(CustomEvent event, Map detail, CoreAjax node) {
+  void ajaxError(CustomEvent event, Map detail, IronAjax node) {
     if (DEBUG) print(detail);
   }
 }

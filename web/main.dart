@@ -1,9 +1,13 @@
 import 'dart:html';
+import 'package:polymer/init.dart';
 import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/competences_service.dart';
+import 'package:observe/observe.dart';
 
-main() => initPolymer();
+main() async {
+  await initPolymer();
+}
 
 @initMethod
 realMain() {

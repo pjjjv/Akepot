@@ -31,7 +31,19 @@ class CompetencesService extends PolymerElement {
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    dbRef = new Firebase(SERVER);
+    //OLD: dbRef = new Firebase(SERVER);
+
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyByIYqE6-sqzM-Gt_xXWv9MDigJ7krVKm8",
+      authDomain: "shining-heat-1634.firebaseapp.com",
+      databaseURL: "https://shining-heat-1634.firebaseio.com",
+      storageBucket: "shining-heat-1634.appspot.com",
+    };
+
+    firebase.initializeApp(config);
+
+    var rootRef = firebase.database().ref();
   }
 
   void domReady(){

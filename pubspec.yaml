@@ -12,14 +12,20 @@ dependencies:
   observe: any
   polymer_elements: ^1.0.0-rc.9
   polymer: ^1.0.0-rc.18
-  web_components: ^0.12.3
+  template_binding: ^0.14.0
+  web_components: ^0.12.0
+  #reflectable: ^1.0.0
   intl: any
   sass: any
 transformers:
 - sass:
-    compass: true                 # Include compass
-- polymer:
-    entry_points: web/index.html
+    compass: false                 # Include compass
+- web_components:
+    entry_points:
+    - web/akepot.html
+#- reflectable:
+#    entry_points:
+#    - web/akepot.dart
 - $dart2js:
     minify: true
     commandLineOptions:
@@ -33,3 +39,17 @@ transformers:
 #    suppressHints: false
 #    terse: false
 #    csp: false
+
+#dependency_overrides:
+#  polymer:
+#    git:
+#      ref: b66389b
+#      url: https://github.com/dart-lang/polymer-dart.git
+#  polymer_elements:
+#    git:
+#      ref: v1.0.0-rc.9
+#      url: https://github.com/dart-lang/polymer_elements.git
+#  polymer_interop:
+#    git:
+#      ref: 0.2.0-dev
+#      url: https://github.com/dart-lang/polymer_interop.git

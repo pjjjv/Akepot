@@ -1,7 +1,5 @@
 library akepot.model.model_project;
 
-import 'package:polymer/polymer.dart';
-import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_person.dart';

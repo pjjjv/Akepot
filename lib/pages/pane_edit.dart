@@ -66,7 +66,7 @@ class PaneEdit extends PolymerElement {
 
   void onRoleTap(Event e, var detail, Node target){
     role_nr = int.parse(detail);
-    pages3 = shadowRoot.querySelector("#pages_edit3");
+    pages3 = $$("#pages_edit3");
     pages3.selectNext();
   }
 
@@ -84,7 +84,7 @@ class PaneEdit extends PolymerElement {
 
   void onTeamTap(Event e, var detail, Node target){
     team_nr = int.parse(detail);
-    pages2 = shadowRoot.querySelector("#pages_edit2");
+    pages2 = $$("#pages_edit2");
     pages2.selectNext();
   }
 
@@ -107,7 +107,7 @@ class PaneEdit extends PolymerElement {
 
   void onCategoryTap(Event e, var detail, Node target){
     category_nr = int.parse(detail);
-    pages = shadowRoot.querySelector("#pages_edit");
+    pages = $$("#pages_edit");
     pages.selectNext();
   }
 
@@ -125,7 +125,7 @@ class PaneEdit extends PolymerElement {
 
   void onSubCategoryTap(Event e, var detail, Node target){
     subcategory_nr = int.parse(detail);
-    pages = shadowRoot.querySelector("#pages_edit");
+    pages = $$("#pages_edit");
     pages.selectNext();
   }
 
@@ -143,22 +143,22 @@ class PaneEdit extends PolymerElement {
 
   void onCompetenceTemplateTap(Event e, var detail, Node target){
     competence_nr = int.parse(detail);
-    pages = shadowRoot.querySelector("#pages_edit");
+    pages = $$("#pages_edit");
     pages.selectNext();
   }
 
   void goUp(Event e, var detail, HtmlElement target){
-    pages = shadowRoot.querySelector("#pages_edit");
+    pages = $$("#pages_edit");
     pages.selectPrevious();
   }
 
   void goUp2(Event e, var detail, HtmlElement target){
-    pages2 = shadowRoot.querySelector("#pages_edit2");
+    pages2 = $$("#pages_edit2");
     pages2.selectPrevious();
   }
 
   void goUp3(Event e, var detail, HtmlElement target){
-    pages3 = shadowRoot.querySelector("#pages_edit3");
+    pages3 = $$("#pages_edit3");
     pages3.selectPrevious();
   }
 

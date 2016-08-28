@@ -16,7 +16,7 @@ class SingleStrengthItem extends PolymerElement {
   IronCollapse cc;
 
   void domReady() {
-    cc = shadowRoot.querySelector("iron-collapse");
+    cc = $$("iron-collapse");
   }
 
   void toggle(Event e) {

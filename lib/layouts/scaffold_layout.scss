@@ -1,5 +1,36 @@
 @import '../../web/theme';
 
+
+
+
+app-header {
+  color: #fff;
+}
+
+.drawer-list {
+  margin: 0 20px;
+}
+.drawer-list a {
+  display: block;
+  padding: 0 16px;
+  line-height: 40px;
+  text-decoration: none;
+}
+.drawer-list a.iron-selected {
+  color: black;
+  font-weight: bold;
+}
+.drawer-list a.subroute {
+  padding-left: 32px;
+}
+
+
+
+
+
+
+
+
 //Toplevel scaffold and toolbars.
 core-scaffold::shadow [drawer] {
   background-color: white;

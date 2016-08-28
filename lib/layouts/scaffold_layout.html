@@ -17,13 +17,11 @@
 --><!--<link rel="import" href="../../../packages/polymer/polymer.html">-->
 <html>
 <head>
-<link rel="import" href="../../../packages/polymer_elements/iron_scaffold.html">
 <link rel="import" href="../../../packages/polymer_elements/paper_header_panel.html">
 <link rel="import" href="../../../packages/polymer_elements/paper_toolbar.html">
 <link rel="import" href="../../../packages/polymer_elements/neon_animated_pages.html">
-<link rel="import" href="../../../packages/pushstate_anchor/pushstate_anchor.html">
 <link rel="import" href="../../../packages/akepot/menu/menu_admin.html">
-<link rel="import" href="../../../packages/akepot/menu/menu_project.html">
+<!--<link rel="import" href="../../../packages/akepot/menu/menu_project.html">-->
 <link rel="import" href="../../../packages/akepot/menu/menu_home.html">
 <link rel="import" href="../../../packages/akepot/dropdown_menu.html">
 <link rel="import" href="../../../packages/akepot/refresh_spinner.html">
@@ -55,16 +53,21 @@
   <link rel="import" type="css" href="scaffold_layout.css">
   <template>
 
-    <core-scaffold id="core_scaffold" mode="waterfall-tall">
-      <paper-header-panel mode="scroll" id="core_header_panel" navigation flex>
-        <paper-toolbar id="panel-head" class="core-header tall">
+
+
+
+    <app-drawer-layout fullbleed>
+
+      <!-- Drawer content -->
+      <app-drawer>
+        <app-toolbar>
           <!-- <core-image src="{{service.user.cover}}" sizing="cover" preload fade></core-image> -->
           <img class="middle profile" _src="{{service.user.profile}}" hidden$="{{_computeHidden(service)}}">
           <div class="bottom" layout vertical>
             <span>{{service.user.nickname}}</span>
             <span>{{service.user.email}}</span>
           </div>
-        </paper-toolbar>
+        </app-toolbar>
 
         <!-- Home -->
         <menu-home selectedsection="{{selected}}" projecthash="{{projectHash}}" hidden$="{{_computeHidden(menu)}}"></menu-home>
@@ -72,20 +75,33 @@
         <menu-project selectedsection="{{selected}}" projecthash="{{projectHash}}" hidden$="{{_computeHidden(menu)}}"></menu-project>
         <!-- Admin -->
         <menu-admin selectedsection="{{selected}}" projecthash="{{projectHash}}" hidden$="{{_computeHidden(menu)}}"></menu-admin>
-      </paper-header-panel>
+      </app-drawer>
 
       <title-page hidden="true" tool projecthash="{{projectHash}}"></title-page><!-- bug: if this is not "preloaded" here than the title-page in e.g. page-category will not initPolymer (load; call domReady). -->
-      <div id="title" tool flex>
-        <content select=".title"></content>
-      </div>
-      <div fit main class="content">
-        <content></content>
-      </div>
 
-      <dropdown-menu tool></dropdown-menu>
-      <refresh-spinner></refresh-spinner>
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
 
-    </core-scaffold>
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div id="title" tool flex>
+              <content select=".title"></content>
+            </div>
+
+            <dropdown-menu tool></dropdown-menu>
+            <refresh-spinner></refresh-spinner>
+          </app-toolbar>
+        </app-header>
+
+        <div fit main class="content">
+          <content></content>
+        </div>
+
+      </app-header-layout>
+
+    </app-drawer-layout>
+
   </template>
 
 </dom-module>

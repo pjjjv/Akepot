@@ -19,7 +19,7 @@ class DropdownMenu extends PolymerElement {
   }
 
   void about(Event e) {
-    PaperDialog dialog = shadowRoot.querySelector('#about-dialog');
+    PaperDialog dialog = $$('#about-dialog');
     dialog.toggle();
   }
 

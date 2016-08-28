@@ -8,7 +8,6 @@ import 'package:polymer_elements/paper_button.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_team.dart';
-import 'package:app_router/app_router.dart';
 import 'package:akepot/competences_service.dart';
 
 @PolymerRegister("pane-home")
@@ -21,7 +20,7 @@ class PaneHome extends PolymerElement {
   void domReady(){
     service = document.querySelector("#service");
 
-    newButton = shadowRoot.querySelector("#new-button");
+    newButton = $$("#new-button");
     newButton.hidden = false;
     newButton.onClick.listen(newProject);
   }
@@ -31,7 +30,7 @@ class PaneHome extends PolymerElement {
 
     Person.exists(service.user.uid, service.project.hash, service, (exists) {
       if (exists){
-        (document.querySelector('app-router') as AppRouter).go("/project/${service.project.hash}");//TODO
+        //(document.querySelector('app-router') as AppRouter).go("/project/${service.project.hash}");//TODO
       } else {
         Team team = service.project.addTeam();
         team.service = service;
@@ -42,6 +41,6 @@ class PaneHome extends PolymerElement {
       }
     });
 
-    (document.querySelector('app-router') as AppRouter).go("/admin/${service.project.hash}/edit");
+    //(document.querySelector('app-router') as AppRouter).go("/admin/${service.project.hash}/edit");
   }
 }

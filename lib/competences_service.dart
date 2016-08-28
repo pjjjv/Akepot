@@ -9,6 +9,7 @@ import 'model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:polymer_elements/iron_ajax.dart';
+import 'package:polymer_elements/iron_request.dart';
 //import 'package:polymer_elements/firebase_app.dart';
 import 'package:firebase/firebase.dart';
 
@@ -46,13 +47,13 @@ class CompetencesService extends PolymerElement {
 
     var rootRef = firebase.database().ref();*/
 
-    /*FirebaseApp firebaseApp = shadowRoot.querySelector('firebase-app');
+    /*FirebaseApp firebaseApp = $$('firebase-app');
     dbRef = firebaseApp.app(0).database().ref;*/
   }
 
-  void domReady(){
-    ajaxUserinfo = shadowRoot.querySelector('#ajax-people');
-    ajaxColourSchemes = shadowRoot.querySelector('#ajax-colour-schemes');
+  void ready(){
+    ajaxUserinfo = $$('#ajax-people');
+    ajaxColourSchemes = $$('#ajax-colour-schemes');
     if(document.querySelector("#cmdebug") != null){
       ajaxColourSchemes.url = "data/colour_schemes_response.json";
     }
@@ -60,7 +61,7 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void ajaxError(CustomEvent event, Map detail, IronAjax node) {
+  void ajaxError(CustomEventWrapper event, {request: IronRequest, error: dynamic}) {
     if (DEBUG) print(event.detail);
   }
 
@@ -92,7 +93,7 @@ class CompetencesService extends PolymerElement {
   }
 
   void getUserinfo(){
-    ajaxUserinfo.go();
+    ajaxUserinfo.generateRequest();
   }
 
   void parseUserinfoResponse(CustomEvent event, Map detail, IronAjax node) {

@@ -44,7 +44,7 @@ class PaneJoin extends PolymerElement {
   }
 
   void newUser(){
-    joinButton = shadowRoot.querySelector("#join-button");
+    joinButton = $$("#join-button");
     joinButton.disabled = false;
     joinButton.onClick.first.then(joinProject);
   }

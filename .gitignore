@@ -3,16 +3,21 @@
 .pub/
 build/
 packages
-pubspec.lock # (Remove this pattern if you wish to check in your lock file)
+pubspec.lock
 
 .buildlog
 pubspec.yaml~
 .gitignore~
 */.sass-cache
 .sass-cache
+.bowerrc
+bower.json
+app-router-dart_config.yaml
 
 # Files created by dart2js
 *.dart.js
+*.dart.precompiled.js
+*.js_
 *.part.js
 *.js.deps
 *.js.map

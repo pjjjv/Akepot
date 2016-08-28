@@ -20,9 +20,9 @@ class LoginScreen extends PolymerElement {
 
     Map headers = {"Content-type": "application/json",
                "Authorization": "Bearer ${response['google']['accessToken']}"};
-    IronAjax peopleAjax =shadowRoot.querySelector('#ajax-people');
+    IronAjax peopleAjax =$$('#ajax-people');
     peopleAjax.headers = headers;
-    peopleAjax.go();
+    peopleAjax.generateRequest();
   }
 
   void signOutDone(CustomEvent event, dynamic detail){
@@ -31,7 +31,7 @@ class LoginScreen extends PolymerElement {
   }
 
   void signOut(Event event){
-    LoginGoogle button = shadowRoot.querySelector("login-google");
+    LoginGoogle button = $$("login-google");
     button.signOut(event);
   }
 

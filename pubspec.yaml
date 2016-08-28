@@ -8,13 +8,12 @@ environment:
   sdk: '>=1.18.0 <2.0.0'
 
 dependencies:
-  browser: ^0.10.0
+  browser: any
   observe: any
   polymer_elements: ^1.0.0-rc.9
   polymer: ^1.0.0-rc.18
-  template_binding: ^0.14.0
-  web_components: ^0.12.0
-  #reflectable: ^1.0.0
+  template_binding: any
+  web_components: any
   intl: any
   sass: any
   firebase:
@@ -22,7 +21,7 @@ dependencies:
 transformers:
 - sass:
     compass: false                 # Include compass
-- web_components:
+- polymer:
     entry_points:
     - web/akepot.html
 #- reflectable:

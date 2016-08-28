@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'package:polymer/init.dart';
 import 'package:polymer/polymer.dart';
 import 'package:template_binding/template_binding.dart';
 import 'package:akepot/competences_service.dart';
@@ -7,34 +6,46 @@ import 'package:observe/observe.dart';
 
 main() async {
   await initPolymer();
+  realMain();
 }
 
-@initMethod
 realMain() {
   Content contentModel;
 
-  Polymer.onReady.then((_) {
-    var content = document.querySelector('#content');
-    contentModel = new Content();
-    templateBind(content).model = contentModel;
+  var content = document.querySelector('#content');
+  contentModel = new Content();
+  templateBind(content).model = contentModel;
 
-    setAkepotTransitionSpeed(350);
+  setAkepotTransitionSpeed(350);
 
-    new AppCache(window.applicationCache);
-  });
+  new AppCache(window.applicationCache);
 }
 
 class Content extends Observable {
-  @Property(observer: bool signedIn;
-  @Property(observer: bool readyDom;
-  @Property(observer: User user;
-  @Property(observer: CompetencesService service;
+  @property bool signedIn;
+  @property bool readyDom;
+  @property User user;
+  @property CompetencesService service;
+  @Property(observer: 'pageChanged') String page;
 
   static const int MIN_SPLASH_TIME = 1000;
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   Content () {
     service = document.querySelector('#service');
+  }
+
+  @Observe('routeData.page')
+  void routePageChanged(String page) {
+    if (page == null || page == ""){
+      page = 'home';
+    }
+    this.page = page;
+  }
+
+  void pageChanged(String page) {
+    // load page import on demand.
+    Polymer.importHref('pages/page_' + page + '.html');
   }
 }
 

@@ -11,9 +11,9 @@ class CoreCard2 extends PolymerElement {
   CoreCard2.created() : super.created();
 
   void domReady() {
-    HtmlElement flipContainer = shadowRoot.querySelector('.flip-container');
-    HtmlElement back = shadowRoot.querySelector('#back');
-    HtmlElement front = shadowRoot.querySelector('#front');
+    HtmlElement flipContainer = $$('.flip-container');
+    HtmlElement back = $$('#back');
+    HtmlElement front = $$('#front');
 
     String height = front.client.height.toString()+"px";
     back.style.height = height;
@@ -28,7 +28,7 @@ class CoreCard2 extends PolymerElement {
 
   void flip(Event e){
     flipped = !flipped;
-    var flip = shadowRoot.querySelector('.flip');
+    var flip = $$('.flip');
     flip.classes.toggle('flipper');
   }
 }

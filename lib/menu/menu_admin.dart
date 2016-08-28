@@ -6,7 +6,6 @@ import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/paper_button.dart';
-import 'package:app_router/app_router.dart';
 import 'package:polymer_elements/paper_dialog.dart';
 import 'package:akepot/competences_service.dart';
 
@@ -19,7 +18,7 @@ class MenuAdmin extends PolymerElement {
   String newlink;
 
   void domReady() {
-    PaperItem createButton = shadowRoot.querySelector("#menu_button_create");
+    PaperItem createButton = $$("#menu_button_create");
     createButton.hidden = false;
     createButton.onClick.listen(showDialog);
   }
@@ -28,15 +27,15 @@ class MenuAdmin extends PolymerElement {
     newlink = window.location.protocol + "//" + window.location.host + window.location.pathname + "#/project/${projectHash}";
     if (DEBUG) print("New project link would be: $newlink");
 
-    PaperDialog dialog = shadowRoot.querySelector('#created-dialog');
+    PaperDialog dialog = $$('#created-dialog');
 
-    PaperButton goButton = shadowRoot.querySelector('#go-button');
+    PaperButton goButton = $$('#go-button');
     goButton.onClick.first.then(onGoButtonClick);
 
     dialog.toggle();
   }
 
   void onGoButtonClick(Event e){
-    (document.querySelector('app-router') as AppRouter).go("/project/${projectHash}");
+    //(document.querySelector('app-router') as AppRouter).go("/project/${projectHash}");
   }
 }

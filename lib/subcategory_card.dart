@@ -43,7 +43,7 @@ class SubCategoryCard extends PolymerElement {
   }
 
   void closeDesc(Event e) {
-    for(SingleStrengthItem item in shadowRoot.querySelectorAll('single-strength-item')){
+    for(SingleStrengthItem item in $$All('single-strength-item')){
       item.closeDesc();
     }
   }
@@ -52,7 +52,7 @@ class SubCategoryCard extends PolymerElement {
     if(palette == null){
       return;
     }
-    IronImage image = shadowRoot.querySelector('#header');
+    IronImage image = $$('#header');
     if(image.getClientRects().length == 0){
       return;
     }

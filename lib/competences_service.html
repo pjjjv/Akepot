@@ -1,17 +1,13 @@
 <!-- before the Polymer elements imports -->
 <link rel="import" href="../../packages/polymer/polymer.html">
 
-<!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
-<link rel="import" href="../../packages/polymer_elements/iron_ajax.html">
-<link rel="import" href="../../packages/polymer_elements/iron_signals.html">
-
 <dom-module id="competences-service">
   <style>
     :host {
       display: none;
     }
     </style>
-  <template>
+  <templatef>
     <!--<firebase-app id="firebase-app"
                   auth-domain="shining-heat-1634.firebaseapp.com"
                   database-url="https://shining-heat-1634.firebaseio.com"
@@ -25,9 +21,9 @@
     <iron-signals on-iron-signal-loginsuccess="signInDone"></iron-signals>
     <iron-signals on-iron-signal-loginsignedout="signOutDone"></iron-signals>
 
-    <iron-ajax id="ajax-colour-schemes" url="https://jsonp.nodejitsu.com/" on-error="ajaxError" on-response="ajaxColourSchemesResponse" handle-as="json" method="GET" params="{ &quot;url&quot; : &quot;http://www.colourlovers.com/api/palettes/top?format=json&quot; }" body="{'numResults': 100}" auto>
+    <iron-ajax id="ajax-colour-schemes" url="https://jsonp.nodejitsu.com/" on-error="ajaxError" on-response="ajaxColourSchemesResponse" handle-as="json" method="GET" params="{ &quot;url&quot; : &quot;http://www.colourlovers.com/api/palettes/top?format=json&quot; }" body="{'numResults': 100}">
     </iron-ajax><!-- proxied through Nodejitsu JSONProxy because colourlovers does not support CORS. -->
 
-  </template>
+  </templatef>
 
 </dom-module>

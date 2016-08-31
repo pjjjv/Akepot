@@ -9,6 +9,7 @@ import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:polymer_elements/iron_ajax.dart';
+import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_request.dart';
 //import 'package:polymer_elements/firebase_app.dart';
 import 'package:firebase/firebase.dart';
@@ -51,18 +52,120 @@ class CompetencesService extends PolymerElement {
     dbRef = firebaseApp.app(0).database().ref;*/
   }
 
-  @reflectable
-  void ajaxError(CustomEventWrapper event, {request: IronRequest, error: dynamic}) {
-    if (DEBUG) print(event.detail);
+  void ready(){
+    ajaxUserinfo = querySelector('#ajax-people');
+    ajaxColourSchemes = querySelector('#ajax-colour-schemes');
+    if(document.querySelector("#cmdebug") != null){
+      ajaxColourSchemes.url = "data/colour_schemes_response.json";//TODO: nodejitsu is gone
+    }
+    ajaxColourSchemes.generateRequest();
+    readyDom = true;
   }
 
-  void ready(){
-    ajaxUserinfo = $$('#ajax-people');
-    ajaxColourSchemes = $$('#ajax-colour-schemes');
-    if(document.querySelector("#cmdebug") != null){
-      ajaxColourSchemes.url = "data/colour_schemes_response.json";
+  @reflectable
+  void ajaxError(CustomEventWrapper event, dynamic rest) {
+    if (DEBUG) print(rest.error);
+  }
+
+  Map get headers => _headers;
+  set headers(Map headers) {
+    _headers = headers;
+    if (DEBUG) print("headers: $headers");
+    ajaxUserinfo.headers = headers;
+  }
+
+  @reflectable
+  void signInDone(CustomEventWrapper event, dynamic rest){//TODO: if signin fails: Exception
+    if(rest.response==null){
+      throw new Exception("Not authorized and repsonse is null.");
     }
-    readyDom = true;
+    if (DEBUG) print("signinResult: ${rest.response}");
+
+    var resp = convertToDart(rest.response);
+
+    headers = {"Content-type": "application/json",
+      "Authorization": "Bearer ${(resp['google']['accessToken'] as String)}"};
+
+    user = new User();
+    user.uid = resp['uid'];
+    if (user.uid == "" || user.uid == null) {
+      if (DEBUG) print("uid empty");
+    }
+
+    getUserinfo();
+  }
+
+  void getUserinfo(){
+    ajaxUserinfo.generateRequest();
+  }
+
+  void parseUserinfoResponse(CustomEventWrapper event, dynamic rest) {
+    if (DEBUG) print("parseUserinfoResponse: "+JSON.encode(rest.response).toString());
+
+    try {
+      if (rest.response == null) {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+
+    var resp = convertToDart(rest.response);
+
+    user.email = resp['emails'][0]['value'];
+    user.nickname = "";
+    if(resp['nickname'] != null){
+      user.nickname = resp['nickname'];
+    } else if(resp['displayName'] != null){
+      user.nickname = resp['displayName'];
+    }
+
+    user.firstname = resp['name']['givenName'];
+    user.lastname = resp['name']['familyName'];
+
+
+    int PROFILE_IMAGE_SIZE = 75;
+    int COVER_IMAGE_SIZE = 315;
+
+    if(resp['image'] != null){
+      user.profile = (resp['image']['url'] as String).replaceFirst(new RegExp('/(.+)\?sz=\d\d/'), "\$1?sz=" + PROFILE_IMAGE_SIZE.toString());
+    }
+
+    if(resp['cover'] != null){
+      user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
+    }
+
+    signedIn = true;
+
+    this.fire( "iron-signal", detail: { "name": "signedin" } );
+  }
+
+  @reflectable
+  void signOutDone(CustomEventWrapper event, dynamic rest){
+    signedIn=false;
+  }
+
+// Retrieves colour palettes using the Colourlovers API, creating a new Palette
+// for each
+  @reflectable
+  void ajaxColourSchemesResponse(CustomEventWrapper event, dynamic rest) {
+    if (DEBUG) print(
+        "ajaxColourSchemesResponse: " + JSON.encode(convertToDart(rest.response)).toString());
+
+    try {
+      if (rest.response == null) {
+        return; //TODO: error
+      }
+    } catch (e) {
+      return;
+    }
+
+    palettes = [];
+    for (Map palette in (convertToDart(rest.response) as List)) {
+      palettes.add(new Palette.fromJson(palette));
+    }
+
+    this.fire("iron-signal", detail: { "name": "palettesloaded"});
   }
 }
 

@@ -5,7 +5,6 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:polymer_elements/iron_ajax.dart';
-import 'login/login_google.dart';
 import 'package:akepot/competences_service.dart';
 
 @PolymerRegister('login-screen')
@@ -31,8 +30,8 @@ class LoginScreen extends PolymerElement {
   }
 
   void signOut(Event event){
-    LoginGoogle button = $$("login-google");
-    button.signOut(event);
+    //LoginGoogle button = $$("login-google");
+    //button.signOut(event);
   }
 
   void parseResponse2(CustomEvent event, Map detail, IronAjax node) {

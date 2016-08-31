@@ -14,43 +14,18 @@ dependencies:
   polymer: ^1.0.0-rc.18
   template_binding: any
   web_components: any
-  intl: any
   sass: any
   firebase:
     path: ../firebase-dart
 transformers:
 - sass:
-    compass: false                 # Include compass
+    compass: false
 - polymer:
     entry_points:
     - web/akepot.html
-#- reflectable:
-#    entry_points:
-#    - web/akepot.dart
+
 - $dart2js:
     minify: true
     commandLineOptions:
     - --trust-type-annotations
     - --trust-primitives
-#- $dart2js:
-#    checked: false
-#    minify: true
-#    verbose: false
-#    suppressWarnings: false
-#    suppressHints: false
-#    terse: false
-#    csp: false
-
-#dependency_overrides:
-#  polymer:
-#    git:
-#      ref: b66389b
-#      url: https://github.com/dart-lang/polymer-dart.git
-#  polymer_elements:
-#    git:
-#      ref: v1.0.0-rc.9
-#      url: https://github.com/dart-lang/polymer_elements.git
-#  polymer_interop:
-#    git:
-#      ref: 0.2.0-dev
-#      url: https://github.com/dart-lang/polymer_interop.git

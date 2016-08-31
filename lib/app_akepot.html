@@ -1,0 +1,17 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<dom-module id="app-akepot">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <link rel="import" type="css" href="app_akepot.css">
+  <template>
+    <div>Abba</div>
+    <login-screen id="loginscreen" layout vertical center-center fit class="{{(signedIn && readyDom) ? '' : 'show'}}" signedin="{{signedIn}}"></login-screen>
+
+    <competences-service id="service" user="{{user}}" signedin="{{signedIn}}" readydom="{{readyDom}}"></competences-service>
+  </template>
+
+</dom-module>

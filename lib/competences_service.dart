@@ -33,6 +33,36 @@ class CompetencesService extends PolymerElement {
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
+    dbRef = new Firebase(SERVER);
+
+    // Initialize Firebase
+    /*var config = {
+      apiKey: "AIzaSyByIYqE6-sqzM-Gt_xXWv9MDigJ7krVKm8",
+      authDomain: "shining-heat-1634.firebaseapp.com",
+      databaseURL: "https://shining-heat-1634.firebaseio.com",
+      storageBucket: "shining-heat-1634.appspot.com",
+    };
+
+    firebase.initializeApp(config);
+
+    var rootRef = firebase.database().ref();*/
+
+    /*FirebaseApp firebaseApp = $$('firebase-app');
+    dbRef = firebaseApp.app(0).database().ref;*/
+  }
+
+  @reflectable
+  void ajaxError(CustomEventWrapper event, {request: IronRequest, error: dynamic}) {
+    if (DEBUG) print(event.detail);
+  }
+
+  void ready(){
+    ajaxUserinfo = $$('#ajax-people');
+    ajaxColourSchemes = $$('#ajax-colour-schemes');
+    if(document.querySelector("#cmdebug") != null){
+      ajaxColourSchemes.url = "data/colour_schemes_response.json";
+    }
+    readyDom = true;
   }
 }
 

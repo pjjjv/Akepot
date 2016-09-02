@@ -22,7 +22,7 @@ transformers:
     compass: false
 - polymer:
     entry_points:
-    - web/akepot.html
+    - web/index.html
 
 - $dart2js:
     minify: true

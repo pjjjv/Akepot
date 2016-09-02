@@ -27,20 +27,46 @@
     <!--  Polyfill of Custom Elements and HTML Imports -->
     <script src="packages/web_components/webcomponents-lite.min.js"></script>
 
-    <script defer type="application/dart" src="main.dart"></script>
+    <script defer type="application/dart" src="index.dart"></script>
     <script defer src="packages/browser/dart.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
 
     <link rel="import" href="packages/polymer/polymer.html">
     <link rel="import" href="packages/akepot/app_akepot.html">
 
+    <script>
+      var _prum = [
+        [
+          'id',
+          '54a6a6c7abe53d46185cc65d'
+        ],
+        [
+          'mark',
+          'firstbyte',
+          new Date().getTime()
+        ]
+      ];
+      (function () {
+        var s = document.getElementsByTagName('script')[0], p = document.createElement('script');
+        p.async = 'async';
+        p.src = '//rum-static.pingdom.net/prum.min.js';
+        Polymer.dom(Polymer.dom(s).parentNode).insertBefore(p, s);
+      }());
+    </script>
+    <meta name="blitz" content="mu-945e2684-1e7d011f-6be36044-cab4553c">
+    <style is="custom-style">
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [fullbleed] {
+      margin: 0;
+      height:100vh;
+    }
+  </style>
   </head>
 
   <body unresolved fullbleed touch-action="auto">
     <div id="cmdebug" hidden></div>
     <app-akepot></app-akepot>
-
-
-
   </body>
 </html>

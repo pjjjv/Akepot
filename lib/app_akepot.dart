@@ -17,8 +17,12 @@ class AppAkepot extends PolymerElement {
   @property bool signedIn;
   @property bool readyDom;
   @property User user;
+  @property dynamic route;
+  @property dynamic routeData;
   @property CompetencesService service;
-  @Property(observer: 'pageChanged', notify: true) String page;
+  @Property(observer: 'pageChanged') String page = 'home';//needs initialization to work!!!!?
+
+  IronPages ip;
 
   AppAkepot.created() : super.created();
 
@@ -26,7 +30,8 @@ class AppAkepot extends PolymerElement {
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   void ready () {
-    service = $$('#service');
+    service = $$('competences-service');
+    ip = $$('iron-pages');
   }
 
   @Observe('routeData.page')
@@ -38,8 +43,8 @@ class AppAkepot extends PolymerElement {
   }
 
   @reflectable
-  void pageChanged(String page, String oldValue) {
+  void pageChanged(String , String old) {
     // load page import on demand.
-    Polymer.importHref('pages/page_' + page + '.html');
+    //Polymer.importHref('pages/page_' + page + '.html');
   }
 }

@@ -1,5 +1,3 @@
-<link rel="import" href="../../packages/polymer/polymer.html">
-
 <dom-module id="app-akepot">
   <style>
     :host {
@@ -17,10 +15,9 @@
     <app-route
         route="{{route}}"
         pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        data="{{routeData}}"></app-route>
 
-    <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+    <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="selected">
       <page-home name="home"></page-home>
       <page-edit name="edit"></page-edit>
       <page-not-found name="not_found"></page-not-found>

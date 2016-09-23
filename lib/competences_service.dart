@@ -22,7 +22,7 @@ const DEBUG = true;
 
 @PolymerRegister('competences-service')
 class CompetencesService extends PolymerElement {
-  @property bool signedIn = false;
+  //@property bool signedIn = false;
   @property bool readyDom = false;
   @property User user = new User();
   IronAjax ajaxUserinfo;
@@ -135,14 +135,14 @@ class CompetencesService extends PolymerElement {
       user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }
 
-    signedIn = true;
+    //signedIn = true;
 
-    this.fire( "iron-signal", detail: { "name": "signedin" } );
+    //this.fire( "iron-signal", detail: { "name": "signedin" } );
   }
 
   @reflectable
   void signOutDone(CustomEventWrapper event, dynamic rest){
-    signedIn=false;
+    //signedIn=false;
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette

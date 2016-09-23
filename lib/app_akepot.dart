@@ -14,13 +14,14 @@ import 'package:polymer_elements/iron_pages.dart';
 
 @PolymerRegister('app-akepot')
 class AppAkepot extends PolymerElement {
-  @property bool signedIn;
+  //@property bool signedIn;
   @property bool readyDom;
   @property User user;
   @property dynamic route;
   @property dynamic routeData;
+  @property dynamic subroute = {};
   @property CompetencesService service;
-  @Property(observer: 'pageChanged') String page = 'home';//needs initialization to work!!!!?
+  @Property(observer: 'pageChanged') String page;//needs initialization to work
 
   IronPages ip;
 
@@ -37,14 +38,16 @@ class AppAkepot extends PolymerElement {
   @Observe('routeData.page')
   void routePageChanged(String page) {
     if (page == null || page == ""){
-      page = 'home';
+      set('page', 'home');
     }
-    this.page = page;
+    set('page', page);
+    print(page);
   }
 
   @reflectable
-  void pageChanged(String , String old) {
+  void pageChanged(String page, String old) {
     // load page import on demand.
+    print('pageChanged: '+page);
     //Polymer.importHref('pages/page_' + page + '.html');
   }
 }

@@ -10,7 +10,7 @@ import 'package:akepot/competences_service.dart';
 @PolymerRegister('login-screen')
 class LoginScreen extends PolymerElement {
   LoginScreen.created() : super.created();
-  bool signedIn = false;
+  @property bool signedIn = false;
   String accessToken = "";
   String name = "";
 

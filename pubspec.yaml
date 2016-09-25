@@ -19,7 +19,7 @@ dependencies:
     path: ../firebase-dart
 transformers:
 - sass:
-    compass: false
+    compass: true
 - polymer:
     entry_points:
     - web/index.html

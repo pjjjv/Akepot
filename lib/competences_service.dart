@@ -7,7 +7,6 @@ import 'dart:html';
 import 'dart:convert';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_category.dart';
-import 'package:akepot/model/model_project.dart';
 import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_request.dart';
@@ -22,7 +21,7 @@ const DEBUG = true;
 
 @PolymerRegister('competences-service')
 class CompetencesService extends PolymerElement {
-  //@property bool signedIn = false;
+  @property bool signedIn = false;
   @property bool readyDom = false;
   @property User user = new User();
   IronAjax ajaxUserinfo;
@@ -55,7 +54,7 @@ class CompetencesService extends PolymerElement {
   void ready(){
     ajaxUserinfo = querySelector('#ajax-people');
     ajaxColourSchemes = querySelector('#ajax-colour-schemes');
-    if(document.querySelector("#cmdebug") != null){
+    if($$("#cmdebug") != null){
       ajaxColourSchemes.url = "data/colour_schemes_response.json";//TODO: nodejitsu is gone
     }
     ajaxColourSchemes.generateRequest();
@@ -135,14 +134,14 @@ class CompetencesService extends PolymerElement {
       user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }
 
-    //signedIn = true;
+    signedIn = true;
 
-    //this.fire( "iron-signal", detail: { "name": "signedin" } );
+    this.fire( "iron-signal", detail: { "name": "signedin" } );
   }
 
   @reflectable
   void signOutDone(CustomEventWrapper event, dynamic rest){
-    //signedIn=false;
+    signedIn=false;
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette

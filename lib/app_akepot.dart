@@ -11,19 +11,23 @@ import 'package:akepot/pages/page_not_found.dart';
 import 'package:polymer_elements/app_route.dart';
 import 'package:polymer_elements/app_location.dart';
 import 'package:polymer_elements/iron_pages.dart';
+import 'package:polymer_elements/iron_meta.dart';
+import 'package:polymer_elements/paper_toast.dart';
+import 'package:polymer_elements/paper_button.dart';
 
 @PolymerRegister('app-akepot')
 class AppAkepot extends PolymerElement {
-  //@property bool signedIn;
+  @property bool signedIn = false;
   @property bool readyDom;
   @property User user;
   @property dynamic route;
   @property dynamic routeData;
-  @property dynamic subroute = {};
+  @property dynamic subroute = {};//needs initialization to work
   @property CompetencesService service;
-  @Property(observer: 'pageChanged') String page;//needs initialization to work
+  @Property(observer: 'pageChanged') String page;
 
   IronPages ip;
+  IronMeta meta;
 
   AppAkepot.created() : super.created();
 
@@ -31,7 +35,10 @@ class AppAkepot extends PolymerElement {
   static const Duration SPLASH_TIMEOUT =  const Duration(milliseconds: MIN_SPLASH_TIME);
 
   void ready () {
-    service = $$('competences-service');
+    set('service', $$('competences-service'));
+    meta = $$('iron-meta');
+    CompetencesService s = meta.byKey('service');
+    print(s);
     ip = $$('iron-pages');
   }
 
@@ -49,5 +56,14 @@ class AppAkepot extends PolymerElement {
     // load page import on demand.
     print('pageChanged: '+page);
     //Polymer.importHref('pages/page_' + page + '.html');
+  }
+
+  @reflectable
+  String computeLoginScreenVisibility(bool signedIn, bool readyDom){
+    if (signedIn && readyDom){
+      return 'show';
+    } else {
+      return '';
+    }
   }
 }

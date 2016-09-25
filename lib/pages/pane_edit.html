@@ -1,0 +1,126 @@
+<dom-module id="pane-edit">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][vertical] {
+      @apply(--layout-vertical);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+    [layout][center] {
+      @apply(--layout-center);
+    }
+    [layout][inline] {
+      @apply(--layout-inline);
+    }
+    [layout][flex] {
+      @apply(--layout-flex);
+    }
+    [layout][center-center] {
+      @apply(--layout-center-center);
+    }
+  </style>
+  <link rel="import" type="css" href="pane_edit.css">
+  <template>
+
+    <iron-signals on-iron-signal-signedin="signedIn"></iron-signals>
+    <iron-signals on-iron-signal-removeproject="removeProject"></iron-signals>
+
+    <iron-signals on-iron-signal-roletap="onRoleTap"></iron-signals>
+    <iron-signals on-iron-signal-addrole="addRole"></iron-signals>
+    <iron-signals on-iron-signal-removerole="removeRole"></iron-signals>
+
+    <iron-signals on-iron-signal-teamtap="onTeamTap"></iron-signals>
+    <iron-signals on-iron-signal-addteam="addTeam"></iron-signals>
+    <iron-signals on-iron-signal-removeteam="removeTeam"></iron-signals>
+
+    <iron-signals on-iron-signal-removeperson="removePerson"></iron-signals>
+
+    <iron-signals on-iron-signal-categorytap="onCategoryTap"></iron-signals>
+    <iron-signals on-iron-signal-addcategory="addCategory"></iron-signals>
+    <iron-signals on-iron-signal-removecategory="removeCategory"></iron-signals>
+
+    <iron-signals on-iron-signal-subcategorytap="onSubCategoryTap"></iron-signals>
+    <iron-signals on-iron-signal-addsubcategory="addSubCategory"></iron-signals>
+    <iron-signals on-iron-signal-removesubcategory="removeSubCategory"></iron-signals>
+
+    <iron-signals on-iron-signal-competencetemplatetap="onCompetenceTemplateTap"></iron-signals>
+    <iron-signals on-iron-signal-addcompetencetemplate="addCompetenceTemplate"></iron-signals>
+    <iron-signals on-iron-signal-removecompetencetemplate="removeCompetenceTemplate"></iron-signals>
+
+    <iron-signals on-iron-signal-goup="goUp"></iron-signals>
+    <iron-signals on-iron-signal-goup2="goUp2"></iron-signals>
+    <iron-signals on-iron-signal-goup3="goUp3"></iron-signals>
+
+    <div id="outer" layout="" vertical="">
+      <template is="dom-if" if="{{service.signedIn}}">
+        <paper-tabs selected="{{tab}}" id="paper_tabs" horizontal center layout>
+          <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
+          <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
+          <paper-tab id="tab-roles" inline flex center-center horizontal layout active>Roles</paper-tab>
+        </paper-tabs>
+        <template is="dom-if" if="{{_computeIf(tab)}}">
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
+
+            <section-edit-project project="{{service.project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
+
+            <template is="dom-if" if="{{_computeIf(category_nr, service)}}">
+              <section-edit-category category="{{_computeCategory(category_nr, service)}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
+
+            <template is="dom-if" if="{{_computeIf(category_nr, service, subcategory_nr)}}">
+              <section-edit-subcategory subcategory="{{_computeSubcategory(category_nr, service, subcategory_nr)}}" page="{{page}}" index="{{competence_nr}}"></section-edit-subcategory>
+
+            <template is="dom-if" if="{{_computeIf(category_nr, competence_nr, service, subcategory_nr)}}">
+              <section-edit-competence competencetemplate="{{_computeCompetencetemplate(category_nr, competence_nr, service, subcategory_nr)}}" page="{{page}}"></section-edit-competence>
+
+            </template>
+            </template>
+            </template>
+          </neon-animated-pages>
+        </template>
+        <template is="dom-if" if="{{_computeIf(tab)}}">
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" flex>
+
+            <section-edit-project2 project="{{service.project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
+
+            <template is="dom-if" if="{{_computeIf(service, team_nr)}}">
+              <section-edit-team team="{{_computeTeam(service, team_nr)}}" page="{{page2}}"></section-edit-team>
+            </template>
+          </neon-animated-pages>
+        </template>
+        <template is="dom-if" if="{{_computeIf(tab)}}">
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page3}}" id="pages_edit3" flex>
+
+            <section-edit-project3 project="{{service.project}}" page="{{page3}}" index="{{role_nr}}"></section-edit-project3>
+
+            <template is="dom-if" if="{{_computeIf(role_nr, service)}}">
+              <section-edit-role page="{{page3}}" role$="{{_computeRole(role_nr, service)}}"></section-edit-role>
+            </template>
+          </neon-animated-pages>
+        </template>
+      </template>
+    </div>
+
+
+
+<!--     <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
+      <core-icon icon="create" aria-label="create" role="img"></core-icon>
+      Create project
+    </paper-button>
+    <paper-action-dialog id="created-dialog" heading="New project created"
+      transition="paper-transition-center" backdrop="true">
+      <p>Write down the following link:<br>
+         {{newlink}}<br></p>
+      <p>This is the permalink to your project. Share it with your project members!</p>
+      <p>Would you like to navigate to it now?</p>
+      <paper-button dismissive tabindex="0" class="flat-button">Close</paper-button>
+      <paper-button affirmative tabindex="0" autofocus class="flat-button" id="go-button">Navigate</paper-button>
+    </paper-action-dialog> -->
+  </template>
+
+</dom-module>

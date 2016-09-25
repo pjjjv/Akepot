@@ -22,29 +22,29 @@
 
       <!-- Drawer content -->
       <app-drawer>
-        <app-toolbar>
-          <!-- <core-image src="{{service.user.cover}}" sizing="cover" preload fade></core-image> -->
+        <paper-toolbar id="panel-head">
+          <!-- <iron-image src="{{service.user.cover}}" sizing="cover" preload fade></iron-image> -->
           <img class="middle profile" _src="{{service.user.profile}}" hidden$="{{_computeHidden(service)}}">
-          <div class="bottom" layout vertical>
+          <div class="bottom layout vertical">
             <span>{{service.user.nickname}}</span>
             <span>{{service.user.email}}</span>
           </div>
-        </app-toolbar>
+        </paper-toolbar>
       </app-drawer>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header condenses reveals effects="waterfall">
-          <app-toolbar>
+          <paper-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div id="title" tool flex>
+            <div id="title" tool class="flex">
               <content select=".title"></content>
             </div>
-          </app-toolbar>
+          </paper-toolbar>
         </app-header>
 
-        <div fit main class="content">
+        <div main class="content fit">
           <content></content>
         </div>
 

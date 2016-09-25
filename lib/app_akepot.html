@@ -1,15 +1,28 @@
 <dom-module id="app-akepot">
-  <style>
+  <!--<style>
     :host {
       display: block;
     }
-  </style>
-  <link rel="import" type="css" href="app_akepot.css">
+  </style>-->
+  <!--<style is="custom-style">
+  paper-button {
+    --paper-button: {
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+      };
+    background: black;
+    color: white;
+    height: 100%;
+    border-radius: 0;
+    border-left: 1px solid white;
+    margin-right: -16px;
+  }
+</style>-->
+  <!-- <link rel="import" type="css" href="app_akepot.css"> -->
   <template>
-    <div>Abba</div>
-    <login-screen id="loginscreen" layout vertical center-center fit></login-screen>
-
-    <competences-service id="service" user="{{user}}"></competences-service>
+    <login-screen id="loginscreen" class="layout vertical center-center fit" class$="{{computeLoginScreenVisibility(signedIn, readyDom)}}" signed-in="{{signedIn}}"></login-screen>
+    <competences-service id="service" user="{{user}}" signed-in="{{signedIn}}" ready-dom="{{readyDom}}"></competences-service>
+    <iron-meta key="service" value="{{service}}"></iron-meta>
 
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route

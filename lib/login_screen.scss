@@ -11,7 +11,7 @@
   margin: 0;
 }
 
-:host(.show:host) {
+:host(.show) {
   visibility: visible;
   opacity: 1;
   transform: scale(1);

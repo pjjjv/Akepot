@@ -2,7 +2,7 @@ library akepot.model.model_category;
 
 import 'package:akepot/model/model_subcategory.dart';
 import 'package:akepot/competences_service.dart';
-import 'package:firebase/firebase.dart';
+//import 'package:firebase/firebase.dart';
 import 'package:observe/observe.dart';
 
 /** Not documented yet. */

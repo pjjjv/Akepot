@@ -5,7 +5,7 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_project.dart';
 import 'dart:html';
-import 'package:observe/observe.dart';
+import 'package:observe/observe.dart' as observe;
 import 'package:akepot/competences_service.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_meta.dart';
@@ -32,33 +32,27 @@ class PaneEdit extends PolymerElement {
   int team_nr = 0;
   int role_nr = 0;
 
-  void ready() {
-    service = (document.createElement('iron-meta') as IronMeta).byKey('service');
-    print(service);
-    //service = document.querySelector("competences-service");
-    page = 0;
-    page2 = 0;
-
-    //TODO: if(service.signedIn) signedIn(null, null, null);
-  }
-
-  void signedIn(Event e, var detail, HtmlElement target){
-
+  @reflectable
+  void signedIn(Event e, var detail){
+    service = new IronMeta().byKey('service');
     if(service.project != null && service.project.hash == projectHash){
       return;
     }
 
-    service.project = toObservable(new Project.retrieve(projectHash, service));
+    service.project = observe.toObservable(new Project.retrieve(projectHash, service));
   }
 
+  @reflectable
   void removeProject(Event e, var detail, Node target){
     //
   }
 
+  @reflectable
   void addRole(Event e, var detail, Node target){
     service.project.addRole();
   }
 
+  @reflectable
   void removeRole(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(role_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
@@ -67,16 +61,19 @@ class PaneEdit extends PolymerElement {
     service.project.removeRole(index);
   }
 
+  @reflectable
   void onRoleTap(Event e, var detail, Node target){
     role_nr = int.parse(detail);
     pages3 = $$("#pages_edit3");
     pages3.selectNext();
   }
 
+  @reflectable
   void addTeam(Event e, var detail, Node target){
     service.project.addTeam();
   }
 
+  @reflectable
   void removeTeam(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(team_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
@@ -85,21 +82,25 @@ class PaneEdit extends PolymerElement {
     service.project.removeTeam(index);
   }
 
+  @reflectable
   void onTeamTap(Event e, var detail, Node target){
     team_nr = int.parse(detail);
     pages2 = $$("#pages_edit2");
     pages2.selectNext();
   }
 
+  @reflectable
   void removePerson(Event e, var detail, Node target){
     int index = int.parse(detail);
     service.project.teams[team_nr].removePerson(index);
   }
 
+  @reflectable
   void addCategory(Event e, var detail, Node target){
     service.project.addCategory();
   }
 
+  @reflectable
   void removeCategory(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(category_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
@@ -108,16 +109,20 @@ class PaneEdit extends PolymerElement {
     service.project.removeCategory(index);
   }
 
+  @reflectable
   void onCategoryTap(Event e, var detail, Node target){
     category_nr = int.parse(detail);
     pages = $$("#pages_edit");
     pages.selectNext();
   }
 
+  @reflectable
   void addSubCategory(Event e, var detail, Node target){
     service.project.categories[category_nr].addSubCategory();
   }
 
+
+  @reflectable
   void removeSubCategory(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(subcategory_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
@@ -126,16 +131,20 @@ class PaneEdit extends PolymerElement {
     service.project.categories[category_nr].removeSubCategory(index);
   }
 
+
+  @reflectable
   void onSubCategoryTap(Event e, var detail, Node target){
     subcategory_nr = int.parse(detail);
     pages = $$("#pages_edit");
     pages.selectNext();
   }
 
+  @reflectable
   void addCompetenceTemplate(Event e, var detail, Node target){
     service.project.categories[category_nr].subcategories[subcategory_nr].addCompetenceTemplate();
   }
 
+  @reflectable
   void removeCompetenceTemplate(Event e, var detail, Node target){
     int index = int.parse(detail);
     if(competence_nr >= index){//TODO: not really needed, reduces harmless errors on polymer expressions but does not remove them entirely
@@ -144,22 +153,26 @@ class PaneEdit extends PolymerElement {
     service.project.categories[category_nr].subcategories[subcategory_nr].removeCompetenceTemplate(index);
   }
 
+  @reflectable
   void onCompetenceTemplateTap(Event e, var detail, Node target){
     competence_nr = int.parse(detail);
     pages = $$("#pages_edit");
     pages.selectNext();
   }
 
+  @reflectable
   void goUp(Event e, var detail, HtmlElement target){
     pages = $$("#pages_edit");
     pages.selectPrevious();
   }
 
+  @reflectable
   void goUp2(Event e, var detail, HtmlElement target){
     pages2 = $$("#pages_edit2");
     pages2.selectPrevious();
   }
 
+  @reflectable
   void goUp3(Event e, var detail, HtmlElement target){
     pages3 = $$("#pages_edit3");
     pages3.selectPrevious();

@@ -79,12 +79,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.10"
-  firebase:
-    description:
-      path: "../firebase-dart"
-      relative: true
-    source: path
-    version: "0.5.1"
   func:
     description:
       name: func
@@ -153,9 +147,9 @@ packages:
     version: "1.0.0-rc.18"
   polymer_elements:
     description:
-      name: polymer_elements
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../polymer_elements"
+      relative: true
+    source: path
     version: "1.0.0-rc.9"
   polymer_interop:
     description:

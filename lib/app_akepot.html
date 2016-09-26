@@ -20,7 +20,7 @@
 </style>-->
   <!-- <link rel="import" type="css" href="app_akepot.css"> -->
   <template>
-    <login-screen id="loginscreen" class="layout vertical center-center fit" class$="{{computeLoginScreenVisibility(signedIn, readyDom)}}" signed-in="{{signedIn}}"></login-screen>
+    <login-screen id="loginscreen" class$="{{computeLoginScreenVisibility(signedIn, readyDom)}}" signed-in="{{signedIn}}"></login-screen>
     <competences-service id="service" user="{{user}}" signed-in="{{signedIn}}" ready-dom="{{readyDom}}"></competences-service>
     <iron-meta key="service" value="{{service}}"></iron-meta>
 

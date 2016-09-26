@@ -10,8 +10,10 @@ import 'package:akepot/model/model_category.dart';
 import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_request.dart';
-//import 'package:polymer_elements/firebase_app.dart';
-import 'package:firebase/firebase.dart';
+import 'package:polymer_elements/firebase_app.dart';
+import 'package:polymer_elements/firebase_auth.dart';
+import 'dart:developer';
+//import 'package:firebase/firebase.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
@@ -24,16 +26,19 @@ class CompetencesService extends PolymerElement {
   @property bool signedIn = false;
   @property bool readyDom = false;
   @property User user = new User();
+  @property dynamic user2 = {};
   IronAjax ajaxUserinfo;
   Map _headers;
-  Firebase dbRef;
+  FirebaseApp firebase;
+  FirebaseAuth auth;
   List<Category> categories = []; //For names only
   Project project;
   IronAjax ajaxColourSchemes;
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    dbRef = new Firebase(SERVER);
+    //dbRef = new Firebase(SERVER);
+    auth = $$('#auth');
 
     // Initialize Firebase
     /*var config = {
@@ -52,18 +57,18 @@ class CompetencesService extends PolymerElement {
   }
 
   void ready(){
-    ajaxUserinfo = querySelector('#ajax-people');
-    ajaxColourSchemes = querySelector('#ajax-colour-schemes');
+    ajaxUserinfo = $$('#ajax-people');
+    ajaxColourSchemes = $$('#ajax-colour-schemes');
     if($$("#cmdebug") != null){
       ajaxColourSchemes.url = "data/colour_schemes_response.json";//TODO: nodejitsu is gone
     }
-    ajaxColourSchemes.generateRequest();
+    //ajaxColourSchemes.generateRequest();
     readyDom = true;
   }
 
   @reflectable
-  void ajaxError(CustomEventWrapper event, dynamic rest) {
-    if (DEBUG) print(rest.error);
+  void ajaxError(Event e, var detail) {
+    if (DEBUG) print(detail.error);
   }
 
   Map get headers => _headers;
@@ -74,21 +79,27 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void signInDone(CustomEventWrapper event, dynamic rest){//TODO: if signin fails: Exception
-    if(rest.response==null){
-      throw new Exception("Not authorized and repsonse is null.");
+  void signInDone(Event e, var response){//TODO: if signin fails: Exception
+    if(response==null){
+      throw new Exception("Not authorized and response is null.");
     }
-    if (DEBUG) print("signinResult: ${rest.response}");
-
-    var resp = convertToDart(rest.response);
+    if (DEBUG) print("signinResult: $response");
 
     headers = {"Content-type": "application/json",
-      "Authorization": "Bearer ${(resp['google']['accessToken'] as String)}"};
+      "Authorization": "Bearer ${(response['credential']['accessToken'] as String)}"};
 
     user = new User();
-    user.uid = resp['uid'];
+    user.uid = response['user']['uid'];
     if (user.uid == "" || user.uid == null) {
       if (DEBUG) print("uid empty");
+    }
+
+    user.email = response['user']['email'];
+    user.nickname = "";
+    if(response['user']['displayName'] != null){
+      user.nickname = response['user']['displayName'];
+    } else if(response['user']['providerData'][0]['displayName'] != null){
+      user.nickname = response['user']['providerData'][0]['displayName'];
     }
 
     getUserinfo();
@@ -98,20 +109,20 @@ class CompetencesService extends PolymerElement {
     ajaxUserinfo.generateRequest();
   }
 
-  void parseUserinfoResponse(CustomEventWrapper event, dynamic rest) {
-    if (DEBUG) print("parseUserinfoResponse: "+JSON.encode(rest.response).toString());
-
+  @reflectable
+  void parseUserinfoResponse(Event e, var detail) {
     try {
-      if (rest.response == null) {
+      if (detail.response == null) {
         return null;
       }
-    } catch (e) {
+    } catch (exception) {
       return null;
     }
 
-    var resp = convertToDart(rest.response);
+    var resp = convertToDart(detail.response);
+    if (DEBUG) print("parseUserinfoResponse: "+resp.toString());
 
-    user.email = resp['emails'][0]['value'];
+    //user.email = resp['emails'][0]['value'];
     user.nickname = "";
     if(resp['nickname'] != null){
       user.nickname = resp['nickname'];
@@ -130,9 +141,9 @@ class CompetencesService extends PolymerElement {
       user.profile = (resp['image']['url'] as String).replaceFirst(new RegExp('/(.+)\?sz=\d\d/'), "\$1?sz=" + PROFILE_IMAGE_SIZE.toString());
     }
 
-    if(resp['cover'] != null){
+    /*if(resp['cover'] != null){
       user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
-    }
+    }*/
 
     signedIn = true;
 
@@ -140,27 +151,27 @@ class CompetencesService extends PolymerElement {
   }
 
   @reflectable
-  void signOutDone(CustomEventWrapper event, dynamic rest){
+  void signOutDone(Event e, var detail){
     signedIn=false;
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette
 // for each
   @reflectable
-  void ajaxColourSchemesResponse(CustomEventWrapper event, dynamic rest) {
+  void ajaxColourSchemesResponse(Event e, var detail) {
     if (DEBUG) print(
-        "ajaxColourSchemesResponse: " + JSON.encode(convertToDart(rest.response)).toString());
+        "ajaxColourSchemesResponse: " + JSON.encode(convertToDart(detail.response)).toString());
 
     try {
-      if (rest.response == null) {
+      if (detail.response == null) {
         return; //TODO: error
       }
-    } catch (e) {
+    } catch (exception) {
       return;
     }
 
     palettes = [];
-    for (Map palette in (convertToDart(rest.response) as List)) {
+    for (Map palette in (convertToDart(detail.response) as List)) {
       palettes.add(new Palette.fromJson(palette));
     }
 

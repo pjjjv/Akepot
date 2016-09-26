@@ -10,13 +10,15 @@ environment:
 dependencies:
   browser: any
   observe: any
-  polymer_elements: ^1.0.0-rc.9
+  #polymer_elements: ^1.0.0-rc.9
+  polymer_elements:
+    path: ../polymer_elements
   polymer: ^1.0.0-rc.18
   template_binding: any
   web_components: any
   sass: any
-  firebase:
-    path: ../firebase-dart
+  #firebase:
+  #  path: ../firebase-dart
 transformers:
 - sass:
     compass: true

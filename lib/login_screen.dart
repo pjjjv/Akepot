@@ -5,7 +5,9 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'package:polymer_elements/iron_ajax.dart';
+import 'package:polymer_elements/iron_signals.dart';
 import 'package:akepot/competences_service.dart';
+import 'package:akepot/login/login_google.dart';
 
 @PolymerRegister('login-screen')
 class LoginScreen extends PolymerElement {
@@ -14,28 +16,31 @@ class LoginScreen extends PolymerElement {
   String accessToken = "";
   String name = "";
 
-  void signInDone(CustomEvent event, dynamic response){
+  @reflectable
+  void signInDone(Event e, var response){
     signedIn = true;
 
     Map headers = {"Content-type": "application/json",
-               "Authorization": "Bearer ${response['google']['accessToken']}"};
+               "Authorization": "Bearer ${response['credential']['accessToken']}"};
     IronAjax peopleAjax =$$('#ajax-people');
     peopleAjax.headers = headers;
     peopleAjax.generateRequest();
   }
 
-  void signOutDone(CustomEvent event, dynamic detail){
+  @reflectable
+  void signOutDone(Event e, var detail){
     if (DEBUG) print("loginsignedout" + detail.toString());
     signedIn = false;
   }
 
-  void signOut(Event event){
-    //LoginGoogle button = $$("login-google");
-    //button.signOut(event);
+  @reflectable
+  void signOut(Event e, var detail){
+    LoginGoogle button = $$("login-google");
+    button.signOut(e, detail);
   }
 
-  void parseResponse2(CustomEvent event, Map detail, IronAjax node) {
-    var response = detail['response'];
+  @reflectable
+  void parseResponse2(Event e, var response) {
     //if (DEBUG) print(response);
 
     try {
@@ -48,16 +53,17 @@ class LoginScreen extends PolymerElement {
       return null;
     }
 
-    if(response['nickname'] != null){
+    /*if(response['nickname'] != null){
       name = ", "+response['nickname'];
     } else {
       name = ", "+response['displayName'];
-    }
+    }*/
     //String email = response['emails'][0]['value'];
     //userid = response['id'];
   }
 
-  void ajaxError(CustomEvent event, Map detail, IronAjax node) {
+  @reflectable
+  void ajaxError(Event e, var detail) {
     if (DEBUG) print(detail);
   }
 }

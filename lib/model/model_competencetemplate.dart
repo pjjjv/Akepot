@@ -1,7 +1,7 @@
 library akepot.model.model_competencetemplate;
 
 import 'package:akepot/competences_service.dart';
-import 'package:firebase/firebase.dart';
+//import 'package:firebase/firebase.dart';
 import 'package:observe/observe.dart';
 
 /** Not documented yet. */

@@ -18,7 +18,7 @@ import 'package:polymer_elements/paper_button.dart';
 @PolymerRegister('app-akepot')
 class AppAkepot extends PolymerElement {
   @property bool signedIn = false;
-  @property bool readyDom;
+  @property bool readyDom = false;
   @property User user;
   @property dynamic route;
   @property dynamic routeData;
@@ -36,6 +36,7 @@ class AppAkepot extends PolymerElement {
 
   void ready () {
     set('service', $$('competences-service'));
+    print("service: $service");
     meta = $$('iron-meta');
     CompetencesService s = meta.byKey('service');
     print(s);
@@ -60,10 +61,12 @@ class AppAkepot extends PolymerElement {
 
   @reflectable
   String computeLoginScreenVisibility(bool signedIn, bool readyDom){
+    String defaultClass = "layout vertical center-center fit";
+    print("computeLoginScreenVisibility: signedIn: $signedIn, readyDom: $readyDom");
     if (signedIn && readyDom){
-      return 'show';
+      return defaultClass;
     } else {
-      return '';
+      return 'show ' + defaultClass;
     }
   }
 }

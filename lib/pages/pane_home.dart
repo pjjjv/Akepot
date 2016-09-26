@@ -12,6 +12,8 @@ import 'package:akepot/competences_service.dart';
 import 'package:polymer_elements/iron_icon.dart';
 import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/iron_meta.dart';
+import 'dart:developer';
 
 @PolymerRegister("pane-home")
 class PaneHome extends PolymerElement {
@@ -21,14 +23,17 @@ class PaneHome extends PolymerElement {
   CompetencesService service;
 
   void ready(){
-    service = document.querySelector("#service");
-
     newButton = $$("#new-button");
     newButton.hidden = false;
     newButton.onClick.listen(newProject);
   }
 
+  void attached(){
+    service = new IronMeta().byKey('service');
+  }
+
   void newProject(Event e){
+    debugger();
     service.project = new Project.newRemote(service);
 
     Person.exists(service.user.uid, service.project.hash, service, (exists) {

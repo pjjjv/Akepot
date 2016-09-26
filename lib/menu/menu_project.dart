@@ -12,6 +12,7 @@ import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/iron_icon.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/iron_meta.dart';
 
 @PolymerRegister('menu-project')
 class MenuProject extends PolymerElement {
@@ -22,8 +23,8 @@ class MenuProject extends PolymerElement {
   CompetencesService service;
   bool isAdmin = false;
 
-  domReady(){
-    service = document.querySelector("#service");
+  attached(){
+    service = new IronMeta().byKey('service');
     if(service.signedIn) signedIn(null, null);
   }
 

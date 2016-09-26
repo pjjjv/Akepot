@@ -12,6 +12,6 @@ class PageJoin extends PolymerElement {
 
   PageJoin.created() : super.created();
 
-  @property String projectHash;
+  @Property(notify: true) String projectHash;
 
 }

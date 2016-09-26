@@ -14,6 +14,7 @@ import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/iron_dropdown.dart';
 import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/iron_meta.dart';
 
 @PolymerRegister('dropdown-menu')
 class DropdownMenu extends PolymerElement {
@@ -21,8 +22,8 @@ class DropdownMenu extends PolymerElement {
 
   CompetencesService service;
 
-  domReady(){
-    service = document.querySelector("#service");
+  attached(){
+    service = new IronMeta().byKey('service');
   }
 
   @reflectable

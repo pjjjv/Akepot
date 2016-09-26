@@ -1,5 +1,5 @@
-@HtmlImport('subbcategory_card.html')
-library akepot.lib.subbcategory_card;
+@HtmlImport('subcategory_card.html')
+library akepot.lib.subcategory_card;
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
@@ -16,6 +16,7 @@ import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
 import 'package:polymer_elements/iron_icons.dart';
 import 'package:polymer_elements/paper_fab.dart';
+import 'package:polymer_elements/iron_meta.dart';
 
 @PolymerRegister('subcategory-card')
 class SubCategoryCard extends PolymerElement {
@@ -26,8 +27,11 @@ class SubCategoryCard extends PolymerElement {
   @property Palette palette;
 
   void ready() {
-    service = document.querySelector("#service");
     if(service.palettes!=null) palettesLoaded(null, null);
+  }
+
+  void attached() {
+    service = new IronMeta().byKey('service');
   }
 
   @reflectable

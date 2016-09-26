@@ -21,6 +21,7 @@ import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/iron_meta.dart';
 
 class Header extends observe.Observable {
   @observe.observable String label = "";
@@ -112,10 +113,12 @@ class PaneReport extends PolymerElement {
   @observe.observable observe.ObservableList<Row> rows = observe.toObservable([]);
 
 
-  void ready() {
-    service = document.querySelector("#service");
+  void attached() {
+    async(() {
+      service = new IronMeta().byKey('service');
 
-    if(service.signedIn) signedIn(null, null, null);
+      if(service.signedIn) signedIn(null, null);
+    });
   }
 
   @reflectable

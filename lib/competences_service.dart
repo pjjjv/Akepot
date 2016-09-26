@@ -29,7 +29,7 @@ class CompetencesService extends PolymerElement {
   @property dynamic user2 = {};
   IronAjax ajaxUserinfo;
   Map _headers;
-  FirebaseApp firebase;
+  FirebaseApp fb;
   FirebaseAuth auth;
   firebase.Firebase dbRef;
   List<Category> categories = []; //For names only
@@ -40,7 +40,7 @@ class CompetencesService extends PolymerElement {
   CompetencesService.created() : super.created() {
     dbRef = new firebase.Firebase(SERVER);
     auth = $$('#auth');
-    firebase = $$('#firebase-app');
+    fb = $$('#firebase-app');
   }
 
   void ready(){

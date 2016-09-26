@@ -3,12 +3,10 @@
 @element ordered-columns
 @demo http://files.stevenskelton.ca/ordered-columns/examples/
 -->
-
 <link rel="import" href="../../../../packages/polymer/polymer.html">
 
-<polymer-element name="ordered-columns" attributes="count noRedraw columnWidth">
-	<template>
-		<style>
+<dom-module id="ordered-columns">
+  <style>
 			:host {
 				display: block;
 			}
@@ -18,122 +16,156 @@
 				vertical-align: top;
 			}
 		</style>
+  <template>
 		<table style="width:100%" cellpadding="0" cellspacing="0">
-			<tr>
-        <td template repeat="{{width,i in columnWidths}}" id="column{{i}}" class="column" style="width: {{width}};"></td>
+			<tbody><tr>
+        <td template="" repeat="{{_computeRepeat(columnWidths, i, width)}}" id="{{_computeId(i)}}" class="column" style$="{{_computeStyle(width)}}"></td>
 			</tr>
-		</table>
+		</tbody></table>
 	</template>
-	<script>
-	"use strict";
-	Polymer({
-		columnWidth: null,
-		noRedraw: false,
-		ready: function(){
-			var self = this;
-			this.load();
-			window.addEventListener('resize', function(e) {
-				if(!self.noRedraw) self.refresh();
-			});
-			this.onMutation(this, this.append);
-		},
-		count: 1,
-		observe: {
-			'count columnWidth': 'refresh'
-		},
-		append: function(observer, mutations){
-			var self = this;
-			mutations.forEach(function(m) {
-				if(m.type === 'childList'){
-					var newArticles = [].filter.call(m.addedNodes, function(element){
-						return element.nodeName === 'ARTICLE' || (element.getAttribute && element.getAttribute('role') === 'article');
-					});
-					var hasTopItems = false;
-					newArticles.forEach(function(element){
-						if(element.classList.contains('new-article')){
-							hasTopItems = true;
-							self.items.unshift(element);
-						}else self.items.push(element);
-					});
-					if(hasTopItems){
-						self.refresh();
-					}else{
-						self.async(function() {
-							self.moveItems(newArticles);
-						});
-					}
-				}
-			});
-			this.onMutation(this, this.append);
-		},
-		refresh: function(){
-		//console.log('refresh');
-			this.job('refresh', this.refreshJob);
-		},
-		refreshJob: function(){
-		//console.log('refreshJob');
-			var self = this;
-			this.setColumnWidths();
-			this.async(function() {
-				[].forEach.call(self.shadowRoot.querySelectorAll('.column'), function(c){ c.innerHTML = ''; });
-				self.moveItems(self.items);
-			});
-		},
-		load: function(){
-			var self = this;
-			this.setColumnWidths();
-			var items = [];
-			[].forEach.call(this.querySelectorAll('article,[role="article"]'), function(o){
-				if(o.parentNode === self) items.push(o);
-			});
-			if(items.length===0){
-				[].forEach.call(this.children, function(o){
-					if(o.parentNode === self && (o.nodeName === 'ARTICLE' || (o.getAttribute && o.getAttribute('role') === 'article'))) items.push(o);
-				});
-			}
-			this.items = items;
-			this.async(function() {
-				if(self.items.length===0){
-					var items = [];
-					[].forEach.call(self.querySelectorAll('article,[role="article"]'), function(o){
-						if(o.parentNode === self) items.push(o);
-					});
-					self.items = items;
-				}
-				self.moveItems(items || self.items);
-			});
-		},
-		moveItems: function(items){
-		//console.log('moveItems');
-			var columns = this.shadowRoot.querySelectorAll('.column');
-			items.forEach(function(element,i){
-				var column = columns[0];
-				[].forEach.call(columns, function(c){
-					if(c.clientHeight < column.clientHeight) column = c;
-				});
-				column.appendChild(element);
-			});
-		},
-		setColumnWidths: function(){
-		//console.log('setColumnWidths');
-			var arr = [];
-			var columnWidth = +this.columnWidth;
-			if(columnWidth > 0){
-				var width = this.clientWidth;
-				var num = Math.floor(width / columnWidth);
-				if(num === 0) num = 1;
-				this.count = num;
-				for(var i=0;i<num;i++) arr.push(columnWidth + 'px');
-			}else{
-				var count = Math.max(this.count,1);
-				var min = Math.floor(100 / count);
-				for(var i=0;i<count-1;i++) arr.push(min + '%');
-				arr.push((100 - min * (count-1)) + '%');
-			}
-			this.columnWidths = arr;
-		},
-		columnWidths: null,
-		items: null
-	});
-	</script>
-</polymer-element>
+  <script>
+    'use strict';
+    Polymer({
+      is: 'ordered-columns',
+      properties: {
+        columnWidth: {
+          value: null,
+          notify: true,
+          observer: 'refresh'
+        },
+        columnWidths: { value: null },
+        count: {
+          type: Number,
+          value: 1,
+          notify: true,
+          observer: 'refresh'
+        },
+        items: { value: null },
+        noRedraw: {
+          type: Boolean,
+          value: false,
+          notify: true
+        }
+      },
+      ready: function () {
+        var self = this;
+        this.load();
+        window.addEventListener('resize', function (e) {
+          if (!self.noRedraw)
+            self.refresh();
+        });
+        this.onMutation(this, this.append);
+      },
+      append: function (observer, mutations) {
+        var self = this;
+        mutations.forEach(function (m) {
+          if (m.type === 'childList') {
+            var newArticles = [].filter.call(m.addedNodes, function (element) {
+              return element.nodeName === 'ARTICLE' || element.getAttribute && element.getAttribute('role') === 'article';
+            });
+            var hasTopItems = false;
+            newArticles.forEach(function (element) {
+              if (Polymer.dom(element).classList.contains('new-article')) {
+                hasTopItems = true;
+                self.items.unshift(element);
+              } else
+                self.items.push(element);
+            });
+            if (hasTopItems) {
+              self.refresh();
+            } else {
+              self.async(function () {
+                self.moveItems(newArticles);
+              });
+            }
+          }
+        });
+        this.onMutation(this, this.append);
+      },
+      refresh: function () {
+        //console.log('refresh');
+        this.debounce('refresh', this.refreshJob);
+      },
+      refreshJob: function () {
+        //console.log('refreshJob');
+        var self = this;
+        this.setColumnWidths();
+        this.async(function () {
+          [].forEach.call(Polymer.dom(self.shadowRoot).querySelectorAll('.column'), function (c) {
+            Polymer.dom(c).innerHTML = '';
+          });
+          self.moveItems(self.items);
+        });
+      },
+      load: function () {
+        var self = this;
+        this.setColumnWidths();
+        var items = [];
+        [].forEach.call(Polymer.dom(this).querySelectorAll('article,[role="article"]'), function (o) {
+          if (Polymer.dom(o).parentNode === self)
+            items.push(o);
+        });
+        if (items.length === 0) {
+          [].forEach.call(this.children, function (o) {
+            if (Polymer.dom(o).parentNode === self && (o.nodeName === 'ARTICLE' || o.getAttribute && o.getAttribute('role') === 'article'))
+              items.push(o);
+          });
+        }
+        this.items = items;
+        this.async(function () {
+          if (self.items.length === 0) {
+            var items = [];
+            [].forEach.call(Polymer.dom(self).querySelectorAll('article,[role="article"]'), function (o) {
+              if (Polymer.dom(o).parentNode === self)
+                items.push(o);
+            });
+            self.items = items;
+          }
+          self.moveItems(items || self.items);
+        });
+      },
+      moveItems: function (items) {
+        //console.log('moveItems');
+        var columns = Polymer.dom(this.shadowRoot).querySelectorAll('.column');
+        items.forEach(function (element, i) {
+          var column = columns[0];
+          [].forEach.call(columns, function (c) {
+            if (c.clientHeight < column.clientHeight)
+              column = c;
+          });
+          Polymer.dom(column).appendChild(element);
+        });
+      },
+      setColumnWidths: function () {
+        //console.log('setColumnWidths');
+        var arr = [];
+        var columnWidth = +this.columnWidth;
+        if (columnWidth > 0) {
+          var width = this.clientWidth;
+          var num = Math.floor(width / columnWidth);
+          if (num === 0)
+            num = 1;
+          this.count = num;
+          for (var i = 0; i < num; i++)
+            arr.push(columnWidth + 'px');
+        } else {
+          var count = Math.max(this.count, 1);
+          var min = Math.floor(100 / count);
+          for (var i = 0; i < count - 1; i++)
+            arr.push(min + '%');
+          arr.push(100 - min * (count - 1) + '%');
+        }
+        this.columnWidths = arr;
+      },
+      _computeRepeat: function (columnWidths, i, width) {
+        return width, i in columnWidths;
+      },
+      _computeId: function (i) {
+        return 'column' + i;
+      },
+      _computeStyle: function (width) {
+        return 'width: ' + width + ';';
+      }
+    });
+  </script>
+</dom-module>

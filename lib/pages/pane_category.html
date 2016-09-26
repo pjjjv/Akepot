@@ -1,0 +1,17 @@
+<link rel="import" href="../../../packages/akepot/components/ordered-columns/ordered-columns.html">
+
+<dom-module id="pane-category">
+  <link rel="import" type="css" href="pane_category.css">
+  <template>
+
+    <div class="layout center-justified">
+      <ordered-columns columnwidth="495" cascade>
+        <template is="dom-repeat" items="{{subcategories}}" as="subcategory">
+          <subcategory-card role="article" id="card" subcategory="{{subcategory}}">
+          </subcategory-card>
+        </template>
+      </ordered-columns>
+    </div>
+  </template>
+
+</dom-module>

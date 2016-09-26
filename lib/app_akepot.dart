@@ -17,6 +17,7 @@ import 'package:polymer_elements/iron_pages.dart';
 import 'package:polymer_elements/iron_meta.dart';
 import 'package:polymer_elements/paper_toast.dart';
 import 'package:polymer_elements/paper_button.dart';
+import 'dart:developer';
 
 @PolymerRegister('app-akepot')
 class AppAkepot extends PolymerElement {
@@ -53,7 +54,8 @@ class AppAkepot extends PolymerElement {
 
   @Observe('routeData.toplevel')
   void routeToplevelChanged(String toplevel) {
-  this.toplevel = toplevel;
+    debugger();
+    this.toplevel = toplevel;
     if (toplevel == null || toplevel == ""){
       set('page', 'home');
     } else if (toplevel != 'admin' && toplevel != 'project'){
@@ -64,12 +66,14 @@ class AppAkepot extends PolymerElement {
 
   @Observe('routeData.projectHash')
   void projectHashChanged(String projectHash) {
+    debugger();
     this.projectHash = projectHash;
     print("projectHash: $projectHash");
   }
 
   @Observe('subrouteData.page')
   void subroutePageChanged(String page) {
+    debugger();
     if ((page == null || page == "") && toplevel == 'project'){
       set('page', 'category');
     } else if ((toplevel == 'admin' && page != 'edit' && page != 'report')
@@ -83,6 +87,7 @@ class AppAkepot extends PolymerElement {
 
   @Observe('subrouteData.detail')
   void subrouteDetailChanged(String detail) {
+    debugger();
     if(page == "category"){
       this.selectedCategory = detail;
     }
@@ -91,6 +96,7 @@ class AppAkepot extends PolymerElement {
 
   @reflectable
   void pageChanged(String page, String old) {
+    debugger();
     // load page import on demand.
     print('pageChanged: '+page);
     //Polymer.importHref('pages/page_' + page + '.html');
@@ -98,6 +104,7 @@ class AppAkepot extends PolymerElement {
 
   @reflectable
   String computeLoginScreenVisibility(bool signedIn, bool readyDom){
+    debugger();
     String defaultClass = "layout vertical center-center fit";
     print("computeLoginScreenVisibility: signedIn: $signedIn, readyDom: $readyDom");
     if (signedIn && readyDom){

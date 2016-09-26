@@ -12,6 +12,7 @@ class PageCategory extends PolymerElement {
 
   PageCategory.created() : super.created();
 
-  @property String projectHash;
+  @Property(notify: true) String projectHash;
+  @Property(notify: true) String selectedcategory;
 
 }

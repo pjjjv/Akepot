@@ -12,6 +12,6 @@ class PageReport extends PolymerElement {
 
   PageReport.created() : super.created();
 
-  @property String projectHash;
+  @Property(notify: true) String projectHash;
 
 }

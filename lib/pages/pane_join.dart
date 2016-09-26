@@ -8,7 +8,6 @@ import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/layouts/scaffold_layout.dart';
-import 'package:app_router/app_router.dart';
 import 'package:polymer_elements/iron_icon.dart';
 import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/paper_item.dart';
@@ -18,6 +17,9 @@ import 'package:polymer_elements/iron_dropdown.dart';
 import 'package:polymer_elements/iron_selector.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/app_location.dart';
+import 'package:polymer_elements/iron_meta.dart';
+import 'dart:developer';
 
 @PolymerRegister("pane-join")
 class PaneJoin extends PolymerElement {
@@ -30,17 +32,20 @@ class PaneJoin extends PolymerElement {
 
   PaneJoin.created() : super.created();
 
-  domReady(){
-    service = document.querySelector("#service");
-    if(service.signedIn) signedIn(null, null, null);
+  attached(){
+    async(() {
+      service = new IronMeta().byKey('service');
+
+      if(service.signedIn) signedIn(null, null);
+    });
   }
 
   @reflectable
   void signedIn(Event e, var detail){
-
+    debugger();
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (exists){
-        (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
+        new AppLocation().path = "/project/$projectHash";
       } else {
         newUser();
       }
@@ -59,8 +64,7 @@ class PaneJoin extends PolymerElement {
     joinButton.onClick.first.then(joinProject);
   }
 
-  @reflectable
-  void joinProject(Event e, var detail){
+  void joinProject(Event e){
     if(selected == null || selected == ""){
       return;
     }
@@ -75,6 +79,6 @@ class PaneJoin extends PolymerElement {
     service.project.teams.elementAt(int.parse(selected)).addPersonFull(person);
     //person.roles
 
-    (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
+    new AppLocation().path = "/project/$projectHash";
   }
 }

@@ -8,10 +8,11 @@ import 'package:akepot/model/model_project.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/pages/pane_category.dart';
 import 'package:akepot/competences_service.dart';
-import 'package:app_router/app_router.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:polymer_elements/app_location.dart';
+import 'package:polymer_elements/iron_meta.dart';
 
 @PolymerRegister('panes-category')
 class PanesCategory extends PolymerElement {
@@ -22,16 +23,19 @@ class PanesCategory extends PolymerElement {
 
   PanesCategory.created() : super.created();
 
-  void ready(){
-    service = document.querySelector("#service");
-    if(service.signedIn) signedIn(null, null, null);
+  void attached(){
+    async(() {
+      service = new IronMeta().byKey('service');
+
+      if(service.signedIn) signedIn(null, null);
+    });
   }
 
   @reflectable
   void signedIn(Event e, var detail){
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (!exists){
-        (document.querySelector('app-router') as AppRouter).go("/project/$projectHash/join");
+        new AppLocation().path = "/project/$projectHash/join";
       }
     });
 
@@ -41,7 +45,7 @@ class PanesCategory extends PolymerElement {
       if(selectedCategory != "" && selectedCategory != null){
         //If we come in through a direct category link, then go back to main project page (no category).
         //Bugfix: We do this to avoid a bug, where core-selector (extended by core-animated-pages) is unable to deal with changing content. We would have to set selected again after everything is loaded from firebase, but we don't know when that is.
-        (document.querySelector('app-router') as AppRouter).go("/project/$projectHash");
+        new AppLocation().path = "/project/$projectHash";
       }
     }
 

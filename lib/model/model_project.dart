@@ -59,7 +59,6 @@ class Project extends Observable {
   }
 
   factory Project.retrieve(String hash, CompetencesService service, [dynamic callback(Project project)]) {
-    debugger();
     Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();

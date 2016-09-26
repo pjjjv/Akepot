@@ -13,7 +13,7 @@ import 'package:polymer_elements/iron_request.dart';
 import 'package:polymer_elements/firebase_app.dart';
 import 'package:polymer_elements/firebase_auth.dart';
 import 'dart:developer';
-import 'package:firebase/firebase.dart';
+import 'package:firebase/firebase.dart' as firebase;
 
 typedef void ResponseHandler(response, HttpRequest req);
 
@@ -31,14 +31,14 @@ class CompetencesService extends PolymerElement {
   Map _headers;
   FirebaseApp firebase;
   FirebaseAuth auth;
-  Firebase dbRef;
+  firebase.Firebase dbRef;
   List<Category> categories = []; //For names only
   Project project;
   IronAjax ajaxColourSchemes;
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    dbRef = new Firebase(SERVER);
+    dbRef = new firebase.Firebase(SERVER);
     auth = $$('#auth');
     firebase = $$('#firebase-app');
   }

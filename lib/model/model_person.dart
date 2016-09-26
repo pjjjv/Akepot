@@ -3,7 +3,7 @@ library akepot.model.model_person;
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
-//import 'package:firebase/firebase.dart';
+import 'package:firebase/firebase.dart';
 import 'package:observe/observe.dart';
 
 /** Not documented yet. */

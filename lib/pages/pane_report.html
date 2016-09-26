@@ -1,0 +1,41 @@
+<dom-module id="pane-report">
+  <link rel="import" type="css" href="pane_report.css">
+  <template>
+
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
+
+    <div id="outer" class="layout vertical">
+      <template is="dom-if" if="{{locallySignedIn}}">
+
+        <table id="aha_table_main">
+          <thead>
+            <tr>
+              <th>
+              </th>
+              <th template repeat="{{ headers }}">
+                <span class="column-head">{{ label }}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr template repeat="{{ rows }}">
+              <td class="layout horizontal">
+                <span class="row-head">{{ label }}</span>
+              </td>
+              <td template repeat="{{_computeRepeat(item, items)}}" class="aha-td">
+                <template is="dom-if" if="{{_computeIf(item)}}">
+                  <paper-input id="paper-input" value="{{item.value}}" class$="{{_computeClass(item)}}"></paper-input>
+                </template>
+                <template is="dom-if" if="{{_computeIf(item)}}">
+                  <strength-button number="{{asInt ( item.value)}}" threshold="{{ item.threshold }}" limited></strength-button>
+                </template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+     </template>
+    </div>
+  </template>
+
+</dom-module>

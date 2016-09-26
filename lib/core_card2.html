@@ -1,0 +1,18 @@
+<!-- try http://www.mademyday.de/css-height-equals-width-with-pure-css.html   one day -->
+<dom-module id="core-card2">
+  <link rel="import" type="css" href="core_card2.css">
+  <template>
+
+    <div class="flip-container" on-click="flipBack">
+      <div class="flip">
+        <div id="front">
+          <content select=".front"></content>
+        </div>
+        <div id="back">
+          <content select=".back"></content>
+        </div>
+      </div>
+    </div>
+  </template>
+
+</dom-module>

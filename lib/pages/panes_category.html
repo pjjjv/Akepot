@@ -1,0 +1,17 @@
+<dom-module id="panes-category">
+  <link rel="import" type="css" href="panes_category.css">
+  <template>
+
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
+    <neon-animated-pages class="fit" main selected="{{selectedCategory}}" valueattr="label" transitions="cascade-transition">
+      <template is="dom-if" if="{{service.signedIn}}">
+        <template is="dom-repeat" items="{{service.project.categories}}" as="category">
+          <section name="{{category.name}}" label="{{category.name}}" class="vertical layout">
+            <pane-category id="list1" subcategories="{{category.subcategories}}" cross-fade></pane-category>
+          </section>
+        </template>
+      </template>
+    </neon-animated-pages>
+  </template>
+
+</dom-module>

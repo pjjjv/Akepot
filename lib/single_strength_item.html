@@ -1,0 +1,16 @@
+<dom-module id="single-strength-item">
+  <link rel="import" type="css" href="single_strength_item.css">
+  <template>
+
+    <div id="main" class="layout horizontal center">
+      <span id="title" flex on-tap="toggle">{{title}}</span>
+      <strength-button-slider id="slider" selected="{{number}}" max="5" tabindex="0"></strength-button-slider>
+    </div>
+    <iron-collapse>
+      <div id="secondary" class="layout horizontal start-justified">
+        <p id="desc">{{desc}}</p>
+      </div>
+    </iron-collapse>
+  </template>
+
+</dom-module>

@@ -1,0 +1,28 @@
+<dom-module id="section-edit-project2">
+  <link rel="import" type="css" href="section_edit_project2.css">
+  <template>
+
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" cross-fade-delayed>
+        <div id="div2" class="layout vertical center center-justified">
+          <div id="div1" class="layout horizontal center">
+            <paper-icon-button style="visibility: hidden;" id="core_icon_button" icon="arrow-back"></paper-icon-button>
+            <div id="label-type">Project: </div>
+            <paper-input label="Project Name" value="{{project.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Project Description" value="{{project.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="onCreateButtonTap"></paper-fab>
+      </paper-toolbar>
+      <section id="content-section">
+
+        <div class="layout center-justified">
+          <template is="dom-repeat" items="{{enumerate(project.teams)}}" as="team">
+            <core-card3 id="{{team.index}}" class="horizontal layout center start-justified" hero-id="hero-team" on-tap="onItemTap" hero$="{{_computeHero(index, page, team)}}" cross-fade-delayed$="{{_computeCross-fade-delayed(index, page, team)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{team.value.name}}</core-card3>
+          </template>
+        </div>
+      </section>
+    </paper-header-panel>
+  </template>
+
+</dom-module>

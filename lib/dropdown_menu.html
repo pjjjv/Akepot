@@ -1,0 +1,30 @@
+<dom-module id="dropdown-menu">
+  <link rel="import" type="css" href="dropdown_menu.css">
+  <template>
+
+    <paper-menu-button class="selected-item layout horizontal"><!-- Outline comes from a11y https://github.com/Polymer/core-menu-button/issues/15 -->
+      <paper-icon-button icon="more-vert"></paper-icon-button>
+      <iron-dropdown class="dropdown" horizontal-align="right" vertical-align="top">
+        <paper-item id="menu_item_about" name="about" tabindex="0" on-tap="about">
+          <iron-icon icon="info"></iron-icon>
+          <span class="flex">About</span>
+        </paper-item>
+        <paper-item id="menu_item_signout" name="signout" tabindex="0" on-tap="signOut">
+          <iron-icon icon="close"></iron-icon>
+          <span class="flex">Sign out</span>
+        </paper-item>
+      </iron-dropdown>
+    </paper-menu-button>
+
+    <paper-dialog id="about-dialog">
+      <h2>About CompetenceMatrix</h2>
+      <p>Made with Polymer, Dart and Firebase in October 2014.</p>
+      <p>Copyright 2014-2015 pjv.</p>
+      <div class="buttons">
+        <paper-button dialog-dismiss tabindex="0" autofocus class="flat-button">Close</paper-button>
+      </div>
+    </paper-dialog>
+
+  </template>
+
+</dom-module>

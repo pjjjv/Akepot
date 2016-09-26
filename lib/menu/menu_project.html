@@ -1,0 +1,30 @@
+<dom-module id="menu-project">
+  <link rel="import" type="css" href="menu_project.css">
+  <template>
+
+    <iron-signals on-iron-signal-signedin="signedIn"></iron-signals>
+    <paper-menu id="panel-list" class="content flex" selected="{{selectedSection}}" valueattr="name" excludedlocalnames="div" theme="core-light-theme">
+      <paper-item id="menu_item_home" name="home" tabindex="0">
+        <a href="#/"><iron-icon icon="home"></iron-icon><span class="flex">Home</span></a>
+      </paper-item>
+      <template is="dom-if" if="{{isAdmin}}">
+        <div class="separator empty"></div>
+        <paper-item id="menu_item_admin" name="admin" tabindex="0">
+          <a href$="{{_compute_href(projectHash)}}"><iron-icon icon="account-child"></iron-icon><span class="flex">To admin</span></a>
+        </paper-item>
+        <div class="separator empty"></div>
+      </template>
+      <div class="separator">All categories</div>
+      <template is="dom-if" if="{{service.signedIn}}">
+        <template is="dom-repeat" items="{{service.categories}}" as="category">
+          <paper-item id="{{_computeId(category)}}" name="{{category.name}}" tabindex="0">
+            <a href$="{{_compute_href(category, projectHash)}}"><iron-icon icon="assignment-ind"></iron-icon><span class="flex">{{category.name}}</span></a>
+          </paper-item>
+        </template>
+      </template>
+      <paper-item id="menu_item_join_hidden" name="_join" class="hidden">
+      </paper-item>
+    </paper-menu>
+  </template>
+
+</dom-module>

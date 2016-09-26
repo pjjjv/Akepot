@@ -1,0 +1,33 @@
+<dom-module id="section-edit-subcategory">
+  <link rel="import" type="css" href="section_edit_subcategory.css">
+  <template>
+
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" hero-id="hero-subcategory" hero cross-fade-delayed$="{{_computeCross-fade-delayed(page)}}">
+        <div id="div2" class="layout vertical center center-justified">
+          <div id="div1" class="layout horizontal center">
+            <paper-icon-button id="paper_icon_button" icon="arrow-back" on-tap="goUp" hero cross-fade-delayed></paper-icon-button>
+            <div id="label-type">Sub-category: </div>
+            <paper-input label="Sub-category Name" value="{{subCategory.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Sub-category Description" value="{{subCategory.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="onCreateButtonTap"></paper-fab>
+      </paper-toolbar>
+      <section id="content-section">
+
+        <div class="layout center-justified">
+          <template is="dom-repeat" items="{{enumerate(subCategory.competenceTemplates)}}" as="competenceTemplate">
+            <core-card3 id="{{competenceTemplate.index}}" class="horizontal layout center start-justified" hero-id="hero-competence" on-tap="onItemTap" hero$="{{_computeHero(competenceTemplate, index, page)}}" cross-fade-delayed$="{{_computeCross-fade-delayed(competenceTemplate, index, page)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{competenceTemplate.value.label}}</core-card3>
+          </template>
+        </div>
+        <!-- <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Planning</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Pigs</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade hero-id="hero3" hero>Stakeholders</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Things</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Things</core-card3> -->
+      </section>
+    </paper-header-panel>
+  </template>
+
+</dom-module>

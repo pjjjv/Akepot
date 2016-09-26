@@ -1,0 +1,55 @@
+@import '../../web/theme';
+
+#join-button {
+  display: block;
+  margin-top: 20px;
+}
+
+$card-width2: 500px;
+$card-height2: $card-width2 * 8 / 7;
+$title-height2: 64px;
+$image-height2: $card-height2 - $card-width2 - $title-height2;
+
+#card-join {
+  margin: 100px 32px;
+  width: $card-width2;
+  min-height: $image-height2 + $title-height2 + $image-height2;
+  //height: $card-height2;
+
+  padding: 20px 16px;
+  border-radius: 4px;
+  background-color: $background-color;
+  box-shadow: 0 2px 5px 0 $shadow;
+  overflow: hidden;
+  position: relative;
+
+  #title-box {
+    height: $image-height;
+    display: block;
+    background-color: $primary-color;
+    border-bottom: 1px solid $seam;
+  }
+
+  #title {
+    display: block;
+    position: absolute;
+    height: $title-height;
+    top: $image-height + 1px - $title-height;
+    padding-left: 20px;
+    padding-right: 20px;
+    @include text-headline();
+    color: $text-white-primary;
+  }
+
+  #title-box-substitute {
+    height: $image-height - 20px;
+    display: block;
+  }
+
+  #text-box {
+    display: block;
+    margin-top: 20px;
+    @include text-subhead();
+  }
+}
+

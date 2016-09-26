@@ -1,0 +1,17 @@
+<dom-module id="page-category">
+  <template>
+    <scaffold-layout menu="project" selected="{{selectedCategory}}" projecthash="{{projectHash}}">
+      <title-page class="title" projecthash="{{projectHash}}" cross-fade="">Competence Matrix for </title-page>
+      <panes-category projecthash="{{projectHash}}" selectedcategory="{{selectedCategory}}"></panes-category>
+    </scaffold-layout>
+  </template>
+  <script>
+    Polymer({
+      is: 'page-category',
+      properties: {
+        projectHash: { notify: true },
+        selectedCategory: { notify: true }
+      }
+    });
+  </script>
+</dom-module>

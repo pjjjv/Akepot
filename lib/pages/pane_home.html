@@ -1,0 +1,33 @@
+<dom-module id="pane-home">
+  <link rel="import" type="css" href="pane_home.css">
+  <template>
+
+    <div class="layout horizontal wrap center-justified" cross-fade-delayed>
+      <div id="card-link" class="self-center layout vertical">
+        <div class="fit" id="title-box">
+          <div id="title">Use link</div>
+        </div>
+        <div id="title-box-substitute"></div>
+        <div id="text-box">
+          To fill in your competences, use the permanent url to your project that your administrator gave you.
+        </div>
+        <div class="flex"></div>
+      </div>
+      <div id="card-new" class="self-center layout vertical">
+        <div class="fit" id="title-box">
+          <div id="title">New project</div>
+        </div>
+        <div id="title-box-substitute"></div>
+        <div id="text-box">
+          Create a new project and administrate it for your teams.
+        </div>
+        <div class="flex"></div>
+        <paper-button id="new-button" raised class="hidden self-center colored custom raised-button" autofocus tabindex="0">
+          <iron-icon icon="create" aria-label="create" role="img"></iron-icon>
+          Create project
+        </paper-button>
+      </div>
+    </div>
+  </template>
+
+</dom-module>

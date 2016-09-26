@@ -4,11 +4,22 @@ library akepot.lib.pages.pane_edit;
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_project.dart';
+import 'package:akepot/pages/section_edit_project.dart';
+import 'package:akepot/pages/section_edit_project2.dart';
+import 'package:akepot/pages/section_edit_project3.dart';
+import 'package:akepot/pages/section_edit_category.dart';
+import 'package:akepot/pages/section_edit_subcategory.dart';
+import 'package:akepot/pages/section_edit_competence.dart';
+import 'package:akepot/pages/section_edit_team.dart';
+import 'package:akepot/pages/section_edit_role.dart';
 import 'dart:html';
 import 'package:observe/observe.dart' as observe;
 import 'package:akepot/competences_service.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_meta.dart';
+import 'package:polymer_elements/iron_signals.dart';
+import 'package:polymer_elements/paper_tabs.dart';
+import 'package:polymer_elements/paper_tab.dart';
 
 @PolymerRegister("pane-edit")
 class PaneEdit extends PolymerElement {

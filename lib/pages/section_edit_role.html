@@ -1,0 +1,21 @@
+<dom-module id="section-edit-role">
+  <link rel="import" type="css" href="section_edit_role.css">
+  <template>
+
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" hero-id="hero-role" hero>
+        <div id="div2" class="layout vertical center center-justified">
+          <div id="div1" class="layout horizontal center">
+            <paper-icon-button id="paper_icon_button" icon="arrow-back" on-tap="goUp" hero cross-fade-delayed></paper-icon-button>
+            <div id="label-type">Role: </div>
+            <paper-input label="Role Name" value="{{role.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Role Description" value="{{role.description}}" id="input-desc"></paper-input>
+        </div>
+      </paper-toolbar>
+      <section id="content-section">
+      </section>
+    </paper-header-panel>
+  </template>
+
+</dom-module>

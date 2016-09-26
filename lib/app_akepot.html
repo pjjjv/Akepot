@@ -27,15 +27,34 @@
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route
         route="{{route}}"
-        pattern="/:page"
+        pattern="/:toplevel/:projectHash"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
+    <app-route
+        route="{{subroute}}"
+        pattern="/:page/:detail"
+        data="{{subrouteData}}"
+        tail="{{tail}}"></app-route>
 
     <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="selected">
       <page-home name="home"></page-home>
       <page-edit name="edit"></page-edit>
+      <page-report name="report"></page-report>
+      <page-category name="category"></page-category>
+      <page-join name="join"></page-join>
       <page-not-found name="not_found"></page-not-found>
     </iron-pages>
+
+    <!--<app-router mode="hash" trailingSlash="ignore" core_animated_pages transitions="cross-fade cross-fade-delayed cascade-transition">
+          <app-route path="/" imp="packages/akepot/pages/page_home.html" template></app-route>
+          <app-route path="/admin/:projectHash/edit" imp="packages/akepot/pages/page_edit.html" elem="page-edit"></app-route>
+          <app-route path="/admin/:projectHash/report" imp="packages/akepot/pages/page_report.html" elem="page-report"></app-route>
+          <app-route path="/project/:projectHash" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
+          <app-route path="/project/:projectHash/category/:selectedCategory" imp="packages/akepot/pages/page_category.html" elem="page-category"></app-route>
+          <app-route path="/project/:projectHash/join" imp="packages/akepot/pages/page_join.html" elem="page-join"></app-route>
+          <app-route path="*" imp="packages/akepot/pages/not-found-page.html" template></app-route>
+        </app-router>-->
+
 
     <paper-toast id="toast" text="Connection timed out. Showing limited messages.">
       <paper-button dismissive tabindex="0" autofocus class="flat-button">Retry</paper-button>

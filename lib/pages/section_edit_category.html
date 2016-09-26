@@ -1,0 +1,33 @@
+<dom-module id="section-edit-category">
+  <link rel="import" type="css" href="section_edit_category.css">
+  <template>
+
+    <paper-header-panel mode="waterfall-tall">
+      <paper-toolbar class="animate tall" hero-id="hero-category" hero cross-fade-delayed$="{{_computeCross-fade-delayed(page)}}">
+        <div id="div2" class="layout vertical center center-justified">
+          <div id="div1" class="layout horizontal center">
+            <paper-icon-button id="paper_icon_button" icon="arrow-back" on-tap="goUp" hero cross-fade-delayed></paper-icon-button>
+            <div id="label-type">Category: </div>
+            <paper-input label="Category Name" value="{{category.name}}" id="input-name"></paper-input>
+          </div>
+          <paper-input label="Category Description" value="{{category.description}}" id="input-desc"></paper-input>
+        </div>
+        <paper-fab id="create-button" icon="add" on-tap="onCreateButtonTap"></paper-fab>
+      </paper-toolbar>
+      <section id="content-section">
+
+        <div class="layout center-justified">
+          <template is="dom-repeat" items="{{enumerate(category.subcategories)}}" as="subcategory">
+            <core-card3 id="{{subcategory.index}}" class="horizontal layout center start-justified" hero-id="hero-subcategory" on-tap="onItemTap" hero$="{{_computeHero(index, page, subcategory)}}" cross-fade-delayed$="{{_computeCross-fade-delayed(index, page, subcategory)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{subcategory.value.name}}</core-card3>
+          </template>
+        </div>
+        <!-- <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Waterfall</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade hero-id="hero2" hero>Agile</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Scrum</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Things</core-card3>
+        <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Things</core-card3> -->
+      </section>
+    </paper-header-panel>
+  </template>
+
+</dom-module>

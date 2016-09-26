@@ -1,0 +1,45 @@
+<dom-module id="pane-join">
+  <link rel="import" type="css" href="pane_join.css">
+  <template>
+
+    <iron-signals on-core-signal-signedin="signedIn"></iron-signals>
+
+    <div class="layout horizontal wrap center-justified" cross-fade-delayed>
+      <div id="card-join" class="self-center layout vertical">
+        <div class="fit" id="title-box">
+          <div id="title">Join this project?</div>
+        </div>
+        <div id="title-box-substitute"></div>
+        <template is="dom-if" if="{{service.signedIn}}">
+          <div id="text-box">
+            <p>Would you like to join this project?</p>
+            <p>Team to be added to: </p>
+            <paper-dropdown-menu label="Choose a team">
+              <iron-dropdown class="dropdown">
+                <iron-selector attr-for-selected="id" selected="{{selected}}">
+                  <template is="dom-repeat" items="{{enumerate(service.project.teams)}}" as="team">
+                    <paper-item id="{{team.index}}" undefined="{{team.value.name}}"></paper-item>
+                  </template>
+                </iron-selector>
+              </iron-dropdown>
+            </paper-dropdown-menu>
+            <p>Select your roles: </p>
+            <iron-selector attr-for-selected="id" selected="{{multiselected}}" multi="">
+              <template is="dom-repeat" items="{{service.project.roles}}" as="role">
+                <paper-item id="{{role.id}}" tabindex="0">
+                  <iron-icon icon="assignment-ind"></iron-icon><span class="flex">{{role.name}}</span>
+                </paper-item>
+              </template>
+            </iron-selector>
+          </div>
+          <div class="flex"></div><!-- active="false" -->
+          <paper-button class="self-center" id="join-button" disabled raised class="colored custom raised-button" autofocus tabindex="0">
+            <iron-icon icon="add" aria-label="add" role="img"></iron-icon>
+            Join project
+          </paper-button>
+        </template>
+      </div>
+    </div>
+  </template>
+
+</dom-module>

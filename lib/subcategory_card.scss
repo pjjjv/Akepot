@@ -1,0 +1,44 @@
+@import '../web/theme';
+
+core-card2 {
+  width: 40%;
+  min-width: $card-width;
+  min-height: $card-height;
+}
+
+#image-box {
+  height: $image-height;
+  display: block;
+}
+
+iron-image {
+  height: $image-height;
+  background-color: $light-color;
+  border-bottom: 1px solid $seam;
+}
+
+#title-box {
+  height: $title-height;
+  display: block;
+}
+
+#title {
+  height: $title-height;
+  top: $image-height + 1px;
+  padding-left: (2 * $component-grid);
+  @include text-headline();
+  background-color: $primary-color;
+  color: $text-white-primary;
+  border-bottom: 1px solid $seam;
+}
+
+.flip-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.single-strength-item {
+  margin: 0;
+}

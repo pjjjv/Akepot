@@ -1,0 +1,25 @@
+@import '../web/theme';
+
+#title {
+  @include text-subhead();
+  line-height: $line-height-body1;
+}
+
+#main {
+  z-index: 1;
+  background-color: $background-color;
+}
+
+#secondary {
+  @include text-body1();
+  color: $text-black-secondary;
+  max-width: 60ch;
+}
+
+#slider {
+  margin: 0;
+}
+
+:host {
+  margin: (1 * $component-grid);
+}

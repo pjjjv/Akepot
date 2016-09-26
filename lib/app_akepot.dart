@@ -7,6 +7,9 @@ import 'package:akepot/login_screen.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/pages/page_home.dart';
 import 'package:akepot/pages/page_edit.dart';
+import 'package:akepot/pages/page_report.dart';
+import 'package:akepot/pages/page_category.dart';
+import 'package:akepot/pages/page_join.dart';
 import 'package:akepot/pages/page_not_found.dart';
 import 'package:polymer_elements/app_route.dart';
 import 'package:polymer_elements/app_location.dart';
@@ -23,8 +26,13 @@ class AppAkepot extends PolymerElement {
   @property dynamic route;
   @property dynamic routeData;
   @property dynamic subroute = {};//needs initialization to work
+  @property dynamic subrouteData;
+  @property dynamic tail = {};//needs initialization to work
   @property CompetencesService service;
   @Property(observer: 'pageChanged') String page;
+  String toplevel;
+  String projectHash;
+  String selectedCategory;
 
   IronPages ip;
   IronMeta meta;
@@ -43,13 +51,42 @@ class AppAkepot extends PolymerElement {
     ip = $$('iron-pages');
   }
 
-  @Observe('routeData.page')
-  void routePageChanged(String page) {
-    if (page == null || page == ""){
+  @Observe('routeData.toplevel')
+  void routeToplevelChanged(String toplevel) {
+  this.toplevel = toplevel;
+    if (toplevel == null || toplevel == ""){
       set('page', 'home');
+    } else if (toplevel != 'admin' && toplevel != 'project'){
+      set('page', 'not_found');
     }
-    set('page', page);
-    print(page);
+    print("toplevel: $toplevel");
+  }
+
+  @Observe('routeData.projectHash')
+  void projectHashChanged(String projectHash) {
+    this.projectHash = projectHash;
+    print("projectHash: $projectHash");
+  }
+
+  @Observe('subrouteData.page')
+  void subroutePageChanged(String page) {
+    if ((page == null || page == "") && toplevel == 'project'){
+      set('page', 'category');
+    } else if ((toplevel == 'admin' && page != 'edit' && page != 'report')
+                || (toplevel == 'project' && page != 'category' && page != 'join')){
+      set('page', 'not_found');
+    } else {
+      set('page', page);
+    }
+    print("page: $page");
+  }
+
+  @Observe('subrouteData.detail')
+  void subrouteDetailChanged(String detail) {
+    if(page == "category"){
+      this.selectedCategory = detail;
+    }
+    print("selectedCategory: ${this.selectedCategory}");
   }
 
   @reflectable

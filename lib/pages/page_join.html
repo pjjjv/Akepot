@@ -1,0 +1,14 @@
+<dom-module id="page-join">
+  <template>
+    <scaffold-layout menu="project" selected="_join" projecthash="{{projectHash}}">
+      <title-page class="title" projecthash="{{projectHash}}" cross-fade="">Competence Matrix for </title-page>
+      <pane-join projecthash="{{projectHash}}"></pane-join>
+    </scaffold-layout>
+  </template>
+  <script>
+    Polymer({
+      is: 'page-join',
+      properties: { projectHash: { notify: true } }
+    });
+  </script>
+</dom-module>

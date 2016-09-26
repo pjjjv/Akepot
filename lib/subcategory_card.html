@@ -1,0 +1,26 @@
+<link rel="import" href="../../packages/akepot/components/trianglify/trianglify.html">
+
+<dom-module id="subcategory-card">
+  <link rel="import" type="css" href="subcategory_card.css">
+  <template>
+
+    <iron-signals on-iron-signal-palettesloaded="palettesLoaded"></iron-signals>
+
+    <core-card2 id="card" class="self-center layout vertical">
+      <div class="front">
+        <paper-fab mini id="help-button" class="flip-button floating-action-button" icon="help" tabindex="0"></paper-fab>
+        <div id="image-box">
+          <iron-image class="fit" sizing="cover" id="header" preload fade></iron-image>
+        </div>
+        <div id="title-box">
+          <div fit id="title">{{subcategory.name}}</div>
+        </div>
+        <template is="dom-repeat" items="{{subcategory.competences}}" as="competence">
+          <single-strength-item id="{{competence.tid}}" title="{{competence.label}}" desc="{{competence.description}}" number="{{competence.rating}}" on-toggleotherdescs="closeDesc"></single-strength-item>
+        </template>
+      </div>
+      <div class="back">Help is coming...</div>
+    </core-card2>
+  </template>
+
+</dom-module>

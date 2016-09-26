@@ -1,30 +1,4 @@
 <dom-module id="pane-edit">
-  <style>
-    /* TODO(polyup): For speed, consider reworking these styles with .classes
-                     and #ids rather than [attributes].
-    */
-    [layout] {
-      @apply(--layout);
-    }
-    [layout][vertical] {
-      @apply(--layout-vertical);
-    }
-    [layout][horizontal] {
-      @apply(--layout-horizontal);
-    }
-    [layout][center] {
-      @apply(--layout-center);
-    }
-    [layout][inline] {
-      @apply(--layout-inline);
-    }
-    [layout][flex] {
-      @apply(--layout-flex);
-    }
-    [layout][center-center] {
-      @apply(--layout-center-center);
-    }
-  </style>
   <link rel="import" type="css" href="pane_edit.css">
   <template>
 
@@ -57,15 +31,15 @@
     <iron-signals on-iron-signal-goup2="goUp2"></iron-signals>
     <iron-signals on-iron-signal-goup3="goUp3"></iron-signals>
 
-    <div id="outer" layout="" vertical="">
+    <div id="outer" class="layout vertical">
       <template is="dom-if" if="{{service.signedIn}}">
-        <paper-tabs selected="{{tab}}" id="paper_tabs" horizontal center layout>
-          <paper-tab id="tab-competences" inline flex center-center horizontal layout active>Competences</paper-tab>
-          <paper-tab id="tab-teams" inline flex center-center horizontal layout active>Teams</paper-tab>
-          <paper-tab id="tab-roles" inline flex center-center horizontal layout active>Roles</paper-tab>
+        <paper-tabs selected="{{tab}}" id="paper_tabs" class="horizontal center layout">
+          <paper-tab id="tab-competences" class="inline flex center-center horizontal layout" active>Competences</paper-tab>
+          <paper-tab id="tab-teams" class="inline flex center-center horizontal layout" active>Teams</paper-tab>
+          <paper-tab id="tab-roles" class="inline flex center-center horizontal layout" active>Roles</paper-tab>
         </paper-tabs>
         <template is="dom-if" if="{{_computeIf(tab)}}">
-          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" flex>
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page}}" id="pages_edit" class="flex">
 
             <section-edit-project project="{{service.project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
@@ -84,7 +58,7 @@
           </neon-animated-pages>
         </template>
         <template is="dom-if" if="{{_computeIf(tab)}}">
-          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" flex>
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page2}}" id="pages_edit2" class="flex">
 
             <section-edit-project2 project="{{service.project}}" page="{{page2}}" index="{{team_nr}}"></section-edit-project2>
 
@@ -94,7 +68,7 @@
           </neon-animated-pages>
         </template>
         <template is="dom-if" if="{{_computeIf(tab)}}">
-          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page3}}" id="pages_edit3" flex>
+          <neon-animated-pages transitions="hero-transition cross-fade cross-fade-delayed" selected="{{page3}}" id="pages_edit3" class="flex">
 
             <section-edit-project3 project="{{service.project}}" page="{{page3}}" index="{{role_nr}}"></section-edit-project3>
 
@@ -108,7 +82,7 @@
 
 
 
-<!--     <paper-button hidden self-center id="create-button" raised class="colored custom raised-button" tabindex="0">
+<!--     <paper-button id="create-button" raised class="hidden self-center colored custom raised-button" tabindex="0">
       <core-icon icon="create" aria-label="create" role="img"></core-icon>
       Create project
     </paper-button>

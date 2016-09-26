@@ -17,8 +17,8 @@ dependencies:
   template_binding: any
   web_components: any
   sass: any
-  #firebase:
-  #  path: ../firebase-dart
+  firebase:
+    path: ../firebase-dart
 transformers:
 - sass:
     compass: true

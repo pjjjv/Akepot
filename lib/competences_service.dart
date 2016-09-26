@@ -13,7 +13,7 @@ import 'package:polymer_elements/iron_request.dart';
 import 'package:polymer_elements/firebase_app.dart';
 import 'package:polymer_elements/firebase_auth.dart';
 import 'dart:developer';
-//import 'package:firebase/firebase.dart';
+import 'package:firebase/firebase.dart';
 
 typedef void ResponseHandler(response, HttpRequest req);
 
@@ -31,29 +31,16 @@ class CompetencesService extends PolymerElement {
   Map _headers;
   FirebaseApp firebase;
   FirebaseAuth auth;
+  Firebase dbRef;
   List<Category> categories = []; //For names only
   Project project;
   IronAjax ajaxColourSchemes;
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    //dbRef = new Firebase(SERVER);
+    dbRef = new Firebase(SERVER);
     auth = $$('#auth');
-
-    // Initialize Firebase
-    /*var config = {
-      apiKey: "AIzaSyByIYqE6-sqzM-Gt_xXWv9MDigJ7krVKm8",
-      authDomain: "shining-heat-1634.firebaseapp.com",
-      databaseURL: "https://shining-heat-1634.firebaseio.com",
-      storageBucket: "shining-heat-1634.appspot.com",
-    };
-
-    firebase.initializeApp(config);
-
-    var rootRef = firebase.database().ref();*/
-
-    /*FirebaseApp firebaseApp = $$('firebase-app');
-    dbRef = firebaseApp.app(0).database().ref;*/
+    firebase = $$('#firebase-app');
   }
 
   void ready(){
@@ -87,6 +74,11 @@ class CompetencesService extends PolymerElement {
 
     headers = {"Content-type": "application/json",
       "Authorization": "Bearer ${(response['credential']['accessToken'] as String)}"};
+
+    //TODO: dbRef is old firebase2 that I use for everything but auth. Here I link through auth.
+    dbRef.authWithOAuthToken("google", (response['credential']['accessToken'] as String));
+
+
 
     user = new User();
     user.uid = response['user']['uid'];

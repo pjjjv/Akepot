@@ -5,8 +5,9 @@ import 'package:akepot/model/model_team.dart';
 import 'package:akepot/model/model_person.dart';
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/competences_service.dart';
-//import 'package:firebase/firebase.dart';
+import 'package:firebase/firebase.dart';
 import 'package:observe/observe.dart';
+import 'dart:developer';
 
 /** Not documented yet. */
 class Project extends Observable {
@@ -58,6 +59,7 @@ class Project extends Observable {
   }
 
   factory Project.retrieve(String hash, CompetencesService service, [dynamic callback(Project project)]) {
+    debugger();
     Project project = toObservable(new Project.newHash(hash));
     service.dbRef.child("projects/$hash").once("value").then((snapshot) {
       Map val = snapshot.val();

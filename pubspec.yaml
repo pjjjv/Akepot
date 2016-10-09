@@ -10,7 +10,7 @@ environment:
 dependencies:
   browser: any
   observe: any
-  polymer_elements: ^1.0.0-rc.9
+  #polymer_elements: ^1.0.0-rc.9
   polymer_elements:
     path: ../polymer_elements
   polymer: ^1.0.0-rc.18

@@ -26,9 +26,9 @@ class AppAkepot extends PolymerElement {
   @property User user;
   @property dynamic route;
   @property dynamic routeData = {};
-  @property dynamic subroute = {};
+  @property dynamic subroute;
   @property dynamic subrouteData = {};
-  @property dynamic subsubroute = {};
+  @property dynamic subsubroute;
   @property dynamic subsubrouteData = {};
   @property CompetencesService service;
   @Property(observer: 'pageChanged') String page;

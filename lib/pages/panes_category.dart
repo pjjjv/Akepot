@@ -13,6 +13,7 @@ import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
 import 'package:polymer_elements/app_location.dart';
 import 'package:polymer_elements/iron_meta.dart';
+import 'dart:developer';
 
 @PolymerRegister('panes-category')
 class PanesCategory extends PolymerElement {
@@ -20,6 +21,9 @@ class PanesCategory extends PolymerElement {
   CompetencesService service;
   @property String projectHash = "";
   @property String selectedCategory = "";//Bugfix: needs to be assigned "", to prevent it from being 0.
+
+  @Property(notify: true, observer: 'selectedChanged') bool selected;
+  bool signInDone = false;
 
   PanesCategory.created() : super.created();
 
@@ -32,7 +36,24 @@ class PanesCategory extends PolymerElement {
   }
 
   @reflectable
+  void selectedChanged(bool selected, bool old) {
+    debugger();
+    if(signInDone && selected==true && old==false){
+      start();
+    }
+  }
+
+  @reflectable
   void signedIn(Event e, var detail){
+    debugger();
+    signInDone = true;
+    if(selected){
+      start();
+    }
+  }
+
+  void start(){
+    debugger();
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (!exists){
         new AppLocation().path = "/project/$projectHash/join";

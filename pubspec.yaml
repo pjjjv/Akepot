@@ -10,7 +10,7 @@ environment:
 dependencies:
   browser: any
   observe: any
-  #polymer_elements: ^1.0.0-rc.9
+  polymer_elements: ^1.0.0-rc.9
   polymer_elements:
     path: ../polymer_elements
   polymer: ^1.0.0-rc.18
@@ -19,6 +19,13 @@ dependencies:
   sass: any
   firebase:
     path: ../firebase-dart
+
+  #polymer:
+  #  version:  "^1.0.0-rc.18.exp.6"
+  #  path: ../polymerdartexp6
+  #polymer_interop:
+  #  version: "^1.0.0-rc.10.exp.8"
+  #  path: ../polymerinteropexp8
 transformers:
 - sass:
     compass: true

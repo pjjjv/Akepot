@@ -30,6 +30,9 @@ class PaneJoin extends PolymerElement {
 
   PaperButton joinButton;
 
+  @Property(notify: true, observer: 'selectedChanged') bool selected2;
+  bool signInDone = false;
+
   PaneJoin.created() : super.created();
 
   attached(){
@@ -41,7 +44,23 @@ class PaneJoin extends PolymerElement {
   }
 
   @reflectable
+  void selectedChanged(bool selected2, bool old) {
+    debugger();
+    if(signInDone && selected2==true && old==false){
+      start();
+    }
+  }
+
+  @reflectable
   void signedIn(Event e, var detail){
+    debugger();
+    signInDone = true;
+    if(selected2){
+      start();
+    }
+  }
+
+  void start(){
     debugger();
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (exists){

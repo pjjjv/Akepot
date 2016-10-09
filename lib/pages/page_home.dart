@@ -12,4 +12,6 @@ class PageHome extends PolymerElement {
 
   PageHome.created() : super.created();
 
+  @Property(notify: true) bool selected;
+  
 }

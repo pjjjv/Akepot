@@ -22,18 +22,19 @@ import 'dart:developer';
 @PolymerRegister('app-akepot')
 class AppAkepot extends PolymerElement {
   @property bool signedIn = false;
-  @property bool readyDom = false;
+  @property bool readyDom;
   @property User user;
   @property dynamic route;
-  @property dynamic routeData;
-  @property dynamic subroute = {};//needs initialization to work
-  @property dynamic subrouteData;
-  @property dynamic tail = {};//needs initialization to work
+  @property dynamic routeData = {};
+  @property dynamic subroute = {};
+  @property dynamic subrouteData = {};
+  @property dynamic subsubroute = {};
+  @property dynamic subsubrouteData = {};
   @property CompetencesService service;
   @Property(observer: 'pageChanged') String page;
   String toplevel;
-  String projectHash;
-  String selectedCategory;
+  @property String projectHash;
+  @property String selectedCategory;
 
   IronPages ip;
   IronMeta meta;
@@ -67,8 +68,10 @@ class AppAkepot extends PolymerElement {
   @Observe('routeData.projectHash')
   void projectHashChanged(String projectHash) {
     debugger();
-    this.projectHash = projectHash;
-    print("projectHash: $projectHash");
+    if (projectHash != null){
+      set('projectHash', projectHash);
+      print("projectHash: $projectHash");
+    }
   }
 
   @Observe('subrouteData.page')
@@ -79,32 +82,40 @@ class AppAkepot extends PolymerElement {
     } else if ((toplevel == 'admin' && page != 'edit' && page != 'report')
                 || (toplevel == 'project' && page != 'category' && page != 'join')){
       set('page', 'not_found');
+    } else if ((toplevel == null || toplevel == "") && this.page == 'home'){
+      //nothing
+      return;
+    } else if (toplevel != 'admin' && toplevel != 'project' && this.page == 'not_found'){
+      //nothing
+      return;
     } else {
       set('page', page);
     }
-    print("page: $page");
+
+    if ((this.page == null || this.page == "")){
+      set('page', 'not_found');
+    }
+    print("page: ${this.page}");
   }
 
-  @Observe('subrouteData.detail')
-  void subrouteDetailChanged(String detail) {
+  @Observe('subsubrouteData.detail')
+  void subsubrouteDetailChanged(String detail) {
     debugger();
     if(page == "category"){
-      this.selectedCategory = detail;
+      set('selectedCategory', detail);
     }
-    print("selectedCategory: ${this.selectedCategory}");
+    print("selectedCategory: ${selectedCategory}");
   }
 
   @reflectable
   void pageChanged(String page, String old) {
-    debugger();
     // load page import on demand.
-    print('pageChanged: '+page);
+    print('pageChanged: $page');
     //Polymer.importHref('pages/page_' + page + '.html');
   }
 
   @reflectable
   String computeLoginScreenVisibility(bool signedIn, bool readyDom){
-    debugger();
     String defaultClass = "layout vertical center-center fit";
     print("computeLoginScreenVisibility: signedIn: $signedIn, readyDom: $readyDom");
     if (signedIn && readyDom){

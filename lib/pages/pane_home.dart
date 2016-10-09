@@ -13,6 +13,7 @@ import 'package:polymer_elements/iron_icon.dart';
 import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
 import 'package:polymer_elements/iron_meta.dart';
+import 'package:polymer_elements/app_location.dart';
 import 'dart:developer';
 
 @PolymerRegister("pane-home")
@@ -20,7 +21,7 @@ class PaneHome extends PolymerElement {
   PaneHome.created() : super.created();
 
   PaperButton newButton;
-  CompetencesService service;
+  @property String routePath;
 
   void ready(){
     newButton = $$("#new-button");
@@ -28,17 +29,15 @@ class PaneHome extends PolymerElement {
     newButton.onClick.listen(newProject);
   }
 
-  void attached(){
-    service = new IronMeta().byKey('service');
-  }
-
   void newProject(Event e){
     debugger();
+
+    CompetencesService service = new IronMeta().byKey('service');
     service.project = new Project.newRemote(service);
 
     Person.exists(service.user.uid, service.project.hash, service, (exists) {
       if (exists){
-        //(document.querySelector('app-router') as AppRouter).go("/project/${service.project.hash}");//TODO
+        set('routePath', "/project/${service.project.hash}");
       } else {
         Team team = service.project.addTeam();
         team.service = service;
@@ -49,6 +48,6 @@ class PaneHome extends PolymerElement {
       }
     });
 
-    //(document.querySelector('app-router') as AppRouter).go("/admin/${service.project.hash}/edit");
+      set('routePath', "/admin/${service.project.hash}/edit");
   }
 }

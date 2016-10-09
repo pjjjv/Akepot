@@ -22,6 +22,7 @@ import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
 import 'package:polymer_elements/iron_meta.dart';
+import 'dart:developer';
 
 class Header extends observe.Observable {
   @observe.observable String label = "";
@@ -109,6 +110,9 @@ class PaneReport extends PolymerElement {
   @property String projectHash = "";
   @observe.observable bool locallySignedIn = false;
 
+  @Property(notify: true, observer: 'selectedChanged') bool selected;
+  bool signInDone = false;
+
   @observe.observable observe.ObservableList<Header> headers = observe.toObservable([]);
   @observe.observable observe.ObservableList<Row> rows = observe.toObservable([]);
 
@@ -122,7 +126,24 @@ class PaneReport extends PolymerElement {
   }
 
   @reflectable
+  void selectedChanged(bool selected, bool old) {
+    debugger();
+    if(signInDone && selected==true && old==false){
+      start();
+    }
+  }
+
+  @reflectable
   void signedIn(Event e, var detail){
+    debugger();
+    signInDone = true;
+    if(selected){
+      start();
+    }
+  }
+
+  void start(){
+    debugger();
 
     if(service.project != null && service.project.hash == projectHash){
       return;

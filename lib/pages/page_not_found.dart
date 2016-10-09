@@ -9,4 +9,6 @@ class PageNotFound extends PolymerElement {
 
   PageNotFound.created() : super.created();
 
+  @Property(notify: true) bool selected;
+  
 }

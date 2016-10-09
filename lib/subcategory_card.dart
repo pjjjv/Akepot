@@ -41,7 +41,7 @@ class SubCategoryCard extends PolymerElement {
 
   void changeCards(){
     if(palette!=null) return;
-    palette = service.palettes[pseudoRandomColor(subcategory.name)];
+    set('palette', service.palettes[pseudoRandomColor(subcategory.name)]);
     generateBackground();
   }
 

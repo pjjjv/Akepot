@@ -19,7 +19,7 @@ class StrengthButtonSlider extends PolymerElement {
 
   @reflectable
   void select(Event e, var detail){
-    selected = (e.target as StrengthButton).number;
+    set('selected', (e.target as StrengthButton).number);
   }
 
 }

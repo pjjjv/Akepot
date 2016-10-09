@@ -13,5 +13,6 @@ class PageEdit extends PolymerElement {
   PageEdit.created() : super.created();
 
   @property String projectHash;
+  @Property(notify: true) bool selected;
 
 }

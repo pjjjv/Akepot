@@ -8,17 +8,18 @@ import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/login/login_google.dart';
+import 'dart:developer';
 
 @PolymerRegister('login-screen')
 class LoginScreen extends PolymerElement {
   LoginScreen.created() : super.created();
-  @property bool signedIn = false;
+  @Property(notify: true) bool signedIn = false;
   String accessToken = "";
   String name = "";
 
   @reflectable
   void signInDone(Event e, var response){
-    signedIn = true;
+    set('signedIn', true);
 
     Map headers = {"Content-type": "application/json",
                "Authorization": "Bearer ${response['credential']['accessToken']}"};
@@ -30,7 +31,7 @@ class LoginScreen extends PolymerElement {
   @reflectable
   void signOutDone(Event e, var detail){
     if (DEBUG) print("loginsignedout" + detail.toString());
-    signedIn = false;
+    set('signedIn', false);
   }
 
   @reflectable

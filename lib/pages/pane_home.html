@@ -1,9 +1,11 @@
 <dom-module id="pane-home">
   <link rel="import" type="css" href="pane_home.css">
   <template>
+    <app-location path="{{routePath}}" use-hash-as-path></app-location>
 
     <div class="layout horizontal wrap center-justified" cross-fade-delayed>
-      <div id="card-link" class="self-center layout vertical">
+      <div id="card
+      -link" class="self-center layout vertical">
         <div class="fit" id="title-box">
           <div id="title">Use link</div>
         </div>

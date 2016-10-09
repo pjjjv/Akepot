@@ -20,6 +20,7 @@ import 'package:polymer_elements/iron_meta.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/paper_tabs.dart';
 import 'package:polymer_elements/paper_tab.dart';
+import 'dart:developer';
 
 @PolymerRegister("pane-edit")
 class PaneEdit extends PolymerElement {
@@ -28,6 +29,7 @@ class PaneEdit extends PolymerElement {
 
   CompetencesService service;
   @property String projectHash = "";
+  @Property(notify: true, observer: 'selectedChanged') bool selected;
 
   NeonAnimatedPages pages;
   NeonAnimatedPages pages2;
@@ -43,8 +45,27 @@ class PaneEdit extends PolymerElement {
   int team_nr = 0;
   int role_nr = 0;
 
+  bool signInDone = false;
+
+  @reflectable
+  void selectedChanged(bool selected, bool old) {
+    debugger();
+    if(signInDone && selected==true && old==false){
+      start();
+    }
+  }
+
   @reflectable
   void signedIn(Event e, var detail){
+    debugger();
+    signInDone = true;
+    if(selected){
+      start();
+    }
+  }
+
+  void start(){
+    debugger();
     service = new IronMeta().byKey('service');
     if(service.project != null && service.project.hash == projectHash){
       return;

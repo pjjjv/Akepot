@@ -23,9 +23,9 @@ const DEBUG = true;
 
 @PolymerRegister('competences-service')
 class CompetencesService extends PolymerElement {
-  @property bool signedIn = false;
-  @property bool readyDom = false;
-  @property User user = new User();
+  @Property(notify: true) bool signedIn = false;
+  @Property(notify: true) bool readyDom = false;
+  @Property(notify: true) User user = new User();
   @property dynamic user2 = {};
   IronAjax ajaxUserinfo;
   Map _headers;
@@ -50,7 +50,7 @@ class CompetencesService extends PolymerElement {
       ajaxColourSchemes.url = "data/colour_schemes_response.json";//TODO: nodejitsu is gone
     }
     //ajaxColourSchemes.generateRequest();
-    readyDom = true;
+    set('readyDom', true);
   }
 
   @reflectable
@@ -80,8 +80,8 @@ class CompetencesService extends PolymerElement {
 
 
 
-    user = new User();
-    user.uid = response['user']['uid'];
+    set('user', new User());
+    user.uid = response['user']['uid'];//TODO: use set for subproperties?
     if (user.uid == "" || user.uid == null) {
       if (DEBUG) print("uid empty");
     }
@@ -137,14 +137,14 @@ class CompetencesService extends PolymerElement {
       user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }*/
 
-    signedIn = true;
+    set('signedIn', true);
 
     this.fire( "iron-signal", detail: { "name": "signedin" } );
   }
 
   @reflectable
   void signOutDone(Event e, var detail){
-    signedIn=false;
+    set('signedIn', false);
   }
 
 // Retrieves colour palettes using the Colourlovers API, creating a new Palette

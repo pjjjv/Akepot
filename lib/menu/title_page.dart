@@ -17,9 +17,9 @@ class TitlePage extends PolymerElement {
 
   void ready(){
     service = $$("#service");
-    projectName = projectHash;
+    set('projectName', projectHash);
     Project.getName(projectHash, service, (projectName) {
-      this.projectName = projectName;
+      set('projectName', projectName);
     });
   }
 }

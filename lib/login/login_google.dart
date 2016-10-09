@@ -88,7 +88,7 @@ class LoginGoogle extends PolymerElement {
       // Trigger the loginsuccess event
       this.fire( "iron-signal", detail: { "name": "loginsuccess", "data": authData } );
 
-      signedIn = true;
+      set('signedIn', true);
     },
     onError:(error) {
       if (DEBUG) print("Login Failed!" + error.toString());
@@ -102,7 +102,7 @@ class LoginGoogle extends PolymerElement {
       }
 
       // No access token could be retrieved, show the button to start the authorization flow.
-      signedIn = false;
+      set('signedIn', false);
     });
   }
 
@@ -122,7 +122,7 @@ class LoginGoogle extends PolymerElement {
     this.fire( "iron-signal", detail: { "name": "loginsignoutattempted" } );
     service.auth.signOut();
     this.fire( "iron-signal", detail: { "name": "loginsignedout" } );
-    signedIn = false;
+    set('signedIn', false);
   }
 
   @reflectable

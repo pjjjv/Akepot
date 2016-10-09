@@ -26,22 +26,25 @@
 
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route
-        route="{{route}}"
+        route="[[route]]"
         pattern="/:toplevel/:projectHash"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
     <app-route
-        route="{{subroute}}"
-        pattern="/:page/:detail"
-        data="{{subrouteData}}"
-        tail="{{tail}}"></app-route>
+        route="[[subroute]]"
+        pattern="/:page"
+        data="{{subrouteData}}"></app-route>
+    <app-route
+        route="[[subsubroute]]"
+        pattern="/:detail"
+        data="{{subsubrouteData}}"></app-route>
 
     <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="selected">
       <page-home name="home"></page-home>
-      <page-edit name="edit"></page-edit>
-      <page-report name="report"></page-report>
-      <page-category name="category"></page-category>
-      <page-join name="join"></page-join>
+      <page-edit name="edit" project-hash="{{projectHash}}"></page-edit>
+      <page-report name="report" project-hash="{{projectHash}}"></page-report>
+      <page-category name="category" project-hash="{{projectHash}}" selected-category="{{selectedCategory}}"></page-category>
+      <page-join name="join" project-hash="{{projectHash}}"></page-join>
       <page-not-found name="not_found"></page-not-found>
     </iron-pages>
 

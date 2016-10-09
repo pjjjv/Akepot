@@ -13,5 +13,6 @@ class PageJoin extends PolymerElement {
   PageJoin.created() : super.created();
 
   @Property(notify: true) String projectHash;
+  @Property(notify: true) bool selected;
 
 }

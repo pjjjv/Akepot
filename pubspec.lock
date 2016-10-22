@@ -79,12 +79,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.11"
-  firebase:
+  firebase3:
     description:
-      path: "../firebase-dart"
-      relative: true
-    source: path
-    version: "0.5.1"
+      name: firebase3
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   func:
     description:
       name: func
@@ -115,6 +115,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
+  js:
+    description:
+      name: js
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   logging:
     description:
       name: logging

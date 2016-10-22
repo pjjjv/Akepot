@@ -128,7 +128,7 @@ class PaneReport extends PolymerElement {
   @reflectable
   void selectedChanged(bool selected, bool old) {
     debugger();
-    if(signInDone && selected==true && old==false){
+    if(signInDone && selected==true && (old==false || old==null)){
       start();
     }
   }

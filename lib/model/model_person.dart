@@ -3,8 +3,9 @@ library akepot.model.model_person;
 import 'package:akepot/model/model_role.dart';
 import 'package:akepot/model/model_project.dart';
 import 'package:akepot/competences_service.dart';
-import 'package:firebase/firebase.dart';
+import 'package:firebase3/firebase.dart';
 import 'package:observe/observe.dart';
+import 'dart:developer';
 
 /** Not documented yet. */
 class Person extends Observable {
@@ -134,6 +135,7 @@ class Person extends Observable {
 
   static exists(String uid, String projectHash, CompetencesService service, dynamic callback(bool exists)) {
     service.dbRef.child('projects/$projectHash/persons/$uid').once("value").then((snapshot) {
+      debugger();
       Map val = snapshot.val();
       callback(val != null);
     });

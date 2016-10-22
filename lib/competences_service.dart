@@ -13,7 +13,7 @@ import 'package:polymer_elements/iron_request.dart';
 import 'package:polymer_elements/firebase_app.dart';
 import 'package:polymer_elements/firebase_auth.dart';
 import 'dart:developer';
-import 'package:firebase/firebase.dart' as firebase;
+import 'package:firebase3/firebase.dart' as firebase;
 
 typedef void ResponseHandler(response, HttpRequest req);
 

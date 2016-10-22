@@ -46,7 +46,7 @@ class PaneJoin extends PolymerElement {
   @reflectable
   void selectedChanged(bool selected2, bool old) {
     debugger();
-    if(signInDone && selected2==true && old==false){
+    if(signInDone && selected2==true && (old==false || old==null)){
       start();
     }
   }

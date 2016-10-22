@@ -17,8 +17,10 @@ dependencies:
   template_binding: any
   web_components: any
   sass: any
-  firebase:
-    path: ../firebase-dart
+  
+  firebase3: any
+  #firebase:
+  #  path: ../firebase-dart
 
   #polymer:
   #  version:  "^1.0.0-rc.18.exp.6"

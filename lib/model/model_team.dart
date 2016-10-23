@@ -63,7 +63,7 @@ class Team extends Observable {
 
   factory Team.newRemote(String projectHash, CompetencesService service) {
     Team team = toObservable(new Team.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/teams").push();
+    ThenableReference pushRef = service.dbRef.child("projects/$projectHash/teams").push();
     team.id = pushRef.key;
     team.projectHash = projectHash;
     pushRef.set(team.toJson()).then((error) {

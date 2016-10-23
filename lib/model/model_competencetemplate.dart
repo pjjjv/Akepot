@@ -58,7 +58,7 @@ class CompetenceTemplate extends Observable {
 
   factory CompetenceTemplate.newRemote(String projectHash, CompetencesService service) {
     CompetenceTemplate competenceTemplate = toObservable(new CompetenceTemplate.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/competenceTemplates").push();
+    ThenableReference pushRef = service.dbRef.child("projects/$projectHash/competenceTemplates").push();
     competenceTemplate.id = pushRef.key;
     competenceTemplate.projectHash = projectHash;
     pushRef.set(competenceTemplate.toJson()).then((error) {

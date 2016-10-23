@@ -72,7 +72,7 @@ class CompetenceLevel extends Observable {
     }
 
     CompetenceLevel competenceLevel = toObservable(new CompetenceLevel.emptyDefault());
-    Firebase ref = service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId");
+    DatabaseReference ref = service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId");
     competenceLevel.projectHash = projectHash;
     competenceLevel.rid = roleId;
     competenceLevel.tid = competenceTemplateId;

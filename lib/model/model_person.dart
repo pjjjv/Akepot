@@ -121,7 +121,7 @@ class Person extends Observable {
       person.lastName = lastName;
     }
     person.isAdmin = admin;
-    Firebase setRef = service.dbRef.child("projects/$projectHash/persons/$uid");
+    DatabaseReference setRef = service.dbRef.child("projects/$projectHash/persons/$uid");
     setRef.set(person.toJson()).then((error) {
       if(error != null) {
         //

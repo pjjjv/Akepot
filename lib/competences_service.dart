@@ -31,14 +31,19 @@ class CompetencesService extends PolymerElement {
   Map _headers;
   FirebaseApp fb;
   FirebaseAuth auth;
-  firebase.Firebase dbRef;
+  firebase.DatabaseReference dbRef;
   List<Category> categories = []; //For names only
   Project project;
   IronAjax ajaxColourSchemes;
   List<Palette> palettes;
 
   CompetencesService.created() : super.created() {
-    dbRef = new firebase.Firebase(SERVER);
+    firebase.initializeApp(
+      apiKey: "AIzaSyByIYqE6-sqzM-Gt_xXWv9MDigJ7krVKm8",
+      authDomain: "shining-heat-1634.firebaseapp.com",
+      databaseURL: SERVER,
+      storageBucket: "shining-heat-1634.appspot.com");
+    dbRef = firebase.database().ref('/');
     auth = $$('#auth');
     fb = $$('#firebase-app');
   }
@@ -75,10 +80,16 @@ class CompetencesService extends PolymerElement {
     headers = {"Content-type": "application/json",
       "Authorization": "Bearer ${(response['credential']['accessToken'] as String)}"};
 
-    //TODO: dbRef is old firebase2 that I use for everything but auth. Here I link through auth.
-    dbRef.authWithOAuthToken("google", (response['credential']['accessToken'] as String));
-
-
+    //TODO: dbRef was old firebase2 that I use for everything but auth. Here I link through auth.
+    //dbRef.authWithOAuthToken("google", (response['credential']['accessToken'] as String));
+    var credential = firebase.GoogleAuthProvider.credential((response['credential']['accessToken'] as String));
+    // Sign in with credential from the Google user.
+    firebase.auth().signInWithCredential(credential).then((authData) {
+      if (DEBUG) print("Authenticated successfully 2222222 with payload:" + authData.toString());
+    },
+    onError:(error) {
+      if (DEBUG) print("Auth 2222 failed" + error.toString());
+    });
 
     set('user', new User());
     user.uid = response['user']['uid'];//TODO: use set for subproperties?

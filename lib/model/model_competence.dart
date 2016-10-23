@@ -89,7 +89,7 @@ class Competence extends Observable {
     }
 
     Competence competence = toObservable(new Competence.emptyDefault());
-    Firebase ref = service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId");
+    DatabaseReference ref = service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId");
     competence.projectHash = projectHash;
     competence.uid = personId;
     competence.tid = competenceTemplateId;

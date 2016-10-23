@@ -66,7 +66,7 @@ class SubCategory extends Observable {
 
   factory SubCategory.newRemote(String projectHash, CompetencesService service) {
     SubCategory subCategory = toObservable(new SubCategory.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects/$projectHash/subCategories").push();
+    ThenableReference pushRef = service.dbRef.child("projects/$projectHash/subCategories").push();
     subCategory.id = pushRef.key;
     subCategory.projectHash = projectHash;
     pushRef.set(subCategory.toJson()).then((error) {

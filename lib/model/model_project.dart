@@ -83,7 +83,7 @@ class Project extends Observable {
 
   factory Project.newRemote(CompetencesService service) {
     Project project = toObservable(new Project.emptyDefault());
-    Firebase pushRef = service.dbRef.child("projects").push();
+    ThenableReference pushRef = service.dbRef.child("projects").push();
     project.hash = pushRef.key;
     project.service = service;
     pushRef.set(project.toJson()).then((error) {

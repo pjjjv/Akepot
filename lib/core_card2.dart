@@ -23,7 +23,7 @@ class CoreCard2 extends PolymerElement {
   @reflectable
   void flipBack(Event e, var detail){
     if (flipped || (e.target as HtmlElement).classes.contains("flip-button")) {
-      flip(e);
+      flip(e, detail);
     }
   }
 

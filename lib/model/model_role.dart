@@ -46,8 +46,8 @@ class Role extends Observable {
 
   factory Role.retrieve(String id, String projectHash, CompetencesService service) {
     Role role = toObservable(new Role.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/roles/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/roles/$id").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         role.fromJson(val);

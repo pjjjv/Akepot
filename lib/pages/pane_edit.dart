@@ -49,7 +49,6 @@ class PaneEdit extends PolymerElement {
 
   @reflectable
   void selectedChanged(bool selected, bool old) {
-    debugger();
     if(signInDone && selected==true && (old==false || old==null)){
       start();
     }
@@ -57,7 +56,6 @@ class PaneEdit extends PolymerElement {
 
   @reflectable
   void signedIn(Event e, var detail){
-    debugger();
     signInDone = true;
     if(selected){
       start();
@@ -65,7 +63,6 @@ class PaneEdit extends PolymerElement {
   }
 
   void start(){
-    debugger();
     service = new IronMeta().byKey('service');
     if(service.project != null && service.project.hash == projectHash){
       return;

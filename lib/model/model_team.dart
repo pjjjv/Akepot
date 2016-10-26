@@ -47,8 +47,8 @@ class Team extends Observable {
 
   factory Team.retrieve(String id, String projectHash, CompetencesService service) {
     Team team = toObservable(new Team.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/teams/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/teams/$id").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         team.fromJson(val);

@@ -50,8 +50,8 @@ class SubCategory extends Observable {
 
   factory SubCategory.retrieve(String id, String projectHash, CompetencesService service) {
     SubCategory subCategory = toObservable(new SubCategory.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/subCategories/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/subCategories/$id").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         subCategory.fromJson(val);

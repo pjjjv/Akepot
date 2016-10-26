@@ -42,8 +42,8 @@ class CompetenceTemplate extends Observable {
 
   factory CompetenceTemplate.retrieve(String id, String projectHash, CompetencesService service) {
     CompetenceTemplate competenceTemplate = toObservable(new CompetenceTemplate.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/competenceTemplates/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/competenceTemplates/$id").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         competenceTemplate.fromJson(val);

@@ -18,7 +18,9 @@ dependencies:
   web_components: any
   sass: any
   
-  firebase3: any
+  #firebase3: any
+  firebase3:
+    path: ../firebase3-dart
   #firebase:
   #  path: ../firebase-dart
 

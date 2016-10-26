@@ -69,8 +69,8 @@ class Competence extends Observable {
 
     Competence competence = toObservable(new Competence.newId(projectHash, personId, competenceTemplateId));
 
-    service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/persons/$personId/competences/$competenceTemplateId").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         competence.fromJson(val);

@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Chrome against localhost, with sourcemaps",
+            "type": "chrome",
+            "runtimeExecutable": "/opt/dartium-lucid64-full-stable-1.19.0.0/chrome-wrapper", 
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ],
+            "request": "launch",
+            "url": "http://localhost:8080/index.html#/home",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}/web"
+        },
+        {
+            "name": "Attach to Chrome, with sourcemaps",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://localhost:8080/index.html#/home",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}/web"
+        }
+    ]
+}

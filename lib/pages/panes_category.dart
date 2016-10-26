@@ -37,7 +37,6 @@ class PanesCategory extends PolymerElement {
 
   @reflectable
   void selectedChanged(bool selected, bool old) {
-    debugger();
     if(signInDone && selected==true && (old==false || old==null)){
       start();
     }
@@ -45,7 +44,6 @@ class PanesCategory extends PolymerElement {
 
   @reflectable
   void signedIn(Event e, var detail){
-    debugger();
     signInDone = true;
     if(selected){
       start();
@@ -53,7 +51,6 @@ class PanesCategory extends PolymerElement {
   }
 
   void start(){
-    debugger();
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (!exists){
         new AppLocation().path = "/project/$projectHash/join";

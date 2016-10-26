@@ -10,8 +10,6 @@ import 'package:akepot/model/model_category.dart';
 import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/iron_request.dart';
-import 'package:polymer_elements/firebase_app.dart';
-import 'package:polymer_elements/firebase_auth.dart';
 import 'dart:developer';
 import 'package:firebase3/firebase.dart' as firebase;
 
@@ -26,11 +24,8 @@ class CompetencesService extends PolymerElement {
   @Property(notify: true) bool signedIn = false;
   @Property(notify: true) bool readyDom = false;
   @Property(notify: true) User user = new User();
-  @property dynamic user2 = {};
   IronAjax ajaxUserinfo;
   Map _headers;
-  FirebaseApp fb;
-  FirebaseAuth auth;
   firebase.DatabaseReference dbRef;
   List<Category> categories = []; //For names only
   Project project;
@@ -44,8 +39,6 @@ class CompetencesService extends PolymerElement {
       databaseURL: SERVER,
       storageBucket: "shining-heat-1634.appspot.com");
     dbRef = firebase.database().ref('/');
-    auth = $$('#auth');
-    fb = $$('#firebase-app');
   }
 
   void ready(){
@@ -78,31 +71,20 @@ class CompetencesService extends PolymerElement {
     if (DEBUG) print("signinResult: $response");
 
     headers = {"Content-type": "application/json",
-      "Authorization": "Bearer ${(response['credential']['accessToken'] as String)}"};
-
-    //TODO: dbRef was old firebase2 that I use for everything but auth. Here I link through auth.
-    //dbRef.authWithOAuthToken("google", (response['credential']['accessToken'] as String));
-    var credential = firebase.GoogleAuthProvider.credential((response['credential']['accessToken'] as String));
-    // Sign in with credential from the Google user.
-    firebase.auth().signInWithCredential(credential).then((authData) {
-      if (DEBUG) print("Authenticated successfully 2222222 with payload:" + authData.toString());
-    },
-    onError:(error) {
-      if (DEBUG) print("Auth 2222 failed" + error.toString());
-    });
+      "Authorization": "Bearer ${(response.accessToken as String)}"};
 
     set('user', new User());
-    user.uid = response['user']['uid'];//TODO: use set for subproperties?
+    user.uid = response.user.uid;//TODO: use set for subproperties?
     if (user.uid == "" || user.uid == null) {
       if (DEBUG) print("uid empty");
     }
 
-    user.email = response['user']['email'];
+    user.email = response.user.email;
     user.nickname = "";
-    if(response['user']['displayName'] != null){
-      user.nickname = response['user']['displayName'];
-    } else if(response['user']['providerData'][0]['displayName'] != null){
-      user.nickname = response['user']['providerData'][0]['displayName'];
+    if(response.user.displayName != null){
+      user.nickname = response.user.displayName;
+    } else if(response.user.providerData[0].displayName != null){
+      user.nickname = response.user.providerData[0].displayName;
     }
 
     getUserinfo();

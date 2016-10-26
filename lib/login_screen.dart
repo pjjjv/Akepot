@@ -8,6 +8,7 @@ import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:akepot/competences_service.dart';
 import 'package:akepot/login/login_google.dart';
+import 'package:firebase3/firebase.dart' as firebase;
 import 'dart:developer';
 
 @PolymerRegister('login-screen')
@@ -20,9 +21,8 @@ class LoginScreen extends PolymerElement {
   @reflectable
   void signInDone(Event e, var response){
     set('signedIn', true);
-
     Map headers = {"Content-type": "application/json",
-               "Authorization": "Bearer ${response['credential']['accessToken']}"};
+               "Authorization": "Bearer ${response.accessToken}"};
     IronAjax peopleAjax =$$('#ajax-people');
     peopleAjax.headers = headers;
     peopleAjax.generateRequest();

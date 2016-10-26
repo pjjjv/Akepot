@@ -13,6 +13,7 @@ import 'package:polymer_elements/paper_ripple.dart';
 import 'package:polymer_elements/paper_material.dart';
 import 'package:polymer_elements/iron_iconset_svg.dart';
 import 'package:polymer_elements/iron_meta.dart';
+import 'package:firebase3/firebase.dart' as firebase;
 
 @PolymerRegister("login-google")
 class LoginGoogle extends PolymerElement {
@@ -81,8 +82,12 @@ class LoginGoogle extends PolymerElement {
 
   @reflectable
   void signIn(html.Event e, var detail){
-    CompetencesService service = new IronMeta().byKey('service');
-    service.auth.signInWithPopup2().then((authData) {
+    firebase.GoogleAuthProvider provider = new firebase.GoogleAuthProvider();
+    /*provider.addScope('https://www.googleapis.com/auth/plus.login');
+    provider.addScope('https://www.googleapis.com/auth/plus.me');
+    provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');*/
+    firebase.auth().signInWithPopup(provider).then((authData) {
       if (DEBUG) print("Authenticated successfully with payload:" + authData.toString());
 
       // Trigger the loginsuccess event
@@ -118,9 +123,8 @@ class LoginGoogle extends PolymerElement {
   @reflectable
   void signOut(html.Event e, var detail){
     if (DEBUG) print("Sign out");
-    CompetencesService service = new IronMeta().byKey('service');
     this.fire( "iron-signal", detail: { "name": "loginsignoutattempted" } );
-    service.auth.signOut();
+    firebase.auth().signOut();
     this.fire( "iron-signal", detail: { "name": "loginsignedout" } );
     set('signedIn', false);
   }

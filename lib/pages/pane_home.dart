@@ -30,8 +30,6 @@ class PaneHome extends PolymerElement {
   }
 
   void newProject(Event e){
-    debugger();
-
     CompetencesService service = new IronMeta().byKey('service');
     service.project = new Project.newRemote(service);
 

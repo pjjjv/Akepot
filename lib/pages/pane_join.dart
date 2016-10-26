@@ -45,7 +45,6 @@ class PaneJoin extends PolymerElement {
 
   @reflectable
   void selectedChanged(bool selected2, bool old) {
-    debugger();
     if(signInDone && selected2==true && (old==false || old==null)){
       start();
     }
@@ -53,7 +52,6 @@ class PaneJoin extends PolymerElement {
 
   @reflectable
   void signedIn(Event e, var detail){
-    debugger();
     signInDone = true;
     if(selected2){
       start();
@@ -61,7 +59,6 @@ class PaneJoin extends PolymerElement {
   }
 
   void start(){
-    debugger();
     Person.exists(service.user.uid, projectHash, service, (exists) {
       if (exists){
         new AppLocation().path = "/project/$projectHash";

@@ -127,7 +127,6 @@ class PaneReport extends PolymerElement {
 
   @reflectable
   void selectedChanged(bool selected, bool old) {
-    debugger();
     if(signInDone && selected==true && (old==false || old==null)){
       start();
     }
@@ -135,7 +134,6 @@ class PaneReport extends PolymerElement {
 
   @reflectable
   void signedIn(Event e, var detail){
-    debugger();
     signInDone = true;
     if(selected){
       start();
@@ -143,8 +141,6 @@ class PaneReport extends PolymerElement {
   }
 
   void start(){
-    debugger();
-
     if(service.project != null && service.project.hash == projectHash){
       return;
     }

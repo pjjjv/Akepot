@@ -52,8 +52,8 @@ class CompetenceLevel extends Observable {
 
     CompetenceLevel competenceLevel = toObservable(new CompetenceLevel.newId(projectHash, roleId, competenceTemplateId));
 
-    service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/roles/$roleId/competences/$competenceTemplateId").once("value").then((event) {
+      Map val = event.snapshot.val();
 
       if(val != null) {
         competenceLevel.fromJson(val);

@@ -60,8 +60,8 @@ class Project extends Observable {
 
   factory Project.retrieve(String hash, CompetencesService service, [dynamic callback(Project project)]) {
     Project project = toObservable(new Project.newHash(hash));
-    service.dbRef.child("projects/$hash").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$hash").once("value").then((event) {
+      Map val = event.snapshot.val();
       if(val == null){
         return;
       }
@@ -296,8 +296,8 @@ class Project extends Observable {
   static void getCategoryNames(String hash, CompetencesService service, dynamic callback(List<Category> categories)) {
     if(hash==null || hash=="") return;
     Project project = toObservable(new Project.newHash(hash));
-    service.dbRef.child("projects/$hash").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$hash").once("value").then((event) {
+      Map val = event.snapshot.val();
       if(val == null){
         return;
       }

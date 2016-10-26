@@ -82,8 +82,8 @@ class Person extends Observable {
 
   factory Person.retrieve(String id, String projectHash, CompetencesService service, [dynamic callback(Person person)]) {
     Person person = toObservable(new Person.newId(id, projectHash));
-    service.dbRef.child("projects/$projectHash/persons/$id").once("value").then((snapshot) {
-      Map val = snapshot.val();
+    service.dbRef.child("projects/$projectHash/persons/$id").once("value").then((event) {
+      Map val = event.snapshot.val();
       if(val != null){
         person.fromJson(val);
       } else {
@@ -134,9 +134,8 @@ class Person extends Observable {
   }
 
   static exists(String uid, String projectHash, CompetencesService service, dynamic callback(bool exists)) {
-    service.dbRef.child('projects/$projectHash/persons/$uid').once("value").then((snapshot) {
-      debugger();
-      Map val = snapshot.val();
+    service.dbRef.child('projects/$projectHash/persons/$uid').once("value").then((event) {
+      Map val = event.snapshot.val();
       callback(val != null);
     });
   }

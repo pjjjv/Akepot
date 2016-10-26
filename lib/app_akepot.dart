@@ -55,7 +55,6 @@ class AppAkepot extends PolymerElement {
 
   @Observe('routeData.toplevel')
   void routeToplevelChanged(String toplevel) {
-    debugger();
     this.toplevel = toplevel;
     if (toplevel == null || toplevel == ""){
       set('page', 'home');
@@ -67,7 +66,6 @@ class AppAkepot extends PolymerElement {
 
   @Observe('routeData.projectHash')
   void projectHashChanged(String projectHash) {
-    debugger();
     if (projectHash != null){
       set('projectHash', projectHash);
       print("projectHash: $projectHash");
@@ -76,7 +74,6 @@ class AppAkepot extends PolymerElement {
 
   @Observe('subrouteData.page')
   void subroutePageChanged(String page) {
-    debugger();
     if ((page == null || page == "") && toplevel == 'project'){
       set('page', 'category');
     } else if ((toplevel == 'admin' && page != 'edit' && page != 'report')
@@ -100,7 +97,6 @@ class AppAkepot extends PolymerElement {
 
   @Observe('subsubrouteData.detail')
   void subsubrouteDetailChanged(String detail) {
-    debugger();
     if(page == "category"){
       set('selectedCategory', detail);
     }

@@ -4,6 +4,11 @@ library akepot.lib.pages.pane_edit;
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart';
 import 'package:akepot/model/model_project.dart';
+import 'package:akepot/model/model_category.dart';
+import 'package:akepot/model/model_subcategory.dart';
+import 'package:akepot/model/model_competencetemplate.dart';
+import 'package:akepot/model/model_team.dart';
+import 'package:akepot/model/model_role.dart';
 import 'package:akepot/pages/section_edit_project.dart';
 import 'package:akepot/pages/section_edit_project2.dart';
 import 'package:akepot/pages/section_edit_project3.dart';
@@ -13,7 +18,6 @@ import 'package:akepot/pages/section_edit_competence.dart';
 import 'package:akepot/pages/section_edit_team.dart';
 import 'package:akepot/pages/section_edit_role.dart';
 import 'dart:html';
-import 'package:observe/observe.dart' as observe;
 import 'package:akepot/competences_service.dart';
 import 'package:polymer_elements/neon_animated_pages.dart';
 import 'package:polymer_elements/iron_meta.dart';
@@ -27,9 +31,10 @@ class PaneEdit extends PolymerElement {
   PaneEdit.created() : super.created() {
   }
 
-  CompetencesService service;
+  @property CompetencesService service;
   @property String projectHash = "";
   @Property(notify: true, observer: 'selectedChanged') bool selected;
+  @property bool started = false;
 
   NeonAnimatedPages pages;
   NeonAnimatedPages pages2;
@@ -63,12 +68,14 @@ class PaneEdit extends PolymerElement {
   }
 
   void start(){
-    service = new IronMeta().byKey('service');
+    started = true;
+    set('service', new IronMeta().byKey('service'));
     if(service.project != null && service.project.hash == projectHash){
       return;
     }
 
-    service.project = observe.toObservable(new Project.retrieve(projectHash, service));
+    //service.project = observe.toObservable(new Project.retrieve(projectHash, service));
+    service.set('project', new Project.retrieve(projectHash, service));
   }
 
   @reflectable
@@ -207,4 +214,65 @@ class PaneEdit extends PolymerElement {
     pages3.selectPrevious();
   }
 
+
+
+  @reflectable
+  bool computeIfTab(int tab, int value){
+    return tab == value;
+  }
+
+  @reflectable
+  bool computeIfCategoriesLength(CompetencesService service, int category_nr){
+    return service.project.categories.length > category_nr;
+  }
+  
+  @reflectable
+  bool computeIfSubcategoriesLength(CompetencesService service, int category_nr, int subcategory_nr){
+    return service.project.categories[category_nr].subcategories.length > subcategory_nr;
+  }
+  
+  @reflectable
+  bool computeIfCompetenceTemplatesLength(CompetencesService service, int category_nr, int subcategory_nr, int competence_nr){
+    return service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr;
+  }
+
+  @reflectable
+  bool computeIfTeamsLength(CompetencesService service, int team_nr){
+    return service.project.teams.length > team_nr;
+  }
+
+  @reflectable
+  bool computeIfRolesLength(CompetencesService service, int role_nr){
+    return service.project.roles.length > role_nr;
+  }
+
+
+
+
+
+
+  @reflectable
+  Category computeCategory(CompetencesService service, int category_nr){
+    return service.project.categories[category_nr];
+  }
+  
+  @reflectable
+  SubCategory computeSubcategory(CompetencesService service, int category_nr, int subcategory_nr){
+    return service.project.categories[category_nr].subcategories.length > subcategory_nr;
+  }
+  
+  @reflectable
+  CompetenceTemplate computeCompetenceTemplate(CompetencesService service, int category_nr, int subcategory_nr, int competence_nr){
+    return service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr;
+  }
+
+  @reflectable
+  Team computeTeam(CompetencesService service, int team_nr){
+    return service.project.teams[team_nr];
+  }
+
+  @reflectable
+  Role computeRole(CompetencesService service, int role_nr){
+    return service.project.roles[role_nr];
+  }
 }

@@ -3,7 +3,7 @@
   <template>
 
     <paper-header-panel mode="waterfall-tall">
-      <paper-toolbar class="animate tall" hero-id="hero-team" hero cross-fade-delayed$="{{_computeCross-fade-delayed(page)}}">
+      <paper-toolbar class="animate tall" hero-id="hero-team" hero cross-fade-delayed$="{{computeCrossFadeDelayed1(page)}}">
         <div id="div2" class="layout vertical center center-justified">
           <div id="div1" class="layout horizontal center">
             <paper-icon-button id="paper_icon_button" icon="arrow-back" on-tap="goUp" hero cross-fade-delayed></paper-icon-button>
@@ -17,7 +17,7 @@
 
         <div class="layout center-justified">
           <template is="dom-repeat" items="{{enumerate(team.persons)}}" as="person">
-            <core-card3 id="{{person.index}}" class="horizontal layout center start-justified" cross-fade-delayed$="{{_computeCross-fade-delayed(index, page, person)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button><span>{{person.value.nickName}}</span>, <span>{{person.value.firstName}}</span> <span>{{person.value.lastName}}</span></core-card3>
+            <core-card3 id="{{person.index}}" class="horizontal layout center start-justified" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, person)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button><span>{{person.value.nickName}}</span>, <span>{{person.value.firstName}}</span> <span>{{person.value.lastName}}</span></core-card3>
           </template>
         </div>
       </section>

@@ -13,4 +13,5 @@ class MenuHome extends PolymerElement {
   MenuHome.created() : super.created();
 
   @property String selectedSection;
+
 }

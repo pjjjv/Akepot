@@ -8,7 +8,8 @@ app-header {
 }
 
 app-drawer {
-  margin: 0 20px;
+  //TODO: margin was offsetting the whole app and drawer.
+  //margin: 0 20px;
   background-color: white;
 }
 app-drawer a {

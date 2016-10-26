@@ -44,4 +44,15 @@ class SectionEditProject extends PolymerElement {
     e.stopPropagation();
     this.fire( "iron-signal", detail: { "name": "removeproject", "data": target.id } );
   }
+
+
+  @reflectable
+  bool computeHero(int index, int page, Category category){
+    return (page == 1 || page == 0) && category.index == index;
+  }
+
+  @reflectable
+  bool computeCrossFadeDelayed(int index, int page, Category category){
+    return page != 0 || category.index != index;
+  }
 }

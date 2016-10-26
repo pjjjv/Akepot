@@ -42,4 +42,15 @@ class SectionEditTeam extends PolymerElement {
   void goUp(Event e, var detail){
     this.fire( "iron-signal", detail: { "name": "goup2" } );
   }
+
+
+  @reflectable
+  bool computeCrossFadeDelayed1(int page){
+    return (page != 0);
+  }
+
+  @reflectable
+  bool computeCrossFadeDelayed2(int index, int page, Person person){
+    return page != 1 || person.index != index;
+  }
 }

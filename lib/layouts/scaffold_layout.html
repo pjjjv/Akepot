@@ -16,20 +16,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <dom-module id="scaffold-layout">
-  <link rel="import" type="css" href="scaffold_layout.css">
-  <template>
+    <link rel="import" type="css" href="scaffold_layout.css">
+    <template>
     <app-drawer-layout fullbleed>
 
       <!-- Drawer content -->
       <app-drawer>
         <paper-toolbar id="panel-head">
           <!-- <iron-image src="{{service.user.cover}}" sizing="cover" preload fade></iron-image> -->
-          <img class="middle profile" _src="{{service.user.profile}}" hidden$="{{_computeHidden(service)}}">
+          <img class="middle profile" _src="{{service.user.profile}}" hidden$="{{computeHiddenService(service)}}">
           <div class="bottom layout vertical">
             <span>{{service.user.nickname}}</span>
             <span>{{service.user.email}}</span>
           </div>
         </paper-toolbar>
+
+        <!-- Home -->
+        <menu-home selected-section="{{selected}}" project-hash="{{projectHash}}" hidden$="{{computeHiddenMenuHome(menu)}}"></menu-home>
+        <!-- Project -->
+        <menu-project selected-section="{{selected}}" project-hash="{{projectHash}}" hidden$="{{computeHiddenMenuProject(menu)}}"></menu-project>
+        <!-- Admin -->
+        <menu-admin selected-section="{{selected}}" project-hash="{{projectHash}}" hidden$="{{computeHiddenMenuAdmin(menu)}}"></menu-admin>
       </app-drawer>
 
       <!-- Main content -->
@@ -44,9 +51,12 @@
           </paper-toolbar>
         </app-header>
 
-        <div main class="content fit">
+        <div main class="content">
           <content></content>
         </div>
+
+        <dropdown-menu tool></dropdown-menu>
+        <refresh-spinner></refresh-spinner>
 
       </app-header-layout>
 

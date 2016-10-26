@@ -129,7 +129,7 @@ class CompetencesService extends PolymerElement {
     /*if(resp['cover'] != null){
       user.cover = (resp['cover']['coverPhoto']['url'] as String).replaceFirst(new RegExp('/\/s\d{3}-/'), "/s" + COVER_IMAGE_SIZE.toString() + "-");
     }*/
-
+    
     set('signedIn', true);
 
     this.fire( "iron-signal", detail: { "name": "signedin" } );

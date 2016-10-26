@@ -5,7 +5,7 @@
     <iron-signals on-iron-signal-signedin="signedIn"></iron-signals>
     <paper-menu id="panel-list" class="content flex" selected="{{selectedSection}}" valueattr="name" excludedlocalnames="div" theme="core-light-theme">
       <paper-item id="menu_item_home" name="home" tabindex="0">
-        <a href="#/"><iron-icon icon="home"></iron-icon><span class="flex">Home</span></a>
+        <a href="#/home"><iron-icon icon="home"></iron-icon><span class="flex">Home</span></a>
       </paper-item>
       <template is="dom-if" if="{{isAdmin}}">
         <div class="separator empty"></div>

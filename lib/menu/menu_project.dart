@@ -20,19 +20,31 @@ class MenuProject extends PolymerElement {
 
   @property String selectedSection;
   @property String projectHash;
-  CompetencesService service;
+  @Property(notify: true, observer: 'hiddenChanged')  bool hidden;
+  @property CompetencesService service;
   bool isAdmin = false;
+  bool signInDone = false;
 
-  attached(){
-    service = new IronMeta().byKey('service');
-    if(service.signedIn) signedIn(null, null);
+  @reflectable
+  void hiddenChanged(bool selected, bool old) {
+    if(signInDone && !hidden && (old==false || old==null)){
+      start();
+    }
   }
 
   @reflectable
   void signedIn(Event e, var detail){
+    signInDone = true;
+    if(!hidden){
+      start();
+    }
+  }
+
+  void start(){
+    set('service', new IronMeta().byKey('service'));
     if(service.categories.isNotEmpty) return;
     Project.getCategoryNames(projectHash, service, (List<Category> categories) {
-      service.categories = categories;
+      service.set('categories', categories);
     });
     Project.isAdmin(projectHash, service.user.uid, service, (bool isAdmin){
       this.isAdmin = isAdmin;

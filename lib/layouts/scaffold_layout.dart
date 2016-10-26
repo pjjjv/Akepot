@@ -10,6 +10,12 @@ import 'package:polymer_elements/paper_toolbar.dart';
 import 'package:polymer_elements/app_layout/app_header_layout/app_header_layout.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/app_layout/app_scroll_effects/effects/waterfall.dart';
+import 'package:akepot/competences_service.dart';
+import 'package:akepot/menu/menu_home.dart';
+import 'package:akepot/menu/menu_admin.dart';
+import 'package:akepot/menu/menu_project.dart';
+import 'package:akepot/dropdown_menu.dart';
+import 'package:akepot/refresh_spinner.dart';
 
 @PolymerRegister('scaffold-layout')
 class ScaffoldLayout extends PolymerElement {
@@ -19,5 +25,40 @@ class ScaffoldLayout extends PolymerElement {
 
   ScaffoldLayout.created() : super.created();
 
+  @reflectable
+  bool computeHiddenService(CompetencesService service){
+    if (service!=null && service.user!=null && service.user.profile!=null){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @reflectable
+  bool computeHiddenMenuHome(String menu){
+    if (menu!=null && menu=="home"){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @reflectable
+  bool computeHiddenMenuProject(String menu){
+    if (menu!=null && menu=="project"){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @reflectable
+  bool computeHiddenMenuAdmin(String menu){
+    if (menu!=null && menu=="admin"){
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 }

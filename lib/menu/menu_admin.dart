@@ -41,4 +41,14 @@ class MenuAdmin extends PolymerElement {
   void onGoButtonClick(Event e){
     //(document.querySelector('app-router') as AppRouter).go("/project/${projectHash}");
   }
+
+  @reflectable
+  String computeHrefEdit(String projectHash){
+    return "#/admin/${projectHash}/edit";
+  }
+
+  @reflectable
+  String computeHrefReport(String projectHash){
+    return "#/admin/${projectHash}/report";
+  }
 }

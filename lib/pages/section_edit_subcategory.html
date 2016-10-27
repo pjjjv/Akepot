@@ -17,8 +17,8 @@
       <section id="content-section">
 
         <div class="layout center-justified">
-          <template is="dom-repeat" items="{{enumerate(subCategory.competenceTemplates)}}" as="competenceTemplate">
-            <core-card3 id="{{competenceTemplate.index}}" class="horizontal layout center start-justified" hero-id="hero-competence" on-tap="onItemTap" hero$="{{computeHero(index, page, competenceTemplate)}}" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, competenceTemplate)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{competenceTemplate.value.label}}</core-card3>
+          <template is="dom-repeat" items="{{subCategory.competenceTemplates}}" as="competenceTemplate" index-as="rIndex">
+            <core-card3 id="{{rIndex}}" class="horizontal layout center start-justified" hero-id="hero-competence" on-tap="onItemTap" hero$="{{computeHero(index, page, rIndex)}}" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, rIndex)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{competenceTemplate.value.label}}</core-card3>
           </template>
         </div>
         <!-- <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Planning</core-card3>

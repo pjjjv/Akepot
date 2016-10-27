@@ -11,7 +11,6 @@ import 'package:polymer_elements/paper_toolbar.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
-import 'package:akepot/model/model_person.dart';
 
 @PolymerRegister("section-edit-team")
 class SectionEditTeam extends PolymerElement {
@@ -51,7 +50,7 @@ class SectionEditTeam extends PolymerElement {
   }
 
   @reflectable
-  bool computeCrossFadeDelayed2(int index, int page, Person person){
-    return page != 1 || person.index != index;
+  bool computeCrossFadeDelayed2(int index, int page, int rIndex){
+    return page != 1 || rIndex != index;
   }
 }

@@ -12,7 +12,6 @@ import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_fab.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
-import 'package:akepot/model/model_competencetemplate.dart';
 
 @PolymerRegister("section-edit-subcategory")
 class SectionEditSubCategory extends PolymerElement {
@@ -63,12 +62,12 @@ class SectionEditSubCategory extends PolymerElement {
   }
 
   @reflectable
-  bool computeHero(int index, int page, CompetenceTemplate competenceTemplate){
-    return (page == 3 || page == 2) && competenceTemplate.index == index;
+  bool computeHero(int index, int page, int rIndex){
+    return (page == 3 || page == 2) && rIndex == index;
   }
 
   @reflectable
-  bool computeCrossFadeDelayed2(int index, int page, CompetenceTemplate competenceTemplate){
-    return (page != 3 && page != 2) || competenceTemplate.index != index;
+  bool computeCrossFadeDelayed2(int index, int page, int rIndex){
+    return (page != 3 && page != 2) || rIndex != index;
   }
 }

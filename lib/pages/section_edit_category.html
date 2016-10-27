@@ -17,8 +17,8 @@
       <section id="content-section">
 
         <div class="layout center-justified">
-          <template is="dom-repeat" items="{{enumerate(category.subcategories)}}" as="subcategory">
-            <core-card3 id="{{subcategory.index}}" class="horizontal layout center start-justified" hero-id="hero-subcategory" on-tap="onItemTap" hero$="{{computeHero(index, page, subcategory)}}" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, subcategory)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{subcategory.value.name}}</core-card3>
+          <template is="dom-repeat" items="{{category.subcategories}}" as="subcategory" index-as="rIndex">
+            <core-card3 id="{{index}}" class="horizontal layout center start-justified" hero-id="hero-subcategory" on-tap="onItemTap" hero$="{{computeHero(index, page, rIndex)}}" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, rIndex)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{subcategory.value.name}}</core-card3>
           </template>
         </div>
         <!-- <core-card3 id="core_card" class="horizontal layout center start-justified" cross-fade>Waterfall</core-card3>

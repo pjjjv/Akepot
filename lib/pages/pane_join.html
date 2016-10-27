@@ -17,8 +17,8 @@
             <paper-dropdown-menu label="Choose a team">
               <iron-dropdown class="dropdown">
                 <iron-selector attr-for-selected="id" selected="{{selected}}">
-                  <template is="dom-repeat" items="{{enumerate(service.project.teams)}}" as="team">
-                    <paper-item id="{{team.index}}" undefined="{{team.value.name}}"></paper-item>
+                  <template is="dom-repeat" items="{{service.project.teams}}" as="team">
+                    <paper-item id="{{index}}" undefined="{{team.name}}"></paper-item>
                   </template>
                 </iron-selector>
               </iron-dropdown>

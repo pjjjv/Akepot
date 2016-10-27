@@ -16,8 +16,8 @@
       <section id="content-section">
 
         <div class="layout center-justified">
-          <template is="dom-repeat" items="{{enumerate(team.persons)}}" as="person">
-            <core-card3 id="{{person.index}}" class="horizontal layout center start-justified" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, person)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button><span>{{person.value.nickName}}</span>, <span>{{person.value.firstName}}</span> <span>{{person.value.lastName}}</span></core-card3>
+          <template is="dom-repeat" items="{{team.persons}}" as="person" index-as="rIndex">
+            <core-card3 id="{{rIndex}}" class="horizontal layout center start-justified" cross-fade-delayed$="{{computeCrossFadeDelayed2(index, page, rIndex)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button><span>{{person.value.nickName}}</span>, <span>{{person.value.firstName}}</span> <span>{{person.value.lastName}}</span></core-card3>
           </template>
         </div>
       </section>

@@ -18,6 +18,7 @@
 
         <div class="layout center-justified">
           <template is="dom-repeat" items="{{project.categories}}" as="category" index-as="rIndex">
+            All these categories
             <core-card3 id="{{rIndex}}" class="horizontal layout center start-justified" hero-id="hero-category" on-tap="onItemTap" hero$="{{computeHero(index, page, rIndex)}}" cross-fade-delayed$="{{computeCrossFadeDelayed(index, page, rIndex)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{category.value.name}}</core-card3>
           </template>
         </div>

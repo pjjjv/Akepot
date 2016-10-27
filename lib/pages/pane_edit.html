@@ -44,6 +44,7 @@
             <section-edit-project project="{{service.project}}" page="{{page}}" index="{{category_nr}}"></section-edit-project>
 
             <template is="dom-if" if="{{computeIfCategoriesLength(service, category_nr)}}">
+              Hello1
               <section-edit-category category="{{computeCategory(service, category_nr)}}" page="{{page}}" index="{{subcategory_nr}}"></section-edit-category>
 
             <template is="dom-if" if="{{computeIfSubcategoriesLength(service, category_nr, subcategory_nr)}}">

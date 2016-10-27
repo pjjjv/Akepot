@@ -18,7 +18,7 @@
 
         <div class="layout center-justified">
           <template is="dom-repeat" items="{{enumerate(project.roles)}}" as="role">
-            <core-card3 id="{{role.index}}" class="horizontal layout center start-justified" hero-id="hero-role" on-tap="onItemTap" hero$="{{_computeHero(index, page, role)}}" cross-fade-delayed$="{{_computeCross-fade-delayed(index, page, role)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{role.value.name}}</core-card3>
+            <core-card3 id="{{role.index}}" class="horizontal layout center start-justified" hero-id="hero-role" on-tap="onItemTap" hero$="{{computeHero(index, page, role)}}" cross-fade-delayed$="{{computeCrossFadeDelayed(index, page, role)}}"><paper-icon-button id="delete-button" title="Delete" icon="delete" on-tap="onItemDeleteButtonTap"></paper-icon-button>{{role.value.name}}</core-card3>
           </template>
         </div>
       </section>

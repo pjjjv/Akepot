@@ -11,6 +11,7 @@ import 'package:polymer_elements/paper_toolbar.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:akepot/model/model_person.dart';
 
 @PolymerRegister("section-edit-team")
 class SectionEditTeam extends PolymerElement {

@@ -24,6 +24,7 @@ import 'package:polymer_elements/iron_meta.dart';
 import 'package:polymer_elements/iron_signals.dart';
 import 'package:polymer_elements/paper_tabs.dart';
 import 'package:polymer_elements/paper_tab.dart';
+import 'package:observe/observe.dart' as observe;
 import 'dart:developer';
 
 @PolymerRegister("pane-edit")
@@ -75,7 +76,7 @@ class PaneEdit extends PolymerElement {
     }
 
     //service.project = observe.toObservable(new Project.retrieve(projectHash, service));
-    service.set('project', new Project.retrieve(projectHash, service));
+    service.set('project', observe.toObservable(new Project.retrieve(projectHash, service)));
   }
 
   @reflectable
@@ -258,12 +259,12 @@ class PaneEdit extends PolymerElement {
   
   @reflectable
   SubCategory computeSubcategory(CompetencesService service, int category_nr, int subcategory_nr){
-    return service.project.categories[category_nr].subcategories.length > subcategory_nr;
+    return service.project.categories[category_nr].subcategories[subcategory_nr];
   }
   
   @reflectable
   CompetenceTemplate computeCompetenceTemplate(CompetencesService service, int category_nr, int subcategory_nr, int competence_nr){
-    return service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates.length > competence_nr;
+    return service.project.categories[category_nr].subcategories[subcategory_nr].competenceTemplates[competence_nr];
   }
 
   @reflectable

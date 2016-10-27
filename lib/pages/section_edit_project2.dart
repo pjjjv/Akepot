@@ -12,6 +12,7 @@ import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_fab.dart';
 import 'package:polymer_elements/iron_flex_layout_classes.dart';
+import 'package:akepot/model/model_team.dart';
 
 @PolymerRegister("section-edit-project2")
 class SectionEditProject2 extends PolymerElement {
@@ -43,5 +44,16 @@ class SectionEditProject2 extends PolymerElement {
   void onProjectDeleteButtonTap(Event e, var detail){
     e.stopPropagation();
     this.fire( "iron-signal", detail: { "name": "removeproject", "data": target.id } );
+  }
+
+
+  @reflectable
+  bool computeHero(int index, int page, Team team){
+    return (page == 1 || page == 0) && team.index == index;
+  }
+
+  @reflectable
+  bool computeCrossFadeDelayed(int index, int page, Team team){
+    return page != 0 || team.index != index;
   }
 }
